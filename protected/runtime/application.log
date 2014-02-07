@@ -1,0 +1,250 @@
+2014/02/07 12:55:23 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not allowed to access this page.' in D:\UniServerZ\www\ticketing\yii\framework\gii\GiiModule.php:170
+Stack trace:
+#0 D:\UniServerZ\www\ticketing\yii\framework\web\CController.php(263): GiiModule->beforeControllerAction(Object(DefaultController), Object(CInlineAction))
+#1 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(282): CController->run('')
+#2 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gii')
+#3 D:\UniServerZ\www\ticketing\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 D:\UniServerZ\www\ticketing\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ticketing/index.php/gii
+---
+2014/02/07 12:55:49 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not allowed to access this page.' in D:\UniServerZ\www\ticketing\yii\framework\gii\GiiModule.php:170
+Stack trace:
+#0 D:\UniServerZ\www\ticketing\yii\framework\web\CController.php(263): GiiModule->beforeControllerAction(Object(DefaultController), Object(CInlineAction))
+#1 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(282): CController->run('')
+#2 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gii')
+#3 D:\UniServerZ\www\ticketing\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 D:\UniServerZ\www\ticketing\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ticketing/index.php/gii
+---
+2014/02/07 12:55:57 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not allowed to access this page.' in D:\UniServerZ\www\ticketing\yii\framework\gii\GiiModule.php:170
+Stack trace:
+#0 D:\UniServerZ\www\ticketing\yii\framework\web\CController.php(263): GiiModule->beforeControllerAction(Object(DefaultController), Object(CInlineAction))
+#1 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(282): CController->run('')
+#2 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gii')
+#3 D:\UniServerZ\www\ticketing\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 D:\UniServerZ\www\ticketing\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ticketing/index.php/gii
+---
+2014/02/07 12:56:31 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not allowed to access this page.' in D:\UniServerZ\www\ticketing\yii\framework\gii\GiiModule.php:170
+Stack trace:
+#0 D:\UniServerZ\www\ticketing\yii\framework\web\CController.php(263): GiiModule->beforeControllerAction(Object(DefaultController), Object(CInlineAction))
+#1 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(282): CController->run('')
+#2 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gii')
+#3 D:\UniServerZ\www\ticketing\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 D:\UniServerZ\www\ticketing\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ticketing/index.php/gii
+---
+2014/02/07 12:56:32 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not allowed to access this page.' in D:\UniServerZ\www\ticketing\yii\framework\gii\GiiModule.php:170
+Stack trace:
+#0 D:\UniServerZ\www\ticketing\yii\framework\web\CController.php(263): GiiModule->beforeControllerAction(Object(DefaultController), Object(CInlineAction))
+#1 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(282): CController->run('')
+#2 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gii')
+#3 D:\UniServerZ\www\ticketing\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 D:\UniServerZ\www\ticketing\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ticketing/index.php/gii
+---
+2014/02/07 12:56:32 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not allowed to access this page.' in D:\UniServerZ\www\ticketing\yii\framework\gii\GiiModule.php:170
+Stack trace:
+#0 D:\UniServerZ\www\ticketing\yii\framework\web\CController.php(263): GiiModule->beforeControllerAction(Object(DefaultController), Object(CInlineAction))
+#1 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(282): CController->run('')
+#2 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gii')
+#3 D:\UniServerZ\www\ticketing\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 D:\UniServerZ\www\ticketing\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ticketing/index.php/gii
+---
+2014/02/07 12:56:32 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not allowed to access this page.' in D:\UniServerZ\www\ticketing\yii\framework\gii\GiiModule.php:170
+Stack trace:
+#0 D:\UniServerZ\www\ticketing\yii\framework\web\CController.php(263): GiiModule->beforeControllerAction(Object(DefaultController), Object(CInlineAction))
+#1 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(282): CController->run('')
+#2 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gii')
+#3 D:\UniServerZ\www\ticketing\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 D:\UniServerZ\www\ticketing\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ticketing/index.php/gii
+---
+2014/02/07 12:56:33 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not allowed to access this page.' in D:\UniServerZ\www\ticketing\yii\framework\gii\GiiModule.php:170
+Stack trace:
+#0 D:\UniServerZ\www\ticketing\yii\framework\web\CController.php(263): GiiModule->beforeControllerAction(Object(DefaultController), Object(CInlineAction))
+#1 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(282): CController->run('')
+#2 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gii')
+#3 D:\UniServerZ\www\ticketing\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 D:\UniServerZ\www\ticketing\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ticketing/index.php/gii
+---
+2014/02/07 12:56:33 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not allowed to access this page.' in D:\UniServerZ\www\ticketing\yii\framework\gii\GiiModule.php:170
+Stack trace:
+#0 D:\UniServerZ\www\ticketing\yii\framework\web\CController.php(263): GiiModule->beforeControllerAction(Object(DefaultController), Object(CInlineAction))
+#1 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(282): CController->run('')
+#2 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gii')
+#3 D:\UniServerZ\www\ticketing\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 D:\UniServerZ\www\ticketing\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ticketing/index.php/gii
+---
+2014/02/07 12:56:33 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not allowed to access this page.' in D:\UniServerZ\www\ticketing\yii\framework\gii\GiiModule.php:170
+Stack trace:
+#0 D:\UniServerZ\www\ticketing\yii\framework\web\CController.php(263): GiiModule->beforeControllerAction(Object(DefaultController), Object(CInlineAction))
+#1 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(282): CController->run('')
+#2 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gii')
+#3 D:\UniServerZ\www\ticketing\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 D:\UniServerZ\www\ticketing\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ticketing/index.php/gii
+---
+2014/02/07 12:57:47 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not allowed to access this page.' in D:\UniServerZ\www\ticketing\yii\framework\gii\GiiModule.php:170
+Stack trace:
+#0 D:\UniServerZ\www\ticketing\yii\framework\web\CController.php(263): GiiModule->beforeControllerAction(Object(DefaultController), Object(CInlineAction))
+#1 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(282): CController->run('')
+#2 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gii')
+#3 D:\UniServerZ\www\ticketing\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 D:\UniServerZ\www\ticketing\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ticketing/index.php/gii
+---
+2014/02/07 12:57:57 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not allowed to access this page.' in D:\UniServerZ\www\ticketing\yii\framework\gii\GiiModule.php:170
+Stack trace:
+#0 D:\UniServerZ\www\ticketing\yii\framework\web\CController.php(263): GiiModule->beforeControllerAction(Object(DefaultController), Object(CInlineAction))
+#1 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(282): CController->run('')
+#2 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gii')
+#3 D:\UniServerZ\www\ticketing\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 D:\UniServerZ\www\ticketing\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ticketing/index.php/gii
+---
+2014/02/07 12:57:58 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not allowed to access this page.' in D:\UniServerZ\www\ticketing\yii\framework\gii\GiiModule.php:170
+Stack trace:
+#0 D:\UniServerZ\www\ticketing\yii\framework\web\CController.php(263): GiiModule->beforeControllerAction(Object(DefaultController), Object(CInlineAction))
+#1 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(282): CController->run('')
+#2 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gii')
+#3 D:\UniServerZ\www\ticketing\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 D:\UniServerZ\www\ticketing\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ticketing/index.php/gii
+---
+2014/02/07 12:57:59 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not allowed to access this page.' in D:\UniServerZ\www\ticketing\yii\framework\gii\GiiModule.php:170
+Stack trace:
+#0 D:\UniServerZ\www\ticketing\yii\framework\web\CController.php(263): GiiModule->beforeControllerAction(Object(DefaultController), Object(CInlineAction))
+#1 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(282): CController->run('')
+#2 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gii')
+#3 D:\UniServerZ\www\ticketing\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 D:\UniServerZ\www\ticketing\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ticketing/index.php/gii
+---
+2014/02/07 12:57:59 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not allowed to access this page.' in D:\UniServerZ\www\ticketing\yii\framework\gii\GiiModule.php:170
+Stack trace:
+#0 D:\UniServerZ\www\ticketing\yii\framework\web\CController.php(263): GiiModule->beforeControllerAction(Object(DefaultController), Object(CInlineAction))
+#1 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(282): CController->run('')
+#2 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gii')
+#3 D:\UniServerZ\www\ticketing\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 D:\UniServerZ\www\ticketing\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ticketing/index.php/gii
+---
+2014/02/07 12:58:02 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not allowed to access this page.' in D:\UniServerZ\www\ticketing\yii\framework\gii\GiiModule.php:170
+Stack trace:
+#0 D:\UniServerZ\www\ticketing\yii\framework\web\CController.php(263): GiiModule->beforeControllerAction(Object(DefaultController), Object(CInlineAction))
+#1 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(282): CController->run('')
+#2 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gii')
+#3 D:\UniServerZ\www\ticketing\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 D:\UniServerZ\www\ticketing\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ticketing/index.php/gii
+---
+2014/02/07 12:58:03 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not allowed to access this page.' in D:\UniServerZ\www\ticketing\yii\framework\gii\GiiModule.php:170
+Stack trace:
+#0 D:\UniServerZ\www\ticketing\yii\framework\web\CController.php(263): GiiModule->beforeControllerAction(Object(DefaultController), Object(CInlineAction))
+#1 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(282): CController->run('')
+#2 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gii')
+#3 D:\UniServerZ\www\ticketing\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 D:\UniServerZ\www\ticketing\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ticketing/index.php/gii
+---
+2014/02/07 12:58:04 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not allowed to access this page.' in D:\UniServerZ\www\ticketing\yii\framework\gii\GiiModule.php:170
+Stack trace:
+#0 D:\UniServerZ\www\ticketing\yii\framework\web\CController.php(263): GiiModule->beforeControllerAction(Object(DefaultController), Object(CInlineAction))
+#1 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(282): CController->run('')
+#2 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gii')
+#3 D:\UniServerZ\www\ticketing\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 D:\UniServerZ\www\ticketing\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ticketing/index.php/gii
+---
+2014/02/07 12:58:04 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not allowed to access this page.' in D:\UniServerZ\www\ticketing\yii\framework\gii\GiiModule.php:170
+Stack trace:
+#0 D:\UniServerZ\www\ticketing\yii\framework\web\CController.php(263): GiiModule->beforeControllerAction(Object(DefaultController), Object(CInlineAction))
+#1 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(282): CController->run('')
+#2 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gii')
+#3 D:\UniServerZ\www\ticketing\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 D:\UniServerZ\www\ticketing\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ticketing/index.php/gii
+---
+2014/02/07 12:58:04 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not allowed to access this page.' in D:\UniServerZ\www\ticketing\yii\framework\gii\GiiModule.php:170
+Stack trace:
+#0 D:\UniServerZ\www\ticketing\yii\framework\web\CController.php(263): GiiModule->beforeControllerAction(Object(DefaultController), Object(CInlineAction))
+#1 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(282): CController->run('')
+#2 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gii')
+#3 D:\UniServerZ\www\ticketing\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 D:\UniServerZ\www\ticketing\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ticketing/index.php/gii
+---
+2014/02/07 12:58:05 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not allowed to access this page.' in D:\UniServerZ\www\ticketing\yii\framework\gii\GiiModule.php:170
+Stack trace:
+#0 D:\UniServerZ\www\ticketing\yii\framework\web\CController.php(263): GiiModule->beforeControllerAction(Object(DefaultController), Object(CInlineAction))
+#1 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(282): CController->run('')
+#2 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gii')
+#3 D:\UniServerZ\www\ticketing\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 D:\UniServerZ\www\ticketing\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ticketing/index.php/gii
+---
+2014/02/07 12:58:05 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not allowed to access this page.' in D:\UniServerZ\www\ticketing\yii\framework\gii\GiiModule.php:170
+Stack trace:
+#0 D:\UniServerZ\www\ticketing\yii\framework\web\CController.php(263): GiiModule->beforeControllerAction(Object(DefaultController), Object(CInlineAction))
+#1 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(282): CController->run('')
+#2 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gii')
+#3 D:\UniServerZ\www\ticketing\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 D:\UniServerZ\www\ticketing\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ticketing/index.php/gii
+---
+2014/02/07 12:58:06 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not allowed to access this page.' in D:\UniServerZ\www\ticketing\yii\framework\gii\GiiModule.php:170
+Stack trace:
+#0 D:\UniServerZ\www\ticketing\yii\framework\web\CController.php(263): GiiModule->beforeControllerAction(Object(DefaultController), Object(CInlineAction))
+#1 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(282): CController->run('')
+#2 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gii')
+#3 D:\UniServerZ\www\ticketing\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 D:\UniServerZ\www\ticketing\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ticketing/index.php/gii
+---
+2014/02/07 12:58:06 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not allowed to access this page.' in D:\UniServerZ\www\ticketing\yii\framework\gii\GiiModule.php:170
+Stack trace:
+#0 D:\UniServerZ\www\ticketing\yii\framework\web\CController.php(263): GiiModule->beforeControllerAction(Object(DefaultController), Object(CInlineAction))
+#1 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(282): CController->run('')
+#2 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gii')
+#3 D:\UniServerZ\www\ticketing\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 D:\UniServerZ\www\ticketing\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ticketing/index.php/gii
+---
+2014/02/07 12:58:06 [error] [exception.CHttpException.403] exception 'CHttpException' with message 'You are not allowed to access this page.' in D:\UniServerZ\www\ticketing\yii\framework\gii\GiiModule.php:170
+Stack trace:
+#0 D:\UniServerZ\www\ticketing\yii\framework\web\CController.php(263): GiiModule->beforeControllerAction(Object(DefaultController), Object(CInlineAction))
+#1 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(282): CController->run('')
+#2 D:\UniServerZ\www\ticketing\yii\framework\web\CWebApplication.php(141): CWebApplication->runController('gii')
+#3 D:\UniServerZ\www\ticketing\yii\framework\base\CApplication.php(180): CWebApplication->processRequest()
+#4 D:\UniServerZ\www\ticketing\index.php(13): CApplication->run()
+#5 {main}
+REQUEST_URI=/ticketing/index.php/gii
+---
