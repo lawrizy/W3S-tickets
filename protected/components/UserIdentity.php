@@ -20,24 +20,30 @@ class UserIdentity extends CUserIdentity {
 
     public function authenticate() {
 
-        //   $record = Locataire::model()->findByAttributes(array('email' => $this->username));
-        if (($record = Locataire::model()->findByAttributes(array('email' => $this->username))) !== null) {
-            if ($record->password !== md5($this->password))
-                $this->errorCode = self::ERROR_PASSWORD_INVALID;
-            else {
-                $this->_id = $record->id_locataire;
-                $this->errorCode = self::ERROR_NONE;
-            }
-            return !$this->errorCode;
-        } elseif (($record = User::model()->findByAttributes(array('email' => $this->username))) !== NULL) {
+        try {
+            if (($record = Locataire::model()->findByAttributes(array('email' => $this->username))) !== null) {
+                if ($record->password !== md5($this->password))
+                    $this->errorCode = self::ERROR_PASSWORD_INVALID;
+                else {
+                    $this->_id = $record->id_locataire;
+                    $this->errorCode = self::ERROR_NONE;
+                    Yii::app()->session['Utilisateur'] = 'Locataire';
+                }
+                return !$this->errorCode;
+            } elseif (($record = User::model()->findByAttributes(array('email' => $this->username))) !== NULL) {
 
-            if ($record->password !== md5($this->password))
-                $this->errorCode = self::ERROR_PASSWORD_INVALID;
-            else {
-                $this->_id = $record->id_user;
-                $this->errorCode = self::ERROR_NONE;
+                if ($record->password !== md5($this->password))
+                    $this->errorCode = self::ERROR_PASSWORD_INVALID;
+                else {
+                    $this->_id = $record->id_user;
+                    $this->errorCode = self::ERROR_NONE;
+                    Yii::app()->session['Utilisateur'] = 'User';
+                }
+                return !$this->errorCode;
             }
-            return !$this->errorCode;
+            return self::ERROR_UNKNOWN_IDENTITY;
+        } catch (CDbException $ex) {
+            Yii::app()->session['erreurDB'] = 'Error: the database is not available for the moment !';
         }
     }
 
@@ -45,7 +51,8 @@ class UserIdentity extends CUserIdentity {
         return $this->_id;
     }
 
-    public function getStatut() {
+    public
+            function getStatut() {
         return $this->_table;
     }
 
