@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class used internally by Text_Diff to actually compute the diffs.
  *
@@ -30,8 +31,7 @@
  */
 class Text_Diff_Engine_native {
 
-    function diff($from_lines, $to_lines)
-    {
+    function diff($from_lines, $to_lines) {
         array_walk($from_lines, array('Text_Diff', 'trimNewlines'));
         array_walk($to_lines, array('Text_Diff', 'trimNewlines'));
 
@@ -54,7 +54,8 @@ class Text_Diff_Engine_native {
         }
 
         // Skip trailing common lines.
-        $xi = $n_from; $yi = $n_to;
+        $xi = $n_from;
+        $yi = $n_to;
         for ($endskip = 0; --$xi > $skip && --$yi > $skip; $endskip++) {
             if ($from_lines[$xi] !== $to_lines[$yi]) {
                 break;
@@ -100,8 +101,7 @@ class Text_Diff_Engine_native {
 
             // Skip matching "snake".
             $copy = array();
-            while ($xi < $n_from && $yi < $n_to
-                   && !$this->xchanged[$xi] && !$this->ychanged[$yi]) {
+            while ($xi < $n_from && $yi < $n_to && !$this->xchanged[$xi] && !$this->ychanged[$yi]) {
                 $copy[] = $from_lines[$xi++];
                 ++$yi;
             }
@@ -148,16 +148,14 @@ class Text_Diff_Engine_native {
      * match.  The caller must trim matching lines from the beginning and end
      * of the portions it is going to specify.
      */
-    function _diag ($xoff, $xlim, $yoff, $ylim, $nchunks)
-    {
+    function _diag($xoff, $xlim, $yoff, $ylim, $nchunks) {
         $flip = false;
 
         if ($xlim - $xoff > $ylim - $yoff) {
             /* Things seems faster (I'm not sure I understand why) when the
              * shortest sequence is in X. */
             $flip = true;
-            list ($xoff, $xlim, $yoff, $ylim)
-                = array($yoff, $ylim, $xoff, $xlim);
+            list ($xoff, $xlim, $yoff, $ylim) = array($yoff, $ylim, $xoff, $xlim);
         }
 
         if ($flip) {
@@ -171,7 +169,7 @@ class Text_Diff_Engine_native {
         }
 
         $this->lcs = 0;
-        $this->seq[0]= $yoff - 1;
+        $this->seq[0] = $yoff - 1;
         $this->in_seq = array();
         $ymids[0] = array();
 
@@ -184,7 +182,7 @@ class Text_Diff_Engine_native {
                 }
             }
 
-            $x1 = $xoff + (int)(($numer + ($xlim - $xoff) * $chunk) / $nchunks);
+            $x1 = $xoff + (int) (($numer + ($xlim - $xoff) * $chunk) / $nchunks);
             for (; $x < $x1; $x++) {
                 $line = $flip ? $this->yv[$x] : $this->xv[$x];
                 if (empty($ymatches[$line])) {
@@ -220,7 +218,7 @@ class Text_Diff_Engine_native {
         $seps[] = $flip ? array($yoff, $xoff) : array($xoff, $yoff);
         $ymid = $ymids[$this->lcs];
         for ($n = 0; $n < $nchunks - 1; $n++) {
-            $x1 = $xoff + (int)(($numer + ($xlim - $xoff) * $n) / $nchunks);
+            $x1 = $xoff + (int) (($numer + ($xlim - $xoff) * $n) / $nchunks);
             $y1 = $ymid[$n] + 1;
             $seps[] = $flip ? array($y1, $x1) : array($x1, $y1);
         }
@@ -229,8 +227,7 @@ class Text_Diff_Engine_native {
         return array($this->lcs, $seps);
     }
 
-    function _lcsPos($ypos)
-    {
+    function _lcsPos($ypos) {
         $end = $this->lcs;
         if ($end == 0 || $ypos > $this->seq[$end]) {
             $this->seq[++$this->lcs] = $ypos;
@@ -240,7 +237,7 @@ class Text_Diff_Engine_native {
 
         $beg = 1;
         while ($beg < $end) {
-            $mid = (int)(($beg + $end) / 2);
+            $mid = (int) (($beg + $end) / 2);
             if ($ypos > $this->seq[$mid]) {
                 $beg = $mid + 1;
             } else {
@@ -268,18 +265,15 @@ class Text_Diff_Engine_native {
      * Note that XLIM, YLIM are exclusive bounds.  All line numbers are
      * origin-0 and discarded lines are not counted.
      */
-    function _compareseq ($xoff, $xlim, $yoff, $ylim)
-    {
+    function _compareseq($xoff, $xlim, $yoff, $ylim) {
         /* Slide down the bottom initial diagonal. */
-        while ($xoff < $xlim && $yoff < $ylim
-               && $this->xv[$xoff] == $this->yv[$yoff]) {
+        while ($xoff < $xlim && $yoff < $ylim && $this->xv[$xoff] == $this->yv[$yoff]) {
             ++$xoff;
             ++$yoff;
         }
 
         /* Slide up the top initial diagonal. */
-        while ($xlim > $xoff && $ylim > $yoff
-               && $this->xv[$xlim - 1] == $this->yv[$ylim - 1]) {
+        while ($xlim > $xoff && $ylim > $yoff && $this->xv[$xlim - 1] == $this->yv[$ylim - 1]) {
             --$xlim;
             --$ylim;
         }
@@ -291,8 +285,7 @@ class Text_Diff_Engine_native {
              * sqrt(min($xlim - $xoff, $ylim - $yoff) / 2.5); $nchunks =
              * max(2,min(8,(int)$nchunks)); */
             $nchunks = min(7, $xlim - $xoff, $ylim - $yoff) + 1;
-            list($lcs, $seps)
-                = $this->_diag($xoff, $xlim, $yoff, $ylim, $nchunks);
+            list($lcs, $seps) = $this->_diag($xoff, $xlim, $yoff, $ylim, $nchunks);
         }
 
         if ($lcs == 0) {
@@ -309,7 +302,7 @@ class Text_Diff_Engine_native {
             reset($seps);
             $pt1 = $seps[0];
             while ($pt2 = next($seps)) {
-                $this->_compareseq ($pt1[0], $pt2[0], $pt1[1], $pt2[1]);
+                $this->_compareseq($pt1[0], $pt2[0], $pt1[1], $pt2[1]);
                 $pt1 = $pt2;
             }
         }
@@ -327,8 +320,7 @@ class Text_Diff_Engine_native {
      *
      * This is extracted verbatim from analyze.c (GNU diffutils-2.7).
      */
-    function _shiftBoundaries($lines, &$changed, $other_changed)
-    {
+    function _shiftBoundaries($lines, &$changed, $other_changed) {
         $i = 0;
         $j = 0;
 
@@ -352,9 +344,10 @@ class Text_Diff_Engine_native {
                 $j++;
             }
 
-            while ($i < $len && ! $changed[$i]) {
+            while ($i < $len && !$changed[$i]) {
                 assert('$j < $other_len && ! $other_changed[$j]');
-                $i++; $j++;
+                $i++;
+                $j++;
                 while ($j < $other_len && $other_changed[$j]) {
                     $j++;
                 }

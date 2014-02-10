@@ -1,4 +1,5 @@
 <?php
+
 /**
  * $Horde: framework/Text_Diff/Diff/Mapped.php,v 1.3.2.3 2008/01/04 10:37:27 jan Exp $
  *
@@ -28,9 +29,7 @@ class Text_Diff_Mapped extends Text_Diff {
      * @param array $mapped_to_lines    This array should have the same number
      *                                  of elements as $to_lines.
      */
-    function Text_Diff_Mapped($from_lines, $to_lines,
-                              $mapped_from_lines, $mapped_to_lines)
-    {
+    function Text_Diff_Mapped($from_lines, $to_lines, $mapped_from_lines, $mapped_to_lines) {
         assert(count($from_lines) == count($mapped_from_lines));
         assert(count($to_lines) == count($mapped_to_lines));
 

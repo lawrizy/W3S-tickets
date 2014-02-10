@@ -20,20 +20,19 @@
  * @version    CVS: $Id: generate,v 1.1 2007/06/03 02:35:28 ssttoo Exp $
  * @link       http://pear.php.net/package/Text_Highlighter
  */
-
 require_once 'Text/Highlighter/Generator.php';
 require_once 'Console/Getopt.php';
 
-$options = Console_Getopt::getopt($argv, 'x:p:d:h', array('xml=', 'php=','dir=', 'help'));
+$options = Console_Getopt::getopt($argv, 'x:p:d:h', array('xml=', 'php=', 'dir=', 'help'));
 
 if (PEAR::isError($options)) {
-    $message = str_replace('Console_Getopt: ','',$options->message);
+    $message = str_replace('Console_Getopt: ', '', $options->message);
     usage($message);
 }
 
 $source = array();
-$dest   = array();
-$dir    = '';
+$dest = array();
+$dir = '';
 
 $expectp = false;
 $expectx = false;
@@ -92,26 +91,25 @@ $nsource = count($source);
 $ndest = count($dest);
 
 if (!$nsource && !$ndest) {
-    $source[]='php://stdin';
+    $source[] = 'php://stdin';
     if (!$dir) {
-        $dest[]='php://stdout';
+        $dest[] = 'php://stdout';
     } else {
-      $dest[] = null;
+        $dest[] = null;
     }
 } elseif ($expectp && !$dir && $nsource > 1) {
     usage('-x or --xml without following -p or --php', STDERR);
 } elseif ($nsource == 1 && !$ndest && !$dir) {
-    $dest[]='php://stdout';
+    $dest[] = 'php://stdout';
 }
 
-if ($dir && substr($dir,-1)!='/' && substr($dir,-1)!=='\\' ) {
+if ($dir && substr($dir, -1) != '/' && substr($dir, -1) !== '\\') {
     $dir .= DIRECTORY_SEPARATOR;
 }
 
 
-foreach ($source as $i => $xmlfile)
-{
-    $gen =& new Text_Highlighter_Generator;
+foreach ($source as $i => $xmlfile) {
+    $gen = & new Text_Highlighter_Generator;
     $gen->setInputFile($xmlfile);
     if ($gen->hasErrors()) {
         break;
@@ -133,13 +131,12 @@ foreach ($source as $i => $xmlfile)
 if ($gen->hasErrors()) {
     $errors = $gen->getErrors();
     foreach ($errors as $error) {
-        fwrite (STDERR, $error . "\n");
+        fwrite(STDERR, $error . "\n");
     }
     exit(1);
 }
 
-function usage($message='', $file=STDOUT)
-{
+function usage($message = '', $file = STDOUT) {
     $code = 0;
     if ($message) {
         $message .= "\n\n";
@@ -164,7 +161,7 @@ Options:
   -h, --help
         This help
 MSG;
-    fwrite ($file, $message);
+    fwrite($file, $message);
     exit($code);
 }
 ?>

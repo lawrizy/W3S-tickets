@@ -3,8 +3,7 @@
 // OUT OF DATE, NEEDS UPDATING!
 // USE XMLWRITER!
 
-class HTMLPurifier_Printer
-{
+class HTMLPurifier_Printer {
 
     /**
      * Instance of HTMLPurifier_Generator for HTML generation convenience funcs
@@ -20,6 +19,7 @@ class HTMLPurifier_Printer
      * Initialize $generator.
      */
     public function __construct() {
+        
     }
 
     /**
@@ -44,8 +44,8 @@ class HTMLPurifier_Printer
      */
     protected function start($tag, $attr = array()) {
         return $this->generator->generateFromToken(
-                    new HTMLPurifier_Token_Start($tag, $attr ? $attr : array())
-               );
+                        new HTMLPurifier_Token_Start($tag, $attr ? $attr : array())
+        );
     }
 
     /**
@@ -54,8 +54,8 @@ class HTMLPurifier_Printer
      */
     protected function end($tag) {
         return $this->generator->generateFromToken(
-                    new HTMLPurifier_Token_End($tag)
-               );
+                        new HTMLPurifier_Token_End($tag)
+        );
     }
 
     /**
@@ -67,19 +67,19 @@ class HTMLPurifier_Printer
      */
     protected function element($tag, $contents, $attr = array(), $escape = true) {
         return $this->start($tag, $attr) .
-               ($escape ? $this->escape($contents) : $contents) .
-               $this->end($tag);
+                ($escape ? $this->escape($contents) : $contents) .
+                $this->end($tag);
     }
 
     protected function elementEmpty($tag, $attr = array()) {
         return $this->generator->generateFromToken(
-            new HTMLPurifier_Token_Empty($tag, $attr)
+                        new HTMLPurifier_Token_Empty($tag, $attr)
         );
     }
 
     protected function text($text) {
         return $this->generator->generateFromToken(
-            new HTMLPurifier_Token_Text($text)
+                        new HTMLPurifier_Token_Text($text)
         );
     }
 
@@ -89,12 +89,13 @@ class HTMLPurifier_Printer
      * @param $value Value
      */
     protected function row($name, $value) {
-        if (is_bool($value)) $value = $value ? 'On' : 'Off';
+        if (is_bool($value))
+            $value = $value ? 'On' : 'Off';
         return
-            $this->start('tr') . "\n" .
+                $this->start('tr') . "\n" .
                 $this->element('th', $name) . "\n" .
                 $this->element('td', $value) . "\n" .
-            $this->end('tr')
+                $this->end('tr')
         ;
     }
 
@@ -114,14 +115,17 @@ class HTMLPurifier_Printer
      * @param $polite Bool whether or not to add an end before the last
      */
     protected function listify($array, $polite = false) {
-        if (empty($array)) return 'None';
+        if (empty($array))
+            return 'None';
         $ret = '';
         $i = count($array);
         foreach ($array as $value) {
             $i--;
             $ret .= $value;
-            if ($i > 0 && !($polite && $i == 1)) $ret .= ', ';
-            if ($polite && $i == 1) $ret .= 'and ';
+            if ($i > 0 && !($polite && $i == 1))
+                $ret .= ', ';
+            if ($polite && $i == 1)
+                $ret .= 'and ';
         }
         return $ret;
     }
@@ -133,9 +137,11 @@ class HTMLPurifier_Printer
      */
     protected function getClass($obj, $sec_prefix = '') {
         static $five = null;
-        if ($five === null) $five = version_compare(PHP_VERSION, '5', '>=');
+        if ($five === null)
+            $five = version_compare(PHP_VERSION, '5', '>=');
         $prefix = 'HTMLPurifier_' . $sec_prefix;
-        if (!$five) $prefix = strtolower($prefix);
+        if (!$five)
+            $prefix = strtolower($prefix);
         $class = str_replace($prefix, '', get_class($obj));
         $lclass = strtolower($class);
         $class .= '(';
@@ -164,7 +170,8 @@ class HTMLPurifier_Printer
                 break;
             case 'css_importantdecorator':
                 $class .= $this->getClass($obj->def, $sec_prefix);
-                if ($obj->allow) $class .= ', !important';
+                if ($obj->allow)
+                    $class .= ', !important';
                 break;
         }
         $class .= ')';

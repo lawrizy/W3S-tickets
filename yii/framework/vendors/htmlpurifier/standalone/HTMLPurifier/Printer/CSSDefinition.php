@@ -1,7 +1,6 @@
 <?php
 
-class HTMLPurifier_Printer_CSSDefinition extends HTMLPurifier_Printer
-{
+class HTMLPurifier_Printer_CSSDefinition extends HTMLPurifier_Printer {
 
     protected $def;
 

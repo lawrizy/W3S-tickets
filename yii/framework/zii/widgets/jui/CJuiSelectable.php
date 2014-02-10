@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CJuiSelectable class file.
  *
@@ -7,7 +8,6 @@
  * @copyright 2008-2013 Yii Software LLC
  * @license http://www.yiiframework.com/license/
  */
-
 Yii::import('zii.widgets.jui.CJuiWidget');
 
 /**
@@ -43,40 +43,43 @@ Yii::import('zii.widgets.jui.CJuiWidget');
  * @since 1.1
  */
 class CJuiSelectable extends CJuiWidget {
-	/**
-	 * @var array list of selectable items (id=>item content).
-	 * Note that the item contents will not be HTML-encoded.
-	 */
-	public $items=array();
-	/**
-	 * @var string the name of the container element that contains all items. Defaults to 'ol'.
-	 */
-	public $tagName='ol';
-	/**
-	 * @var string the template that is used to generated every selectable item.
-	 * The token "{content}" in the template will be replaced with the item content,
-	 * while "{id}" will be replaced with the item ID.
-	 */
-	public $itemTemplate='<li id="{id}">{content}</li>';
 
-	/**
-	 * Run this widget.
-	 * This method registers necessary javascript and renders the needed HTML code.
-	 */
-	public function run()
-	{
-		$id=$this->getId();
-		if(isset($this->htmlOptions['id']))
-			$id=$this->htmlOptions['id'];
-		else
-			$this->htmlOptions['id']=$id;
+    /**
+     * @var array list of selectable items (id=>item content).
+     * Note that the item contents will not be HTML-encoded.
+     */
+    public $items = array();
 
-		$options=CJavaScript::encode($this->options);
-		Yii::app()->getClientScript()->registerScript(__CLASS__.'#'.$id,"jQuery('#{$id}').selectable({$options});");
+    /**
+     * @var string the name of the container element that contains all items. Defaults to 'ol'.
+     */
+    public $tagName = 'ol';
 
-		echo CHtml::openTag($this->tagName,$this->htmlOptions)."\n";
-		foreach($this->items as $id=>$content)
-			echo strtr($this->itemTemplate,array('{id}'=>$id,'{content}'=>$content))."\n";
-		echo CHtml::closeTag($this->tagName);
-	}
+    /**
+     * @var string the template that is used to generated every selectable item.
+     * The token "{content}" in the template will be replaced with the item content,
+     * while "{id}" will be replaced with the item ID.
+     */
+    public $itemTemplate = '<li id="{id}">{content}</li>';
+
+    /**
+     * Run this widget.
+     * This method registers necessary javascript and renders the needed HTML code.
+     */
+    public function run() {
+        $id = $this->getId();
+        if (isset($this->htmlOptions['id']))
+            $id = $this->htmlOptions['id'];
+        else
+            $this->htmlOptions['id'] = $id;
+
+        $options = CJavaScript::encode($this->options);
+        Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $id, "jQuery('#{$id}').selectable({$options});");
+
+        echo CHtml::openTag($this->tagName, $this->htmlOptions) . "\n";
+        foreach ($this->items as $id => $content)
+            echo strtr($this->itemTemplate, array('{id}' => $id, '{content}' => $content)) . "\n";
+        echo CHtml::closeTag($this->tagName);
+    }
+
 }

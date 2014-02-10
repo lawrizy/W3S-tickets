@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CChainedCacheDependency class file.
  *
@@ -25,73 +26,66 @@
  * @package system.caching.dependencies
  * @since 1.0
  */
-class CChainedCacheDependency extends CComponent implements ICacheDependency
-{
-	private $_dependencies=null;
+class CChainedCacheDependency extends CComponent implements ICacheDependency {
 
-	/**
-	 * Constructor.
-	 * @param array $dependencies the dependencies to be added to this chain.
-	 * @since 1.1.4
-	 */
-	public function __construct($dependencies=array())
-	{
-		if(!empty($dependencies))
-			$this->setDependencies($dependencies);
-	}
+    private $_dependencies = null;
 
-	/**
-	 * @return CTypedList list of dependency objects
-	 */
-	public function getDependencies()
-	{
-		if($this->_dependencies===null)
-			$this->_dependencies=new CTypedList('ICacheDependency');
-		return $this->_dependencies;
-	}
+    /**
+     * Constructor.
+     * @param array $dependencies the dependencies to be added to this chain.
+     * @since 1.1.4
+     */
+    public function __construct($dependencies = array()) {
+        if (!empty($dependencies))
+            $this->setDependencies($dependencies);
+    }
 
-	/**
-	 * @param array $values list of dependency objects or configurations to be added to this chain.
-	 * If a dependency is specified as a configuration, it must be an array that can be recognized
-	 * by {@link YiiBase::createComponent}.
-	 */
-	public function setDependencies($values)
-	{
-		$dependencies=$this->getDependencies();
-		foreach($values as $value)
-		{
-			if(is_array($value))
-				$value=Yii::createComponent($value);
-			$dependencies->add($value);
-		}
-	}
+    /**
+     * @return CTypedList list of dependency objects
+     */
+    public function getDependencies() {
+        if ($this->_dependencies === null)
+            $this->_dependencies = new CTypedList('ICacheDependency');
+        return $this->_dependencies;
+    }
 
-	/**
-	 * Evaluates the dependency by generating and saving the data related with dependency.
-	 */
-	public function evaluateDependency()
-	{
-		if($this->_dependencies!==null)
-		{
-			foreach($this->_dependencies as $dependency)
-				$dependency->evaluateDependency();
-		}
-	}
+    /**
+     * @param array $values list of dependency objects or configurations to be added to this chain.
+     * If a dependency is specified as a configuration, it must be an array that can be recognized
+     * by {@link YiiBase::createComponent}.
+     */
+    public function setDependencies($values) {
+        $dependencies = $this->getDependencies();
+        foreach ($values as $value) {
+            if (is_array($value))
+                $value = Yii::createComponent($value);
+            $dependencies->add($value);
+        }
+    }
 
-	/**
-	 * Performs the actual dependency checking.
-	 * This method returns true if any of the dependency objects
-	 * reports a dependency change.
-	 * @return boolean whether the dependency is changed or not.
-	 */
-	public function getHasChanged()
-	{
-		if($this->_dependencies!==null)
-		{
-			foreach($this->_dependencies as $dependency)
-				if($dependency->getHasChanged())
-					return true;
-		}
-		return false;
-	}
+    /**
+     * Evaluates the dependency by generating and saving the data related with dependency.
+     */
+    public function evaluateDependency() {
+        if ($this->_dependencies !== null) {
+            foreach ($this->_dependencies as $dependency)
+                $dependency->evaluateDependency();
+        }
+    }
+
+    /**
+     * Performs the actual dependency checking.
+     * This method returns true if any of the dependency objects
+     * reports a dependency change.
+     * @return boolean whether the dependency is changed or not.
+     */
+    public function getHasChanged() {
+        if ($this->_dependencies !== null) {
+            foreach ($this->_dependencies as $dependency)
+                if ($dependency->getHasChanged())
+                    return true;
+        }
+        return false;
+    }
+
 }

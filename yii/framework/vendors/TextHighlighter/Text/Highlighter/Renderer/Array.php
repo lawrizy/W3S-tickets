@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 /**
  * Array renderer.
@@ -22,12 +23,10 @@
  * @version    CVS: $Id: Array.php,v 1.1 2007/06/03 02:37:08 ssttoo Exp $
  * @link       http://pear.php.net/package/Text_Highlighter
  */
-
 /**
  * @ignore
  */
-
-require_once dirname(__FILE__).'/../Renderer.php';
+require_once dirname(__FILE__) . '/../Renderer.php';
 
 /**
  * Array renderer, based on Andrey Demenev's HTML renderer.
@@ -49,11 +48,8 @@ require_once dirname(__FILE__).'/../Renderer.php';
  * @version    Release: 0.5.0
  * @link       http://pear.php.net/package/Text_Highlighter
  */
-
-class Text_Highlighter_Renderer_Array extends Text_Highlighter_Renderer
-{
-
-    /**#@+
+class Text_Highlighter_Renderer_Array extends Text_Highlighter_Renderer {
+    /*     * #@+
      * @access private
      */
 
@@ -85,7 +81,7 @@ class Text_Highlighter_Renderer_Array extends Text_Highlighter_Renderer
      */
     var $_output = array();
 
-    /**#@-*/
+    /*     * #@- */
 
     /**
      * Preprocesses code
@@ -95,16 +91,14 @@ class Text_Highlighter_Renderer_Array extends Text_Highlighter_Renderer
      * @param  string $str Code to preprocess
      * @return string Preprocessed code
      */
-    function preprocess($str)
-    {
+    function preprocess($str) {
         // normalize whitespace and tabs
-        $str = str_replace("\r\n","\n", $str);
+        $str = str_replace("\r\n", "\n", $str);
         // some browsers refuse to display empty lines
-        $str = preg_replace('~^$~m'," ", $str);
-        $str = str_replace("\t",str_repeat(' ', $this->_tabsize), $str);
+        $str = preg_replace('~^$~m', " ", $str);
+        $str = str_replace("\t", str_repeat(' ', $this->_tabsize), $str);
         return rtrim($str);
     }
-
 
     /**
      * Resets renderer state
@@ -114,8 +108,7 @@ class Text_Highlighter_Renderer_Array extends Text_Highlighter_Renderer
      *
      * @access protected
      */
-    function reset()
-    {
+    function reset() {
         $this->_output = array();
         $this->_lastClass = 'default';
         if (isset($this->_options['tabsize'])) {
@@ -129,8 +122,6 @@ class Text_Highlighter_Renderer_Array extends Text_Highlighter_Renderer
         }
     }
 
-
-
     /**
      * Accepts next token
      *
@@ -139,8 +130,7 @@ class Text_Highlighter_Renderer_Array extends Text_Highlighter_Renderer
      * @param  string $class   Token class
      * @param  string $content Token content
      */
-    function acceptToken($class, $content)
-    {
+    function acceptToken($class, $content) {
 
 
         $theClass = $this->_getFullClassName($class);
@@ -153,9 +143,7 @@ class Text_Highlighter_Renderer_Array extends Text_Highlighter_Renderer
             $this->_output[][$class] = $content;
         }
         $this->_lastClass = $class;
-
     }
-
 
     /**
      * Given a CSS class name, returns the class name
@@ -165,8 +153,7 @@ class Text_Highlighter_Renderer_Array extends Text_Highlighter_Renderer
      *
      * @param  string $class   Token class
      */
-    function _getFullClassName($class)
-    {
+    function _getFullClassName($class) {
         if (!empty($this->_options['use_language'])) {
             $theClass = $this->_language . '-' . $class;
         } else {
@@ -182,10 +169,10 @@ class Text_Highlighter_Renderer_Array extends Text_Highlighter_Renderer
      * @return array Highlighted code as an array
      * @access public
      */
-    function getOutput()
-    {
+    function getOutput() {
         return $this->_output;
     }
+
 }
 
 /*
@@ -195,5 +182,4 @@ class Text_Highlighter_Renderer_Array extends Text_Highlighter_Renderer
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
 ?>

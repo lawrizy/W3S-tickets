@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 /**
  * Highlighter base class
@@ -19,26 +20,24 @@
  * @version    CVS: $Id: Highlighter.php,v 1.1 2007/06/03 02:35:28 ssttoo Exp $
  * @link       http://pear.php.net/package/Text_Highlighter
  */
-
 // {{{ BC constants
-
 // BC trick : define constants related to default
 // renderer if needed
 if (!defined('HL_NUMBERS_LI')) {
-    /**#@+
+    /*     * #@+
      * Constant for use with $options['numbers']
      * @see Text_Highlighter_Renderer_Html::_init()
      */
     /**
      * use numbered list
      */
-    define ('HL_NUMBERS_LI'    ,    1);
+    define('HL_NUMBERS_LI', 1);
     /**
      * Use 2-column table with line numbers in left column and code in  right column.
      * Forces $options['tag'] = HL_TAG_PRE
      */
-    define ('HL_NUMBERS_TABLE'    , 2);
-    /**#@-*/
+    define('HL_NUMBERS_TABLE', 2);
+    /*     * #@- */
 }
 
 // }}}
@@ -46,7 +45,7 @@ if (!defined('HL_NUMBERS_LI')) {
 /**
  * for our purpose, it is infinity
  */
-define ('HL_INFINITY',      1000000000);
+define('HL_INFINITY', 1000000000);
 
 // }}}
 
@@ -59,7 +58,6 @@ define ('HL_INFINITY',      1000000000);
  * @version    Release: 0.7.1
  * @link       http://pear.php.net/package/Text_Highlighter
  */
-
 // {{{ Text_Highlighter
 
 /**
@@ -80,20 +78,18 @@ define ('HL_INFINITY',      1000000000);
  *
  * Usage example
  * <code>
- *require_once 'Text/Highlighter.php';
- *$hlSQL =& Text_Highlighter::factory('SQL',array('numbers'=>true));
- *echo $hlSQL->highlight('SELECT * FROM table a WHERE id = 12');
+ * require_once 'Text/Highlighter.php';
+ * $hlSQL =& Text_Highlighter::factory('SQL',array('numbers'=>true));
+ * echo $hlSQL->highlight('SELECT * FROM table a WHERE id = 12');
  * </code>
  *
  * @author Andrey Demenev <demenev@gmail.com>
  * @package Text_Highlighter
  * @access public
  */
-
-class Text_Highlighter
-{
+class Text_Highlighter {
     // {{{ members
-    
+
     /**
      * Syntax highlighting rules.
      * Auto-generated classes set this var
@@ -146,7 +142,7 @@ class Text_Highlighter
 
     // }}}
     // {{{ _checkDefines
-    
+
     /**
      * Called by subclssses' constructors to enable/disable
      * optional highlighter rules
@@ -155,15 +151,14 @@ class Text_Highlighter
      *
      * @access protected
      */
-    function _checkDefines()
-    {
+    function _checkDefines() {
         if (isset($this->_options['defines'])) {
             $defines = $this->_options['defines'];
         } else {
             $defines = array();
         }
         foreach ($this->_conditions as $name => $actions) {
-            foreach($actions as $action) {
+            foreach ($actions as $action) {
                 $present = in_array($name, $defines);
                 if (!$action[1]) {
                     $present = !$present;
@@ -179,7 +174,7 @@ class Text_Highlighter
 
     // }}}
     // {{{ factory
-    
+
     /**
      * Create a new Highlighter object for specified language
      *
@@ -194,26 +189,25 @@ class Text_Highlighter
      * @static
      * @access public
      */
-    public static function factory($lang, $options = array())
-    {
+    public static function factory($lang, $options = array()) {
         $lang = strtoupper($lang);
-        $langFile = dirname(__FILE__)."/Highlighter/$lang.php";
+        $langFile = dirname(__FILE__) . "/Highlighter/$lang.php";
         if (is_file($langFile))
-        	include_once $langFile;
+            include_once $langFile;
         else
-        	return false;
+            return false;
 
         $classname = 'Text_Highlighter_' . $lang;
 
         if (!class_exists($classname))
-        	return false;
+            return false;
 
-		return new $classname($options);
+        return new $classname($options);
     }
 
     // }}}
     // {{{ setRenderer
-    
+
     /**
      * Set renderer object
      *
@@ -221,8 +215,7 @@ class Text_Highlighter
      *
      * @access public
      */
-    function setRenderer($renderer)
-    {
+    function setRenderer($renderer) {
         $this->_renderer = $renderer;
     }
 
@@ -233,16 +226,11 @@ class Text_Highlighter
      *
      * @access private
      */
-    function _matchingBrackets($str)
-    {
+    function _matchingBrackets($str) {
         return strtr($str, '()<>[]{}', ')(><][}{');
     }
 
-
-    
-    
-    function _getToken()
-    {
+    function _getToken() {
         if (!empty($this->_tokenStack)) {
             return array_pop($this->_tokenStack);
         }
@@ -256,15 +244,15 @@ class Text_Highlighter
         } else {
             $endpos = -1;
         }
-        preg_match ($this->_regs[$this->_state], $this->_str, $m, PREG_OFFSET_CAPTURE, $this->_pos);
+        preg_match($this->_regs[$this->_state], $this->_str, $m, PREG_OFFSET_CAPTURE, $this->_pos);
         $n = 1;
- 
- 
-         foreach ($this->_counts[$this->_state] as $i=>$count) {
+
+
+        foreach ($this->_counts[$this->_state] as $i => $count) {
             if (!isset($m[$n])) {
                 break;
             }
-            if ($m[$n][1]>-1 && ($endpos == -1 || $m[$n][1] < $endpos)) {
+            if ($m[$n][1] > -1 && ($endpos == -1 || $m[$n][1] < $endpos)) {
                 if ($this->_states[$this->_state][$i] != -1) {
                     $this->_tokenStack[] = array($this->_delim[$this->_state][$i], $m[$n][0]);
                 } else {
@@ -272,17 +260,17 @@ class Text_Highlighter
                     if (isset($this->_parts[$this->_state][$i])) {
                         $parts = array();
                         $partpos = $m[$n][1];
-                        for ($j=1; $j<=$count; $j++) {
-                            if ($m[$j+$n][1] < 0) {
+                        for ($j = 1; $j <= $count; $j++) {
+                            if ($m[$j + $n][1] < 0) {
                                 continue;
                             }
                             if (isset($this->_parts[$this->_state][$i][$j])) {
-                                if ($m[$j+$n][1] > $partpos) {
-                                    array_unshift($parts, array($inner, substr($this->_str, $partpos, $m[$j+$n][1]-$partpos)));
+                                if ($m[$j + $n][1] > $partpos) {
+                                    array_unshift($parts, array($inner, substr($this->_str, $partpos, $m[$j + $n][1] - $partpos)));
                                 }
-                                array_unshift($parts, array($this->_parts[$this->_state][$i][$j], $m[$j+$n][0]));
+                                array_unshift($parts, array($this->_parts[$this->_state][$i][$j], $m[$j + $n][0]));
                             }
-                            $partpos = $m[$j+$n][1] + strlen($m[$j+$n][0]);
+                            $partpos = $m[$j + $n][1] + strlen($m[$j + $n][0]);
                         }
                         if ($partpos < $m[$n][1] + strlen($m[$n][0])) {
                             array_unshift($parts, array($inner, substr($this->_str, $partpos, $m[$n][1] - $partpos + strlen($m[$n][0]))));
@@ -302,7 +290,7 @@ class Text_Highlighter
                     }
                 }
                 if ($m[$n][1] > $this->_pos) {
-                    $this->_tokenStack[] = array($this->_lastinner, substr($this->_str, $this->_pos, $m[$n][1]-$this->_pos));
+                    $this->_tokenStack[] = array($this->_lastinner, substr($this->_str, $this->_pos, $m[$n][1] - $this->_pos));
                 }
                 $this->_pos = $m[$n][1] + strlen($m[$n][0]);
                 if ($this->_states[$this->_state][$i] != -1) {
@@ -313,13 +301,13 @@ class Text_Highlighter
                     $this->_state = $this->_states[$this->_state][$i];
                     $this->_endpattern = $this->_end[$this->_state];
                     if ($this->_subst[$l][$i]) {
-                        for ($k=0; $k<=$this->_counts[$l][$i]; $k++) {
-                            if (!isset($m[$i+$k])) {
+                        for ($k = 0; $k <= $this->_counts[$l][$i]; $k++) {
+                            if (!isset($m[$i + $k])) {
                                 break;
                             }
-                            $quoted = preg_quote($m[$n+$k][0], '/');
-                            $this->_endpattern = str_replace('%'.$k.'%', $quoted, $this->_endpattern);
-                            $this->_endpattern = str_replace('%b'.$k.'%', $this->_matchingBrackets($quoted), $this->_endpattern);
+                            $quoted = preg_quote($m[$n + $k][0], '/');
+                            $this->_endpattern = str_replace('%' . $k . '%', $quoted, $this->_endpattern);
+                            $this->_endpattern = str_replace('%b' . $k . '%', $this->_matchingBrackets($quoted), $this->_endpattern);
                         }
                     }
                 }
@@ -331,7 +319,7 @@ class Text_Highlighter
         if ($endpos > -1) {
             $this->_tokenStack[] = array($this->_lastdelim, $endmatch);
             if ($endpos > $this->_pos) {
-                $this->_tokenStack[] = array($this->_lastinner, substr($this->_str, $this->_pos, $endpos-$this->_pos));
+                $this->_tokenStack[] = array($this->_lastinner, substr($this->_str, $this->_pos, $endpos - $this->_pos));
             }
             list($this->_state, $this->_lastdelim, $this->_lastinner, $this->_endpattern) = array_pop($this->_stack);
             $this->_pos = $endpos + strlen($endmatch);
@@ -341,10 +329,7 @@ class Text_Highlighter
         $this->_pos = HL_INFINITY;
         return array($this->_lastinner, substr($this->_str, $p));
     }
-    
-    
-    
-    
+
     // {{{ highlight
 
     /**
@@ -355,11 +340,9 @@ class Text_Highlighter
      * @return string Highlighted text
      *
      */
-
-    function highlight($str)
-    {
+    function highlight($str) {
         if (!($this->_renderer)) {
-            include_once(dirname(__FILE__).'/Renderer/Html.php');
+            include_once(dirname(__FILE__) . '/Renderer/Html.php');
             $this->_renderer = new Text_Highlighter_Renderer_Html($this->_options);
         }
         $this->_state = -1;
@@ -379,9 +362,8 @@ class Text_Highlighter
         $this->_renderer->finalize();
         return $this->_renderer->getOutput();
     }
-    
+
     // }}}
-    
 }
 
 // }}}
@@ -393,5 +375,4 @@ class Text_Highlighter
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
 ?>

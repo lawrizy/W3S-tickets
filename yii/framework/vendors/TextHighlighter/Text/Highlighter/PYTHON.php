@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Auto-generated class. PYTHON syntax highlighting 
  *
@@ -31,8 +32,8 @@
  * @version    Release: 0.7.1
  * @link       http://pear.php.net/package/Text_Highlighter
  */
-class  Text_Highlighter_PYTHON extends Text_Highlighter
-{
+class Text_Highlighter_PYTHON extends Text_Highlighter {
+
     var $_language = 'python';
 
     /**
@@ -41,11 +42,10 @@ class  Text_Highlighter_PYTHON extends Text_Highlighter
      * @param array  $options
      * @access public
      */
-    function __construct($options=array())
-    {
+    function __construct($options = array()) {
 
         $this->_options = $options;
-        $this->_regs = array (
+        $this->_regs = array(
             -1 => '/((?i)\'\'\')|((?i)""")|((?i)")|((?i)\')|((?i)\\()|((?i)\\[)|((?i)[a-z_]\\w*(?=\\s*\\())|((?i)[a-z_]\\w*)|((?i)((\\d+|((\\d*\\.\\d+)|(\\d+\\.\\d*)))[eE][+-]?\\d+))|((?i)((\\d*\\.\\d+)|(\\d+\\.\\d*)|(\\d+))j)|((?i)(\\d*\\.\\d+)|(\\d+\\.\\d*))|((?i)\\d+l?|\\b0l?\\b)|((?i)0[xX][\\da-f]+l?)|((?i)0[0-7]+l?)|((?i)#.+)/',
             0 => '/((?i)\\\\.)/',
             1 => '/((?i)\\\\.)/',
@@ -54,9 +54,9 @@ class  Text_Highlighter_PYTHON extends Text_Highlighter
             4 => '/((?i)\'\'\')|((?i)""")|((?i)")|((?i)\')|((?i)\\()|((?i)\\[)|((?i)[a-z_]\\w*(?=\\s*\\())|((?i)[a-z_]\\w*)|((?i)((\\d+|((\\d*\\.\\d+)|(\\d+\\.\\d*)))[eE][+-]?\\d+))|((?i)((\\d*\\.\\d+)|(\\d+\\.\\d*)|(\\d+))j)|((?i)(\\d*\\.\\d+)|(\\d+\\.\\d*))|((?i)\\d+l?|\\b0l?\\b)|((?i)0[xX][\\da-f]+l?)|((?i)0[0-7]+l?)|((?i)#.+)/',
             5 => '/((?i)\'\'\')|((?i)""")|((?i)")|((?i)\')|((?i)\\()|((?i)\\[)|((?i)[a-z_]\\w*(?=\\s*\\())|((?i)[a-z_]\\w*)|((?i)((\\d+|((\\d*\\.\\d+)|(\\d+\\.\\d*)))[eE][+-]?\\d+))|((?i)((\\d*\\.\\d+)|(\\d+\\.\\d*)|(\\d+))j)|((?i)(\\d*\\.\\d+)|(\\d+\\.\\d*))|((?i)\\d+l?|\\b0l?\\b)|((?i)0[xX][\\da-f]+l?)|((?i)0[0-7]+l?)|((?i)#.+)/',
         );
-        $this->_counts = array (
-            -1 => 
-            array (
+        $this->_counts = array(
+            -1 =>
+            array(
                 0 => 0,
                 1 => 0,
                 2 => 0,
@@ -73,24 +73,24 @@ class  Text_Highlighter_PYTHON extends Text_Highlighter
                 13 => 0,
                 14 => 0,
             ),
-            0 => 
-            array (
+            0 =>
+            array(
                 0 => 0,
             ),
-            1 => 
-            array (
+            1 =>
+            array(
                 0 => 0,
             ),
-            2 => 
-            array (
+            2 =>
+            array(
                 0 => 0,
             ),
-            3 => 
-            array (
+            3 =>
+            array(
                 0 => 0,
             ),
-            4 => 
-            array (
+            4 =>
+            array(
                 0 => 0,
                 1 => 0,
                 2 => 0,
@@ -107,8 +107,8 @@ class  Text_Highlighter_PYTHON extends Text_Highlighter
                 13 => 0,
                 14 => 0,
             ),
-            5 => 
-            array (
+            5 =>
+            array(
                 0 => 0,
                 1 => 0,
                 2 => 0,
@@ -126,9 +126,9 @@ class  Text_Highlighter_PYTHON extends Text_Highlighter
                 14 => 0,
             ),
         );
-        $this->_delim = array (
-            -1 => 
-            array (
+        $this->_delim = array(
+            -1 =>
+            array(
                 0 => 'quotes',
                 1 => 'quotes',
                 2 => 'quotes',
@@ -145,24 +145,24 @@ class  Text_Highlighter_PYTHON extends Text_Highlighter
                 13 => '',
                 14 => '',
             ),
-            0 => 
-            array (
+            0 =>
+            array(
                 0 => '',
             ),
-            1 => 
-            array (
+            1 =>
+            array(
                 0 => '',
             ),
-            2 => 
-            array (
+            2 =>
+            array(
                 0 => '',
             ),
-            3 => 
-            array (
+            3 =>
+            array(
                 0 => '',
             ),
-            4 => 
-            array (
+            4 =>
+            array(
                 0 => 'quotes',
                 1 => 'quotes',
                 2 => 'quotes',
@@ -179,8 +179,8 @@ class  Text_Highlighter_PYTHON extends Text_Highlighter
                 13 => '',
                 14 => '',
             ),
-            5 => 
-            array (
+            5 =>
+            array(
                 0 => 'quotes',
                 1 => 'quotes',
                 2 => 'quotes',
@@ -198,9 +198,9 @@ class  Text_Highlighter_PYTHON extends Text_Highlighter
                 14 => '',
             ),
         );
-        $this->_inner = array (
-            -1 => 
-            array (
+        $this->_inner = array(
+            -1 =>
+            array(
                 0 => 'string',
                 1 => 'string',
                 2 => 'string',
@@ -217,24 +217,24 @@ class  Text_Highlighter_PYTHON extends Text_Highlighter
                 13 => 'number',
                 14 => 'comment',
             ),
-            0 => 
-            array (
+            0 =>
+            array(
                 0 => 'special',
             ),
-            1 => 
-            array (
+            1 =>
+            array(
                 0 => 'special',
             ),
-            2 => 
-            array (
+            2 =>
+            array(
                 0 => 'special',
             ),
-            3 => 
-            array (
+            3 =>
+            array(
                 0 => 'special',
             ),
-            4 => 
-            array (
+            4 =>
+            array(
                 0 => 'string',
                 1 => 'string',
                 2 => 'string',
@@ -251,8 +251,8 @@ class  Text_Highlighter_PYTHON extends Text_Highlighter
                 13 => 'number',
                 14 => 'comment',
             ),
-            5 => 
-            array (
+            5 =>
+            array(
                 0 => 'string',
                 1 => 'string',
                 2 => 'string',
@@ -270,7 +270,7 @@ class  Text_Highlighter_PYTHON extends Text_Highlighter
                 14 => 'comment',
             ),
         );
-        $this->_end = array (
+        $this->_end = array(
             0 => '/(?i)\'\'\'/',
             1 => '/(?i)"""/',
             2 => '/(?i)"/',
@@ -278,9 +278,9 @@ class  Text_Highlighter_PYTHON extends Text_Highlighter
             4 => '/(?i)\\)/',
             5 => '/(?i)\\]/',
         );
-        $this->_states = array (
-            -1 => 
-            array (
+        $this->_states = array(
+            -1 =>
+            array(
                 0 => 0,
                 1 => 1,
                 2 => 2,
@@ -297,24 +297,24 @@ class  Text_Highlighter_PYTHON extends Text_Highlighter
                 13 => -1,
                 14 => -1,
             ),
-            0 => 
-            array (
+            0 =>
+            array(
                 0 => -1,
             ),
-            1 => 
-            array (
+            1 =>
+            array(
                 0 => -1,
             ),
-            2 => 
-            array (
+            2 =>
+            array(
                 0 => -1,
             ),
-            3 => 
-            array (
+            3 =>
+            array(
                 0 => -1,
             ),
-            4 => 
-            array (
+            4 =>
+            array(
                 0 => 0,
                 1 => 1,
                 2 => 2,
@@ -331,8 +331,8 @@ class  Text_Highlighter_PYTHON extends Text_Highlighter
                 13 => -1,
                 14 => -1,
             ),
-            5 => 
-            array (
+            5 =>
+            array(
                 0 => 0,
                 1 => 1,
                 2 => 2,
@@ -350,165 +350,165 @@ class  Text_Highlighter_PYTHON extends Text_Highlighter
                 14 => -1,
             ),
         );
-        $this->_keywords = array (
-            -1 => 
-            array (
+        $this->_keywords = array(
+            -1 =>
+            array(
                 0 => -1,
                 1 => -1,
                 2 => -1,
                 3 => -1,
                 4 => -1,
                 5 => -1,
-                6 => 
-                array (
+                6 =>
+                array(
                     'builtin' => '/^(__import__|abs|apply|basestring|bool|buffer|callable|chr|classmethod|cmp|coerce|compile|complex|delattr|dict|dir|divmod|enumerate|eval|execfile|file|filter|float|getattr|globals|hasattr|hash|help|hex|id|input|int|intern|isinstance|issubclass|iter|len|list|locals|long|map|max|min|object|oct|open|ord|pow|property|range|raw_input|reduce|reload|repr|round|setattr|slice|staticmethod|sum|super|str|tuple|type|unichr|unicode|vars|xrange|zip)$/',
                 ),
-                7 => 
-                array (
+                7 =>
+                array(
                     'reserved' => '/^(and|del|for|is|raise|assert|elif|from|lambda|return|break|else|global|not|try|class|except|if|or|while|continue|exec|import|pass|yield|def|finally|in|print|False|True|None|NotImplemented|Ellipsis|Exception|SystemExit|StopIteration|StandardError|KeyboardInterrupt|ImportError|EnvironmentError|IOError|OSError|WindowsError|EOFError|RuntimeError|NotImplementedError|NameError|UnboundLocalError|AttributeError|SyntaxError|IndentationError|TabError|TypeError|AssertionError|LookupError|IndexError|KeyError|ArithmeticError|OverflowError|ZeroDivisionError|FloatingPointError|ValueError|UnicodeError|UnicodeEncodeError|UnicodeDecodeError|UnicodeTranslateError|ReferenceError|SystemError|MemoryError|Warning|UserWarning|DeprecationWarning|PendingDeprecationWarning|SyntaxWarning|OverflowWarning|RuntimeWarning|FutureWarning)$/',
                 ),
-                8 => 
-                array (
+                8 =>
+                array(
                 ),
-                9 => 
-                array (
+                9 =>
+                array(
                 ),
-                10 => 
-                array (
+                10 =>
+                array(
                 ),
-                11 => 
-                array (
+                11 =>
+                array(
                 ),
-                12 => 
-                array (
+                12 =>
+                array(
                 ),
-                13 => 
-                array (
+                13 =>
+                array(
                 ),
-                14 => 
-                array (
-                ),
-            ),
-            0 => 
-            array (
-                0 => 
-                array (
+                14 =>
+                array(
                 ),
             ),
-            1 => 
-            array (
-                0 => 
-                array (
+            0 =>
+            array(
+                0 =>
+                array(
                 ),
             ),
-            2 => 
-            array (
-                0 => 
-                array (
+            1 =>
+            array(
+                0 =>
+                array(
                 ),
             ),
-            3 => 
-            array (
-                0 => 
-                array (
+            2 =>
+            array(
+                0 =>
+                array(
                 ),
             ),
-            4 => 
-            array (
+            3 =>
+            array(
+                0 =>
+                array(
+                ),
+            ),
+            4 =>
+            array(
                 0 => -1,
                 1 => -1,
                 2 => -1,
                 3 => -1,
                 4 => -1,
                 5 => -1,
-                6 => 
-                array (
+                6 =>
+                array(
                     'builtin' => '/^(__import__|abs|apply|basestring|bool|buffer|callable|chr|classmethod|cmp|coerce|compile|complex|delattr|dict|dir|divmod|enumerate|eval|execfile|file|filter|float|getattr|globals|hasattr|hash|help|hex|id|input|int|intern|isinstance|issubclass|iter|len|list|locals|long|map|max|min|object|oct|open|ord|pow|property|range|raw_input|reduce|reload|repr|round|setattr|slice|staticmethod|sum|super|str|tuple|type|unichr|unicode|vars|xrange|zip)$/',
                 ),
-                7 => 
-                array (
+                7 =>
+                array(
                     'reserved' => '/^(and|del|for|is|raise|assert|elif|from|lambda|return|break|else|global|not|try|class|except|if|or|while|continue|exec|import|pass|yield|def|finally|in|print|False|True|None|NotImplemented|Ellipsis|Exception|SystemExit|StopIteration|StandardError|KeyboardInterrupt|ImportError|EnvironmentError|IOError|OSError|WindowsError|EOFError|RuntimeError|NotImplementedError|NameError|UnboundLocalError|AttributeError|SyntaxError|IndentationError|TabError|TypeError|AssertionError|LookupError|IndexError|KeyError|ArithmeticError|OverflowError|ZeroDivisionError|FloatingPointError|ValueError|UnicodeError|UnicodeEncodeError|UnicodeDecodeError|UnicodeTranslateError|ReferenceError|SystemError|MemoryError|Warning|UserWarning|DeprecationWarning|PendingDeprecationWarning|SyntaxWarning|OverflowWarning|RuntimeWarning|FutureWarning)$/',
                 ),
-                8 => 
-                array (
+                8 =>
+                array(
                 ),
-                9 => 
-                array (
+                9 =>
+                array(
                 ),
-                10 => 
-                array (
+                10 =>
+                array(
                 ),
-                11 => 
-                array (
+                11 =>
+                array(
                 ),
-                12 => 
-                array (
+                12 =>
+                array(
                 ),
-                13 => 
-                array (
+                13 =>
+                array(
                 ),
-                14 => 
-                array (
+                14 =>
+                array(
                 ),
             ),
-            5 => 
-            array (
+            5 =>
+            array(
                 0 => -1,
                 1 => -1,
                 2 => -1,
                 3 => -1,
                 4 => -1,
                 5 => -1,
-                6 => 
-                array (
+                6 =>
+                array(
                     'builtin' => '/^(__import__|abs|apply|basestring|bool|buffer|callable|chr|classmethod|cmp|coerce|compile|complex|delattr|dict|dir|divmod|enumerate|eval|execfile|file|filter|float|getattr|globals|hasattr|hash|help|hex|id|input|int|intern|isinstance|issubclass|iter|len|list|locals|long|map|max|min|object|oct|open|ord|pow|property|range|raw_input|reduce|reload|repr|round|setattr|slice|staticmethod|sum|super|str|tuple|type|unichr|unicode|vars|xrange|zip)$/',
                 ),
-                7 => 
-                array (
+                7 =>
+                array(
                     'reserved' => '/^(and|del|for|is|raise|assert|elif|from|lambda|return|break|else|global|not|try|class|except|if|or|while|continue|exec|import|pass|yield|def|finally|in|print|False|True|None|NotImplemented|Ellipsis|Exception|SystemExit|StopIteration|StandardError|KeyboardInterrupt|ImportError|EnvironmentError|IOError|OSError|WindowsError|EOFError|RuntimeError|NotImplementedError|NameError|UnboundLocalError|AttributeError|SyntaxError|IndentationError|TabError|TypeError|AssertionError|LookupError|IndexError|KeyError|ArithmeticError|OverflowError|ZeroDivisionError|FloatingPointError|ValueError|UnicodeError|UnicodeEncodeError|UnicodeDecodeError|UnicodeTranslateError|ReferenceError|SystemError|MemoryError|Warning|UserWarning|DeprecationWarning|PendingDeprecationWarning|SyntaxWarning|OverflowWarning|RuntimeWarning|FutureWarning)$/',
                 ),
-                8 => 
-                array (
+                8 =>
+                array(
                 ),
-                9 => 
-                array (
+                9 =>
+                array(
                 ),
-                10 => 
-                array (
+                10 =>
+                array(
                 ),
-                11 => 
-                array (
+                11 =>
+                array(
                 ),
-                12 => 
-                array (
+                12 =>
+                array(
                 ),
-                13 => 
-                array (
+                13 =>
+                array(
                 ),
-                14 => 
-                array (
+                14 =>
+                array(
                 ),
             ),
         );
-        $this->_parts = array (
-            0 => 
-            array (
+        $this->_parts = array(
+            0 =>
+            array(
                 0 => NULL,
             ),
-            1 => 
-            array (
+            1 =>
+            array(
                 0 => NULL,
             ),
-            2 => 
-            array (
+            2 =>
+            array(
                 0 => NULL,
             ),
-            3 => 
-            array (
+            3 =>
+            array(
                 0 => NULL,
             ),
-            4 => 
-            array (
+            4 =>
+            array(
                 0 => NULL,
                 1 => NULL,
                 2 => NULL,
@@ -525,8 +525,8 @@ class  Text_Highlighter_PYTHON extends Text_Highlighter
                 13 => NULL,
                 14 => NULL,
             ),
-            5 => 
-            array (
+            5 =>
+            array(
                 0 => NULL,
                 1 => NULL,
                 2 => NULL,
@@ -544,9 +544,9 @@ class  Text_Highlighter_PYTHON extends Text_Highlighter
                 14 => NULL,
             ),
         );
-        $this->_subst = array (
-            -1 => 
-            array (
+        $this->_subst = array(
+            -1 =>
+            array(
                 0 => false,
                 1 => false,
                 2 => false,
@@ -563,24 +563,24 @@ class  Text_Highlighter_PYTHON extends Text_Highlighter
                 13 => false,
                 14 => false,
             ),
-            0 => 
-            array (
+            0 =>
+            array(
                 0 => false,
             ),
-            1 => 
-            array (
+            1 =>
+            array(
                 0 => false,
             ),
-            2 => 
-            array (
+            2 =>
+            array(
                 0 => false,
             ),
-            3 => 
-            array (
+            3 =>
+            array(
                 0 => false,
             ),
-            4 => 
-            array (
+            4 =>
+            array(
                 0 => false,
                 1 => false,
                 2 => false,
@@ -597,8 +597,8 @@ class  Text_Highlighter_PYTHON extends Text_Highlighter
                 13 => false,
                 14 => false,
             ),
-            5 => 
-            array (
+            5 =>
+            array(
                 0 => false,
                 1 => false,
                 2 => false,
@@ -616,14 +616,14 @@ class  Text_Highlighter_PYTHON extends Text_Highlighter
                 14 => false,
             ),
         );
-        $this->_conditions = array (
+        $this->_conditions = array(
         );
-        $this->_kwmap = array (
+        $this->_kwmap = array(
             'builtin' => 'builtin',
             'reserved' => 'reserved',
         );
         $this->_defClass = 'code';
         $this->_checkDefines();
     }
-    
+
 }

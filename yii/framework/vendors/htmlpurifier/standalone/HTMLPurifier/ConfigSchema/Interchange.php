@@ -5,8 +5,7 @@
  * representation (HTMLPurifier_ConfigSchema) or HTML documentation. Members
  * are completely validated.
  */
-class HTMLPurifier_ConfigSchema_Interchange
-{
+class HTMLPurifier_ConfigSchema_Interchange {
 
     /**
      * Name of the application this schema is describing.

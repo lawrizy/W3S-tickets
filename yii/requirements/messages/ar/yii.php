@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Message translations.
  *
@@ -13,30 +14,30 @@
  *
  * NOTE, this file must be saved in UTF-8 encoding.
  */
-return array (
-  '$_SERVER does not have {vars}.' => '$_SERVER لايحتوي {vars}.',
-  '$_SERVER variable' => '$_SERVER متغير',
-  '$_SERVER["SCRIPT_FILENAME"] must be the same as the entry script file path.' => '$_SERVER["SCRIPT_FILENAME"] يجب ان يكون مساوي لمسار الملف الافتتاحي للسكربت (entry script file).',
-  'APC extension' => 'لاحقة APC',
-  'All <a href="http://www.yiiframework.com/doc/api/#system.db">DB-related classes</a>' => 'جميع <a href="http://www.yiiframework.com/doc/api/#system.db">الفئات ذات العلاقة</a>',
-  'DOM extension' => 'DOM لاحقة',
-  'Either $_SERVER["REQUEST_URI"] or $_SERVER["QUERY_STRING"] must exist.' => 'يجب أن يتوفر إما $_SERVER["REQUEST_URI"] أو $_SERVER["QUERY_STRING"].',
-  'GD extension' => 'GD لاحقة',
-  'Mcrypt extension' => 'Mcrypt لاحقة',
-  'Memcache extension' => 'Memcache لاحقة',
-  'PCRE extension' => 'PCRE لاحقة',
-  'PDO MySQL extension' => 'PDO MySQL لاحقة',
-  'PDO PostgreSQL extension' => 'PDO PostgreSQL لاحقة',
-  'PDO SQLite extension' => 'PDO SQLite لاحقة',
-  'PDO extension' => 'PDO لاحقة',
-  'PHP 5.1.0 or higher is required.' => 'يجب وجود إصدارة PHP 5.1.0 أو أعلى.',
-  'PHP version' => 'إصدارة PHP',
-  'Reflection extension' => 'Reflection لاحقة',
-  'SOAP extension' => 'SOAP لاحقة',
-  'SPL extension' => 'SPL لاحقة',
-  'This is required by encrypt and decrypt methods.' => 'مطلوب من أجل وظائف التشفير وفك التشفير.',
-  'This is required if you are using MySQL database.' => 'مطلوب اذا كنت تستخدم قواعد البيانات MySQL.',
-  'This is required if you are using PostgreSQL database.' => 'مطلوب اذا كنت تستخدم قواعد البيانات PostgreSQL.',
-  'This is required if you are using SQLite database.' => 'مطلوب اذا كنت تستخدم قواعد البيانات SQLite.',
-  'Unable to determine URL path info. Please make sure $_SERVER["PATH_INFO"] (or $_SERVER["PHP_SELF"] and $_SERVER["SCRIPT_NAME"]) contains proper value.' => 'غير قادر على تحديد معلومات مسار العنوان. الرجاء التحقق من أن $_SERVER["PATH_INFO"] (أو $_SERVER["PHP_SELF"] و $_SERVER["SCRIPT_NAME"]) تحتوي على القيم الصحيحة.',
+return array(
+    '$_SERVER does not have {vars}.' => '$_SERVER لايحتوي {vars}.',
+    '$_SERVER variable' => '$_SERVER متغير',
+    '$_SERVER["SCRIPT_FILENAME"] must be the same as the entry script file path.' => '$_SERVER["SCRIPT_FILENAME"] يجب ان يكون مساوي لمسار الملف الافتتاحي للسكربت (entry script file).',
+    'APC extension' => 'لاحقة APC',
+    'All <a href="http://www.yiiframework.com/doc/api/#system.db">DB-related classes</a>' => 'جميع <a href="http://www.yiiframework.com/doc/api/#system.db">الفئات ذات العلاقة</a>',
+    'DOM extension' => 'DOM لاحقة',
+    'Either $_SERVER["REQUEST_URI"] or $_SERVER["QUERY_STRING"] must exist.' => 'يجب أن يتوفر إما $_SERVER["REQUEST_URI"] أو $_SERVER["QUERY_STRING"].',
+    'GD extension' => 'GD لاحقة',
+    'Mcrypt extension' => 'Mcrypt لاحقة',
+    'Memcache extension' => 'Memcache لاحقة',
+    'PCRE extension' => 'PCRE لاحقة',
+    'PDO MySQL extension' => 'PDO MySQL لاحقة',
+    'PDO PostgreSQL extension' => 'PDO PostgreSQL لاحقة',
+    'PDO SQLite extension' => 'PDO SQLite لاحقة',
+    'PDO extension' => 'PDO لاحقة',
+    'PHP 5.1.0 or higher is required.' => 'يجب وجود إصدارة PHP 5.1.0 أو أعلى.',
+    'PHP version' => 'إصدارة PHP',
+    'Reflection extension' => 'Reflection لاحقة',
+    'SOAP extension' => 'SOAP لاحقة',
+    'SPL extension' => 'SPL لاحقة',
+    'This is required by encrypt and decrypt methods.' => 'مطلوب من أجل وظائف التشفير وفك التشفير.',
+    'This is required if you are using MySQL database.' => 'مطلوب اذا كنت تستخدم قواعد البيانات MySQL.',
+    'This is required if you are using PostgreSQL database.' => 'مطلوب اذا كنت تستخدم قواعد البيانات PostgreSQL.',
+    'This is required if you are using SQLite database.' => 'مطلوب اذا كنت تستخدم قواعد البيانات SQLite.',
+    'Unable to determine URL path info. Please make sure $_SERVER["PATH_INFO"] (or $_SERVER["PHP_SELF"] and $_SERVER["SCRIPT_NAME"]) contains proper value.' => 'غير قادر على تحديد معلومات مسار العنوان. الرجاء التحقق من أن $_SERVER["PATH_INFO"] (أو $_SERVER["PHP_SELF"] و $_SERVER["SCRIPT_NAME"]) تحتوي على القيم الصحيحة.',
 );

@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 /**
  * Abstract base class for Highlighter renderers
@@ -32,9 +33,8 @@
  * @link       http://pear.php.net/package/Text_Highlighter
  * @abstract
  */
+class Text_Highlighter_Renderer {
 
-class Text_Highlighter_Renderer
-{
     /**
      * Renderer options
      *
@@ -58,8 +58,7 @@ class Text_Highlighter_Renderer
      *
      * @param  array $options  Rendering options. Renderer-specific.
      */
-    function __construct($options = array())
-    {
+    function __construct($options = array()) {
         $this->_options = $options;
     }
 
@@ -70,8 +69,7 @@ class Text_Highlighter_Renderer
      *
      * @param  array $options  Rendering options. Renderer-specific.
      */
-    function reset()
-    {
+    function reset() {
         return;
     }
 
@@ -83,8 +81,7 @@ class Text_Highlighter_Renderer
      * @param  string $str Code to preprocess
      * @return string Preprocessed code
      */
-    function preprocess($str)
-    {
+    function preprocess($str) {
         return $str;
     }
 
@@ -97,8 +94,7 @@ class Text_Highlighter_Renderer
      * @param  string $class   Token class
      * @param  string $content Token content
      */
-    function acceptToken($class, $content)
-    {
+    function acceptToken($class, $content) {
         return;
     }
 
@@ -108,8 +104,7 @@ class Text_Highlighter_Renderer
      * @access public
      *
      */
-    function finalize()
-    {
+    function finalize() {
         return;
     }
 
@@ -121,8 +116,7 @@ class Text_Highlighter_Renderer
      * @access public
      *
      */
-    function getOutput()
-    {
+    function getOutput() {
         return;
     }
 
@@ -134,8 +128,7 @@ class Text_Highlighter_Renderer
      * @access public
      *
      */
-    function setCurrentLanguage($lang)
-    {
+    function setCurrentLanguage($lang) {
         $this->_language = $lang;
     }
 
@@ -148,5 +141,4 @@ class Text_Highlighter_Renderer
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
 ?>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CUserIdentity class file
  *
@@ -24,58 +25,56 @@
  * @package system.web.auth
  * @since 1.0
  */
-class CUserIdentity extends CBaseUserIdentity
-{
-	/**
-	 * @var string username
-	 */
-	public $username;
-	/**
-	 * @var string password
-	 */
-	public $password;
+class CUserIdentity extends CBaseUserIdentity {
 
-	/**
-	 * Constructor.
-	 * @param string $username username
-	 * @param string $password password
-	 */
-	public function __construct($username,$password)
-	{
-		$this->username=$username;
-		$this->password=$password;
-	}
+    /**
+     * @var string username
+     */
+    public $username;
 
-	/**
-	 * Authenticates a user based on {@link username} and {@link password}.
-	 * Derived classes should override this method, or an exception will be thrown.
-	 * This method is required by {@link IUserIdentity}.
-	 * @return boolean whether authentication succeeds.
-	 */
-	public function authenticate()
-	{
-		throw new CException(Yii::t('yii','{class}::authenticate() must be implemented.',array('{class}'=>get_class($this))));
-	}
+    /**
+     * @var string password
+     */
+    public $password;
 
-	/**
-	 * Returns the unique identifier for the identity.
-	 * The default implementation simply returns {@link username}.
-	 * This method is required by {@link IUserIdentity}.
-	 * @return string the unique identifier for the identity.
-	 */
-	public function getId()
-	{
-		return $this->username;
-	}
+    /**
+     * Constructor.
+     * @param string $username username
+     * @param string $password password
+     */
+    public function __construct($username, $password) {
+        $this->username = $username;
+        $this->password = $password;
+    }
 
-	/**
-	 * Returns the display name for the identity.
-	 * The default implementation simply returns {@link username}.
-	 * This method is required by {@link IUserIdentity}.
-	 * @return string the display name for the identity.
-	 */
-	public function getName()
-	{
-		return $this->username;
-	}
+    /**
+     * Authenticates a user based on {@link username} and {@link password}.
+     * Derived classes should override this method, or an exception will be thrown.
+     * This method is required by {@link IUserIdentity}.
+     * @return boolean whether authentication succeeds.
+     */
+    public function authenticate() {
+        throw new CException(Yii::t('yii', '{class}::authenticate() must be implemented.', array('{class}' => get_class($this))));
+    }
+
+    /**
+     * Returns the unique identifier for the identity.
+     * The default implementation simply returns {@link username}.
+     * This method is required by {@link IUserIdentity}.
+     * @return string the unique identifier for the identity.
+     */
+    public function getId() {
+        return $this->username;
+    }
+
+    /**
+     * Returns the display name for the identity.
+     * The default implementation simply returns {@link username}.
+     * This method is required by {@link IUserIdentity}.
+     * @return string the display name for the identity.
+     */
+    public function getName() {
+        return $this->username;
+    }
+
 }

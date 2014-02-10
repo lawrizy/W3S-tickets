@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CJuiDraggable class file.
  *
@@ -7,7 +8,6 @@
  * @copyright 2008-2013 Yii Software LLC
  * @license http://www.yiiframework.com/license/
  */
-
 Yii::import('zii.widgets.jui.CJuiWidget');
 
 /**
@@ -41,38 +41,37 @@ Yii::import('zii.widgets.jui.CJuiWidget');
  * @package zii.widgets.jui
  * @since 1.1
  */
-class CJuiDraggable extends CJuiWidget
-{
-	/**
-	 * @var string the name of the Draggable element. Defaults to 'div'.
-	 */
-	public $tagName='div';
+class CJuiDraggable extends CJuiWidget {
 
-	/**
-	 * Renders the open tag of the draggable element.
-	 * This method also registers the necessary javascript code.
-	 */
-	public function init()
-	{
-		parent::init();
+    /**
+     * @var string the name of the Draggable element. Defaults to 'div'.
+     */
+    public $tagName = 'div';
 
-		$id=$this->getId();
-		if(isset($this->htmlOptions['id']))
-			$id=$this->htmlOptions['id'];
-		else
-			$this->htmlOptions['id']=$id;
+    /**
+     * Renders the open tag of the draggable element.
+     * This method also registers the necessary javascript code.
+     */
+    public function init() {
+        parent::init();
 
-		$options=CJavaScript::encode($this->options);
-		Yii::app()->getClientScript()->registerScript(__CLASS__.'#'.$id,"jQuery('#{$id}').draggable($options);");
+        $id = $this->getId();
+        if (isset($this->htmlOptions['id']))
+            $id = $this->htmlOptions['id'];
+        else
+            $this->htmlOptions['id'] = $id;
 
-		echo CHtml::openTag($this->tagName,$this->htmlOptions)."\n";
-	}
+        $options = CJavaScript::encode($this->options);
+        Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $id, "jQuery('#{$id}').draggable($options);");
 
-	/**
-	 * Renders the close tag of the draggable element.
-	 */
-	public function run()
-	{
-		echo CHtml::closeTag($this->tagName);
-	}
+        echo CHtml::openTag($this->tagName, $this->htmlOptions) . "\n";
+    }
+
+    /**
+     * Renders the close tag of the draggable element.
+     */
+    public function run() {
+        echo CHtml::closeTag($this->tagName);
+    }
+
 }

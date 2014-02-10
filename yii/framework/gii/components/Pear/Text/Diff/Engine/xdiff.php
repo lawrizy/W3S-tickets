@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Class used internally by Diff to actually compute the diffs.
  *
@@ -19,8 +20,7 @@ class Text_Diff_Engine_xdiff {
 
     /**
      */
-    function diff($from_lines, $to_lines)
-    {
+    function diff($from_lines, $to_lines) {
         array_walk($from_lines, array('Text_Diff', 'trimNewlines'));
         array_walk($to_lines, array('Text_Diff', 'trimNewlines'));
 
@@ -43,17 +43,17 @@ class Text_Diff_Engine_xdiff {
         $edits = array();
         foreach ($diff as $line) {
             switch ($line[0]) {
-            case ' ':
-                $edits[] = new Text_Diff_Op_copy(array(substr($line, 1)));
-                break;
+                case ' ':
+                    $edits[] = new Text_Diff_Op_copy(array(substr($line, 1)));
+                    break;
 
-            case '+':
-                $edits[] = new Text_Diff_Op_add(array(substr($line, 1)));
-                break;
+                case '+':
+                    $edits[] = new Text_Diff_Op_add(array(substr($line, 1)));
+                    break;
 
-            case '-':
-                $edits[] = new Text_Diff_Op_delete(array(substr($line, 1)));
-                break;
+                case '-':
+                    $edits[] = new Text_Diff_Op_delete(array(substr($line, 1)));
+                    break;
             }
         }
 

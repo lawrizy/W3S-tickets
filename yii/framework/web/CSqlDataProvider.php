@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CSqlDataProvider implements a data provider based on a plain SQL statement.
  *
@@ -35,108 +36,102 @@
  * @package system.web
  * @since 1.1.4
  */
-class CSqlDataProvider extends CDataProvider
-{
-	/**
-	 * @var CDbConnection the database connection to be used in the queries.
-	 * Defaults to null, meaning using Yii::app()->db.
-	 */
-	public $db;
-	/**
-	 * @var string|CDbCommand the SQL statement to be used for fetching data rows.
-	 * Since version 1.1.13 this can also be an instance of {@link CDbCommand}.
-	 */
-	public $sql;
-	/**
-	 * @var array parameters (name=>value) to be bound to the SQL statement.
-	 */
-	public $params=array();
-	/**
-	 * @var string the name of key field. Defaults to 'id'.
-	 */
-	public $keyField='id';
+class CSqlDataProvider extends CDataProvider {
 
-	/**
-	 * Constructor.
-	 * @param string|CDbCommand $sql the SQL statement to be used for fetching data rows. Since version 1.1.13 this can also be an instance of {@link CDbCommand}.
-	 * @param array $config configuration (name=>value) to be applied as the initial property values of this class.
-	 */
-	public function __construct($sql,$config=array())
-	{
-		$this->sql=$sql;
-		foreach($config as $key=>$value)
-			$this->$key=$value;
-	}
+    /**
+     * @var CDbConnection the database connection to be used in the queries.
+     * Defaults to null, meaning using Yii::app()->db.
+     */
+    public $db;
 
-	/**
-	 * Fetches the data from the persistent data storage.
-	 * @return array list of data items
-	 */
-	protected function fetchData()
-	{
-		if(!($this->sql instanceof CDbCommand))
-		{
-			$db=$this->db===null ? Yii::app()->db : $this->db;
-			$command=$db->createCommand($this->sql);
-		}
-		else
-			$command=clone $this->sql;
+    /**
+     * @var string|CDbCommand the SQL statement to be used for fetching data rows.
+     * Since version 1.1.13 this can also be an instance of {@link CDbCommand}.
+     */
+    public $sql;
 
-		if(($sort=$this->getSort())!==false)
-		{
-			$order=$sort->getOrderBy();
-			if(!empty($order))
-			{
-				if(preg_match('/\s+order\s+by\s+[\w\s,\.]+$/i',$command->text))
-					$command->text.=', '.$order;
-				else
-					$command->text.=' ORDER BY '.$order;
-			}
-		}
+    /**
+     * @var array parameters (name=>value) to be bound to the SQL statement.
+     */
+    public $params = array();
 
-		if(($pagination=$this->getPagination())!==false)
-		{
-			$pagination->setItemCount($this->getTotalItemCount());
-			$limit=$pagination->getLimit();
-			$offset=$pagination->getOffset();
-			$command->text=$command->getConnection()->getCommandBuilder()->applyLimit($command->text,$limit,$offset);
-		}
+    /**
+     * @var string the name of key field. Defaults to 'id'.
+     */
+    public $keyField = 'id';
 
-		foreach($this->params as $name=>$value)
-			$command->bindValue($name,$value);
+    /**
+     * Constructor.
+     * @param string|CDbCommand $sql the SQL statement to be used for fetching data rows. Since version 1.1.13 this can also be an instance of {@link CDbCommand}.
+     * @param array $config configuration (name=>value) to be applied as the initial property values of this class.
+     */
+    public function __construct($sql, $config = array()) {
+        $this->sql = $sql;
+        foreach ($config as $key => $value)
+            $this->$key = $value;
+    }
 
-		return $command->queryAll();
-	}
+    /**
+     * Fetches the data from the persistent data storage.
+     * @return array list of data items
+     */
+    protected function fetchData() {
+        if (!($this->sql instanceof CDbCommand)) {
+            $db = $this->db === null ? Yii::app()->db : $this->db;
+            $command = $db->createCommand($this->sql);
+        } else
+            $command = clone $this->sql;
 
-	/**
-	 * Fetches the data item keys from the persistent data storage.
-	 * @return array list of data item keys.
-	 */
-	protected function fetchKeys()
-	{
-		$keys=array();
-		if($data=$this->getData())
-		{
-			if(is_object(reset($data)))
-				foreach($data as $i=>$item)
-					$keys[$i]=$item->{$this->keyField};
-			else
-				foreach($data as $i=>$item)
-					$keys[$i]=$item[$this->keyField];
-		}
-		return $keys;
-	}
+        if (($sort = $this->getSort()) !== false) {
+            $order = $sort->getOrderBy();
+            if (!empty($order)) {
+                if (preg_match('/\s+order\s+by\s+[\w\s,\.]+$/i', $command->text))
+                    $command->text.=', ' . $order;
+                else
+                    $command->text.=' ORDER BY ' . $order;
+            }
+        }
 
-	/**
-	 * Calculates the total number of data items.
-	 * This method is invoked when {@link getTotalItemCount()} is invoked
-	 * and {@link totalItemCount} is not set previously.
-	 * The default implementation simply returns 0.
-	 * You may override this method to return accurate total number of data items.
-	 * @return integer the total number of data items.
-	 */
-	protected function calculateTotalItemCount()
-	{
-		return 0;
-	}
+        if (($pagination = $this->getPagination()) !== false) {
+            $pagination->setItemCount($this->getTotalItemCount());
+            $limit = $pagination->getLimit();
+            $offset = $pagination->getOffset();
+            $command->text = $command->getConnection()->getCommandBuilder()->applyLimit($command->text, $limit, $offset);
+        }
+
+        foreach ($this->params as $name => $value)
+            $command->bindValue($name, $value);
+
+        return $command->queryAll();
+    }
+
+    /**
+     * Fetches the data item keys from the persistent data storage.
+     * @return array list of data item keys.
+     */
+    protected function fetchKeys() {
+        $keys = array();
+        if ($data = $this->getData()) {
+            if (is_object(reset($data)))
+                foreach ($data as $i => $item)
+                    $keys[$i] = $item->{$this->keyField};
+            else
+                foreach ($data as $i => $item)
+                    $keys[$i] = $item[$this->keyField];
+        }
+        return $keys;
+    }
+
+    /**
+     * Calculates the total number of data items.
+     * This method is invoked when {@link getTotalItemCount()} is invoked
+     * and {@link totalItemCount} is not set previously.
+     * The default implementation simply returns 0.
+     * You may override this method to return accurate total number of data items.
+     * @return integer the total number of data items.
+     */
+    protected function calculateTotalItemCount() {
+        return 0;
+    }
+
 }

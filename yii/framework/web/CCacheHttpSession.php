@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CCacheHttpSession class
  *
@@ -7,7 +8,6 @@
  * @copyright 2008-2013 Yii Software LLC
  * @license http://www.yiiframework.com/license/
  */
-
 
 /**
  * CCacheHttpSession implements a session component using cache as storage medium.
@@ -26,87 +26,82 @@
  * @package system.web
  * @since 1.0
  */
-class CCacheHttpSession extends CHttpSession
-{
-	/**
-	 * Prefix to the keys for storing cached data
-	 */
-	const CACHE_KEY_PREFIX='Yii.CCacheHttpSession.';
-	/**
-	 * @var string the ID of the cache application component. Defaults to 'cache' (the primary cache application component.)
-	 */
-	public $cacheID='cache';
+class CCacheHttpSession extends CHttpSession {
 
-	/**
-	 * @var ICache the cache component
-	 */
-	private $_cache;
+    /**
+     * Prefix to the keys for storing cached data
+     */
+    const CACHE_KEY_PREFIX = 'Yii.CCacheHttpSession.';
 
-	/**
-	 * Initializes the application component.
-	 * This method overrides the parent implementation by checking if cache is available.
-	 */
-	public function init()
-	{
-		$this->_cache=Yii::app()->getComponent($this->cacheID);
-		if(!($this->_cache instanceof ICache))
-			throw new CException(Yii::t('yii','CCacheHttpSession.cacheID is invalid. Please make sure "{id}" refers to a valid cache application component.',
-				array('{id}'=>$this->cacheID)));
-		parent::init();
-	}
+    /**
+     * @var string the ID of the cache application component. Defaults to 'cache' (the primary cache application component.)
+     */
+    public $cacheID = 'cache';
 
-	/**
-	 * Returns a value indicating whether to use custom session storage.
-	 * This method overrides the parent implementation and always returns true.
-	 * @return boolean whether to use custom storage.
-	 */
-	public function getUseCustomStorage()
-	{
-		return true;
-	}
+    /**
+     * @var ICache the cache component
+     */
+    private $_cache;
 
-	/**
-	 * Session read handler.
-	 * Do not call this method directly.
-	 * @param string $id session ID
-	 * @return string the session data
-	 */
-	public function readSession($id)
-	{
-		$data=$this->_cache->get($this->calculateKey($id));
-		return $data===false?'':$data;
-	}
+    /**
+     * Initializes the application component.
+     * This method overrides the parent implementation by checking if cache is available.
+     */
+    public function init() {
+        $this->_cache = Yii::app()->getComponent($this->cacheID);
+        if (!($this->_cache instanceof ICache))
+            throw new CException(Yii::t('yii', 'CCacheHttpSession.cacheID is invalid. Please make sure "{id}" refers to a valid cache application component.', array('{id}' => $this->cacheID)));
+        parent::init();
+    }
 
-	/**
-	 * Session write handler.
-	 * Do not call this method directly.
-	 * @param string $id session ID
-	 * @param string $data session data
-	 * @return boolean whether session write is successful
-	 */
-	public function writeSession($id,$data)
-	{
-		return $this->_cache->set($this->calculateKey($id),$data,$this->getTimeout());
-	}
+    /**
+     * Returns a value indicating whether to use custom session storage.
+     * This method overrides the parent implementation and always returns true.
+     * @return boolean whether to use custom storage.
+     */
+    public function getUseCustomStorage() {
+        return true;
+    }
 
-	/**
-	 * Session destroy handler.
-	 * Do not call this method directly.
-	 * @param string $id session ID
-	 * @return boolean whether session is destroyed successfully
-	 */
-	public function destroySession($id)
-	{
-	    return $this->_cache->delete($this->calculateKey($id));
-	}
+    /**
+     * Session read handler.
+     * Do not call this method directly.
+     * @param string $id session ID
+     * @return string the session data
+     */
+    public function readSession($id) {
+        $data = $this->_cache->get($this->calculateKey($id));
+        return $data === false ? '' : $data;
+    }
 
-	/**
-	 * Generates a unique key used for storing session data in cache.
-	 * @param string $id session variable name
-	 * @return string a safe cache key associated with the session variable name
-	 */
-	protected function calculateKey($id)
-	{
-	    return self::CACHE_KEY_PREFIX.$id;
-	}
+    /**
+     * Session write handler.
+     * Do not call this method directly.
+     * @param string $id session ID
+     * @param string $data session data
+     * @return boolean whether session write is successful
+     */
+    public function writeSession($id, $data) {
+        return $this->_cache->set($this->calculateKey($id), $data, $this->getTimeout());
+    }
+
+    /**
+     * Session destroy handler.
+     * Do not call this method directly.
+     * @param string $id session ID
+     * @return boolean whether session is destroyed successfully
+     */
+    public function destroySession($id) {
+        return $this->_cache->delete($this->calculateKey($id));
+    }
+
+    /**
+     * Generates a unique key used for storing session data in cache.
+     * @param string $id session variable name
+     * @return string a safe cache key associated with the session variable name
+     */
+    protected function calculateKey($id) {
+        return self::CACHE_KEY_PREFIX . $id;
+    }
+
 }

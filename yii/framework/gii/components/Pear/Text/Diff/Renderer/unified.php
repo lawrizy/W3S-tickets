@@ -1,4 +1,5 @@
 <?php
+
 /**
  * "Unified" diff renderer.
  *
@@ -14,7 +15,6 @@
  * @author  Ciprian Popovici
  * @package Text_Diff
  */
-
 /** Text_Diff_Renderer */
 require_once 'Text/Diff/Renderer.php';
 
@@ -33,8 +33,7 @@ class Text_Diff_Renderer_unified extends Text_Diff_Renderer {
      */
     var $_trailing_context_lines = 4;
 
-    function _blockHeader($xbeg, $xlen, $ybeg, $ylen)
-    {
+    function _blockHeader($xbeg, $xlen, $ybeg, $ylen) {
         if ($xlen != 1) {
             $xbeg .= ',' . $xlen;
         }
@@ -44,23 +43,19 @@ class Text_Diff_Renderer_unified extends Text_Diff_Renderer {
         return "@@ -$xbeg +$ybeg @@";
     }
 
-    function _context($lines)
-    {
+    function _context($lines) {
         return $this->_lines($lines, ' ');
     }
 
-    function _added($lines)
-    {
+    function _added($lines) {
         return $this->_lines($lines, '+');
     }
 
-    function _deleted($lines)
-    {
+    function _deleted($lines) {
         return $this->_lines($lines, '-');
     }
 
-    function _changed($orig, $final)
-    {
+    function _changed($orig, $final) {
         return $this->_deleted($orig) . $this->_added($final);
     }
 

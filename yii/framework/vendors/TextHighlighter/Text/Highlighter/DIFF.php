@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Auto-generated class. DIFF syntax highlighting 
  *
@@ -31,8 +32,8 @@
  * @version    Release: 0.7.1
  * @link       http://pear.php.net/package/Text_Highlighter
  */
-class  Text_Highlighter_DIFF extends Text_Highlighter
-{
+class Text_Highlighter_DIFF extends Text_Highlighter {
+
     var $_language = 'diff';
 
     /**
@@ -41,11 +42,10 @@ class  Text_Highlighter_DIFF extends Text_Highlighter
      * @param array  $options
      * @access public
      */
-    function __construct($options=array())
-    {
+    function __construct($options = array()) {
 
         $this->_options = $options;
-        $this->_regs = array (
+        $this->_regs = array(
             -1 => '/((?m)^\\\\\\sNo\\snewline.+$)|((?m)^\\-\\-\\-$)|((?m)^(diff\\s+\\-|Only\\s+|Index).*$)|((?m)^(\\-\\-\\-|\\+\\+\\+)\\s.+$)|((?m)^\\*.*$)|((?m)^\\+.*$)|((?m)^!.*$)|((?m)^\\<\\s.*$)|((?m)^\\>\\s.*$)|((?m)^\\d+(\\,\\d+)?[acd]\\d+(,\\d+)?$)|((?m)^\\-.*$)|((?m)^\\+.*$)|((?m)^@@.+@@$)|((?m)^d\\d+\\s\\d+$)|((?m)^a\\d+\\s\\d+$)|((?m)^(\\d+)(,\\d+)?(a)$)|((?m)^(\\d+)(,\\d+)?(c)$)|((?m)^(\\d+)(,\\d+)?(d)$)|((?m)^a(\\d+)(\\s\\d+)?$)|((?m)^c(\\d+)(\\s\\d+)?$)|((?m)^d(\\d+)(\\s\\d+)?$)/',
             0 => '//',
             1 => '//',
@@ -53,9 +53,9 @@ class  Text_Highlighter_DIFF extends Text_Highlighter
             3 => '//',
             4 => '//',
         );
-        $this->_counts = array (
-            -1 => 
-            array (
+        $this->_counts = array(
+            -1 =>
+            array(
                 0 => 0,
                 1 => 0,
                 2 => 1,
@@ -78,25 +78,25 @@ class  Text_Highlighter_DIFF extends Text_Highlighter
                 19 => 2,
                 20 => 2,
             ),
-            0 => 
-            array (
+            0 =>
+            array(
             ),
-            1 => 
-            array (
+            1 =>
+            array(
             ),
-            2 => 
-            array (
+            2 =>
+            array(
             ),
-            3 => 
-            array (
+            3 =>
+            array(
             ),
-            4 => 
-            array (
+            4 =>
+            array(
             ),
         );
-        $this->_delim = array (
-            -1 => 
-            array (
+        $this->_delim = array(
+            -1 =>
+            array(
                 0 => '',
                 1 => '',
                 2 => '',
@@ -119,25 +119,25 @@ class  Text_Highlighter_DIFF extends Text_Highlighter
                 19 => 'code',
                 20 => '',
             ),
-            0 => 
-            array (
+            0 =>
+            array(
             ),
-            1 => 
-            array (
+            1 =>
+            array(
             ),
-            2 => 
-            array (
+            2 =>
+            array(
             ),
-            3 => 
-            array (
+            3 =>
+            array(
             ),
-            4 => 
-            array (
+            4 =>
+            array(
             ),
         );
-        $this->_inner = array (
-            -1 => 
-            array (
+        $this->_inner = array(
+            -1 =>
+            array(
                 0 => 'special',
                 1 => 'code',
                 2 => 'var',
@@ -160,32 +160,32 @@ class  Text_Highlighter_DIFF extends Text_Highlighter
                 19 => 'inlinedoc',
                 20 => 'code',
             ),
-            0 => 
-            array (
+            0 =>
+            array(
             ),
-            1 => 
-            array (
+            1 =>
+            array(
             ),
-            2 => 
-            array (
+            2 =>
+            array(
             ),
-            3 => 
-            array (
+            3 =>
+            array(
             ),
-            4 => 
-            array (
+            4 =>
+            array(
             ),
         );
-        $this->_end = array (
+        $this->_end = array(
             0 => '/(?m)(?=^[ad]\\d+\\s\\d+)/',
             1 => '/(?m)^(\\.)$/',
             2 => '/(?m)^(\\.)$/',
             3 => '/(?m)^(\\.)$/',
             4 => '/(?m)^(\\.)$/',
         );
-        $this->_states = array (
-            -1 => 
-            array (
+        $this->_states = array(
+            -1 =>
+            array(
                 0 => -1,
                 1 => -1,
                 2 => -1,
@@ -208,115 +208,115 @@ class  Text_Highlighter_DIFF extends Text_Highlighter
                 19 => 4,
                 20 => -1,
             ),
-            0 => 
-            array (
+            0 =>
+            array(
             ),
-            1 => 
-            array (
+            1 =>
+            array(
             ),
-            2 => 
-            array (
+            2 =>
+            array(
             ),
-            3 => 
-            array (
+            3 =>
+            array(
             ),
-            4 => 
-            array (
+            4 =>
+            array(
             ),
         );
-        $this->_keywords = array (
-            -1 => 
-            array (
-                0 => 
-                array (
+        $this->_keywords = array(
+            -1 =>
+            array(
+                0 =>
+                array(
                 ),
-                1 => 
-                array (
+                1 =>
+                array(
                 ),
-                2 => 
-                array (
+                2 =>
+                array(
                 ),
-                3 => 
-                array (
+                3 =>
+                array(
                 ),
-                4 => 
-                array (
+                4 =>
+                array(
                 ),
-                5 => 
-                array (
+                5 =>
+                array(
                 ),
-                6 => 
-                array (
+                6 =>
+                array(
                 ),
-                7 => 
-                array (
+                7 =>
+                array(
                 ),
-                8 => 
-                array (
+                8 =>
+                array(
                 ),
-                9 => 
-                array (
+                9 =>
+                array(
                 ),
-                10 => 
-                array (
+                10 =>
+                array(
                 ),
-                11 => 
-                array (
+                11 =>
+                array(
                 ),
-                12 => 
-                array (
+                12 =>
+                array(
                 ),
-                13 => 
-                array (
+                13 =>
+                array(
                 ),
                 14 => -1,
                 15 => -1,
                 16 => -1,
-                17 => 
-                array (
+                17 =>
+                array(
                 ),
                 18 => -1,
                 19 => -1,
-                20 => 
-                array (
+                20 =>
+                array(
                 ),
             ),
-            0 => 
-            array (
+            0 =>
+            array(
             ),
-            1 => 
-            array (
+            1 =>
+            array(
             ),
-            2 => 
-            array (
+            2 =>
+            array(
             ),
-            3 => 
-            array (
+            3 =>
+            array(
             ),
-            4 => 
-            array (
-            ),
-        );
-        $this->_parts = array (
-            0 => 
-            array (
-            ),
-            1 => 
-            array (
-            ),
-            2 => 
-            array (
-            ),
-            3 => 
-            array (
-            ),
-            4 => 
-            array (
+            4 =>
+            array(
             ),
         );
-        $this->_subst = array (
-            -1 => 
-            array (
+        $this->_parts = array(
+            0 =>
+            array(
+            ),
+            1 =>
+            array(
+            ),
+            2 =>
+            array(
+            ),
+            3 =>
+            array(
+            ),
+            4 =>
+            array(
+            ),
+        );
+        $this->_subst = array(
+            -1 =>
+            array(
                 0 => false,
                 1 => false,
                 2 => false,
@@ -339,28 +339,28 @@ class  Text_Highlighter_DIFF extends Text_Highlighter
                 19 => false,
                 20 => false,
             ),
-            0 => 
-            array (
+            0 =>
+            array(
             ),
-            1 => 
-            array (
+            1 =>
+            array(
             ),
-            2 => 
-            array (
+            2 =>
+            array(
             ),
-            3 => 
-            array (
+            3 =>
+            array(
             ),
-            4 => 
-            array (
+            4 =>
+            array(
             ),
         );
-        $this->_conditions = array (
+        $this->_conditions = array(
         );
-        $this->_kwmap = array (
+        $this->_kwmap = array(
         );
         $this->_defClass = 'default';
         $this->_checkDefines();
     }
-    
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CGlobalStateCacheDependency class file.
  *
@@ -20,35 +21,34 @@
  * @package system.caching.dependencies
  * @since 1.0
  */
-class CGlobalStateCacheDependency extends CCacheDependency
-{
-	/**
-	 * @var string the name of the global state whose value is to check
-	 * if the dependency has changed.
-	 * @see CApplication::setGlobalState
-	 */
-	public $stateName;
+class CGlobalStateCacheDependency extends CCacheDependency {
 
-	/**
-	 * Constructor.
-	 * @param string $name the name of the global state
-	 */
-	public function __construct($name=null)
-	{
-		$this->stateName=$name;
-	}
+    /**
+     * @var string the name of the global state whose value is to check
+     * if the dependency has changed.
+     * @see CApplication::setGlobalState
+     */
+    public $stateName;
 
-	/**
-	 * Generates the data needed to determine if dependency has been changed.
-	 * This method returns the value of the global state.
-	 * @throws CException if {@link stateName} is empty
-	 * @return mixed the data needed to determine if dependency has been changed.
-	 */
-	protected function generateDependentData()
-	{
-		if($this->stateName!==null)
-			return Yii::app()->getGlobalState($this->stateName);
-		else
-			throw new CException(Yii::t('yii','CGlobalStateCacheDependency.stateName cannot be empty.'));
-	}
+    /**
+     * Constructor.
+     * @param string $name the name of the global state
+     */
+    public function __construct($name = null) {
+        $this->stateName = $name;
+    }
+
+    /**
+     * Generates the data needed to determine if dependency has been changed.
+     * This method returns the value of the global state.
+     * @throws CException if {@link stateName} is empty
+     * @return mixed the data needed to determine if dependency has been changed.
+     */
+    protected function generateDependentData() {
+        if ($this->stateName !== null)
+            return Yii::app()->getGlobalState($this->stateName);
+        else
+            throw new CException(Yii::t('yii', 'CGlobalStateCacheDependency.stateName cannot be empty.'));
+    }
+
 }

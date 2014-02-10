@@ -9,7 +9,7 @@
 }
 .php-hl-comment {
     color: #808080;
-	font-style: italic;
+    font-style: italic;
 }
 .php-hl-quotes {
     color: red;
@@ -25,7 +25,7 @@
 }
 .php-hl-reserved {
     color: black;
-	font-weight: bold;
+    font-weight: bold;
 }
 .php-hl-inlinedoc {
     color: Blue;
@@ -46,13 +46,13 @@
     color: Blue;
 }
 .php-hl-main {
-	font-family: 'Courier New', Courier, monospace;
-	font-weight: normal;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: normal;
     font-size: 12px;
 }
 ol.php-hl-main pre {
-	margin: 0;
-	padding: 0;
+    margin: 0;
+    padding: 0;
 }
 .php-hl-gutter {
     background-color: #999999;
@@ -75,7 +75,7 @@ ol.php-hl-main pre {
 }
 .xml-hl-comment {
     color: #808080;
-	font-style: italic;
+    font-style: italic;
 }
 .xml-hl-quotes {
     color: red;
@@ -111,8 +111,8 @@ ol.php-hl-main pre {
     color: Blue;
 }
 .xml-hl-main {
-	font-family: 'Courier New', Courier, monospace;
-	font-weight: normal;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: normal;
 }
 .xml-hl-gutter {
     background-color: #999999;
@@ -135,7 +135,7 @@ ol.php-hl-main pre {
 }
 .html-hl-comment {
     color: #808080;
-	font-style: italic;
+    font-style: italic;
 }
 .html-hl-quotes {
     color: red;
@@ -171,8 +171,8 @@ ol.php-hl-main pre {
     color: Blue;
 }
 .html-hl-main {
-	font-family: 'Courier New', Courier, monospace;
-	font-weight: normal;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: normal;
 }
 .html-hl-gutter {
     background-color: #999999;
@@ -195,7 +195,7 @@ ol.php-hl-main pre {
 }
 .css-hl-comment {
     color: #808080;
-	font-style: italic;
+    font-style: italic;
 }
 .css-hl-quotes {
     color: red;
@@ -231,8 +231,8 @@ ol.php-hl-main pre {
     color: Blue;
 }
 .css-hl-main {
-	font-family: 'Courier New', Courier, monospace;
-	font-weight: normal;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: normal;
 }
 .css-hl-gutter {
     background-color: #999999;
@@ -255,7 +255,7 @@ ol.php-hl-main pre {
 }
 .javascript-hl-comment {
     color: #808080;
-	font-style: italic;
+    font-style: italic;
 }
 .javascript-hl-quotes {
     color: red;
@@ -291,8 +291,8 @@ ol.php-hl-main pre {
     color: Blue;
 }
 .javascript-hl-main {
-	font-family: 'Courier New', Courier, monospace;
-	font-weight: normal;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: normal;
 }
 .javascript-hl-gutter {
     background-color: #999999;
@@ -316,7 +316,7 @@ ol.php-hl-main pre {
 }
 .sql-hl-comment {
     color: #808080;
-	font-style: italic;
+    font-style: italic;
 }
 .sql-hl-quotes {
     color: red;
@@ -352,8 +352,8 @@ ol.php-hl-main pre {
     color: Blue;
 }
 .sql-hl-main {
-	font-family: 'Courier New', Courier, monospace;
-	font-weight: normal;
+    font-family: 'Courier New', Courier, monospace;
+    font-weight: normal;
 }
 .sql-hl-gutter {
     background-color: #999999;
@@ -367,17 +367,17 @@ ol.php-hl-main pre {
 
 .source .copycode
 {
-	text-align: right;
-	float: right;
+    text-align: right;
+    float: right;
 }
 
 .source .copycode a
 {
-	cursor: pointer;
-	color: blue;
+    cursor: pointer;
+    color: blue;
 }
 
 .source .copycode_hover a
 {
-	color: red;
+    color: red;
 }
