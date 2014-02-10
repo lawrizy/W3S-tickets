@@ -20,21 +20,15 @@
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'id_categorie_incident'); ?>
-		<?php echo $form->textField($model,'id_categorie_incident',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'id_categorie_incident'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->labelEx($model,'label'); ?>
 		<?php echo $form->textField($model,'label',array('size'=>60,'maxlength'=>64)); ?>
 		<?php echo $form->error($model,'label'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'id_parent_categorie'); ?>
-		<?php echo $form->textField($model,'id_parent_categorie',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'id_parent_categorie'); ?>
+		<?php echo $form->labelEx($model,'fk_parent'); ?>
+		<?php echo $form->textField($model,'fk_parent',array('size'=>10,'maxlength'=>10)); ?>
+		<?php echo $form->error($model,'fk_parent'); ?>
 	</div>
 
 	<div class="row buttons">

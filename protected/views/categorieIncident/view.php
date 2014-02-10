@@ -23,6 +23,6 @@ $this->menu=array(
 	'attributes'=>array(
 		'id_categorie_incident',
 		'label',
-		'id_parent_categorie',
+		'fk_parent',
 	),
 )); ?>

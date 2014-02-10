@@ -9,16 +9,24 @@
 	<?php echo CHtml::link(CHtml::encode($data->id_ticket), array('view', 'id'=>$data->id_ticket)); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('id_sous_categorie')); ?>:</b>
-	<?php echo CHtml::encode($data->id_sous_categorie); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('fk_statut')); ?>:</b>
+	<?php echo CHtml::encode($data->fk_statut); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('id_statut_ticket')); ?>:</b>
-	<?php echo CHtml::encode($data->id_statut_ticket); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('fk_categorie')); ?>:</b>
+	<?php echo CHtml::encode($data->fk_categorie); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('id_lieu')); ?>:</b>
-	<?php echo CHtml::encode($data->id_lieu); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('fk_lieu')); ?>:</b>
+	<?php echo CHtml::encode($data->fk_lieu); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('fk_user')); ?>:</b>
+	<?php echo CHtml::encode($data->fk_user); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('version')); ?>:</b>
+	<?php echo CHtml::encode($data->version); ?>
 	<br />
 
 

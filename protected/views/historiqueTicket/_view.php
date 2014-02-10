@@ -17,12 +17,12 @@
 	<?php echo CHtml::encode($data->commentaire); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('id_ticket')); ?>:</b>
-	<?php echo CHtml::encode($data->id_ticket); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('fk_ticket')); ?>:</b>
+	<?php echo CHtml::encode($data->fk_ticket); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('id_statut_ticket')); ?>:</b>
-	<?php echo CHtml::encode($data->id_statut_ticket); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('fk_statut_ticket')); ?>:</b>
+	<?php echo CHtml::encode($data->fk_statut_ticket); ?>
 	<br />
 
 

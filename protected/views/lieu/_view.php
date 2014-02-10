@@ -17,8 +17,8 @@
 	<?php echo CHtml::encode($data->ville); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('id_locataire')); ?>:</b>
-	<?php echo CHtml::encode($data->id_locataire); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('fk_locataire')); ?>:</b>
+	<?php echo CHtml::encode($data->fk_locataire); ?>
 	<br />
 
 

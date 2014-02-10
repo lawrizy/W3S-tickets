@@ -6,8 +6,9 @@
  * The followings are the available columns in table 'w3sys_categorie_incident':
  * @property string $id_categorie_incident
  * @property string $label
- * @property string $id_parent_categorie
+ * @property string $fk_parent
  */
+
 class CategorieIncident extends CActiveRecord
 {
 	/**
@@ -26,12 +27,12 @@ class CategorieIncident extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_categorie_incident, label', 'required'),
-			array('id_categorie_incident, id_parent_categorie', 'length', 'max'=>10),
+			array('label', 'required'),
 			array('label', 'length', 'max'=>64),
+			array('fk_parent', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_categorie_incident, label, id_parent_categorie', 'safe', 'on'=>'search'),
+			array('id_categorie_incident, label, fk_parent', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -54,7 +55,7 @@ class CategorieIncident extends CActiveRecord
 		return array(
 			'id_categorie_incident' => 'Id Categorie Incident',
 			'label' => 'Label',
-			'id_parent_categorie' => 'Id Parent Categorie',
+			'fk_parent' => 'Fk Parent',
 		);
 	}
 
@@ -78,7 +79,7 @@ class CategorieIncident extends CActiveRecord
 
 		$criteria->compare('id_categorie_incident',$this->id_categorie_incident,true);
 		$criteria->compare('label',$this->label,true);
-		$criteria->compare('id_parent_categorie',$this->id_parent_categorie,true);
+		$criteria->compare('fk_parent',$this->fk_parent,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

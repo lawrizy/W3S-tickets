@@ -24,7 +24,7 @@ $this->menu=array(
 		'id_historique_ticket',
 		'date_update',
 		'commentaire',
-		'id_ticket',
-		'id_statut_ticket',
+		'fk_ticket',
+		'fk_statut_ticket',
 	),
 )); ?>

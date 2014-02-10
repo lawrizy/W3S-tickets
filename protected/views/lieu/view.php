@@ -24,6 +24,6 @@ $this->menu=array(
 		'id_lieu',
 		'adresse',
 		'ville',
-		'id_locataire',
+		'fk_locataire',
 	),
 )); ?>

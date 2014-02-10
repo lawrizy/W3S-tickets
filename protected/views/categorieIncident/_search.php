@@ -22,8 +22,8 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'id_parent_categorie'); ?>
-		<?php echo $form->textField($model,'id_parent_categorie',array('size'=>10,'maxlength'=>10)); ?>
+		<?php echo $form->label($model,'fk_parent'); ?>
+		<?php echo $form->textField($model,'fk_parent',array('size'=>10,'maxlength'=>10)); ?>
 	</div>
 
 	<div class="row buttons">

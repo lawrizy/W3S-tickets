@@ -20,12 +20,6 @@
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'id_lieu'); ?>
-		<?php echo $form->textField($model,'id_lieu',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'id_lieu'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->labelEx($model,'adresse'); ?>
 		<?php echo $form->textField($model,'adresse',array('size'=>60,'maxlength'=>64)); ?>
 		<?php echo $form->error($model,'adresse'); ?>
@@ -38,9 +32,9 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'id_locataire'); ?>
-		<?php echo $form->textField($model,'id_locataire',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'id_locataire'); ?>
+		<?php echo $form->labelEx($model,'fk_locataire'); ?>
+		<?php echo $form->textField($model,'fk_locataire',array('size'=>10,'maxlength'=>10)); ?>
+		<?php echo $form->error($model,'fk_locataire'); ?>
 	</div>
 
 	<div class="row buttons">

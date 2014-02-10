@@ -20,12 +20,6 @@
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'id_historique_ticket'); ?>
-		<?php echo $form->textField($model,'id_historique_ticket'); ?>
-		<?php echo $form->error($model,'id_historique_ticket'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->labelEx($model,'date_update'); ?>
 		<?php echo $form->textField($model,'date_update'); ?>
 		<?php echo $form->error($model,'date_update'); ?>
@@ -38,15 +32,15 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'id_ticket'); ?>
-		<?php echo $form->textField($model,'id_ticket',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'id_ticket'); ?>
+		<?php echo $form->labelEx($model,'fk_ticket'); ?>
+		<?php echo $form->textField($model,'fk_ticket',array('size'=>10,'maxlength'=>10)); ?>
+		<?php echo $form->error($model,'fk_ticket'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'id_statut_ticket'); ?>
-		<?php echo $form->textField($model,'id_statut_ticket',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'id_statut_ticket'); ?>
+		<?php echo $form->labelEx($model,'fk_statut_ticket'); ?>
+		<?php echo $form->textField($model,'fk_statut_ticket',array('size'=>10,'maxlength'=>10)); ?>
+		<?php echo $form->error($model,'fk_statut_ticket'); ?>
 	</div>
 
 	<div class="row buttons">

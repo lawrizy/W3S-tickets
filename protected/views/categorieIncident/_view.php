@@ -13,8 +13,8 @@
 	<?php echo CHtml::encode($data->label); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('id_parent_categorie')); ?>:</b>
-	<?php echo CHtml::encode($data->id_parent_categorie); ?>
+	<b><?php echo CHtml::encode($data->getAttributeLabel('fk_parent')); ?>:</b>
+	<?php echo CHtml::encode($data->fk_parent); ?>
 	<br />
 
 

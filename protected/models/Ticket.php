@@ -5,13 +5,16 @@
  *
  * The followings are the available columns in table 'w3sys_ticket':
  * @property string $id_ticket
- * @property string $id_sous_categorie
- * @property string $id_statut_ticket
- * @property string $id_lieu
+ * @property string $fk_statut
+ * @property string $fk_categorie
+ * @property string $fk_lieu
+ * @property string $fk_user
+ * @property string $version
  *
  * The followings are the available model relations:
  * @property HistoriqueTicket[] $historiqueTickets
  */
+
 class Ticket extends CActiveRecord
 {
 	/**
@@ -30,11 +33,12 @@ class Ticket extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_ticket, id_sous_categorie, id_statut_ticket, id_lieu', 'required'),
-			array('id_ticket, id_sous_categorie, id_statut_ticket, id_lieu', 'length', 'max'=>10),
+			array('fk_statut, fk_categorie, fk_lieu, fk_user', 'required'),
+			array('fk_statut, fk_categorie, fk_lieu, fk_user', 'length', 'max'=>10),
+			array('version', 'length', 'max'=>2),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_ticket, id_sous_categorie, id_statut_ticket, id_lieu', 'safe', 'on'=>'search'),
+			array('id_ticket, fk_statut, fk_categorie, fk_lieu, fk_user, version', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -46,7 +50,7 @@ class Ticket extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'historiqueTickets' => array(self::HAS_MANY, 'HistoriqueTicket', 'id_ticket'),
+			'historiqueTickets' => array(self::HAS_MANY, 'HistoriqueTicket', 'fk_ticket'),
 		);
 	}
 
@@ -57,9 +61,11 @@ class Ticket extends CActiveRecord
 	{
 		return array(
 			'id_ticket' => 'Id Ticket',
-			'id_sous_categorie' => 'Id Sous Categorie',
-			'id_statut_ticket' => 'Id Statut Ticket',
-			'id_lieu' => 'Id Lieu',
+			'fk_statut' => 'Fk Statut',
+			'fk_categorie' => 'Fk Categorie',
+			'fk_lieu' => 'Fk Lieu',
+			'fk_user' => 'Fk User',
+			'version' => 'Version',
 		);
 	}
 
@@ -82,9 +88,11 @@ class Ticket extends CActiveRecord
 		$criteria=new CDbCriteria;
 
 		$criteria->compare('id_ticket',$this->id_ticket,true);
-		$criteria->compare('id_sous_categorie',$this->id_sous_categorie,true);
-		$criteria->compare('id_statut_ticket',$this->id_statut_ticket,true);
-		$criteria->compare('id_lieu',$this->id_lieu,true);
+		$criteria->compare('fk_statut',$this->fk_statut,true);
+		$criteria->compare('fk_categorie',$this->fk_categorie,true);
+		$criteria->compare('fk_lieu',$this->fk_lieu,true);
+		$criteria->compare('fk_user',$this->fk_user,true);
+		$criteria->compare('version',$this->version,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

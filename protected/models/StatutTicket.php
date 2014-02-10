@@ -10,6 +10,7 @@
  * The followings are the available model relations:
  * @property HistoriqueTicket[] $historiqueTickets
  */
+
 class StatutTicket extends CActiveRecord
 {
 	/**
@@ -28,8 +29,6 @@ class StatutTicket extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_statut_ticket', 'required'),
-			array('id_statut_ticket', 'length', 'max'=>10),
 			array('label', 'length', 'max'=>64),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
@@ -45,7 +44,7 @@ class StatutTicket extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'historiqueTickets' => array(self::HAS_MANY, 'HistoriqueTicket', 'id_statut_ticket'),
+			'historiqueTickets' => array(self::HAS_MANY, 'HistoriqueTicket', 'fk_statut_ticket'),
 		);
 	}
 

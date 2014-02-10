@@ -7,8 +7,9 @@
  * @property string $id_lieu
  * @property string $adresse
  * @property string $ville
- * @property string $id_locataire
+ * @property string $fk_locataire
  */
+
 class Lieu extends CActiveRecord
 {
 	/**
@@ -27,12 +28,12 @@ class Lieu extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_lieu, adresse, ville, id_locataire', 'required'),
-			array('id_lieu, id_locataire', 'length', 'max'=>10),
+			array('adresse, ville, fk_locataire', 'required'),
 			array('adresse, ville', 'length', 'max'=>64),
+			array('fk_locataire', 'length', 'max'=>10),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_lieu, adresse, ville, id_locataire', 'safe', 'on'=>'search'),
+			array('id_lieu, adresse, ville, fk_locataire', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -56,7 +57,7 @@ class Lieu extends CActiveRecord
 			'id_lieu' => 'Id Lieu',
 			'adresse' => 'Adresse',
 			'ville' => 'Ville',
-			'id_locataire' => 'Id Locataire',
+			'fk_locataire' => 'Fk Locataire',
 		);
 	}
 
@@ -81,7 +82,7 @@ class Lieu extends CActiveRecord
 		$criteria->compare('id_lieu',$this->id_lieu,true);
 		$criteria->compare('adresse',$this->adresse,true);
 		$criteria->compare('ville',$this->ville,true);
-		$criteria->compare('id_locataire',$this->id_locataire,true);
+		$criteria->compare('fk_locataire',$this->fk_locataire,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

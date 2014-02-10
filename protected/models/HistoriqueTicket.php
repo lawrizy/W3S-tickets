@@ -7,13 +7,14 @@
  * @property integer $id_historique_ticket
  * @property string $date_update
  * @property string $commentaire
- * @property string $id_ticket
- * @property string $id_statut_ticket
+ * @property string $fk_ticket
+ * @property string $fk_statut_ticket
  *
  * The followings are the available model relations:
- * @property Ticket $idTicket
- * @property StatutTicket $idStatutTicket
+ * @property Ticket $fkTicket
+ * @property StatutTicket $fkStatutTicket
  */
+
 class HistoriqueTicket extends CActiveRecord
 {
 	/**
@@ -32,13 +33,12 @@ class HistoriqueTicket extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_historique_ticket, date_update, id_ticket, id_statut_ticket', 'required'),
-			array('id_historique_ticket', 'numerical', 'integerOnly'=>true),
-			array('id_ticket, id_statut_ticket', 'length', 'max'=>10),
+			array('date_update, fk_ticket, fk_statut_ticket', 'required'),
+			array('fk_ticket, fk_statut_ticket', 'length', 'max'=>10),
 			array('commentaire', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_historique_ticket, date_update, commentaire, id_ticket, id_statut_ticket', 'safe', 'on'=>'search'),
+			array('id_historique_ticket, date_update, commentaire, fk_ticket, fk_statut_ticket', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -50,8 +50,8 @@ class HistoriqueTicket extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'idTicket' => array(self::BELONGS_TO, 'Ticket', 'id_ticket'),
-			'idStatutTicket' => array(self::BELONGS_TO, 'StatutTicket', 'id_statut_ticket'),
+			'fkTicket' => array(self::BELONGS_TO, 'Ticket', 'fk_ticket'),
+			'fkStatutTicket' => array(self::BELONGS_TO, 'StatutTicket', 'fk_statut_ticket'),
 		);
 	}
 
@@ -64,8 +64,8 @@ class HistoriqueTicket extends CActiveRecord
 			'id_historique_ticket' => 'Id Historique Ticket',
 			'date_update' => 'Date Update',
 			'commentaire' => 'Commentaire',
-			'id_ticket' => 'Id Ticket',
-			'id_statut_ticket' => 'Id Statut Ticket',
+			'fk_ticket' => 'Fk Ticket',
+			'fk_statut_ticket' => 'Fk Statut Ticket',
 		);
 	}
 
@@ -90,8 +90,8 @@ class HistoriqueTicket extends CActiveRecord
 		$criteria->compare('id_historique_ticket',$this->id_historique_ticket);
 		$criteria->compare('date_update',$this->date_update,true);
 		$criteria->compare('commentaire',$this->commentaire,true);
-		$criteria->compare('id_ticket',$this->id_ticket,true);
-		$criteria->compare('id_statut_ticket',$this->id_statut_ticket,true);
+		$criteria->compare('fk_ticket',$this->fk_ticket,true);
+		$criteria->compare('fk_statut_ticket',$this->fk_statut_ticket,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

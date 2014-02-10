@@ -27,13 +27,13 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'id_ticket'); ?>
-		<?php echo $form->textField($model,'id_ticket',array('size'=>10,'maxlength'=>10)); ?>
+		<?php echo $form->label($model,'fk_ticket'); ?>
+		<?php echo $form->textField($model,'fk_ticket',array('size'=>10,'maxlength'=>10)); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'id_statut_ticket'); ?>
-		<?php echo $form->textField($model,'id_statut_ticket',array('size'=>10,'maxlength'=>10)); ?>
+		<?php echo $form->label($model,'fk_statut_ticket'); ?>
+		<?php echo $form->textField($model,'fk_statut_ticket',array('size'=>10,'maxlength'=>10)); ?>
 	</div>
 
 	<div class="row buttons">

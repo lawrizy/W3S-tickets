@@ -20,12 +20,6 @@
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'id_locataire'); ?>
-		<?php echo $form->textField($model,'id_locataire',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'id_locataire'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->labelEx($model,'nom'); ?>
 		<?php echo $form->textField($model,'nom',array('size'=>60,'maxlength'=>64)); ?>
 		<?php echo $form->error($model,'nom'); ?>

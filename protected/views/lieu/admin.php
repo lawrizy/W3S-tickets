@@ -48,7 +48,7 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'id_lieu',
 		'adresse',
 		'ville',
-		'id_locataire',
+		'fk_locataire',
 		array(
 			'class'=>'CButtonColumn',
 		),

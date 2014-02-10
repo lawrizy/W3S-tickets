@@ -48,8 +48,8 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'id_historique_ticket',
 		'date_update',
 		'commentaire',
-		'id_ticket',
-		'id_statut_ticket',
+		'fk_ticket',
+		'fk_statut_ticket',
 		array(
 			'class'=>'CButtonColumn',
 		),

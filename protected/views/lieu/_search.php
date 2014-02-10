@@ -27,8 +27,8 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'id_locataire'); ?>
-		<?php echo $form->textField($model,'id_locataire',array('size'=>10,'maxlength'=>10)); ?>
+		<?php echo $form->label($model,'fk_locataire'); ?>
+		<?php echo $form->textField($model,'fk_locataire',array('size'=>10,'maxlength'=>10)); ?>
 	</div>
 
 	<div class="row buttons">

@@ -9,6 +9,8 @@
  * @property string $email
  * @property string $password
  */
+
+
 class Locataire extends CActiveRecord
 {
 	/**
@@ -27,8 +29,7 @@ class Locataire extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_locataire, nom, email, password', 'required'),
-			array('id_locataire', 'length', 'max'=>10),
+			array('nom, email, password', 'required'),
 			array('nom, email', 'length', 'max'=>64),
 			array('password', 'length', 'max'=>32),
 			// The following rule is used by search().

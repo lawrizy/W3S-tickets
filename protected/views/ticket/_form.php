@@ -20,27 +20,33 @@
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'id_ticket'); ?>
-		<?php echo $form->textField($model,'id_ticket',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'id_ticket'); ?>
+		<?php echo $form->labelEx($model,'fk_statut'); ?>
+		<?php echo $form->textField($model,'fk_statut',array('size'=>10,'maxlength'=>10)); ?>
+		<?php echo $form->error($model,'fk_statut'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'id_sous_categorie'); ?>
-		<?php echo $form->textField($model,'id_sous_categorie',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'id_sous_categorie'); ?>
+		<?php echo $form->labelEx($model,'fk_categorie'); ?>
+		<?php echo $form->textField($model,'fk_categorie',array('size'=>10,'maxlength'=>10)); ?>
+		<?php echo $form->error($model,'fk_categorie'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'id_statut_ticket'); ?>
-		<?php echo $form->textField($model,'id_statut_ticket',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'id_statut_ticket'); ?>
+		<?php echo $form->labelEx($model,'fk_lieu'); ?>
+		<?php echo $form->textField($model,'fk_lieu',array('size'=>10,'maxlength'=>10)); ?>
+		<?php echo $form->error($model,'fk_lieu'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'id_lieu'); ?>
-		<?php echo $form->textField($model,'id_lieu',array('size'=>10,'maxlength'=>10)); ?>
-		<?php echo $form->error($model,'id_lieu'); ?>
+		<?php echo $form->labelEx($model,'fk_user'); ?>
+		<?php echo $form->textField($model,'fk_user',array('size'=>10,'maxlength'=>10)); ?>
+		<?php echo $form->error($model,'fk_user'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'version'); ?>
+		<?php echo $form->textField($model,'version',array('size'=>2,'maxlength'=>2)); ?>
+		<?php echo $form->error($model,'version'); ?>
 	</div>
 
 	<div class="row buttons">

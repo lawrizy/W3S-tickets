@@ -22,8 +22,10 @@ $this->menu=array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id_ticket',
-		'id_sous_categorie',
-		'id_statut_ticket',
-		'id_lieu',
+		'fk_statut',
+		'fk_categorie',
+		'fk_lieu',
+		'fk_user',
+		'version',
 	),
 )); ?>
