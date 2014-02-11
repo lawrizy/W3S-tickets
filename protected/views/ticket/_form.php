@@ -15,8 +15,7 @@
         'enableAjaxValidation' => false,
     ));
     ?>
-    
-    <?php ; ?> 
+
     <p class="note">Les champs marqués de <span class="required">*</span> sont requis.</p>
 
     <?php echo $form->errorSummary($model); ?>
@@ -29,14 +28,15 @@
 
     <div class="row">
         <?php echo $form->labelEx($model, 'fk_categorie'); ?>
-        <?php echo $form->dropDownList($model, 'fk_categorie', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => !NULL)), 'id_categorie_incident', 'label')); ?>
-        <?php echo $form->dropDownList($model,'fk_categorie',  CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent'=>NULL)),'id_categorie_incident','label'));?>
+        <?php echo $form->dropDownList($model, 'fk_categorie', array('' => '', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => !NULL)), 'id_categorie_incident', 'label'))); ?>
+        <?php echo $form->dropDownList($model, 'fk_categorie', array('' => '', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL)), 'id_categorie_incident', 'label'))); ?>
         <?php echo $form->error($model, 'fk_categorie'); ?>
     </div>
 
+
     <div class="row">
         <?php echo $form->labelEx($model, 'fk_lieu'); ?>
-        <?php echo $form->dropDownList($model, 'fk_lieu', CHtml::listData(Lieu::model()->findAll(), 'id_lieu', 'appartement')); ?>
+        <?php echo $form->dropDownList($model, 'fk_lieu', array('' => '', CHtml::listData(Lieu::model()->findAllByAttributes(array('fk_locataire'=>  Yii::app()->session['id_locataire']->id_locataire)), 'id_lieu', 'adresse'))); ?>
         <?php echo $form->error($model, 'fk_lieu'); ?>
     </div>
 

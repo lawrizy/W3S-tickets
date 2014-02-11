@@ -17,38 +17,38 @@
     ));
     ?>
 
-	<p class="note">Les champs marqués de <span class="required">*</span> sont requis.</p>
+    <p class="note">Les champs marqués de <span class="required">*</span> sont requis.</p>
 
-        <?php echo $form->errorSummary($model); ?>
+    <?php echo $form->errorSummary($model); ?>
 
     <div class="row">
         <?php echo $form->labelEx($model, 'etage'); ?>
-<?php echo $form->textField($model, 'etage'); ?>
-<?php echo $form->error($model, 'etage'); ?>
+        <?php echo $form->textField($model, 'etage'); ?>
+        <?php echo $form->error($model, 'etage'); ?>
     </div>
 
     <div class="row">
         <?php echo $form->labelEx($model, 'appartement'); ?>
-<?php echo $form->textField($model, 'appartement', array('size' => 5, 'maxlength' => 5)); ?>
-<?php echo $form->error($model, 'appartement'); ?>
+        <?php echo $form->textField($model, 'appartement', array('size' => 5, 'maxlength' => 5)); ?>
+        <?php echo $form->error($model, 'appartement'); ?>
     </div>
 
     <div class="row">
         <?php echo $form->labelEx($model, 'fk_locataire'); ?>
-<?php echo $form->dropDownList($model, 'fk_locataire', CHtml::listData(Locataire::model()->findAll(), 'id_locataire', 'nom')); ?>
-<?php echo $form->error($model, 'fk_locataire'); ?>
+        <?php echo $form->dropDownList($model, 'fk_locataire', CHtml::listData(Locataire::model()->findAll(), 'id_locataire', 'nom')); ?>
+        <?php echo $form->error($model, 'fk_locataire'); ?>
     </div>
 
     <div class="row">
         <?php echo $form->labelEx($model, 'fk_batiment'); ?>
-<?php echo $form->textField($model, 'fk_batiment'); ?>
-<?php echo $form->error($model, 'fk_batiment'); ?>
+        <?php echo $form->textField($model, 'fk_batiment'); ?>
+        <?php echo $form->error($model, 'fk_batiment'); ?>
     </div>
 
     <div class="row buttons">
-    <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+        <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
     </div>
 
-<?php $this->endWidget(); ?>
+    <?php $this->endWidget(); ?>
 
 </div><!-- form -->

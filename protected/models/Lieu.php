@@ -40,9 +40,11 @@ class Lieu extends CActiveRecord {
      * @return array relational rules.
      */
     public function relations() {
-// NOTE: you may need to adjust the relation name and the related
-// class name for the relations automatically generated below.
-        return array();
+
+
+        return array('Lieux' => array(self::HAS_ONE, 'Batiment', 'fk_batiment'),
+            'loc' => array(self::HAS_ONE, 'Locataire', 'fk_locataire')
+        );
     }
 
     /**
@@ -73,6 +75,7 @@ class Lieu extends CActiveRecord {
     public function search() {
         // @todo Please modify the following code to remove attributes that should not be searched.
 
+
         $criteria = new CDbCriteria;
 
 
@@ -81,7 +84,8 @@ class Lieu extends CActiveRecord {
         $criteria->compare('appartement', $this->appartement, true);
         $criteria->compare('fk_locataire', $this->fk_locataire, true);
         $criteria->compare('fk_batiment', $this->fk_batiment);
-
+        $criteria->select = 'l.*,b.*';
+        $criteria->join = 'INNER JOIN w3sys_batiment b ON l.fk_batiment=b.id_batiment';
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
@@ -95,6 +99,16 @@ class Lieu extends CActiveRecord {
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
+    }
+
+    public function getAdresse() {
+        $var = Batiment::model()->findByPk($this->fk_batiment);
+       $var1= Locataire::model()->findByPk(2);
+        return $var->adresse . ', ' . $var->cp . ' ' . $var->commune . ' apt ' . $this->appartement . '/' . $this->etage;
+    }
+
+    public function getLocataire() {
+        return Locataire::model()->findByPk($this->fk_locataire);
     }
 
 }

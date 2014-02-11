@@ -12,58 +12,53 @@
  * The followings are the available model relations:
  * @property Secteur[] $secteurs
  */
-class Batiment extends CActiveRecord
-{
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'w3sys_batiment';
-	}
+class Batiment extends CActiveRecord {
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('adresse, commune, cp', 'required'),
-			array('cp', 'numerical', 'integerOnly'=>true),
-			array('adresse, commune', 'length', 'max'=>45),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('id_batiment, adresse, commune, cp', 'safe', 'on'=>'search'),
-		);
-	}
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName() {
+        return 'w3sys_batiment';
+    }
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-			'secteurs' => array(self::HAS_MANY, 'Secteur', 'fk_batiment'),
-		);
-	}
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules() {
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        return array(
+            array('adresse, commune, cp', 'required'),
+            array('cp', 'numerical', 'integerOnly' => true),
+            array('adresse, commune', 'length', 'max' => 45),
+            // The following rule is used by search().
+            // @todo Please remove those attributes that should not be searched.
+            array('id_batiment, adresse, commune, cp', 'safe', 'on' => 'search'),
+        );
+    }
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'id_batiment' => 'Numéro de bâtiment',
-			'adresse' => 'Adresse',
-			'commune' => 'Commune',
-			'cp' => 'Code postal',
-		);
-	}
+    /**
+     * @return array relational rules.
+     */
+    public function relations() {
+        // NOTE: you may need to adjust the relation name and the related
+        // class name for the relations automatically generated below.
+        return array(
+            'secteurs' => array(self::HAS_MANY, 'Secteur', 'fk_batiment'),
+        );
+    }
 
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels() {
+        return array(
+            'id_batiment' => 'Numéro de bâtiment',
+            'adresse' => 'Adresse',
+            'commune' => 'Commune',
+            'cp' => 'Code postal',
+        );
+    }
 
     /**
      * Retrieves a list of models based on the current search/filter conditions.
@@ -83,10 +78,10 @@ class Batiment extends CActiveRecord
         $criteria = new CDbCriteria;
 
 
-		$criteria->compare('id_batiment',$this->id_batiment);
-		$criteria->compare('adresse',$this->adresse,true);
-		$criteria->compare('commune',$this->commune,true);
-		$criteria->compare('cp',$this->cp);
+        $criteria->compare('id_batiment', $this->id_batiment);
+        $criteria->compare('adresse', $this->adresse, true);
+        $criteria->compare('commune', $this->commune, true);
+        $criteria->compare('cp', $this->cp);
 
 
         return new CActiveDataProvider($this, array(
