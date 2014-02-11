@@ -10,15 +10,15 @@
     <br />
 
     <b><?php echo CHtml::encode($data->getAttributeLabel('fk_statut')); ?>:</b>
-    <?php echo CHtml::encode($data->fk_statut); ?>
+    <?php echo CHtml::encode($data->getStatusTicket()); ?>
     <br />
 
     <b><?php echo CHtml::encode($data->getAttributeLabel('fk_categorie')); ?>:</b>
-    <?php echo CHtml::encode($data->fk_categorie); ?>
+    <?php echo CHtml::encode($data->getCategorieIncident()); ?>
     <br />
 
     <b><?php echo CHtml::encode($data->getAttributeLabel('fk_lieu')); ?>:</b>
-    <?php echo CHtml::encode($data->fk_lieu); ?>
+    <?php echo CHtml::encode($data->getLieu()); ?>
     <br />
 
     <b><?php echo CHtml::encode($data->getAttributeLabel('fk_user')); ?>:</b>

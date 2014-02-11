@@ -16,35 +16,32 @@
  * The followings are the available model relations:
  * @property HistoriqueTicket[] $historiqueTickets
  */
+class Ticket extends CActiveRecord {
 
-class Ticket extends CActiveRecord
-{
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'w3sys_ticket';
-	}
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName() {
+        return 'w3sys_ticket';
+    }
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('fk_categorie, fk_lieu, fk_canal', 'required'),
-			array('fk_canal', 'numerical', 'integerOnly'=>true),
-			array('fk_statut, fk_categorie, fk_lieu, fk_user', 'length', 'max'=>10),
-			array('version', 'length', 'max'=>2),
-			array('commentaire', 'safe'),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('id_ticket, fk_statut, fk_categorie, fk_lieu, fk_user, version, commentaire, fk_canal', 'safe', 'on'=>'search'),
-		);
-	}
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules() {
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        return array(
+            array('fk_categorie, fk_lieu, fk_canal', 'required'),
+            array('fk_canal', 'numerical', 'integerOnly' => true),
+            array('fk_statut, fk_categorie, fk_lieu, fk_user', 'length', 'max' => 10),
+            array('version', 'length', 'max' => 2),
+            array('commentaire', 'safe'),
+            // The following rule is used by search().
+            // @todo Please remove those attributes that should not be searched.
+            array('id_ticket, fk_statut, fk_categorie, fk_lieu, fk_user, version, commentaire, fk_canal', 'safe', 'on' => 'search'),
+        );
+    }
 
     /**
      * @return array relational rules.
@@ -54,26 +51,25 @@ class Ticket extends CActiveRecord
         // class name for the relations automatically generated below.
         return array(
             'historiqueTickets' => array(self::HAS_MANY, 'HistoriqueTicket', 'fk_ticket'),
+            'lsdfldf' => array(self::HAS_ONE, 'StatutTicket', 'fk_statut')
         );
     }
 
-
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'id_ticket' => 'Numéro du ticket',
-			'fk_statut' => 'Statut du ticket',
-			'fk_categorie' => 'Catégorie de l\'incident',
-			'fk_lieu' => 'Lieu',
-			'fk_user' => 'Utilisateur',
-			'version' => 'Version',
-			'commentaire' => 'Commentaire',
-			'fk_canal' => 'Canal de création',
-		);
-	}
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels() {
+        return array(
+            'id_ticket' => 'Numéro du ticket',
+            'fk_statut' => 'Statut du ticket',
+            'fk_categorie' => 'Catégorie de l\'incident',
+            'fk_lieu' => 'Lieu',
+            'fk_user' => 'Utilisateur',
+            'version' => 'Version',
+            'commentaire' => 'Commentaire',
+            'fk_canal' => 'Canal de création',
+        );
+    }
 
     /**
      * Retrieves a list of models based on the current search/filter conditions.
@@ -92,14 +88,14 @@ class Ticket extends CActiveRecord
 
         $criteria = new CDbCriteria;
 
-		$criteria->compare('id_ticket',$this->id_ticket,true);
-		$criteria->compare('fk_statut',$this->fk_statut,true);
-		$criteria->compare('fk_categorie',$this->fk_categorie,true);
-		$criteria->compare('fk_lieu',$this->fk_lieu,true);
-		$criteria->compare('fk_user',$this->fk_user,true);
-		$criteria->compare('version',$this->version,true);
-		$criteria->compare('commentaire',$this->commentaire,true);
-		$criteria->compare('fk_canal',$this->fk_canal);
+        $criteria->compare('id_ticket', $this->id_ticket, true);
+        $criteria->compare('fk_statut', $this->fk_statut, true);
+        $criteria->compare('fk_categorie', $this->fk_categorie, true);
+        $criteria->compare('fk_lieu', $this->fk_lieu, true);
+        $criteria->compare('fk_user', $this->fk_user, true);
+        $criteria->compare('version', $this->version, true);
+        $criteria->compare('commentaire', $this->commentaire, true);
+        $criteria->compare('fk_canal', $this->fk_canal);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -114,6 +110,23 @@ class Ticket extends CActiveRecord
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
+    }
+
+    public function getStatusTicket() {
+        $var = StatutTicket::model()->findByPk($this->fk_statut);
+        return $var->label;
+    }
+
+    public function getCategorieIncident() {
+        $var = CategorieIncident::model()->findByPk($this->fk_categorie);
+        return $var->label;
+    }
+
+    public function getLieu() {
+        $var = Lieu::model()->findByPk($this->fk_lieu);
+        $var1 = Batiment::model()->findByPk($var->fk_batiment);
+        //  $var1 = Locataire::model()->findByPk(2);
+        return $var1->adresse . ', ' . $var1->cp . ' ' . $var1->commune . ' apt ' . $var->appartement . '/' . $var->etage;
     }
 
 }

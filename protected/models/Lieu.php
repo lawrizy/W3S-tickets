@@ -103,12 +103,8 @@ class Lieu extends CActiveRecord {
 
     public function getAdresse() {
         $var = Batiment::model()->findByPk($this->fk_batiment);
-       $var1= Locataire::model()->findByPk(2);
+      //  $var1 = Locataire::model()->findByPk(2);
         return $var->adresse . ', ' . $var->cp . ' ' . $var->commune . ' apt ' . $this->appartement . '/' . $this->etage;
-    }
-
-    public function getLocataire() {
-        return Locataire::model()->findByPk($this->fk_locataire);
     }
 
 }

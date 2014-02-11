@@ -42,23 +42,27 @@ $('.search-form form').submit(function(){
     ?>
 </div><!-- search-form -->
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'ticket-grid',
-	'dataProvider'=>$model->search(),
-	'filter'=>$model,
-	'columns'=>array(
-		'id_ticket',
-		'fk_statut',
-		'fk_categorie',
-		'fk_lieu',
-		'fk_user',
-		'version',
-		/*
-		'commentaire',
-		'fk_canal',
-		*/
-		array(
-			'class'=>'CButtonColumn',
-		),
-	),
-)); ?>
+<?php
+$this->widget('zii.widgets.grid.CGridView', array(
+    'id' => 'ticket-grid',
+    'dataProvider' => $model->search(),
+    'filter' => $model,
+    'columns' => array(
+        'id_ticket',
+        'fk_statut',
+        'fk_categorie',
+        'fk_lieu',
+        'fk_user',
+        /*
+          'commentaire',
+          'fk_canal',
+         */
+        array
+            (
+            'class' => 'CButtonColumn',
+            'template' => '{update} {view}',
+            'visible' => Yii::app()->session['Utilisateur'] == 'User'
+        ),
+    ),
+));
+?>
