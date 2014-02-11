@@ -45,6 +45,7 @@ $this->breadcrumbs = array(
     </div>
 
     <div class="row buttons">
+        <?php echo $form->error($model, 'DBConnectionFail'); ?>
         <?php echo CHtml::submitButton('Login'); ?>
     </div>
     <p> <?php

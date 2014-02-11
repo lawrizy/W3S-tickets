@@ -37,6 +37,7 @@ class Entreprise extends CActiveRecord {
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
             array('id_entreprise, nom, adresse, tva, commune, cp, tel', 'safe', 'on' => 'search'),
+            //TODO ajouter une vérification sur le n° de TVA inséré
         );
     }
 

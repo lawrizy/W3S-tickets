@@ -42,7 +42,6 @@ $('.search-form form').submit(function(){
     ?>
 </div><!-- search-form -->
 
-<<<<<<< HEAD
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'lieu-grid',
 	'dataProvider'=>$model->search(),
@@ -58,21 +57,3 @@ $('.search-form form').submit(function(){
 		),
 	),
 )); ?>
-=======
-<?php
-$this->widget('zii.widgets.grid.CGridView', array(
-    'id' => 'lieu-grid',
-    'dataProvider' => $model->search(),
-    'filter' => $model,
-    'columns' => array(
-        'id_lieu',
-        'adresse',
-        'ville',
-        'fk_locataire',
-        array(
-            'class' => 'CButtonColumn',
-        ),
-    ),
-));
-?>
->>>>>>> 11491a7f40938f72ce5a9d8c131056ced1d02d27

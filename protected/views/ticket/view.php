@@ -18,7 +18,6 @@ $this->menu = array(
 
 <h1>View Ticket #<?php echo $model->id_ticket; ?></h1>
 
-<<<<<<< HEAD
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
@@ -32,18 +31,3 @@ $this->menu = array(
 		'fk_canal',
 	),
 )); ?>
-=======
-<?php
-$this->widget('zii.widgets.CDetailView', array(
-    'data' => $model,
-    'attributes' => array(
-        'id_ticket',
-        'fk_statut',
-        'fk_categorie',
-        'fk_lieu',
-        'fk_user',
-        'version',
-    ),
-));
-?>
->>>>>>> 11491a7f40938f72ce5a9d8c131056ced1d02d27

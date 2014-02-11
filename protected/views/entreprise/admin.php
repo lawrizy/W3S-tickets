@@ -44,7 +44,6 @@ $('.search-form form').submit(function(){
     ?>
 </div><!-- search-form -->
 
-<<<<<<< HEAD:protected/views/entreprise/admin.php
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'entreprise-grid',
 	'dataProvider'=>$model->search(),
@@ -56,28 +55,9 @@ $('.search-form form').submit(function(){
 		'tva',
 		'commune',
 		'cp',
-		/*
 		'tel',
-		*/
 		array(
 			'class'=>'CButtonColumn',
 		),
 	),
 )); ?>
-=======
-<?php
-$this->widget('zii.widgets.grid.CGridView', array(
-    'id' => 'categorie-incident-grid',
-    'dataProvider' => $model->search(),
-    'filter' => $model,
-    'columns' => array(
-        'id_categorie_incident',
-        'label',
-        'fk_parent',
-        array(
-            'class' => 'CButtonColumn',
-        ),
-    ),
-));
-?>
->>>>>>> 11491a7f40938f72ce5a9d8c131056ced1d02d27:protected/views/categorieIncident/admin.php
