@@ -51,10 +51,10 @@ class Lieu extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id_lieu' => 'Id Lieu',
-            'etage' => 'Etage',
-            'appartement' => 'Appartement',
-            'fk_locataire' => 'Fk Locataire',
-            'fk_batiment' => 'Fk Batiment',
+            'etage' => 'Etage n°',
+            'appartement' => 'Numéro de l\'appartement',
+            'fk_locataire' => 'Numéro de locataire',
+            'fk_batiment' => 'Numéro de bâtiment',
         );
     }
 

@@ -49,10 +49,10 @@ class Locataire extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'id_locataire' => 'Id Locataire',
+            'id_locataire' => 'Numéro de locataire',
             'nom' => 'Nom',
             'email' => 'Email',
-            'password' => 'Password',
+            'password' => 'Mot de passe',
         );
     }
 
