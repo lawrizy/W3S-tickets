@@ -49,10 +49,13 @@ class LoginForm extends CFormModel {
              * Lorsqu'une erreur de connection à la DB est détectée, renvoie le message suivant.
              * TODO : Trouver à quoi correspond l'attribut dans $this->addError($attribute, $errorMessage);
              */
-            if (isset(Yii::app()->session['erreurDB']))
-                $this->addError ('password', 'La base de donnée est temporairement indisponible.');
-            else if (!$this->_identity->authenticate())
-                $this->addError('password', 'Le mot de passe ou le nom d\'utilisateur est incorrect.');
+            if (!$this->_identity->authenticate())
+            {
+                if(isset(Yii::app()->session['erreurDB']))
+                    $this->addError('DBConnectionFail', 'La connection à la DB a échoué.');
+                else
+                    $this->addError('password', 'Le mot de passe ou le nom d\'utilisateur est incorrect.');
+            }
         }
     }
 
