@@ -8,32 +8,22 @@
     <b><?php echo CHtml::encode($data->getAttributeLabel('id_lieu')); ?>:</b>
     <?php echo CHtml::link(CHtml::encode($data->id_lieu), array('view', 'id' => $data->id_lieu)); ?>
     <br />
-
-<<<<<<< HEAD
-	<b><?php echo CHtml::encode($data->getAttributeLabel('etage')); ?>:</b>
-	<?php echo CHtml::encode($data->etage); ?>
-	<br />
-
-	<b><?php echo CHtml::encode($data->getAttributeLabel('appartement')); ?>:</b>
-	<?php echo CHtml::encode($data->appartement); ?>
-	<br />
-=======
-    <b><?php echo CHtml::encode($data->getAttributeLabel('adresse')); ?>:</b>
-    <?php echo CHtml::encode($data->adresse); ?>
+    <b><?php echo CHtml::encode($data->getAttributeLabel('etage')); ?>:</b>
+    <?php echo CHtml::encode($data->etage); ?>
     <br />
 
-    <b><?php echo CHtml::encode($data->getAttributeLabel('ville')); ?>:</b>
-    <?php echo CHtml::encode($data->ville); ?>
+    <b><?php echo CHtml::encode($data->getAttributeLabel('appartement')); ?>:</b>
+    <?php echo CHtml::encode($data->appartement); ?>
     <br />
->>>>>>> 11491a7f40938f72ce5a9d8c131056ced1d02d27
+
 
     <b><?php echo CHtml::encode($data->getAttributeLabel('fk_locataire')); ?>:</b>
     <?php echo CHtml::encode($data->fk_locataire); ?>
     <br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('fk_batiment')); ?>:</b>
-	<?php echo CHtml::encode($data->fk_batiment); ?>
-	<br />
+    <b><?php echo CHtml::encode($data->getAttributeLabel('fk_batiment')); ?>:</b>
+    <?php echo CHtml::encode($data->fk_batiment); ?>
+    <br />
 
 
 </div>

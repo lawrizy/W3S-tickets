@@ -15,19 +15,22 @@
         'enableAjaxValidation' => false,
     ));
     ?>
+    
+    <?php ; ?> 
     <p class="note">Fields with <span class="required">*</span> are required.</p>
 
     <?php echo $form->errorSummary($model); ?>
 
     <div class="row">
         <?php echo $form->labelEx($model, 'fk_statut'); ?>
-        <input type="hidden" value="<?php  ?>" >
+        <input type="hidden" value="<?php ?>" >
         <?php echo $form->error($model, 'fk_statut'); ?>
     </div>
 
     <div class="row">
         <?php echo $form->labelEx($model, 'fk_categorie'); ?>
-        <?php echo $form->dropDownList($model, 'fk_categorie', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent'=>! NULL)), 'id_categorie_incident', 'label')); ?>
+        <?php echo $form->dropDownList($model, 'fk_categorie', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => !NULL)), 'id_categorie_incident', 'label')); ?>
+        <?php echo $form->dropDownList($model,'fk_categorie',  CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent'=>NULL)),'id_categorie_incident','label'));?>
         <?php echo $form->error($model, 'fk_categorie'); ?>
     </div>
 
@@ -37,9 +40,9 @@
         <?php echo $form->error($model, 'fk_lieu'); ?>
     </div>
 
-<!--    <div class="row">
-      
-    </div>-->
+    <!--    <div class="row">
+          
+        </div>-->
 
     <div class="row">
         <?php echo $form->labelEx($model, 'version'); ?>
