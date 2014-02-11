@@ -43,7 +43,6 @@ $('.search-form form').submit(function(){
     ?>
 </div><!-- search-form -->
 
-<<<<<<< HEAD:protected/views/batiment/admin.php
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'id'=>'batiment-grid',
 	'dataProvider'=>$model->search(),
@@ -58,19 +57,3 @@ $('.search-form form').submit(function(){
 		),
 	),
 )); ?>
-=======
-<?php
-$this->widget('zii.widgets.grid.CGridView', array(
-    'id' => 'statut-ticket-grid',
-    'dataProvider' => $model->search(),
-    'filter' => $model,
-    'columns' => array(
-        'id_statut_ticket',
-        'label',
-        array(
-            'class' => 'CButtonColumn',
-        ),
-    ),
-));
-?>
->>>>>>> 11491a7f40938f72ce5a9d8c131056ced1d02d27:protected/views/statutTicket/admin.php
