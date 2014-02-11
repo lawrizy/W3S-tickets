@@ -64,7 +64,7 @@ class User extends CActiveRecord
 			'nom' => 'Nom',
 			'email' => 'Email',
 			'password' => 'Password',
-			'fk_fonction' => 'Fk Fonction',
+			'fk_fonction' => 'Fonction de l\'utilisateur (1 = user, 2 = admin)',
 		);
 	}
 
