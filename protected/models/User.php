@@ -35,6 +35,7 @@ class User extends CActiveRecord
 			array('nom, email, password, fk_fonction', 'required'),
 			array('fk_fonction', 'numerical', 'integerOnly'=>true),
 			array('nom, email', 'length', 'max'=>64),
+                        array('email', 'email'),
 			array('password', 'length', 'max'=>32),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.

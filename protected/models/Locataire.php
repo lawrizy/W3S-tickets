@@ -27,6 +27,7 @@ class Locataire extends CActiveRecord {
         return array(
             array('nom, email, password', 'required'),
             array('nom, email', 'length', 'max' => 64),
+            array('email', 'email'),
             array('password', 'length', 'max' => 32),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
