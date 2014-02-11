@@ -64,14 +64,14 @@ class Ticket extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id_ticket' => 'Id Ticket',
-			'fk_statut' => 'Fk Statut',
-			'fk_categorie' => 'Fk Categorie',
-			'fk_lieu' => 'Fk Lieu',
-			'fk_user' => 'Fk User',
+			'id_ticket' => 'Numéro du ticket',
+			'fk_statut' => 'Statut du ticket',
+			'fk_categorie' => 'Catégorie de l\'incident',
+			'fk_lieu' => 'Lieu',
+			'fk_user' => 'Utilisateur',
 			'version' => 'Version',
 			'commentaire' => 'Commentaire',
-			'fk_canal' => 'Fk Canal',
+			'fk_canal' => 'Canal de création',
 		);
 	}
 
