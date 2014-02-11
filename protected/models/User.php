@@ -62,7 +62,7 @@ class User extends CActiveRecord
 		return array(
 			'id_user' => 'Id User',
 			'nom' => 'Nom',
-			'email' => 'Email',
+			'email' => 'Email (sera utilisé pour se connecter)',
 			'password' => 'Password',
 			'fk_fonction' => 'Fonction de l\'utilisateur (1 = user, 2 = admin)',
 		);
