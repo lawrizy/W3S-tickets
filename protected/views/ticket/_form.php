@@ -47,11 +47,15 @@
         }
         ?>
     </div>
-
-    <!--    <div class="row">
-          
-        </div>-->
-
+    
+    <div class="row">
+        <?php 
+            echo $form->labelEx($model, 'commentaire');
+            echo $form->textArea($model, 'commentaire', array('maxlength' => 800, 'rows' => 5, 'cols' => 50));
+            echo $form->error($model, 'commentaire');
+        ?>
+    </div>
+    
     <div class="row">
 <?php echo $form->labelEx($model, 'version'); ?>
         <?php echo $form->textField($model, 'version', array('size' => 2, 'maxlength' => 2)); ?>
