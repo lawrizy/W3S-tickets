@@ -20,21 +20,27 @@
 	<?php echo $form->errorSummary($model); ?>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'adresse'); ?>
-		<?php echo $form->textField($model,'adresse',array('size'=>60,'maxlength'=>64)); ?>
-		<?php echo $form->error($model,'adresse'); ?>
+		<?php echo $form->labelEx($model,'etage'); ?>
+		<?php echo $form->textField($model,'etage'); ?>
+		<?php echo $form->error($model,'etage'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'ville'); ?>
-		<?php echo $form->textField($model,'ville',array('size'=>60,'maxlength'=>64)); ?>
-		<?php echo $form->error($model,'ville'); ?>
+		<?php echo $form->labelEx($model,'appartement'); ?>
+		<?php echo $form->textField($model,'appartement',array('size'=>5,'maxlength'=>5)); ?>
+		<?php echo $form->error($model,'appartement'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'fk_locataire'); ?>
 		<?php echo $form->textField($model,'fk_locataire',array('size'=>10,'maxlength'=>10)); ?>
 		<?php echo $form->error($model,'fk_locataire'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'fk_batiment'); ?>
+		<?php echo $form->textField($model,'fk_batiment'); ?>
+		<?php echo $form->error($model,'fk_batiment'); ?>
 	</div>
 
 	<div class="row buttons">

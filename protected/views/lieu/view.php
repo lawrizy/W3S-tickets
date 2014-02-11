@@ -22,8 +22,9 @@ $this->menu=array(
 	'data'=>$model,
 	'attributes'=>array(
 		'id_lieu',
-		'adresse',
-		'ville',
+		'etage',
+		'appartement',
 		'fk_locataire',
+		'fk_batiment',
 	),
 )); ?>

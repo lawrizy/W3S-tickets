@@ -1,24 +1,25 @@
 <?php
 
 /**
- * This is the model class for table "w3sys_statut_ticket".
+ * This is the model class for table "w3sys_batiment".
  *
- * The followings are the available columns in table 'w3sys_statut_ticket':
- * @property string $id_statut_ticket
- * @property string $label
+ * The followings are the available columns in table 'w3sys_batiment':
+ * @property integer $id_batiment
+ * @property string $adresse
+ * @property string $commune
+ * @property integer $cp
  *
  * The followings are the available model relations:
- * @property HistoriqueTicket[] $historiqueTickets
+ * @property Secteur[] $secteurs
  */
-
-class StatutTicket extends CActiveRecord
+class Batiment extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'w3sys_statut_ticket';
+		return 'w3sys_batiment';
 	}
 
 	/**
@@ -29,10 +30,12 @@ class StatutTicket extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('label', 'length', 'max'=>64),
+			array('adresse, commune, cp', 'required'),
+			array('cp', 'numerical', 'integerOnly'=>true),
+			array('adresse, commune', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_statut_ticket, label', 'safe', 'on'=>'search'),
+			array('id_batiment, adresse, commune, cp', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -44,7 +47,7 @@ class StatutTicket extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'historiqueTickets' => array(self::HAS_MANY, 'HistoriqueTicket', 'fk_statut_ticket'),
+			'secteurs' => array(self::HAS_MANY, 'Secteur', 'fk_batiment'),
 		);
 	}
 
@@ -54,8 +57,10 @@ class StatutTicket extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id_statut_ticket' => 'Id Statut Ticket',
-			'label' => 'Label',
+			'id_batiment' => 'Id Batiment',
+			'adresse' => 'Adresse',
+			'commune' => 'Commune',
+			'cp' => 'Cp',
 		);
 	}
 
@@ -77,8 +82,10 @@ class StatutTicket extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id_statut_ticket',$this->id_statut_ticket,true);
-		$criteria->compare('label',$this->label,true);
+		$criteria->compare('id_batiment',$this->id_batiment);
+		$criteria->compare('adresse',$this->adresse,true);
+		$criteria->compare('commune',$this->commune,true);
+		$criteria->compare('cp',$this->cp);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -89,7 +96,7 @@ class StatutTicket extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return StatutTicket the static model class
+	 * @return Batiment the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

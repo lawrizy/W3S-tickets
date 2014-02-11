@@ -1,6 +1,6 @@
 <?php
 
-class StatutTicketController extends Controller
+class EntrepriseController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -62,16 +62,16 @@ class StatutTicketController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new StatutTicket;
+		$model=new Entreprise;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['StatutTicket']))
+		if(isset($_POST['Entreprise']))
 		{
-			$model->attributes=$_POST['StatutTicket'];
+			$model->attributes=$_POST['Entreprise'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_statut_ticket));
+				$this->redirect(array('view','id'=>$model->id_entreprise));
 		}
 
 		$this->render('create',array(
@@ -91,11 +91,11 @@ class StatutTicketController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['StatutTicket']))
+		if(isset($_POST['Entreprise']))
 		{
-			$model->attributes=$_POST['StatutTicket'];
+			$model->attributes=$_POST['Entreprise'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_statut_ticket));
+				$this->redirect(array('view','id'=>$model->id_entreprise));
 		}
 
 		$this->render('update',array(
@@ -122,7 +122,7 @@ class StatutTicketController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('StatutTicket');
+		$dataProvider=new CActiveDataProvider('Entreprise');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -133,10 +133,10 @@ class StatutTicketController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new StatutTicket('search');
+		$model=new Entreprise('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['StatutTicket']))
-			$model->attributes=$_GET['StatutTicket'];
+		if(isset($_GET['Entreprise']))
+			$model->attributes=$_GET['Entreprise'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -147,12 +147,12 @@ class StatutTicketController extends Controller
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
-	 * @return StatutTicket the loaded model
+	 * @return Entreprise the loaded model
 	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
-		$model=StatutTicket::model()->findByPk($id);
+		$model=Entreprise::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -160,11 +160,11 @@ class StatutTicketController extends Controller
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param StatutTicket $model the model to be validated
+	 * @param Entreprise $model the model to be validated
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='statut-ticket-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='entreprise-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

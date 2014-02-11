@@ -10,11 +10,12 @@
  * @property string $fk_lieu
  * @property string $fk_user
  * @property string $version
+ * @property string $commentaire
+ * @property integer $fk_canal
  *
  * The followings are the available model relations:
  * @property HistoriqueTicket[] $historiqueTickets
  */
-
 class Ticket extends CActiveRecord
 {
 	/**
@@ -33,12 +34,14 @@ class Ticket extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('fk_statut, fk_categorie, fk_lieu, fk_user', 'required'),
+			array('fk_categorie, fk_lieu, fk_canal', 'required'),
+			array('fk_canal', 'numerical', 'integerOnly'=>true),
 			array('fk_statut, fk_categorie, fk_lieu, fk_user', 'length', 'max'=>10),
 			array('version', 'length', 'max'=>2),
+			array('commentaire', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_ticket, fk_statut, fk_categorie, fk_lieu, fk_user, version', 'safe', 'on'=>'search'),
+			array('id_ticket, fk_statut, fk_categorie, fk_lieu, fk_user, version, commentaire, fk_canal', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -66,6 +69,8 @@ class Ticket extends CActiveRecord
 			'fk_lieu' => 'Fk Lieu',
 			'fk_user' => 'Fk User',
 			'version' => 'Version',
+			'commentaire' => 'Commentaire',
+			'fk_canal' => 'Fk Canal',
 		);
 	}
 
@@ -93,6 +98,8 @@ class Ticket extends CActiveRecord
 		$criteria->compare('fk_lieu',$this->fk_lieu,true);
 		$criteria->compare('fk_user',$this->fk_user,true);
 		$criteria->compare('version',$this->version,true);
+		$criteria->compare('commentaire',$this->commentaire,true);
+		$criteria->compare('fk_canal',$this->fk_canal);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

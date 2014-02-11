@@ -49,6 +49,18 @@
 		<?php echo $form->error($model,'version'); ?>
 	</div>
 
+	<div class="row">
+		<?php echo $form->labelEx($model,'commentaire'); ?>
+		<?php echo $form->textArea($model,'commentaire',array('rows'=>6, 'cols'=>50)); ?>
+		<?php echo $form->error($model,'commentaire'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'fk_canal'); ?>
+		<?php echo $form->textField($model,'fk_canal'); ?>
+		<?php echo $form->error($model,'fk_canal'); ?>
+	</div>
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
 	</div>

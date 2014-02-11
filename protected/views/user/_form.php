@@ -26,12 +26,6 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'prenom'); ?>
-		<?php echo $form->textField($model,'prenom',array('size'=>60,'maxlength'=>64)); ?>
-		<?php echo $form->error($model,'prenom'); ?>
-	</div>
-
-	<div class="row">
 		<?php echo $form->labelEx($model,'email'); ?>
 		<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>64)); ?>
 		<?php echo $form->error($model,'email'); ?>
@@ -39,8 +33,14 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'password'); ?>
-		<?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>100)); ?>
+		<?php echo $form->passwordField($model,'password',array('size'=>32,'maxlength'=>32)); ?>
 		<?php echo $form->error($model,'password'); ?>
+	</div>
+
+	<div class="row">
+		<?php echo $form->labelEx($model,'fk_fonction'); ?>
+		<?php echo $form->textField($model,'fk_fonction'); ?>
+		<?php echo $form->error($model,'fk_fonction'); ?>
 	</div>
 
 	<div class="row buttons">

@@ -1,6 +1,6 @@
 <?php
 
-class CategorieIncidentController extends Controller
+class BatimentController extends Controller
 {
 	/**
 	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -62,16 +62,16 @@ class CategorieIncidentController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new CategorieIncident;
+		$model=new Batiment;
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['CategorieIncident']))
+		if(isset($_POST['Batiment']))
 		{
-			$model->attributes=$_POST['CategorieIncident'];
+			$model->attributes=$_POST['Batiment'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_categorie_incident));
+				$this->redirect(array('view','id'=>$model->id_batiment));
 		}
 
 		$this->render('create',array(
@@ -91,11 +91,11 @@ class CategorieIncidentController extends Controller
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['CategorieIncident']))
+		if(isset($_POST['Batiment']))
 		{
-			$model->attributes=$_POST['CategorieIncident'];
+			$model->attributes=$_POST['Batiment'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id_categorie_incident));
+				$this->redirect(array('view','id'=>$model->id_batiment));
 		}
 
 		$this->render('update',array(
@@ -122,7 +122,7 @@ class CategorieIncidentController extends Controller
 	 */
 	public function actionIndex()
 	{
-		$dataProvider=new CActiveDataProvider('CategorieIncident');
+		$dataProvider=new CActiveDataProvider('Batiment');
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
@@ -133,10 +133,10 @@ class CategorieIncidentController extends Controller
 	 */
 	public function actionAdmin()
 	{
-		$model=new CategorieIncident('search');
+		$model=new Batiment('search');
 		$model->unsetAttributes();  // clear any default values
-		if(isset($_GET['CategorieIncident']))
-			$model->attributes=$_GET['CategorieIncident'];
+		if(isset($_GET['Batiment']))
+			$model->attributes=$_GET['Batiment'];
 
 		$this->render('admin',array(
 			'model'=>$model,
@@ -147,12 +147,12 @@ class CategorieIncidentController extends Controller
 	 * Returns the data model based on the primary key given in the GET variable.
 	 * If the data model is not found, an HTTP exception will be raised.
 	 * @param integer $id the ID of the model to be loaded
-	 * @return CategorieIncident the loaded model
+	 * @return Batiment the loaded model
 	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
-		$model=CategorieIncident::model()->findByPk($id);
+		$model=Batiment::model()->findByPk($id);
 		if($model===null)
 			throw new CHttpException(404,'The requested page does not exist.');
 		return $model;
@@ -160,11 +160,11 @@ class CategorieIncidentController extends Controller
 
 	/**
 	 * Performs the AJAX validation.
-	 * @param CategorieIncident $model the model to be validated
+	 * @param Batiment $model the model to be validated
 	 */
 	protected function performAjaxValidation($model)
 	{
-		if(isset($_POST['ajax']) && $_POST['ajax']==='categorie-incident-form')
+		if(isset($_POST['ajax']) && $_POST['ajax']==='batiment-form')
 		{
 			echo CActiveForm::validate($model);
 			Yii::app()->end();

@@ -51,6 +51,10 @@ or <b>=</b>) at the beginning of each of your search values to specify how the c
 		'fk_lieu',
 		'fk_user',
 		'version',
+		/*
+		'commentaire',
+		'fk_canal',
+		*/
 		array(
 			'class'=>'CButtonColumn',
 		),

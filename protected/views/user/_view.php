@@ -13,16 +13,16 @@
 	<?php echo CHtml::encode($data->nom); ?>
 	<br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('prenom')); ?>:</b>
-	<?php echo CHtml::encode($data->prenom); ?>
-	<br />
-
 	<b><?php echo CHtml::encode($data->getAttributeLabel('email')); ?>:</b>
 	<?php echo CHtml::encode($data->email); ?>
 	<br />
 
 	<b><?php echo CHtml::encode($data->getAttributeLabel('password')); ?>:</b>
 	<?php echo CHtml::encode($data->password); ?>
+	<br />
+
+	<b><?php echo CHtml::encode($data->getAttributeLabel('fk_fonction')); ?>:</b>
+	<?php echo CHtml::encode($data->fk_fonction); ?>
 	<br />
 
 

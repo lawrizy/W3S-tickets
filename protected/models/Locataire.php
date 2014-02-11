@@ -9,8 +9,6 @@
  * @property string $email
  * @property string $password
  */
-
-
 class Locataire extends CActiveRecord
 {
 	/**

@@ -6,11 +6,13 @@
  * The followings are the available columns in table 'w3sys_user':
  * @property integer $id_user
  * @property string $nom
- * @property string $prenom
  * @property string $email
  * @property string $password
+ * @property integer $fk_fonction
+ *
+ * The followings are the available model relations:
+ * @property Fonction $fkFonction
  */
-
 class User extends CActiveRecord
 {
 	/**
@@ -29,12 +31,13 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('nom, prenom, email, password', 'required'),
-			array('nom, prenom, email', 'length', 'max'=>64),
-			array('password', 'length', 'max'=>100),
+			array('nom, email, password, fk_fonction', 'required'),
+			array('fk_fonction', 'numerical', 'integerOnly'=>true),
+			array('nom, email', 'length', 'max'=>64),
+			array('password', 'length', 'max'=>32),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_user, nom, prenom, email, password', 'safe', 'on'=>'search'),
+			array('id_user, nom, email, password, fk_fonction', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -46,6 +49,7 @@ class User extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
+			'fkFonction' => array(self::BELONGS_TO, 'Fonction', 'fk_fonction'),
 		);
 	}
 
@@ -57,9 +61,9 @@ class User extends CActiveRecord
 		return array(
 			'id_user' => 'Id User',
 			'nom' => 'Nom',
-			'prenom' => 'Prenom',
 			'email' => 'Email',
 			'password' => 'Password',
+			'fk_fonction' => 'Fk Fonction',
 		);
 	}
 
@@ -83,9 +87,9 @@ class User extends CActiveRecord
 
 		$criteria->compare('id_user',$this->id_user);
 		$criteria->compare('nom',$this->nom,true);
-		$criteria->compare('prenom',$this->prenom,true);
 		$criteria->compare('email',$this->email,true);
 		$criteria->compare('password',$this->password,true);
+		$criteria->compare('fk_fonction',$this->fk_fonction);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

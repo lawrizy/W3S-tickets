@@ -1,18 +1,18 @@
 <?php
-/* @var $this StatutTicketController */
+/* @var $this BatimentController */
 /* @var $dataProvider CActiveDataProvider */
 
 $this->breadcrumbs=array(
-	'Statut Tickets',
+	'Batiments',
 );
 
 $this->menu=array(
-	array('label'=>'Create StatutTicket', 'url'=>array('create')),
-	array('label'=>'Manage StatutTicket', 'url'=>array('admin')),
+	array('label'=>'Create Batiment', 'url'=>array('create')),
+	array('label'=>'Manage Batiment', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Statut Tickets</h1>
+<h1>Batiments</h1>
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,

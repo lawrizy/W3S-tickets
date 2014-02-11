@@ -1,28 +1,28 @@
 <?php
 
 /**
- * This is the model class for table "w3sys_historique_ticket".
+ * This is the model class for table "w3sys_entreprise".
  *
- * The followings are the available columns in table 'w3sys_historique_ticket':
- * @property integer $id_historique_ticket
- * @property string $date_update
- * @property string $commentaire
- * @property string $fk_ticket
- * @property string $fk_statut_ticket
+ * The followings are the available columns in table 'w3sys_entreprise':
+ * @property integer $id_entreprise
+ * @property string $nom
+ * @property string $adresse
+ * @property string $tva
+ * @property string $commune
+ * @property integer $cp
+ * @property string $tel
  *
  * The followings are the available model relations:
- * @property Ticket $fkTicket
- * @property StatutTicket $fkStatutTicket
+ * @property Secteur[] $secteurs
  */
-
-class HistoriqueTicket extends CActiveRecord
+class Entreprise extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'w3sys_historique_ticket';
+		return 'w3sys_entreprise';
 	}
 
 	/**
@@ -33,12 +33,12 @@ class HistoriqueTicket extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('date_update, fk_ticket, fk_statut_ticket', 'required'),
-			array('fk_ticket, fk_statut_ticket', 'length', 'max'=>10),
-			array('commentaire', 'safe'),
+			array('nom, adresse, tva, commune, cp, tel', 'required'),
+			array('cp', 'numerical', 'integerOnly'=>true),
+			array('nom, adresse, tva, commune, tel', 'length', 'max'=>45),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id_historique_ticket, date_update, commentaire, fk_ticket, fk_statut_ticket', 'safe', 'on'=>'search'),
+			array('id_entreprise, nom, adresse, tva, commune, cp, tel', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -50,8 +50,7 @@ class HistoriqueTicket extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'fkTicket' => array(self::BELONGS_TO, 'Ticket', 'fk_ticket'),
-			'fkStatutTicket' => array(self::BELONGS_TO, 'StatutTicket', 'fk_statut_ticket'),
+			'secteurs' => array(self::HAS_MANY, 'Secteur', 'fk_entreprise'),
 		);
 	}
 
@@ -61,11 +60,13 @@ class HistoriqueTicket extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id_historique_ticket' => 'Id Historique Ticket',
-			'date_update' => 'Date Update',
-			'commentaire' => 'Commentaire',
-			'fk_ticket' => 'Fk Ticket',
-			'fk_statut_ticket' => 'Fk Statut Ticket',
+			'id_entreprise' => 'Id Entreprise',
+			'nom' => 'Nom',
+			'adresse' => 'Adresse',
+			'tva' => 'Tva',
+			'commune' => 'Commune',
+			'cp' => 'Cp',
+			'tel' => 'Tel',
 		);
 	}
 
@@ -87,11 +88,13 @@ class HistoriqueTicket extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id_historique_ticket',$this->id_historique_ticket);
-		$criteria->compare('date_update',$this->date_update,true);
-		$criteria->compare('commentaire',$this->commentaire,true);
-		$criteria->compare('fk_ticket',$this->fk_ticket,true);
-		$criteria->compare('fk_statut_ticket',$this->fk_statut_ticket,true);
+		$criteria->compare('id_entreprise',$this->id_entreprise);
+		$criteria->compare('nom',$this->nom,true);
+		$criteria->compare('adresse',$this->adresse,true);
+		$criteria->compare('tva',$this->tva,true);
+		$criteria->compare('commune',$this->commune,true);
+		$criteria->compare('cp',$this->cp);
+		$criteria->compare('tel',$this->tel,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -102,7 +105,7 @@ class HistoriqueTicket extends CActiveRecord
 	 * Returns the static model of the specified AR class.
 	 * Please note that you should have this exact method in all your CActiveRecord descendants!
 	 * @param string $className active record class name.
-	 * @return HistoriqueTicket the static model class
+	 * @return Entreprise the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

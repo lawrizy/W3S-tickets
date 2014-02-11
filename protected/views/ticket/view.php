@@ -27,5 +27,7 @@ $this->menu=array(
 		'fk_lieu',
 		'fk_user',
 		'version',
+		'commentaire',
+		'fk_canal',
 	),
 )); ?>

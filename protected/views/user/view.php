@@ -23,8 +23,8 @@ $this->menu=array(
 	'attributes'=>array(
 		'id_user',
 		'nom',
-		'prenom',
 		'email',
 		'password',
+		'fk_fonction',
 	),
 )); ?>

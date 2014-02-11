@@ -22,13 +22,13 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'prenom'); ?>
-		<?php echo $form->textField($model,'prenom',array('size'=>60,'maxlength'=>64)); ?>
+		<?php echo $form->label($model,'email'); ?>
+		<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>64)); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'email'); ?>
-		<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>64)); ?>
+		<?php echo $form->label($model,'fk_fonction'); ?>
+		<?php echo $form->textField($model,'fk_fonction'); ?>
 	</div>
 
 	<div class="row buttons">
