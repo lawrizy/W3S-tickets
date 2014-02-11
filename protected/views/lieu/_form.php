@@ -33,7 +33,7 @@
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'fk_locataire'); ?>
-		<?php echo $form->textField($model,'fk_locataire',array('size'=>10,'maxlength'=>10)); ?>
+		<?php echo $form->dropDownList($model, 'fk_locataire', CHtml::listData(Locataire::model()->findAll(), 'id_locataire', 'nom')); ?>
 		<?php echo $form->error($model,'fk_locataire'); ?>
 	</div>
 

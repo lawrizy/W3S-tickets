@@ -8,6 +8,7 @@
     <b><?php echo CHtml::encode($data->getAttributeLabel('id_lieu')); ?>:</b>
     <?php echo CHtml::link(CHtml::encode($data->id_lieu), array('view', 'id' => $data->id_lieu)); ?>
     <br />
+
     <b><?php echo CHtml::encode($data->getAttributeLabel('etage')); ?>:</b>
     <?php echo CHtml::encode($data->etage); ?>
     <br />
