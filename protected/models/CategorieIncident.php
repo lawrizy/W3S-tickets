@@ -58,10 +58,10 @@ return array(
 public function attributeLabels()
 {
 return array(
-    'id_categorie_incident' => 'Id Categorie Incident',
-    'label' => 'Label',
-    'fk_parent' => 'Fk Parent',
-    'fk_priorite' => 'Fk Priorite',
+    'id_categorie_incident' => 'Numéro de catégorie',
+    'label' => 'Nom de l\'incident',
+    'fk_parent' => 'Catégorie parente',
+    'fk_priorite' => 'Priorité de l\'incident',
 );
 }
 

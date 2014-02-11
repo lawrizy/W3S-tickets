@@ -56,13 +56,13 @@ class Entreprise extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'id_entreprise' => 'Id Entreprise',
+            'id_entreprise' => 'Numéro d\'entreprise',
             'nom' => 'Nom',
             'adresse' => 'Adresse',
-            'tva' => 'Tva',
+            'tva' => 'Numéro de TVA',
             'commune' => 'Commune',
-            'cp' => 'Cp',
-            'tel' => 'Tel',
+            'cp' => 'Code postal',
+            'tel' => 'Numéro de téléphone',
         );
     }
 

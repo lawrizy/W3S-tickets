@@ -57,10 +57,10 @@ class Batiment extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id_batiment' => 'Id Batiment',
+			'id_batiment' => 'Numéro de bâtiment',
 			'adresse' => 'Adresse',
 			'commune' => 'Commune',
-			'cp' => 'Cp',
+			'cp' => 'Code postal',
 		);
 	}
 
