@@ -2,7 +2,7 @@
 /* @var $this EntrepriseController */
 /* @var $model Entreprise */
 
-<<<<<<< HEAD:protected/views/entreprise/admin.php
+
 $this->breadcrumbs=array(
 	'Entreprises'=>array('index'),
 	'Manage',
@@ -11,16 +11,7 @@ $this->breadcrumbs=array(
 $this->menu=array(
 	array('label'=>'List Entreprise', 'url'=>array('index')),
 	array('label'=>'Create Entreprise', 'url'=>array('create')),
-=======
-$this->breadcrumbs = array(
-    'Categorie Incidents' => array('index'),
-    'Manage',
-);
 
-$this->menu = array(
-    array('label' => 'List CategorieIncident', 'url' => array('index')),
-    array('label' => 'Create CategorieIncident', 'url' => array('create')),
->>>>>>> 11491a7f40938f72ce5a9d8c131056ced1d02d27:protected/views/categorieIncident/admin.php
 );
 
 Yii::app()->clientScript->registerScript('search', "

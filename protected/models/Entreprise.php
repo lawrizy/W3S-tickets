@@ -15,69 +15,13 @@
  * The followings are the available model relations:
  * @property Secteur[] $secteurs
  */
-<<<<<<< HEAD:protected/models/Entreprise.php
-class Entreprise extends CActiveRecord
-{
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'w3sys_entreprise';
-	}
-
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('nom, adresse, tva, commune, cp, tel', 'required'),
-			array('cp', 'numerical', 'integerOnly'=>true),
-			array('nom, adresse, tva, commune, tel', 'length', 'max'=>45),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('id_entreprise, nom, adresse, tva, commune, cp, tel', 'safe', 'on'=>'search'),
-		);
-	}
-
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-			'secteurs' => array(self::HAS_MANY, 'Secteur', 'fk_entreprise'),
-		);
-	}
-
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'id_entreprise' => 'Id Entreprise',
-			'nom' => 'Nom',
-			'adresse' => 'Adresse',
-			'tva' => 'Tva',
-			'commune' => 'Commune',
-			'cp' => 'Cp',
-			'tel' => 'Tel',
-		);
-	}
-=======
-class CategorieIncident extends CActiveRecord {
+class Entreprise extends CActiveRecord {
 
     /**
      * @return string the associated database table name
      */
     public function tableName() {
-        return 'w3sys_categorie_incident';
+        return 'w3sys_entreprise';
     }
 
     /**
@@ -87,12 +31,12 @@ class CategorieIncident extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('label', 'required'),
-            array('label', 'length', 'max' => 64),
-            array('fk_parent', 'length', 'max' => 10),
+            array('nom, adresse, tva, commune, cp, tel', 'required'),
+            array('cp', 'numerical', 'integerOnly' => true),
+            array('nom, adresse, tva, commune, tel', 'length', 'max' => 45),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.
-            array('id_categorie_incident, label, fk_parent', 'safe', 'on' => 'search'),
+            array('id_entreprise, nom, adresse, tva, commune, cp, tel', 'safe', 'on' => 'search'),
         );
     }
 
@@ -103,6 +47,7 @@ class CategorieIncident extends CActiveRecord {
         // NOTE: you may need to adjust the relation name and the related
         // class name for the relations automatically generated below.
         return array(
+            'secteurs' => array(self::HAS_MANY, 'Secteur', 'fk_entreprise'),
         );
     }
 
@@ -111,12 +56,15 @@ class CategorieIncident extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'id_categorie_incident' => 'Id Categorie Incident',
-            'label' => 'Label',
-            'fk_parent' => 'Fk Parent',
+            'id_entreprise' => 'Id Entreprise',
+            'nom' => 'Nom',
+            'adresse' => 'Adresse',
+            'tva' => 'Tva',
+            'commune' => 'Commune',
+            'cp' => 'Cp',
+            'tel' => 'Tel',
         );
     }
->>>>>>> 11491a7f40938f72ce5a9d8c131056ced1d02d27:protected/models/CategorieIncident.php
 
     /**
      * Retrieves a list of models based on the current search/filter conditions.
@@ -135,19 +83,15 @@ class CategorieIncident extends CActiveRecord {
 
         $criteria = new CDbCriteria;
 
-<<<<<<< HEAD:protected/models/Entreprise.php
-		$criteria->compare('id_entreprise',$this->id_entreprise);
-		$criteria->compare('nom',$this->nom,true);
-		$criteria->compare('adresse',$this->adresse,true);
-		$criteria->compare('tva',$this->tva,true);
-		$criteria->compare('commune',$this->commune,true);
-		$criteria->compare('cp',$this->cp);
-		$criteria->compare('tel',$this->tel,true);
-=======
-        $criteria->compare('id_categorie_incident', $this->id_categorie_incident, true);
-        $criteria->compare('label', $this->label, true);
-        $criteria->compare('fk_parent', $this->fk_parent, true);
->>>>>>> 11491a7f40938f72ce5a9d8c131056ced1d02d27:protected/models/CategorieIncident.php
+
+        $criteria->compare('id_entreprise', $this->id_entreprise);
+        $criteria->compare('nom', $this->nom, true);
+        $criteria->compare('adresse', $this->adresse, true);
+        $criteria->compare('tva', $this->tva, true);
+        $criteria->compare('commune', $this->commune, true);
+        $criteria->compare('cp', $this->cp);
+        $criteria->compare('tel', $this->tel, true);
+
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -164,17 +108,4 @@ class CategorieIncident extends CActiveRecord {
         return parent::model($className);
     }
 
-<<<<<<< HEAD:protected/models/Entreprise.php
-	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return Entreprise the static model class
-	 */
-	public static function model($className=__CLASS__)
-	{
-		return parent::model($className);
-	}
-=======
->>>>>>> 11491a7f40938f72ce5a9d8c131056ced1d02d27:protected/models/CategorieIncident.php
 }

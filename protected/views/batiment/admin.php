@@ -2,7 +2,6 @@
 /* @var $this BatimentController */
 /* @var $model Batiment */
 
-<<<<<<< HEAD:protected/views/batiment/admin.php
 $this->breadcrumbs=array(
 	'Batiments'=>array('index'),
 	'Manage',
@@ -11,16 +10,7 @@ $this->breadcrumbs=array(
 $this->menu=array(
 	array('label'=>'List Batiment', 'url'=>array('index')),
 	array('label'=>'Create Batiment', 'url'=>array('create')),
-=======
-$this->breadcrumbs = array(
-    'Statut Tickets' => array('index'),
-    'Manage',
-);
 
-$this->menu = array(
-    array('label' => 'List StatutTicket', 'url' => array('index')),
-    array('label' => 'Create StatutTicket', 'url' => array('create')),
->>>>>>> 11491a7f40938f72ce5a9d8c131056ced1d02d27:protected/views/statutTicket/admin.php
 );
 
 Yii::app()->clientScript->registerScript('search', "

@@ -9,17 +9,6 @@
  * @property string $email
  * @property string $password
  */
-<<<<<<< HEAD
-class Locataire extends CActiveRecord
-{
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'w3sys_locataire';
-	}
-=======
 class Locataire extends CActiveRecord {
 
     /**
@@ -44,7 +33,6 @@ class Locataire extends CActiveRecord {
             array('id_locataire, nom, email, password', 'safe', 'on' => 'search'),
         );
     }
->>>>>>> 11491a7f40938f72ce5a9d8c131056ced1d02d27
 
     /**
      * @return array relational rules.
