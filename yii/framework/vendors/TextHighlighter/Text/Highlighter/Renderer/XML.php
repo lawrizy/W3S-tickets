@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 /**
  * XML renderer.
@@ -19,13 +20,11 @@
  * @version    CVS: $Id: XML.php,v 1.1 2007/06/03 02:37:09 ssttoo Exp $
  * @link       http://pear.php.net/package/Text_Highlighter
  */
-
 /**
  * @ignore
  */
-
-require_once dirname(__FILE__).'/../Renderer.php';
-require_once dirname(__FILE__).'/../Renderer/Array.php';
+require_once dirname(__FILE__) . '/../Renderer.php';
+require_once dirname(__FILE__) . '/../Renderer/Array.php';
 
 /**
  * XML renderer, based on Andrey Demenev's HTML renderer.
@@ -38,10 +37,7 @@ require_once dirname(__FILE__).'/../Renderer/Array.php';
  * @version    Release: 0.5.0
  * @link       http://pear.php.net/package/Text_Highlighter
  */
-
-class Text_Highlighter_Renderer_XML extends Text_Highlighter_Renderer_Array
-{
-
+class Text_Highlighter_Renderer_XML extends Text_Highlighter_Renderer_Array {
 
     /**
      * Options for XML_Serializer
@@ -51,7 +47,6 @@ class Text_Highlighter_Renderer_XML extends Text_Highlighter_Renderer_Array
      */
     var $_serializer_options = array();
 
-
     /**
      * Resets renderer state
      *
@@ -60,14 +55,12 @@ class Text_Highlighter_Renderer_XML extends Text_Highlighter_Renderer_Array
      *
      * @access protected
      */
-    function reset()
-    {
+    function reset() {
         parent::reset();
         if (isset($this->_options['xml_serializer'])) {
             $this->_serializer_options = $this->_options['xml_serializer'];
         }
     }
-
 
     /**
      * Signals that no more tokens are available
@@ -75,8 +68,7 @@ class Text_Highlighter_Renderer_XML extends Text_Highlighter_Renderer_Array
      * @abstract
      * @access public
      */
-    function finalize()
-    {
+    function finalize() {
 
         // call parent's finalize(), then serialize array into XML
         parent::finalize();
@@ -89,7 +81,6 @@ class Text_Highlighter_Renderer_XML extends Text_Highlighter_Renderer_Array
         }
     }
 
-
 }
 
 /*
@@ -99,5 +90,4 @@ class Text_Highlighter_Renderer_XML extends Text_Highlighter_Renderer_Array
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
 ?>

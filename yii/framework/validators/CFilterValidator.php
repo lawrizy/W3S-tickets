@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CFilterValidator class file.
  *
@@ -26,24 +27,24 @@
  * @package system.validators
  * @since 1.0
  */
-class CFilterValidator extends CValidator
-{
-	/**
-	 * @var callback the filter method
-	 */
-	public $filter;
+class CFilterValidator extends CValidator {
 
-	/**
-	 * Validates the attribute of the object.
-	 * If there is any error, the error message is added to the object.
-	 * @param CModel $object the object being validated
-	 * @param string $attribute the attribute being validated
-	 * @throws CException if given {@link filter} is not callable
-	 */
-	protected function validateAttribute($object,$attribute)
-	{
-		if($this->filter===null || !is_callable($this->filter))
-			throw new CException(Yii::t('yii','The "filter" property must be specified with a valid callback.'));
-		$object->$attribute=call_user_func_array($this->filter,array($object->$attribute));
-	}
+    /**
+     * @var callback the filter method
+     */
+    public $filter;
+
+    /**
+     * Validates the attribute of the object.
+     * If there is any error, the error message is added to the object.
+     * @param CModel $object the object being validated
+     * @param string $attribute the attribute being validated
+     * @throws CException if given {@link filter} is not callable
+     */
+    protected function validateAttribute($object, $attribute) {
+        if ($this->filter === null || !is_callable($this->filter))
+            throw new CException(Yii::t('yii', 'The "filter" property must be specified with a valid callback.'));
+        $object->$attribute = call_user_func_array($this->filter, array($object->$attribute));
+    }
+
 }

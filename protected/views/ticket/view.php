@@ -2,22 +2,23 @@
 /* @var $this TicketController */
 /* @var $model Ticket */
 
-$this->breadcrumbs=array(
-	'Tickets'=>array('index'),
-	$model->id_ticket,
+$this->breadcrumbs = array(
+    'Tickets' => array('index'),
+    $model->id_ticket,
 );
 
-$this->menu=array(
-	array('label'=>'List Ticket', 'url'=>array('index')),
-	array('label'=>'Create Ticket', 'url'=>array('create')),
-	array('label'=>'Update Ticket', 'url'=>array('update', 'id'=>$model->id_ticket)),
-	array('label'=>'Delete Ticket', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id_ticket),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage Ticket', 'url'=>array('admin')),
+$this->menu = array(
+    array('label' => 'List Ticket', 'url' => array('index')),
+    array('label' => 'Create Ticket', 'url' => array('create')),
+    array('label' => 'Update Ticket', 'url' => array('update', 'id' => $model->id_ticket)),
+    array('label' => 'Delete Ticket', 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id_ticket), 'confirm' => 'Are you sure you want to delete this item?')),
+    array('label' => 'Manage Ticket', 'url' => array('admin')),
 );
 ?>
 
 <h1>View Ticket #<?php echo $model->id_ticket; ?></h1>
 
+<<<<<<< HEAD
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
 	'attributes'=>array(
@@ -31,3 +32,18 @@ $this->menu=array(
 		'fk_canal',
 	),
 )); ?>
+=======
+<?php
+$this->widget('zii.widgets.CDetailView', array(
+    'data' => $model,
+    'attributes' => array(
+        'id_ticket',
+        'fk_statut',
+        'fk_categorie',
+        'fk_lieu',
+        'fk_user',
+        'version',
+    ),
+));
+?>
+>>>>>>> 11491a7f40938f72ce5a9d8c131056ced1d02d27

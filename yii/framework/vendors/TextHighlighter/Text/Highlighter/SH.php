@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Auto-generated class. SH syntax highlighting
  *
@@ -36,8 +37,8 @@
  * @version    Release: 0.7.1
  * @link       http://pear.php.net/package/Text_Highlighter
  */
-class  Text_Highlighter_SH extends Text_Highlighter
-{
+class Text_Highlighter_SH extends Text_Highlighter {
+
     var $_language = 'sh';
 
     /**
@@ -46,11 +47,10 @@ class  Text_Highlighter_SH extends Text_Highlighter
      * @param array  $options
      * @access public
      */
-    function __construct($options=array())
-    {
+    function __construct($options = array()) {
 
         $this->_options = $options;
-        $this->_regs = array (
+        $this->_regs = array(
             -1 => '/((?m)^(#!)(.*))|(\\{)|(\\()|(\\[)|((use)\\s+([\\w:]*))|((?Us)\\b(q[wq]\\s*((\\{)|(\\()|(\\[)|(\\<)|([\\W\\S])))(?=(.*)((?(3)\\})(?(4)\\))(?(5)\\])(?(6)\\>)(?(7)\\7))))|((?Us)\\b(q\\s*((\\{)|(\\()|(\\[)|(\\<)|([\\W\\S])))(?=(.*)((?(3)\\})(?(4)\\))(?(5)\\])(?(6)\\>)(?(7)\\7))))|(#.*)|((?x)(s|tr) ([|#~`!@$%^&*-+=\\\\;:\'",.\\/?])  ((\\\\.|[^\\\\])*?) (\\2)((\\\\.|[^\\\\])*?)(\\2[ecgimosx]*))|((?x)(m) ([|#~`!@$%^&*-+=\\\\;:\'",.\\/?])  ((\\\\.|[^\\\\])*?) (\\2[ecgimosx]*))|( \\/)|(\\$#?[1-9\'`@!])|((?i)(\\$#?|[@%*])([a-z1-9_]+::)*([a-z1-9_]+|\\^(?-i)[A-Z]?(?i)))|((?i)\\$([a-z1-9_]+|\\^(?-i)[A-Z]?(?i)))|((?i)(\\{)([a-z1-9]+)(\\}))|((?i)[\\$@%]#?\\{[a-z1-9]+\\})|(`)|(\')|(")|((?i)[a-z_]\\w*)|(\\d*\\.?\\d+)/',
             0 => '/((?m)^(#!)(.*))|(\\{)|(\\()|(\\[)|((use)\\s+([\\w:]*))|((?Us)\\b(q[wq]\\s*((\\{)|(\\()|(\\[)|(\\<)|([\\W\\S])))(?=(.*)((?(3)\\})(?(4)\\))(?(5)\\])(?(6)\\>)(?(7)\\7))))|((?Us)\\b(q\\s*((\\{)|(\\()|(\\[)|(\\<)|([\\W\\S])))(?=(.*)((?(3)\\})(?(4)\\))(?(5)\\])(?(6)\\>)(?(7)\\7))))|(#.*)|((?x)(s|tr) ([|#~`!@$%^&*-+=\\\\;:\'",.\\/?])  ((\\\\.|[^\\\\])*?) (\\2)((\\\\.|[^\\\\])*?)(\\2[ecgimosx]*))|((?x)(m) ([|#~`!@$%^&*-+=\\\\;:\'",.\\/?])  ((\\\\.|[^\\\\])*?) (\\2[ecgimosx]*))|( \\/)|(\\$#?[1-9\'`@!])|((?i)(\\$#?|[@%*])([a-z1-9_]+::)*([a-z1-9_]+|\\^(?-i)[A-Z]?(?i)))|((?i)\\$([a-z1-9_]+|\\^(?-i)[A-Z]?(?i)))|((?i)(\\{)([a-z1-9]+)(\\}))|((?i)[\\$@%]#?\\{[a-z1-9]+\\})|(`)|(\')|(")|((?i)[a-z_]\\w*)|(\\d*\\.?\\d+)/',
             1 => '/((?m)^(#!)(.*))|(\\{)|(\\()|(\\[)|((use)\\s+([\\w:]*))|((?Us)\\b(q[wq]\\s*((\\{)|(\\()|(\\[)|(\\<)|([\\W\\S])))(?=(.*)((?(3)\\})(?(4)\\))(?(5)\\])(?(6)\\>)(?(7)\\7))))|((?Us)\\b(q\\s*((\\{)|(\\()|(\\[)|(\\<)|([\\W\\S])))(?=(.*)((?(3)\\})(?(4)\\))(?(5)\\])(?(6)\\>)(?(7)\\7))))|(#.*)|((?x)(s|tr) ([|#~`!@$%^&*-+=\\\\;:\'",.\\/?])  ((\\\\.|[^\\\\])*?) (\\2)((\\\\.|[^\\\\])*?)(\\2[ecgimosx]*))|((?x)(m) ([|#~`!@$%^&*-+=\\\\;:\'",.\\/?])  ((\\\\.|[^\\\\])*?) (\\2[ecgimosx]*))|( \\/)|((?i)([a-z1-9_]+)(\\s*=>))|(\\$#?[1-9\'`@!])|((?i)(\\$#?|[@%*])([a-z1-9_]+::)*([a-z1-9_]+|\\^(?-i)[A-Z]?(?i)))|((?i)\\$([a-z1-9_]+|\\^(?-i)[A-Z]?(?i)))|((?i)(\\{)([a-z1-9]+)(\\}))|((?i)[\\$@%]#?\\{[a-z1-9]+\\})|(`)|(\')|(")|((?i)[a-z_]\\w*)|(\\d*\\.?\\d+)/',
@@ -62,9 +62,9 @@ class  Text_Highlighter_SH extends Text_Highlighter
             7 => '/(\\\\\\\\|\\\\"|\\\\\'|\\\\`)/',
             8 => '/(\\$#?[1-9\'`@!])|((?i)\\$([a-z1-9_]+|\\^(?-i)[A-Z]?(?i)))|((?i)[\\$@%]#?\\{[a-z1-9]+\\})|(\\\\[\\\\"\'`tnr\\$\\{@])/',
         );
-        $this->_counts = array (
+        $this->_counts = array(
             -1 =>
-            array (
+            array(
                 0 => 2,
                 1 => 0,
                 2 => 0,
@@ -88,7 +88,7 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 20 => 0,
             ),
             0 =>
-            array (
+            array(
                 0 => 2,
                 1 => 0,
                 2 => 0,
@@ -112,7 +112,7 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 20 => 0,
             ),
             1 =>
-            array (
+            array(
                 0 => 2,
                 1 => 0,
                 2 => 0,
@@ -137,7 +137,7 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 21 => 0,
             ),
             2 =>
-            array (
+            array(
                 0 => 2,
                 1 => 0,
                 2 => 0,
@@ -161,42 +161,42 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 20 => 0,
             ),
             3 =>
-            array (
+            array(
                 0 => 0,
                 1 => 1,
                 2 => 0,
                 3 => 0,
             ),
             4 =>
-            array (
+            array(
                 0 => 0,
             ),
             5 =>
-            array (
+            array(
                 0 => 0,
             ),
             6 =>
-            array (
+            array(
                 0 => 0,
                 1 => 1,
                 2 => 0,
                 3 => 0,
             ),
             7 =>
-            array (
+            array(
                 0 => 0,
             ),
             8 =>
-            array (
+            array(
                 0 => 0,
                 1 => 1,
                 2 => 0,
                 3 => 0,
             ),
         );
-        $this->_delim = array (
+        $this->_delim = array(
             -1 =>
-            array (
+            array(
                 0 => '',
                 1 => 'brackets',
                 2 => 'brackets',
@@ -220,7 +220,7 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 20 => '',
             ),
             0 =>
-            array (
+            array(
                 0 => '',
                 1 => 'brackets',
                 2 => 'brackets',
@@ -244,7 +244,7 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 20 => '',
             ),
             1 =>
-            array (
+            array(
                 0 => '',
                 1 => 'brackets',
                 2 => 'brackets',
@@ -269,7 +269,7 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 21 => '',
             ),
             2 =>
-            array (
+            array(
                 0 => '',
                 1 => 'brackets',
                 2 => 'brackets',
@@ -293,42 +293,42 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 20 => '',
             ),
             3 =>
-            array (
+            array(
                 0 => '',
                 1 => '',
                 2 => '',
                 3 => '',
             ),
             4 =>
-            array (
+            array(
                 0 => '',
             ),
             5 =>
-            array (
+            array(
                 0 => '',
             ),
             6 =>
-            array (
+            array(
                 0 => '',
                 1 => '',
                 2 => '',
                 3 => '',
             ),
             7 =>
-            array (
+            array(
                 0 => '',
             ),
             8 =>
-            array (
+            array(
                 0 => '',
                 1 => '',
                 2 => '',
                 3 => '',
             ),
         );
-        $this->_inner = array (
+        $this->_inner = array(
             -1 =>
-            array (
+            array(
                 0 => 'special',
                 1 => 'code',
                 2 => 'code',
@@ -352,7 +352,7 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 20 => 'number',
             ),
             0 =>
-            array (
+            array(
                 0 => 'special',
                 1 => 'code',
                 2 => 'code',
@@ -376,7 +376,7 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 20 => 'number',
             ),
             1 =>
-            array (
+            array(
                 0 => 'special',
                 1 => 'code',
                 2 => 'code',
@@ -401,7 +401,7 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 21 => 'number',
             ),
             2 =>
-            array (
+            array(
                 0 => 'special',
                 1 => 'code',
                 2 => 'code',
@@ -425,40 +425,40 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 20 => 'number',
             ),
             3 =>
-            array (
+            array(
                 0 => 'var',
                 1 => 'var',
                 2 => 'var',
                 3 => 'special',
             ),
             4 =>
-            array (
+            array(
                 0 => 'special',
             ),
             5 =>
-            array (
+            array(
                 0 => 'string',
             ),
             6 =>
-            array (
+            array(
                 0 => 'var',
                 1 => 'var',
                 2 => 'var',
                 3 => 'special',
             ),
             7 =>
-            array (
+            array(
                 0 => 'special',
             ),
             8 =>
-            array (
+            array(
                 0 => 'var',
                 1 => 'var',
                 2 => 'var',
                 3 => 'special',
             ),
         );
-        $this->_end = array (
+        $this->_end = array(
             0 => '/\\}/',
             1 => '/\\)/',
             2 => '/\\]/',
@@ -469,9 +469,9 @@ class  Text_Highlighter_SH extends Text_Highlighter
             7 => '/\'/',
             8 => '/"/',
         );
-        $this->_states = array (
+        $this->_states = array(
             -1 =>
-            array (
+            array(
                 0 => -1,
                 1 => 0,
                 2 => 1,
@@ -495,7 +495,7 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 20 => -1,
             ),
             0 =>
-            array (
+            array(
                 0 => -1,
                 1 => 0,
                 2 => 1,
@@ -519,7 +519,7 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 20 => -1,
             ),
             1 =>
-            array (
+            array(
                 0 => -1,
                 1 => 0,
                 2 => 1,
@@ -544,7 +544,7 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 21 => -1,
             ),
             2 =>
-            array (
+            array(
                 0 => -1,
                 1 => 0,
                 2 => 1,
@@ -568,312 +568,312 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 20 => -1,
             ),
             3 =>
-            array (
+            array(
                 0 => -1,
                 1 => -1,
                 2 => -1,
                 3 => -1,
             ),
             4 =>
-            array (
+            array(
                 0 => -1,
             ),
             5 =>
-            array (
+            array(
                 0 => -1,
             ),
             6 =>
-            array (
+            array(
                 0 => -1,
                 1 => -1,
                 2 => -1,
                 3 => -1,
             ),
             7 =>
-            array (
+            array(
                 0 => -1,
             ),
             8 =>
-            array (
+            array(
                 0 => -1,
                 1 => -1,
                 2 => -1,
                 3 => -1,
             ),
         );
-        $this->_keywords = array (
+        $this->_keywords = array(
             -1 =>
-            array (
+            array(
                 0 =>
-                array (
+                array(
                 ),
                 1 => -1,
                 2 => -1,
                 3 => -1,
                 4 =>
-                array (
+                array(
                 ),
                 5 => -1,
                 6 => -1,
                 7 =>
-                array (
+                array(
                 ),
                 8 =>
-                array (
+                array(
                 ),
                 9 =>
-                array (
+                array(
                 ),
                 10 => -1,
                 11 =>
-                array (
+                array(
                 ),
                 12 =>
-                array (
+                array(
                 ),
                 13 =>
-                array (
+                array(
                 ),
                 14 =>
-                array (
+                array(
                 ),
                 15 =>
-                array (
+                array(
                 ),
                 16 => -1,
                 17 => -1,
                 18 => -1,
                 19 =>
-                array (
+                array(
                     'reserved' => '/^(cd|cp|rm|echo|printf|exit|cut|join|comm|fmt|grep|egrep|fgrep|sed|awk|yes|false|true|test|expr|tee|basename|dirname|pathchk|pwd|stty|tty|env|printenv|id|logname|whoami|groups|users|who|date|uname|hostname|chroot|nice|nohup|sleep|factor|seq|getopt|getopts|options|shift)$/',
                     'flowcontrol' => '/^(if|fi|then|else|elif|case|esac|while|done|for|in|function|until|do|select|time|read|set)$/',
                 ),
                 20 =>
-                array (
+                array(
                 ),
             ),
             0 =>
-            array (
+            array(
                 0 =>
-                array (
+                array(
                 ),
                 1 => -1,
                 2 => -1,
                 3 => -1,
                 4 =>
-                array (
+                array(
                 ),
                 5 => -1,
                 6 => -1,
                 7 =>
-                array (
+                array(
                 ),
                 8 =>
-                array (
+                array(
                 ),
                 9 =>
-                array (
+                array(
                 ),
                 10 => -1,
                 11 =>
-                array (
+                array(
                 ),
                 12 =>
-                array (
+                array(
                 ),
                 13 =>
-                array (
+                array(
                 ),
                 14 =>
-                array (
+                array(
                 ),
                 15 =>
-                array (
+                array(
                 ),
                 16 => -1,
                 17 => -1,
                 18 => -1,
                 19 =>
-                array (
+                array(
                     'reserved' => '/^(cd|cp|rm|echo|printf|exit|cut|join|comm|fmt|grep|egrep|fgrep|sed|awk|yes|false|true|test|expr|tee|basename|dirname|pathchk|pwd|stty|tty|env|printenv|id|logname|whoami|groups|users|who|date|uname|hostname|chroot|nice|nohup|sleep|factor|seq|getopt|getopts|options|shift)$/',
                     'flowcontrol' => '/^(if|fi|then|else|elif|case|esac|while|done|for|in|function|until|do|select|time|read|set)$/',
                 ),
                 20 =>
-                array (
+                array(
                 ),
             ),
             1 =>
-            array (
+            array(
                 0 =>
-                array (
+                array(
                 ),
                 1 => -1,
                 2 => -1,
                 3 => -1,
                 4 =>
-                array (
+                array(
                 ),
                 5 => -1,
                 6 => -1,
                 7 =>
-                array (
+                array(
                 ),
                 8 =>
-                array (
+                array(
                 ),
                 9 =>
-                array (
+                array(
                 ),
                 10 => -1,
                 11 =>
-                array (
+                array(
                 ),
                 12 =>
-                array (
+                array(
                 ),
                 13 =>
-                array (
+                array(
                 ),
                 14 =>
-                array (
+                array(
                 ),
                 15 =>
-                array (
+                array(
                 ),
                 16 =>
-                array (
+                array(
                 ),
                 17 => -1,
                 18 => -1,
                 19 => -1,
                 20 =>
-                array (
+                array(
                     'reserved' => '/^(cd|cp|rm|echo|printf|exit|cut|join|comm|fmt|grep|egrep|fgrep|sed|awk|yes|false|true|test|expr|tee|basename|dirname|pathchk|pwd|stty|tty|env|printenv|id|logname|whoami|groups|users|who|date|uname|hostname|chroot|nice|nohup|sleep|factor|seq|getopt|getopts|options|shift)$/',
                     'flowcontrol' => '/^(if|fi|then|else|elif|case|esac|while|done|for|in|function|until|do|select|time|read|set)$/',
                 ),
                 21 =>
-                array (
+                array(
                 ),
             ),
             2 =>
-            array (
+            array(
                 0 =>
-                array (
+                array(
                 ),
                 1 => -1,
                 2 => -1,
                 3 => -1,
                 4 =>
-                array (
+                array(
                 ),
                 5 => -1,
                 6 => -1,
                 7 =>
-                array (
+                array(
                 ),
                 8 =>
-                array (
+                array(
                 ),
                 9 =>
-                array (
+                array(
                 ),
                 10 => -1,
                 11 =>
-                array (
+                array(
                 ),
                 12 =>
-                array (
+                array(
                 ),
                 13 =>
-                array (
+                array(
                 ),
                 14 =>
-                array (
+                array(
                 ),
                 15 =>
-                array (
+                array(
                 ),
                 16 => -1,
                 17 => -1,
                 18 => -1,
                 19 =>
-                array (
+                array(
                     'reserved' => '/^(cd|cp|rm|echo|printf|exit|cut|join|comm|fmt|grep|egrep|fgrep|sed|awk|yes|false|true|test|expr|tee|basename|dirname|pathchk|pwd|stty|tty|env|printenv|id|logname|whoami|groups|users|who|date|uname|hostname|chroot|nice|nohup|sleep|factor|seq|getopt|getopts|options|shift)$/',
                     'flowcontrol' => '/^(if|fi|then|else|elif|case|esac|while|done|for|in|function|until|do|select|time|read|set)$/',
                 ),
                 20 =>
-                array (
+                array(
                 ),
             ),
             3 =>
-            array (
+            array(
                 0 =>
-                array (
+                array(
                 ),
                 1 =>
-                array (
+                array(
                 ),
                 2 =>
-                array (
+                array(
                 ),
                 3 =>
-                array (
+                array(
                 ),
             ),
             4 =>
-            array (
+            array(
                 0 =>
-                array (
+                array(
                 ),
             ),
             5 =>
-            array (
+            array(
                 0 =>
-                array (
+                array(
                 ),
             ),
             6 =>
-            array (
+            array(
                 0 =>
-                array (
+                array(
                 ),
                 1 =>
-                array (
+                array(
                 ),
                 2 =>
-                array (
+                array(
                 ),
                 3 =>
-                array (
+                array(
                 ),
             ),
             7 =>
-            array (
+            array(
                 0 =>
-                array (
+                array(
                 ),
             ),
             8 =>
-            array (
+            array(
                 0 =>
-                array (
+                array(
                 ),
                 1 =>
-                array (
+                array(
                 ),
                 2 =>
-                array (
+                array(
                 ),
                 3 =>
-                array (
+                array(
                 ),
             ),
         );
-        $this->_parts = array (
+        $this->_parts = array(
             0 =>
-            array (
+            array(
                 0 =>
-                array (
+                array(
                     1 => 'special',
                     2 => 'string',
                 ),
@@ -881,7 +881,7 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 2 => NULL,
                 3 => NULL,
                 4 =>
-                array (
+                array(
                     1 => 'reserved',
                     2 => 'special',
                 ),
@@ -889,7 +889,7 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 6 => NULL,
                 7 => NULL,
                 8 =>
-                array (
+                array(
                     1 => 'quotes',
                     2 => 'quotes',
                     3 => 'string',
@@ -898,7 +898,7 @@ class  Text_Highlighter_SH extends Text_Highlighter
                     8 => 'quotes',
                 ),
                 9 =>
-                array (
+                array(
                     1 => 'quotes',
                     2 => 'quotes',
                     3 => 'string',
@@ -909,7 +909,7 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 12 => NULL,
                 13 => NULL,
                 14 =>
-                array (
+                array(
                     1 => 'brackets',
                     2 => 'var',
                     3 => 'brackets',
@@ -922,9 +922,9 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 20 => NULL,
             ),
             1 =>
-            array (
+            array(
                 0 =>
-                array (
+                array(
                     1 => 'special',
                     2 => 'string',
                 ),
@@ -932,7 +932,7 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 2 => NULL,
                 3 => NULL,
                 4 =>
-                array (
+                array(
                     1 => 'reserved',
                     2 => 'special',
                 ),
@@ -940,7 +940,7 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 6 => NULL,
                 7 => NULL,
                 8 =>
-                array (
+                array(
                     1 => 'quotes',
                     2 => 'quotes',
                     3 => 'string',
@@ -949,7 +949,7 @@ class  Text_Highlighter_SH extends Text_Highlighter
                     8 => 'quotes',
                 ),
                 9 =>
-                array (
+                array(
                     1 => 'quotes',
                     2 => 'quotes',
                     3 => 'string',
@@ -957,7 +957,7 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 ),
                 10 => NULL,
                 11 =>
-                array (
+                array(
                     1 => 'string',
                     2 => 'code',
                 ),
@@ -965,7 +965,7 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 13 => NULL,
                 14 => NULL,
                 15 =>
-                array (
+                array(
                     1 => 'brackets',
                     2 => 'var',
                     3 => 'brackets',
@@ -978,9 +978,9 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 21 => NULL,
             ),
             2 =>
-            array (
+            array(
                 0 =>
-                array (
+                array(
                     1 => 'special',
                     2 => 'string',
                 ),
@@ -988,7 +988,7 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 2 => NULL,
                 3 => NULL,
                 4 =>
-                array (
+                array(
                     1 => 'reserved',
                     2 => 'special',
                 ),
@@ -996,7 +996,7 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 6 => NULL,
                 7 => NULL,
                 8 =>
-                array (
+                array(
                     1 => 'quotes',
                     2 => 'quotes',
                     3 => 'string',
@@ -1005,7 +1005,7 @@ class  Text_Highlighter_SH extends Text_Highlighter
                     8 => 'quotes',
                 ),
                 9 =>
-                array (
+                array(
                     1 => 'quotes',
                     2 => 'quotes',
                     3 => 'string',
@@ -1016,7 +1016,7 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 12 => NULL,
                 13 => NULL,
                 14 =>
-                array (
+                array(
                     1 => 'brackets',
                     2 => 'var',
                     3 => 'brackets',
@@ -1029,42 +1029,42 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 20 => NULL,
             ),
             3 =>
-            array (
+            array(
                 0 => NULL,
                 1 => NULL,
                 2 => NULL,
                 3 => NULL,
             ),
             4 =>
-            array (
+            array(
                 0 => NULL,
             ),
             5 =>
-            array (
+            array(
                 0 => NULL,
             ),
             6 =>
-            array (
+            array(
                 0 => NULL,
                 1 => NULL,
                 2 => NULL,
                 3 => NULL,
             ),
             7 =>
-            array (
+            array(
                 0 => NULL,
             ),
             8 =>
-            array (
+            array(
                 0 => NULL,
                 1 => NULL,
                 2 => NULL,
                 3 => NULL,
             ),
         );
-        $this->_subst = array (
+        $this->_subst = array(
             -1 =>
-            array (
+            array(
                 0 => false,
                 1 => false,
                 2 => false,
@@ -1088,7 +1088,7 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 20 => false,
             ),
             0 =>
-            array (
+            array(
                 0 => false,
                 1 => false,
                 2 => false,
@@ -1112,7 +1112,7 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 20 => false,
             ),
             1 =>
-            array (
+            array(
                 0 => false,
                 1 => false,
                 2 => false,
@@ -1137,7 +1137,7 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 21 => false,
             ),
             2 =>
-            array (
+            array(
                 0 => false,
                 1 => false,
                 2 => false,
@@ -1161,42 +1161,42 @@ class  Text_Highlighter_SH extends Text_Highlighter
                 20 => false,
             ),
             3 =>
-            array (
+            array(
                 0 => false,
                 1 => false,
                 2 => false,
                 3 => false,
             ),
             4 =>
-            array (
+            array(
                 0 => false,
             ),
             5 =>
-            array (
+            array(
                 0 => false,
             ),
             6 =>
-            array (
+            array(
                 0 => false,
                 1 => false,
                 2 => false,
                 3 => false,
             ),
             7 =>
-            array (
+            array(
                 0 => false,
             ),
             8 =>
-            array (
+            array(
                 0 => false,
                 1 => false,
                 2 => false,
                 3 => false,
             ),
         );
-        $this->_conditions = array (
+        $this->_conditions = array(
         );
-        $this->_kwmap = array (
+        $this->_kwmap = array(
             'reserved' => 'reserved',
             'flowcontrol' => 'reserved',
         );

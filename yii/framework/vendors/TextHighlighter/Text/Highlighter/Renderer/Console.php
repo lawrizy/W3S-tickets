@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 /**
  * Console renderer
@@ -19,14 +20,12 @@
  * @version    CVS: $Id: Console.php,v 1.1 2007/06/03 02:37:08 ssttoo Exp $
  * @link       http://pear.php.net/package/Text_Highlighter
  */
-
 /**
  * @ignore
  */
+require_once dirname(__FILE__) . '/../Renderer.php';
 
-require_once dirname(__FILE__).'/../Renderer.php';
-
-define ('HL_CONSOLE_DEFCOLOR', "\033[0m");
+define('HL_CONSOLE_DEFCOLOR', "\033[0m");
 
 /**
  * Console renderer
@@ -48,11 +47,8 @@ define ('HL_CONSOLE_DEFCOLOR', "\033[0m");
  * @version    Release: 0.7.1
  * @link       http://pear.php.net/package/Text_Highlighter
  */
-
-class Text_Highlighter_Renderer_Console extends Text_Highlighter_Renderer
-{
-
-    /**#@+
+class Text_Highlighter_Renderer_Console extends Text_Highlighter_Renderer {
+    /*     * #@+
      * @access private
      */
 
@@ -84,10 +80,8 @@ class Text_Highlighter_Renderer_Console extends Text_Highlighter_Renderer
      */
     var $_output = '';
 
-    /**#@-*/
-
+    /*     * #@- */
     var $_colors = array();
-
     var $_defColors = array(
         'default' => "\033[0m",
         'inlinetags' => "\033[31m",
@@ -103,14 +97,12 @@ class Text_Highlighter_Renderer_Console extends Text_Highlighter_Renderer
         'mlcomment' => "\033[33m",
     );
 
-    function preprocess($str)
-    {
+    function preprocess($str) {
         // normalize whitespace and tabs
-        $str = str_replace("\r\n","\n", $str);
-        $str = str_replace("\t",str_repeat(' ', $this->_tabsize), $str);
+        $str = str_replace("\r\n", "\n", $str);
+        $str = str_replace("\t", str_repeat(' ', $this->_tabsize), $str);
         return rtrim($str);
     }
-
 
     /**
      * Resets renderer state
@@ -121,11 +113,10 @@ class Text_Highlighter_Renderer_Console extends Text_Highlighter_Renderer
      * Descendents of Text_Highlighter call this method from the constructor,
      * passing $options they get as parameter.
      */
-    function reset()
-    {
+    function reset() {
         $this->_lastClass = '';
         if (isset($this->_options['numbers'])) {
-            $this->_numbers = (bool)$this->_options['numbers'];
+            $this->_numbers = (bool) $this->_options['numbers'];
         } else {
             $this->_numbers = false;
         }
@@ -142,8 +133,6 @@ class Text_Highlighter_Renderer_Console extends Text_Highlighter_Renderer
         $this->_output = '';
     }
 
-
-
     /**
      * Accepts next token
      *
@@ -152,8 +141,7 @@ class Text_Highlighter_Renderer_Console extends Text_Highlighter_Renderer
      * @param  string $class   Token class
      * @param  string $content Token content
      */
-    function acceptToken($class, $content)
-    {
+    function acceptToken($class, $content) {
         if (isset($this->_colors[$class])) {
             $color = $this->_colors[$class];
         } else {
@@ -173,8 +161,7 @@ class Text_Highlighter_Renderer_Console extends Text_Highlighter_Renderer
      * @access public
      *
      */
-    function finalize()
-    {
+    function finalize() {
         if ($this->_numbers) {
             $nlines = substr_count($this->_output, "\n") + 1;
             $len = strlen($nlines);
@@ -191,10 +178,10 @@ class Text_Highlighter_Renderer_Console extends Text_Highlighter_Renderer
      * @access public
      *
      */
-    function getOutput()
-    {
+    function getOutput() {
         return $this->_output;
     }
+
 }
 
 /*
@@ -204,5 +191,4 @@ class Text_Highlighter_Renderer_Console extends Text_Highlighter_Renderer
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
 ?>

@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 /**
  * BB code renderer.
@@ -20,12 +21,10 @@
  * @version    CVS: $Id: BB.php,v 1.1 2007/06/03 02:37:08 ssttoo Exp $
  * @link       http://pear.php.net/package/Text_Highlighter
  */
-
 /**
  * @ignore
  */
-
-require_once dirname(__FILE__).'/../Renderer.php';
+require_once dirname(__FILE__) . '/../Renderer.php';
 
 /**
  * BB code renderer, based on Andrey Demenev's HTML renderer.
@@ -70,11 +69,8 @@ require_once dirname(__FILE__).'/../Renderer.php';
  * @version    Release: 0.5.0
  * @link       http://pear.php.net/package/Text_Highlighter
  */
-
-class Text_Highlighter_Renderer_BB extends Text_Highlighter_Renderer_Array
-{
-
-    /**#@+
+class Text_Highlighter_Renderer_BB extends Text_Highlighter_Renderer_Array {
+    /*     * #@+
      * @access private
      */
 
@@ -90,11 +86,11 @@ class Text_Highlighter_Renderer_BB extends Text_Highlighter_Renderer_Array
      *
      * @var array
      */
-    var $_bb_tags = array (
-        'color'     => 'color',
-        'list'      => 'list',
+    var $_bb_tags = array(
+        'color' => 'color',
+        'list' => 'list',
         'list_item' => '*',
-        'code'      => 'code',
+        'code' => 'code',
     );
 
     /**
@@ -102,7 +98,7 @@ class Text_Highlighter_Renderer_BB extends Text_Highlighter_Renderer_Array
      *
      * @var array
      */
-    var $_tag_brackets = array ('start' => '[', 'end' => ']');
+    var $_tag_brackets = array('start' => '[', 'end' => ']');
 
     /**
      * Colors map
@@ -110,25 +106,25 @@ class Text_Highlighter_Renderer_BB extends Text_Highlighter_Renderer_Array
      * @var boolean
      */
     var $_colors = array(
-        'default'    => 'Black',
-        'code'       => 'Gray',
-        'brackets'   => 'Olive',
-        'comment'    => 'Orange',
-        'mlcomment'  => 'Orange',
-        'quotes'     => 'Darkred',
-        'string'     => 'Red',
+        'default' => 'Black',
+        'code' => 'Gray',
+        'brackets' => 'Olive',
+        'comment' => 'Orange',
+        'mlcomment' => 'Orange',
+        'quotes' => 'Darkred',
+        'string' => 'Red',
         'identifier' => 'Blue',
-        'builtin'    => 'Teal',
-        'reserved'   => 'Green',
-        'inlinedoc'  => 'Blue',
-        'var'        => 'Darkblue',
-        'url'        => 'Blue',
-        'special'    => 'Navy',
-        'number'     => 'Maroon',
+        'builtin' => 'Teal',
+        'reserved' => 'Green',
+        'inlinedoc' => 'Blue',
+        'var' => 'Darkblue',
+        'url' => 'Blue',
+        'special' => 'Navy',
+        'number' => 'Maroon',
         'inlinetags' => 'Blue',
     );
 
-    /**#@-*/
+    /*     * #@- */
 
     /**
      * Resets renderer state
@@ -139,8 +135,7 @@ class Text_Highlighter_Renderer_BB extends Text_Highlighter_Renderer_Array
      * Descendents of Text_Highlighter call this method from the constructor,
      * passing $options they get as parameter.
      */
-    function reset()
-    {
+    function reset() {
         parent::reset();
         if (isset($this->_options['numbers'])) {
             $this->_numbers = $this->_options['numbers'];
@@ -156,7 +151,6 @@ class Text_Highlighter_Renderer_BB extends Text_Highlighter_Renderer_Array
         }
     }
 
-
     /**
      * Signals that no more tokens are available
      *
@@ -164,8 +158,7 @@ class Text_Highlighter_Renderer_BB extends Text_Highlighter_Renderer_Array
      * @access public
      *
      */
-    function finalize()
-    {
+    function finalize() {
 
         // get parent's output
         parent::finalize();
@@ -173,8 +166,8 @@ class Text_Highlighter_Renderer_BB extends Text_Highlighter_Renderer_Array
 
         $bb_output = '';
 
-        $color_start = $this->_tag_brackets['start'] . $this->_bb_tags['color'] . '=%s'  . $this->_tag_brackets['end'];
-        $color_end   = $this->_tag_brackets['start'] . '/' . $this->_bb_tags['color'] . $this->_tag_brackets['end'];
+        $color_start = $this->_tag_brackets['start'] . $this->_bb_tags['color'] . '=%s' . $this->_tag_brackets['end'];
+        $color_end = $this->_tag_brackets['start'] . '/' . $this->_bb_tags['color'] . $this->_tag_brackets['end'];
 
         // loop through each class=>content pair
         foreach ($output AS $token) {
@@ -201,27 +194,27 @@ class Text_Highlighter_Renderer_BB extends Text_Highlighter_Renderer_Array
         if ($this->_numbers) {
 
             $item_tag = $this->_tag_brackets['start'] .
-                        $this->_bb_tags['list_item'] .
-                        $this->_tag_brackets['end'];
-            $this->_output = $item_tag . str_replace("\n", "\n". $item_tag .' ', $bb_output);
+                    $this->_bb_tags['list_item'] .
+                    $this->_tag_brackets['end'];
+            $this->_output = $item_tag . str_replace("\n", "\n" . $item_tag . ' ', $bb_output);
             $this->_output = $this->_tag_brackets['start'] .
-                             $this->_bb_tags['list'] .
-                             $this->_tag_brackets['end'] .
-                             $this->_output .
-                             $this->_tag_brackets['start'] .
-                             '/'.
-                             $this->_bb_tags['list'] .
-                             $this->_tag_brackets['end']
-                             ;
+                    $this->_bb_tags['list'] .
+                    $this->_tag_brackets['end'] .
+                    $this->_output .
+                    $this->_tag_brackets['start'] .
+                    '/' .
+                    $this->_bb_tags['list'] .
+                    $this->_tag_brackets['end']
+            ;
         } else {
             $this->_output = $this->_tag_brackets['start'] .
-                             $this->_bb_tags['code'] .
-                             $this->_tag_brackets['end'] .
-                             $bb_output .
-                             $this->_tag_brackets['start'] .
-                             '/' .
-                             $this->_bb_tags['code'] .
-                             $this->_tag_brackets['end'];
+                    $this->_bb_tags['code'] .
+                    $this->_tag_brackets['end'] .
+                    $bb_output .
+                    $this->_tag_brackets['start'] .
+                    '/' .
+                    $this->_bb_tags['code'] .
+                    $this->_tag_brackets['end'];
         }
     }
 
@@ -234,5 +227,4 @@ class Text_Highlighter_Renderer_BB extends Text_Highlighter_Renderer_Array
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
 ?>

@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 /**
  * HTML renderer that uses only basic html tags
@@ -21,13 +22,11 @@
  * @version    CVS: $Id: HtmlTags.php,v 1.1 2007/06/03 02:37:09 ssttoo Exp $
  * @link       http://pear.php.net/package/Text_Highlighter
  */
-
 /**
  * @ignore
  */
-
-require_once dirname(__FILE__).'/../Renderer.php';
-require_once dirname(__FILE__).'/../Renderer/Array.php';
+require_once dirname(__FILE__) . '/../Renderer.php';
+require_once dirname(__FILE__) . '/../Renderer/Array.php';
 
 /**
  * HTML basic tags renderer, based on Andrey Demenev's HTML renderer.
@@ -64,11 +63,8 @@ require_once dirname(__FILE__).'/../Renderer/Array.php';
  * @version    Release: 0.5.0
  * @link       http://pear.php.net/package/Text_Highlighter
  */
-
-class Text_Highlighter_Renderer_HtmlTags extends Text_Highlighter_Renderer_Array
-{
-
-    /**#@+
+class Text_Highlighter_Renderer_HtmlTags extends Text_Highlighter_Renderer_Array {
+    /*     * #@+
      * @access private
      */
 
@@ -85,25 +81,25 @@ class Text_Highlighter_Renderer_HtmlTags extends Text_Highlighter_Renderer_Array
      * @var array
      */
     var $_hilite_tags = array(
-        'default'    => '',
-        'code'       => '',
-        'brackets'   => 'b',
-        'comment'    => 'i',
-        'mlcomment'  => 'i',
-        'quotes'     => '',
-        'string'     => 'i',
+        'default' => '',
+        'code' => '',
+        'brackets' => 'b',
+        'comment' => 'i',
+        'mlcomment' => 'i',
+        'quotes' => '',
+        'string' => 'i',
         'identifier' => 'b',
-        'builtin'    => 'b',
-        'reserved'   => 'u',
-        'inlinedoc'  => 'i',
-        'var'        => 'b',
-        'url'        => 'i',
-        'special'    => '',
-        'number'     => '',
+        'builtin' => 'b',
+        'reserved' => 'u',
+        'inlinedoc' => 'i',
+        'var' => 'b',
+        'url' => 'i',
+        'special' => '',
+        'number' => '',
         'inlinetags' => '',
     );
 
-    /**#@-*/
+    /*     * #@- */
 
     /**
      * Resets renderer state
@@ -114,8 +110,7 @@ class Text_Highlighter_Renderer_HtmlTags extends Text_Highlighter_Renderer_Array
      * Descendents of Text_Highlighter call this method from the constructor,
      * passing $options they get as parameter.
      */
-    function reset()
-    {
+    function reset() {
         parent::reset();
         if (isset($this->_options['numbers'])) {
             $this->_numbers = $this->_options['numbers'];
@@ -125,7 +120,6 @@ class Text_Highlighter_Renderer_HtmlTags extends Text_Highlighter_Renderer_Array
         }
     }
 
-
     /**
      * Signals that no more tokens are available
      *
@@ -133,8 +127,7 @@ class Text_Highlighter_Renderer_HtmlTags extends Text_Highlighter_Renderer_Array
      * @access public
      *
      */
-    function finalize()
-    {
+    function finalize() {
 
         // get parent's output
         parent::finalize();
@@ -156,7 +149,7 @@ class Text_Highlighter_Renderer_HtmlTags extends Text_Highlighter_Renderer_Array
 
             $iswhitespace = ctype_space($content);
             if (!$iswhitespace && !empty($this->_hilite_tags[$class])) {
-                $html_output .= '<'. $this->_hilite_tags[$class] . '>' . $content . '</'. $this->_hilite_tags[$class] . '>';
+                $html_output .= '<' . $this->_hilite_tags[$class] . '>' . $content . '</' . $this->_hilite_tags[$class] . '>';
             } else {
                 $html_output .= $content;
             }
@@ -165,14 +158,13 @@ class Text_Highlighter_Renderer_HtmlTags extends Text_Highlighter_Renderer_Array
 
         if ($this->_numbers) {
             /* additional whitespace for browsers that do not display
-            empty list items correctly */
+              empty list items correctly */
             $html_output = '<li>&nbsp;' . str_replace("\n", "</li>\n<li>&nbsp;", $html_output) . '</li>';
             $this->_output = '<ol>' . str_replace(' ', '&nbsp;', $html_output) . '</ol>';
         } else {
             $this->_output = '<pre>' . $html_output . '</pre>';
         }
     }
-
 
 }
 
@@ -183,5 +175,4 @@ class Text_Highlighter_Renderer_HtmlTags extends Text_Highlighter_Renderer_Array
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
 ?>

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * A class for computing three way diffs.
  *
@@ -12,7 +13,6 @@
  * @package Text_Diff
  * @since   0.3.0
  */
-
 /** Text_Diff */
 require_once 'Text/Diff.php';
 
@@ -38,32 +38,24 @@ class Text_Diff_ThreeWay extends Text_Diff {
      * @param array $final1  The first version to compare to.
      * @param array $final2  The second version to compare to.
      */
-    function Text_Diff_ThreeWay($orig, $final1, $final2)
-    {
+    function Text_Diff_ThreeWay($orig, $final1, $final2) {
         if (extension_loaded('xdiff')) {
             $engine = new Text_Diff_Engine_xdiff();
         } else {
             $engine = new Text_Diff_Engine_native();
         }
 
-        $this->_edits = $this->_diff3($engine->diff($orig, $final1),
-                                      $engine->diff($orig, $final2));
+        $this->_edits = $this->_diff3($engine->diff($orig, $final1), $engine->diff($orig, $final2));
     }
 
     /**
      */
-    function mergedOutput($label1 = false, $label2 = false)
-    {
+    function mergedOutput($label1 = false, $label2 = false) {
         $lines = array();
         foreach ($this->_edits as $edit) {
             if ($edit->isConflict()) {
                 /* FIXME: this should probably be moved somewhere else. */
-                $lines = array_merge($lines,
-                                     array('<<<<<<<' . ($label1 ? ' ' . $label1 : '')),
-                                     $edit->final1,
-                                     array("======="),
-                                     $edit->final2,
-                                     array('>>>>>>>' . ($label2 ? ' ' . $label2 : '')));
+                $lines = array_merge($lines, array('<<<<<<<' . ($label1 ? ' ' . $label1 : '')), $edit->final1, array("======="), $edit->final2, array('>>>>>>>' . ($label2 ? ' ' . $label2 : '')));
                 $this->_conflictingBlocks++;
             } else {
                 $lines = array_merge($lines, $edit->merged());
@@ -76,8 +68,7 @@ class Text_Diff_ThreeWay extends Text_Diff {
     /**
      * @access private
      */
-    function _diff3($edits1, $edits2)
-    {
+    function _diff3($edits1, $edits2) {
         $edits = array();
         $bb = new Text_Diff_ThreeWay_BlockBuilder();
 
@@ -127,11 +118,11 @@ class Text_Diff_ThreeWay extends Text_Diff {
                     }
                 }
 
-                if ($e1 && ! $e1->orig) {
+                if ($e1 && !$e1->orig) {
                     $bb->out1($e1->final);
                     $e1 = next($edits1);
                 }
-                if ($e2 && ! $e2->orig) {
+                if ($e2 && !$e2->orig) {
                     $bb->out2($e2->final);
                     $e2 = next($edits2);
                 }
@@ -155,15 +146,13 @@ class Text_Diff_ThreeWay extends Text_Diff {
  */
 class Text_Diff_ThreeWay_Op {
 
-    function Text_Diff_ThreeWay_Op($orig = false, $final1 = false, $final2 = false)
-    {
+    function Text_Diff_ThreeWay_Op($orig = false, $final1 = false, $final2 = false) {
         $this->orig = $orig ? $orig : array();
         $this->final1 = $final1 ? $final1 : array();
         $this->final2 = $final2 ? $final2 : array();
     }
 
-    function merged()
-    {
+    function merged() {
         if (!isset($this->_merged)) {
             if ($this->final1 === $this->final2) {
                 $this->_merged = &$this->final1;
@@ -179,8 +168,7 @@ class Text_Diff_ThreeWay_Op {
         return $this->_merged;
     }
 
-    function isConflict()
-    {
+    function isConflict() {
         return $this->merged() === false;
     }
 
@@ -194,20 +182,17 @@ class Text_Diff_ThreeWay_Op {
  */
 class Text_Diff_ThreeWay_Op_copy extends Text_Diff_ThreeWay_Op {
 
-    function Text_Diff_ThreeWay_Op_Copy($lines = false)
-    {
+    function Text_Diff_ThreeWay_Op_Copy($lines = false) {
         $this->orig = $lines ? $lines : array();
         $this->final1 = &$this->orig;
         $this->final2 = &$this->orig;
     }
 
-    function merged()
-    {
+    function merged() {
         return $this->orig;
     }
 
-    function isConflict()
-    {
+    function isConflict() {
         return false;
     }
 
@@ -221,39 +206,33 @@ class Text_Diff_ThreeWay_Op_copy extends Text_Diff_ThreeWay_Op {
  */
 class Text_Diff_ThreeWay_BlockBuilder {
 
-    function Text_Diff_ThreeWay_BlockBuilder()
-    {
+    function Text_Diff_ThreeWay_BlockBuilder() {
         $this->_init();
     }
 
-    function input($lines)
-    {
+    function input($lines) {
         if ($lines) {
             $this->_append($this->orig, $lines);
         }
     }
 
-    function out1($lines)
-    {
+    function out1($lines) {
         if ($lines) {
             $this->_append($this->final1, $lines);
         }
     }
 
-    function out2($lines)
-    {
+    function out2($lines) {
         if ($lines) {
             $this->_append($this->final2, $lines);
         }
     }
 
-    function isEmpty()
-    {
+    function isEmpty() {
         return !$this->orig && !$this->final1 && !$this->final2;
     }
 
-    function finish()
-    {
+    function finish() {
         if ($this->isEmpty()) {
             return false;
         } else {
@@ -263,13 +242,11 @@ class Text_Diff_ThreeWay_BlockBuilder {
         }
     }
 
-    function _init()
-    {
+    function _init() {
         $this->orig = $this->final1 = $this->final2 = array();
     }
 
-    function _append(&$array, $lines)
-    {
+    function _append(&$array, $lines) {
         array_splice($array, sizeof($array), 0, $lines);
     }
 

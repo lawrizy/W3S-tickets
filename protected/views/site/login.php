@@ -47,7 +47,10 @@ $this->breadcrumbs = array(
     <div class="row buttons">
         <?php echo CHtml::submitButton('Login'); ?>
     </div>
-    <p> <?php echo Yii::app()->session['erreurDB']; ; ?></p>
+    <p> <?php
+        echo Yii::app()->session['erreurDB'];
+        ;
+        ?></p>
 
-    <?php $this->endWidget(); ?>
+<?php $this->endWidget(); ?>
 </div><!-- form -->

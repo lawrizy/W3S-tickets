@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Yii command line script file.
  *
@@ -10,24 +11,21 @@
  * @copyright 2008-2013 Yii Software LLC
  * @license http://www.yiiframework.com/license/
  */
-
 // fix for fcgi
 defined('STDIN') or define('STDIN', fopen('php://stdin', 'r'));
 
-defined('YII_DEBUG') or define('YII_DEBUG',true);
+defined('YII_DEBUG') or define('YII_DEBUG', true);
 
-require_once(dirname(__FILE__).'/yii.php');
+require_once(dirname(__FILE__) . '/yii.php');
 
-if(isset($config))
-{
-	$app=Yii::createConsoleApplication($config);
-	$app->commandRunner->addCommands(YII_PATH.'/cli/commands');
-}
-else
-	$app=Yii::createConsoleApplication(array('basePath'=>dirname(__FILE__).'/cli'));
+if (isset($config)) {
+    $app = Yii::createConsoleApplication($config);
+    $app->commandRunner->addCommands(YII_PATH . '/cli/commands');
+} else
+    $app = Yii::createConsoleApplication(array('basePath' => dirname(__FILE__) . '/cli'));
 
-$env=@getenv('YII_CONSOLE_COMMANDS');
-if(!empty($env))
-	$app->commandRunner->addCommands($env);
+$env = @getenv('YII_CONSOLE_COMMANDS');
+if (!empty($env))
+    $app->commandRunner->addCommands($env);
 
 $app->run();

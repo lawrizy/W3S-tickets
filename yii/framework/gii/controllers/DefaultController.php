@@ -1,58 +1,52 @@
 <?php
 
-class DefaultController extends CController
-{
-	public $layout='/layouts/column1';
+class DefaultController extends CController {
 
-	public function getPageTitle()
-	{
-		if($this->action->id==='index')
-			return 'Gii: a Web-based code generator for Yii';
-		else
-			return 'Gii - '.ucfirst($this->action->id).' Generator';
-	}
+    public $layout = '/layouts/column1';
 
-	public function actionIndex()
-	{
-		$this->render('index');
-	}
+    public function getPageTitle() {
+        if ($this->action->id === 'index')
+            return 'Gii: a Web-based code generator for Yii';
+        else
+            return 'Gii - ' . ucfirst($this->action->id) . ' Generator';
+    }
 
-	public function actionError()
-	{
-	    if($error=Yii::app()->errorHandler->error)
-	    {
-	    	if(Yii::app()->request->isAjaxRequest)
-	    		echo $error['message'];
-	    	else
-	        	$this->render('error', $error);
-	    }
-	}
+    public function actionIndex() {
+        $this->render('index');
+    }
 
-	/**
-	 * Displays the login page
-	 */
-	public function actionLogin()
-	{
-		$model=Yii::createComponent('gii.models.LoginForm');
+    public function actionError() {
+        if ($error = Yii::app()->errorHandler->error) {
+            if (Yii::app()->request->isAjaxRequest)
+                echo $error['message'];
+            else
+                $this->render('error', $error);
+        }
+    }
 
-		// collect user input data
-		if(isset($_POST['LoginForm']))
-		{
-			$model->attributes=$_POST['LoginForm'];
-			// validate user input and redirect to the previous page if valid
-			if($model->validate() && $model->login())
-				$this->redirect(array('index'));
-		}
-		// display the login form
-		$this->render('login',array('model'=>$model));
-	}
+    /**
+     * Displays the login page
+     */
+    public function actionLogin() {
+        $model = Yii::createComponent('gii.models.LoginForm');
 
-	/**
-	 * Logs out the current user and redirect to homepage.
-	 */
-	public function actionLogout()
-	{
-		Yii::app()->user->logout(false);
-		$this->redirect(array('index'));
-	}
+        // collect user input data
+        if (isset($_POST['LoginForm'])) {
+            $model->attributes = $_POST['LoginForm'];
+            // validate user input and redirect to the previous page if valid
+            if ($model->validate() && $model->login())
+                $this->redirect(array('index'));
+        }
+        // display the login form
+        $this->render('login', array('model' => $model));
+    }
+
+    /**
+     * Logs out the current user and redirect to homepage.
+     */
+    public function actionLogout() {
+        Yii::app()->user->logout(false);
+        $this->redirect(array('index'));
+    }
+
 }

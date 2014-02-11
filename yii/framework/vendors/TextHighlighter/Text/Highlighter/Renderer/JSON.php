@@ -1,4 +1,5 @@
 <?php
+
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 /**
  * JSON renderer.
@@ -19,13 +20,11 @@
  * @version    CVS: $Id: JSON.php,v 1.1 2007/06/03 02:37:09 ssttoo Exp $
  * @link       http://pear.php.net/package/Text_Highlighter
  */
-
 /**
  * @ignore
  */
-
-require_once dirname(__FILE__).'/../Renderer.php';
-require_once dirname(__FILE__).'/../Renderer/Array.php';
+require_once dirname(__FILE__) . '/../Renderer.php';
+require_once dirname(__FILE__) . '/../Renderer/Array.php';
 
 /**
  * JSON renderer, based on Andrey Demenev's HTML renderer.
@@ -38,9 +37,7 @@ require_once dirname(__FILE__).'/../Renderer/Array.php';
  * @version    Release: 0.5.0
  * @link       http://pear.php.net/package/Text_Highlighter
  */
-
-class Text_Highlighter_Renderer_JSON extends Text_Highlighter_Renderer_Array
-{
+class Text_Highlighter_Renderer_JSON extends Text_Highlighter_Renderer_Array {
 
     /**
      * Signals that no more tokens are available
@@ -48,8 +45,7 @@ class Text_Highlighter_Renderer_JSON extends Text_Highlighter_Renderer_Array
      * @abstract
      * @access public
      */
-    function finalize()
-    {
+    function finalize() {
 
         parent::finalize();
         $output = parent::getOutput();
@@ -64,14 +60,11 @@ class Text_Highlighter_Renderer_JSON extends Text_Highlighter_Renderer_Array
                 $key = key($token);
                 $json_array[] = '{"class": "' . $key . '","content":"' . $token[$key] . '"}';
             }
-
         }
 
-        $this->_output  = '['. implode(',', $json_array) .']';
+        $this->_output = '[' . implode(',', $json_array) . ']';
         $this->_output = str_replace("\n", '\n', $this->_output);
-
     }
-
 
 }
 
@@ -82,5 +75,4 @@ class Text_Highlighter_Renderer_JSON extends Text_Highlighter_Renderer_Array
  * c-hanging-comment-ender-p: nil
  * End:
  */
-
 ?>

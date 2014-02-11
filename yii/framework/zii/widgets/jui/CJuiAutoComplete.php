@@ -1,4 +1,5 @@
 <?php
+
 /**
  * CJuiAutoComplete class file.
  *
@@ -7,7 +8,6 @@
  * @copyright 2008-2013 Yii Software LLC
  * @license http://www.yiiframework.com/license/
  */
-
 Yii::import('zii.widgets.jui.CJuiInputWidget');
 
 /**
@@ -47,51 +47,52 @@ Yii::import('zii.widgets.jui.CJuiInputWidget');
  * @package zii.widgets.jui
  * @since 1.1.2
  */
-class CJuiAutoComplete extends CJuiInputWidget
-{
-	/**
-	 * @var mixed the entries that the autocomplete should choose from. This can be
-	 * <ul>
-	 * <li>an Array with local data</li>
-	 * <li>a String, specifying a URL that returns JSON data as the entries.</li>
-	 * <li>a javascript callback. Please make sure you wrap the callback with
-	 * {@link CJavaScriptExpression} in this case.</li>
-	 * </ul>
-	 */
-	public $source=array();
-	/**
-	 * @var mixed the URL that will return JSON data as the autocomplete items.
-	 * CHtml::normalizeUrl() will be applied to this property to convert the property
-	 * into a proper URL. When this property is set, the {@link source} property will be ignored.
-	 */
-	public $sourceUrl;
+class CJuiAutoComplete extends CJuiInputWidget {
 
-	/**
-	 * Run this widget.
-	 * This method registers necessary javascript and renders the needed HTML code.
-	 */
-	public function run()
-	{
-		list($name,$id)=$this->resolveNameID();
+    /**
+     * @var mixed the entries that the autocomplete should choose from. This can be
+     * <ul>
+     * <li>an Array with local data</li>
+     * <li>a String, specifying a URL that returns JSON data as the entries.</li>
+     * <li>a javascript callback. Please make sure you wrap the callback with
+     * {@link CJavaScriptExpression} in this case.</li>
+     * </ul>
+     */
+    public $source = array();
 
-		if(isset($this->htmlOptions['id']))
-			$id=$this->htmlOptions['id'];
-		else
-			$this->htmlOptions['id']=$id;
-		if(isset($this->htmlOptions['name']))
-			$name=$this->htmlOptions['name'];
+    /**
+     * @var mixed the URL that will return JSON data as the autocomplete items.
+     * CHtml::normalizeUrl() will be applied to this property to convert the property
+     * into a proper URL. When this property is set, the {@link source} property will be ignored.
+     */
+    public $sourceUrl;
 
-		if($this->hasModel())
-			echo CHtml::activeTextField($this->model,$this->attribute,$this->htmlOptions);
-		else
-			echo CHtml::textField($name,$this->value,$this->htmlOptions);
+    /**
+     * Run this widget.
+     * This method registers necessary javascript and renders the needed HTML code.
+     */
+    public function run() {
+        list($name, $id) = $this->resolveNameID();
 
-		if($this->sourceUrl!==null)
-			$this->options['source']=CHtml::normalizeUrl($this->sourceUrl);
-		else
-			$this->options['source']=$this->source;
+        if (isset($this->htmlOptions['id']))
+            $id = $this->htmlOptions['id'];
+        else
+            $this->htmlOptions['id'] = $id;
+        if (isset($this->htmlOptions['name']))
+            $name = $this->htmlOptions['name'];
 
-		$options=CJavaScript::encode($this->options);
-		Yii::app()->getClientScript()->registerScript(__CLASS__.'#'.$id,"jQuery('#{$id}').autocomplete($options);");
-	}
+        if ($this->hasModel())
+            echo CHtml::activeTextField($this->model, $this->attribute, $this->htmlOptions);
+        else
+            echo CHtml::textField($name, $this->value, $this->htmlOptions);
+
+        if ($this->sourceUrl !== null)
+            $this->options['source'] = CHtml::normalizeUrl($this->sourceUrl);
+        else
+            $this->options['source'] = $this->source;
+
+        $options = CJavaScript::encode($this->options);
+        Yii::app()->getClientScript()->registerScript(__CLASS__ . '#' . $id, "jQuery('#{$id}').autocomplete($options);");
+    }
+
 }
