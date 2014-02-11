@@ -18,28 +18,17 @@ $this->menu = array(
 
 <h1>View User #<?php echo $model->id_user; ?></h1>
 
-<<<<<<< HEAD
-<?php $this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>array(
-		'id_user',
-		'nom',
-		'email',
-		'password',
-		'fk_fonction',
-	),
-)); ?>
-=======
+
 <?php
 $this->widget('zii.widgets.CDetailView', array(
     'data' => $model,
     'attributes' => array(
         'id_user',
         'nom',
-        'prenom',
         'email',
         'password',
+        'fk_fonction',
     ),
 ));
 ?>
->>>>>>> 11491a7f40938f72ce5a9d8c131056ced1d02d27
+

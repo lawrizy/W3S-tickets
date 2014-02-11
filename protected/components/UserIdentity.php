@@ -16,7 +16,6 @@ class UserIdentity extends CUserIdentity {
      * @return boolean whether authentication succeeds.
      */
     private $_id;
-    private $_table;
 
     public function authenticate() {
 
@@ -49,11 +48,6 @@ class UserIdentity extends CUserIdentity {
 
     public function getId() {
         return $this->_id;
-    }
-
-    public
-            function getStatut() {
-        return $this->_table;
     }
 
 }
