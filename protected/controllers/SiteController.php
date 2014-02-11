@@ -99,4 +99,9 @@ class SiteController extends Controller {
     public function actionAction() {
         $this->render('action');
     }
+
+    public function actionGetLocataire() {
+        $this->render('getLocataire');
+    }
+
 }

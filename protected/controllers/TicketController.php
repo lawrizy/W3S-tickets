@@ -64,7 +64,9 @@ class TicketController extends Controller {
         // $this->performAjaxValidation($model);
 
         if (isset($_POST['Ticket'])) {
-            $model->attributes = $_POST['Ticket'];
+            $var = $_POST['Ticket'];
+            $var['fk_canal'] = 1;
+            $model->attributes = $var;
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id_ticket));
         }
