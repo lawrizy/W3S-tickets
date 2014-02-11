@@ -27,6 +27,7 @@ class UserIdentity extends CUserIdentity {
                     $this->_id = $record->id_locataire;
                     $this->errorCode = self::ERROR_NONE;
                     Yii::app()->session['Utilisateur'] = 'Locataire';
+                    Yii::app()->session['id_locataire']=$record;
                 }
                 return !$this->errorCode;
             } elseif (($record = User::model()->findByAttributes(array('email' => $this->username))) !== NULL) {
