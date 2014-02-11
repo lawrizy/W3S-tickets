@@ -36,7 +36,7 @@
 
     <div class="row">
         <?php echo $form->labelEx($model, 'fk_lieu'); ?>
-        <?php echo $form->dropDownList($model, 'fk_lieu', CHtml::listData(Lieu::model()->findAll(), 'id_lieu', 'adresse')); ?>
+        <?php echo $form->dropDownList($model, 'fk_lieu', CHtml::listData(Lieu::model()->findAll(), 'id_lieu', 'appartement')); ?>
         <?php echo $form->error($model, 'fk_lieu'); ?>
     </div>
 
