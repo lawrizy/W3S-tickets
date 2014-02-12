@@ -20,11 +20,7 @@
 
     <?php echo $form->errorSummary($model); ?>
 
-    <div class="row">
-        <?php echo $form->labelEx($model, 'fk_statut'); ?>
-        <input type="hidden" value="<?php ?>" >
-        <?php echo $form->error($model, 'fk_statut'); ?>
-    </div>
+
 
     <div class="row">
         <?php echo $form->labelEx($model, 'fk_categorie'); ?>
@@ -36,14 +32,14 @@
 
     <div class="row">
         <?php
+        echo $form->labelEx($model, 'fk_lieu');
         if ((Yii::app()->session['Locataire'] == 'Locataire')) {
-            echo $form->labelEx($model, 'fk_lieu');
             echo $form->dropDownList($model, 'fk_lieu', array('' => '', CHtml::listData(Lieu::model()->findAllByAttributes(array('fk_locataire' => Yii::app()->session['Logged']->id_locataire)), 'id_lieu', 'adresse')));
             echo $form->error($model, 'fk_lieu');
             $var = 0;
             $var = Yii::app()->session['Logged'];
         } else {
-            echo $form->dropDownList($model, 'fk_lieu', array('' => '', CHtml::listData(Lieu::model()->findAllByAttributes(array('fk_locataire' => Locataire::model()->findByPk(2)->id_locataire)), 'id_lieu', 'adresse')));
+            echo $form->dropDownList($model, 'fk_lieu', array('' => '', CHtml::listData(Lieu::model()->findAllByAttributes(array('fk_locataire' => $_GET['id'])), 'id_lieu', 'adresse')));
         }
         ?>
     </div>
@@ -56,11 +52,7 @@
         ?>
     </div>
 
-    <div class="row">
-        <?php echo $form->labelEx($model, 'version'); ?>
-        <?php echo $form->textField($model, 'version', array('size' => 2, 'maxlength' => 2)); ?>
-        <?php echo $form->error($model, 'version'); ?>
-    </div>
+
 
 
     <?php $this->endWidget(); ?>
