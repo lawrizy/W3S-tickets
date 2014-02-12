@@ -78,7 +78,7 @@ class TicketController extends Controller {
                 $histo->date_update = date("Y-m-d", time());
                 $histo->fk_ticket = $model->id_ticket;
                 $histo->fk_statut_ticket = 1;
-                $histo->save(FALSE);
+           //     $histo->save(FALSE);
                 $this->redirect(array('view', 'id' => $model->id_ticket));
             }
         }
