@@ -83,12 +83,23 @@ class TicketController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
-
+        // Stocke les anciennes valeurs du modèle, pour comparaison ultérieure.
+        $oldModel = $model;
+        
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
         if (isset($_POST['Ticket'])) {
+            // Le changement du modèle s'opère ici.
             $model->attributes = $_POST['Ticket'];
+            
+            // Vérifier si le statut du ticket a changé, si oui, envoyer un mail.
+            if($oldModel->fk_statut != $model->fk_statut)
+            {
+                // TODO
+            }
+            
+            // Ensuite on sauvegarde les changements normalement.
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id_ticket));
         }
@@ -150,7 +161,7 @@ class TicketController extends Controller {
      * Cette méthode est utilisée pour envoyer le mail de notification, lors
      * du changement de statut d'un ticket, au LOCATAIRE qui l'a créé.
      */
-    private function actionSendNotificationMail()
+    private function actionSendNotificationMail($userEmail)
     {
         
     }
