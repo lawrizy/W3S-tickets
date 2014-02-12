@@ -75,7 +75,7 @@ class TicketController extends Controller {
             $model->attributes = $var;
             if ($model->save()) {
                 $histo = new HistoriqueTicket();
-                $histo->date_update = date("Y-m-d H:i:s", time());
+                $histo->date_update = date("Y-m-d", time());
                 $histo->fk_ticket = $model->id_ticket;
                 $histo->fk_statut_ticket = 1;
                 $histo->save(FALSE);
