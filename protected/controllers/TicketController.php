@@ -73,8 +73,14 @@ class TicketController extends Controller {
                 $var['fk_user'] = $var1['id_user'];
             }
             $model->attributes = $var;
-            if ($model->save())
+            if ($model->save()) {
+                $histo = new HistoriqueTicket();
+                $histo->date_update = date("Y-m-d H:i:s", time());
+                $histo->fk_ticket = $model->id_ticket;
+                $histo->fk_statut_ticket = 1;
+                $histo->save(FALSE);
                 $this->redirect(array('view', 'id' => $model->id_ticket));
+            }
         }
 
         $this->render('create', array(
@@ -91,18 +97,17 @@ class TicketController extends Controller {
         $model = $this->loadModel($id);
         // Stocke les anciennes valeurs du modèle, pour comparaison ultérieure.
         $oldModel = $model;
-        
+
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
         if (isset($_POST['Ticket'])) {
             // Le changement du modèle s'opère ici.
             $model->attributes = $_POST['Ticket'];
-            
+
             // Vérifier si le statut du ticket a changé.
-            if($oldModel->fk_statut != $model->fk_statut)
-            {
-                /* 
+            if ($oldModel->fk_statut != $model->fk_statut) {
+                /*
                  * Si le statut du ticket a changé, récupérer l'email du locataire
                  * et lui envoyer le mail de confirmation.
                  */
@@ -111,7 +116,7 @@ class TicketController extends Controller {
                 $email = $locataire->email;
                 $this->actionSendNotificationMail($email);
             }
-            
+
             // Ensuite on sauvegarde les changements normalement.
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id_ticket));
@@ -158,24 +163,22 @@ class TicketController extends Controller {
             'model' => $model,
         ));
     }
-    
+
     /**
      * Cette méthode change le statut courant du ticket vers le statut indiqué en paramètre.
      * Lorsque le changement de statut se fait, un mail est envoyé au LOCATAIRE
      * pour lui indiquer le changement de statut de son ticket.
      * @param integer $newStatusID L'ID du nouveau statut à attribuer au ticket.
      */
-    public function actionChangeStatutTicket($newStatusID)
-    {
+    public function actionChangeStatutTicket($newStatusID) {
         
     }
-    
+
     /**
      * Cette méthode est utilisée pour envoyer le mail de notification, lors
      * du changement de statut d'un ticket, au LOCATAIRE qui l'a créé.
      */
-    private function actionSendNotificationMail($userEmail)
-    {
+    private function actionSendNotificationMail($userEmail) {
         echo "
             <script>
             alert('Envoi Email to client');

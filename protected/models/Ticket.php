@@ -33,7 +33,7 @@ class Ticket extends CActiveRecord {
 // NOTE: you should only define rules for those attributes that
 // will receive user inputs.
         return array(
-            array('fk_categorie, fk_lieu, fk_canal', 'required'),
+            array('fk_categorie, fk_lieu, fk_canal, commentaire', 'required'),
             array('fk_canal, fk_secteur', 'numerical', 'integerOnly' => true),
             array('fk_statut, fk_categorie, fk_lieu, fk_user', 'length', 'max' => 10),
             array('commentaire, date_intervention', 'safe'),
@@ -61,8 +61,8 @@ class Ticket extends CActiveRecord {
         return array(
             'id_ticket' => 'Id Ticket',
             'fk_statut' => 'Fk Statut',
-            'fk_categorie' => 'Fk Categorie',
-            'fk_lieu' => 'Fk Lieu',
+            'fk_categorie' => 'Categorie',
+            'fk_lieu' => 'Lieu',
             'fk_user' => 'Fk User',
             'commentaire' => 'Commentaire',
             'fk_canal' => 'Fk Canal',
@@ -128,6 +128,10 @@ class Ticket extends CActiveRecord {
         $var1 = Batiment::model()->findByPk($var->fk_batiment);
         //  $var1 = Locataire::model()->findByPk(2);
         return $var1->adresse . ', ' . $var1->cp . ' ' . $var1->commune . ' apt ' . $var->appartement . '/' . $var->etage;
+    }
+    
+    public function getLieuByLocataire(){
+        
     }
 
 }
