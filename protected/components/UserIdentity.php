@@ -46,7 +46,7 @@ class UserIdentity extends CUserIdentity {
             }
             return self::ERROR_UNKNOWN_IDENTITY;
         } catch (CDbException $ex) {
-            Yii::app()->session['erreurDB'] = '';
+            Yii::app()->session['erreurDB'] = 'La base de donnnée est indisponible pour le moment';
         }
     }
 

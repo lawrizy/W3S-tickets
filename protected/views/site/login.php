@@ -50,8 +50,7 @@ $this->breadcrumbs = array(
     </div>
     <p> <?php
         echo Yii::app()->session['erreurDB'];
-        ;
         ?></p>
 
-<?php $this->endWidget(); ?>
+    <?php $this->endWidget(); ?>
 </div><!-- form -->
