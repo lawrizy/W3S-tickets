@@ -126,51 +126,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `db_ticketing`.`w3sys_ticket`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_ticket` (
-  `id_ticket` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
-  `fk_statut` INT(10) UNSIGNED NOT NULL DEFAULT 1,
-  `fk_categorie` INT(10) UNSIGNED NOT NULL,
-  `fk_lieu` INT(10) UNSIGNED NOT NULL,
-  `fk_user` INT(10) UNSIGNED NULL,
-  `version` INT(2) UNSIGNED NULL DEFAULT 0,
-  `commentaire` TEXT NULL,
-  `fk_canal` INT(10) NOT NULL,
-  PRIMARY KEY (`id_ticket`),
-  INDEX `fk_w3sys_ticket_w3sys_statut_ticket1_idx` (`fk_statut` ASC),
-  INDEX `fk_w3sys_ticket_w3sys_categorie_incident1_idx` (`fk_categorie` ASC),
-  INDEX `fk_w3sys_ticket_w3sys_lieu1_idx` (`fk_lieu` ASC),
-  INDEX `fk_w3sys_ticket_w3sys_user1_idx` (`fk_user` ASC),
-  INDEX `fk_w3sys_ticket_w3sys_canal1_idx` (`fk_canal` ASC))
-ENGINE = MyISAM;
-
-
--- -----------------------------------------------------
--- Table `db_ticketing`.`w3sys_historique_ticket`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_historique_ticket` (
-  `id_historique_ticket` INT(11) NOT NULL AUTO_INCREMENT,
-  `date_update` DATETIME NOT NULL,
-  `fk_ticket` INT(10) NOT NULL,
-  `fk_statut_ticket` INT(10) NOT NULL DEFAULT 1,
-  PRIMARY KEY (`id_historique_ticket`),
-  INDEX `fk_w3sys_historique_ticket_w3sys_ticket_idx` (`fk_ticket` ASC),
-  INDEX `fk_w3sys_historique_ticket_w3sys_statut_ticket1_idx` (`fk_statut_ticket` ASC),
-  CONSTRAINT `fk_w3sys_historique_ticket_w3sys_ticket`
-    FOREIGN KEY (`fk_ticket`)
-    REFERENCES `db_ticketing`.`w3sys_ticket` (`id_ticket`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_w3sys_historique_ticket_w3sys_statut_ticket1`
-    FOREIGN KEY (`fk_statut_ticket`)
-    REFERENCES `db_ticketing`.`w3sys_statut_ticket` (`id_statut_ticket`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `db_ticketing`.`w3sys_entreprise`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_entreprise` (
@@ -211,6 +166,53 @@ CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_secteur` (
   CONSTRAINT `fk_w3sys_secteur_w3sys_categorie_incident1`
     FOREIGN KEY (`fk_categorie`)
     REFERENCES `db_ticketing`.`w3sys_categorie_incident` (`id_categorie_incident`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `db_ticketing`.`w3sys_ticket`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_ticket` (
+  `id_ticket` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `fk_statut` INT(10) UNSIGNED NOT NULL DEFAULT 1,
+  `fk_categorie` INT(10) UNSIGNED NOT NULL,
+  `fk_lieu` INT(10) UNSIGNED NOT NULL,
+  `fk_user` INT(10) UNSIGNED NULL,
+  `commentaire` TEXT NULL,
+  `fk_canal` INT(10) NOT NULL,
+  `fk_secteur` INT(10) NULL,
+  `date_intervention` DATE NULL,
+  PRIMARY KEY (`id_ticket`),
+  INDEX `fk_w3sys_ticket_w3sys_statut_ticket1_idx` (`fk_statut` ASC),
+  INDEX `fk_w3sys_ticket_w3sys_categorie_incident1_idx` (`fk_categorie` ASC),
+  INDEX `fk_w3sys_ticket_w3sys_lieu1_idx` (`fk_lieu` ASC),
+  INDEX `fk_w3sys_ticket_w3sys_user1_idx` (`fk_user` ASC),
+  INDEX `fk_w3sys_ticket_w3sys_canal1_idx` (`fk_canal` ASC),
+  INDEX `fk_w3sys_ticket_w3sys_secteur1_idx` (`fk_secteur` ASC))
+ENGINE = MyISAM;
+
+
+-- -----------------------------------------------------
+-- Table `db_ticketing`.`w3sys_historique_ticket`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_historique_ticket` (
+  `id_historique_ticket` INT(10) NOT NULL AUTO_INCREMENT,
+  `date_update` DATETIME NOT NULL,
+  `fk_ticket` INT(10) NOT NULL,
+  `fk_statut_ticket` INT(10) NOT NULL DEFAULT 1,
+  PRIMARY KEY (`id_historique_ticket`),
+  INDEX `fk_w3sys_historique_ticket_w3sys_ticket_idx` (`fk_ticket` ASC),
+  INDEX `fk_w3sys_historique_ticket_w3sys_statut_ticket1_idx` (`fk_statut_ticket` ASC),
+  CONSTRAINT `fk_w3sys_historique_ticket_w3sys_ticket`
+    FOREIGN KEY (`fk_ticket`)
+    REFERENCES `db_ticketing`.`w3sys_ticket` (`id_ticket`)
+    ON UPDATE NO ACTION,
+    ON DELETE NO ACTION
+  CONSTRAINT `fk_w3sys_historique_ticket_w3sys_statut_ticket1`
+    FOREIGN KEY (`fk_statut_ticket`)
+    REFERENCES `db_ticketing`.`w3sys_statut_ticket` (`id_statut_ticket`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
