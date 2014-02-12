@@ -25,19 +25,15 @@
     <?php echo CHtml::encode($data->fk_user); ?>
     <br />
 
-    <b><?php echo CHtml::encode($data->getAttributeLabel('version')); ?>:</b>
-    <?php echo CHtml::encode($data->version); ?>
+    <b><?php echo CHtml::encode($data->getAttributeLabel('commentaire')); ?>:</b>
+    <?php echo CHtml::encode($data->commentaire); ?>
     <br />
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('commentaire')); ?>:</b>
-	<?php echo CHtml::encode($data->commentaire); ?>
-	<br />
+    <?php /*
+      <b><?php echo CHtml::encode($data->getAttributeLabel('fk_canal')); ?>:</b>
+      <?php echo CHtml::encode($data->fk_canal); ?>
+      <br />
 
-	<?php /*
-	<b><?php echo CHtml::encode($data->getAttributeLabel('fk_canal')); ?>:</b>
-	<?php echo CHtml::encode($data->fk_canal); ?>
-	<br />
-
-	*/ ?>
+     */ ?>
 
 </div>
