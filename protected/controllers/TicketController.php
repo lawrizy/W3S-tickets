@@ -99,10 +99,17 @@ class TicketController extends Controller {
             // Le changement du modèle s'opère ici.
             $model->attributes = $_POST['Ticket'];
             
-            // Vérifier si le statut du ticket a changé, si oui, envoyer un mail.
+            // Vérifier si le statut du ticket a changé.
             if($oldModel->fk_statut != $model->fk_statut)
             {
-                // TODO
+                /* 
+                 * Si le statut du ticket a changé, récupérer l'email du locataire
+                 * et lui envoyer le mail de confirmation.
+                 */
+                $lieu = Lieu::model()->findByPk($model->fk_lieu);
+                $locataire = Locataire::model()->findByPk($lieu->fk_locataire);
+                $email = $locataire->email;
+                $this->actionSendNotificationMail($email);
             }
             
             // Ensuite on sauvegarde les changements normalement.
@@ -169,7 +176,11 @@ class TicketController extends Controller {
      */
     private function actionSendNotificationMail($userEmail)
     {
-        
+        echo "
+            <script>
+            alert('Envoi Email to client');
+            </script>
+            ";
     }
 
     /**
