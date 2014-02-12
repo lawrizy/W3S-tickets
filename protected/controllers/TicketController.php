@@ -134,6 +134,26 @@ class TicketController extends Controller {
             'model' => $model,
         ));
     }
+    
+    /**
+     * Cette méthode change le statut courant du ticket vers le statut indiqué en paramètre.
+     * Lorsque le changement de statut se fait, un mail est envoyé au LOCATAIRE
+     * pour lui indiquer le changement de statut de son ticket.
+     * @param integer $newStatusID L'ID du nouveau statut à attribuer au ticket.
+     */
+    public function actionChangeStatutTicket($newStatusID)
+    {
+        
+    }
+    
+    /**
+     * Cette méthode est utilisée pour envoyer le mail de notification, lors
+     * du changement de statut d'un ticket, au LOCATAIRE qui l'a créé.
+     */
+    private function actionSendNotificationMail()
+    {
+        
+    }
 
     /**
      * Returns the data model based on the primary key given in the GET variable.
