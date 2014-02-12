@@ -8,8 +8,7 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'List Ticket', 'url' => array('index')),
-    array('label' => 'Create Ticket', 'url' => array('create')),
+    array('label' => 'Recherche locataire', 'url' => array('/locataire/admin')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -53,6 +52,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'fk_categorie',
         'fk_lieu',
         'fk_user',
+        
         /*
           'commentaire',
           'fk_canal',

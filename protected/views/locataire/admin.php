@@ -7,10 +7,7 @@ $this->breadcrumbs = array(
     'Manage',
 );
 
-$this->menu = array(
-    array('label' => 'List Locataire', 'url' => array('index')),
-    array('label' => 'Create Locataire', 'url' => array('create')),
-);
+
 
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
@@ -51,9 +48,11 @@ $this->widget('zii.widgets.grid.CGridView', array(
         'id_locataire',
         'nom',
         'email',
-        'password',
-        array(
+        array
+            (
             'class' => 'CButtonColumn',
+            'template' => '{view}',
+            'visible' => Yii::app()->session['Utilisateur'] == 'User'
         ),
     ),
 ));

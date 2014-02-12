@@ -36,36 +36,33 @@
 
     <div class="row">
         <?php
-        if (isset(Yii::app()->session['id_locataire'])) {
+        if ((Yii::app()->session['Locataire'] == 'Locataire')) {
             echo $form->labelEx($model, 'fk_lieu');
-            echo $form->dropDownList($model, 'fk_lieu', array('' => '', CHtml::listData(Lieu::model()->findAllByAttributes(array('fk_locataire' => Yii::app()->session['id_locataire']->id_locataire)), 'id_lieu', 'adresse')));
+            echo $form->dropDownList($model, 'fk_lieu', array('' => '', CHtml::listData(Lieu::model()->findAllByAttributes(array('fk_locataire' => Yii::app()->session['Logged']->id_locataire)), 'id_lieu', 'adresse')));
             echo $form->error($model, 'fk_lieu');
             $var = 0;
-            $var = Yii::app()->session['id_locataire'];
+            $var = Yii::app()->session['Logged'];
         } else {
-            
+            echo $form->dropDownList($model, 'fk_lieu', array('' => '', CHtml::listData(Lieu::model()->findAllByAttributes(array('fk_locataire' => Locataire::model()->findByPk(2)->id_locataire)), 'id_lieu', 'adresse')));
         }
         ?>
     </div>
-    
+
     <div class="row">
-        <?php 
-            echo $form->labelEx($model, 'commentaire');
-            echo $form->textArea($model, 'commentaire', array('maxlength' => 800, 'rows' => 5, 'cols' => 50, 'style' => 'resize:none'));
-            echo $form->error($model, 'commentaire');
+        <?php
+        echo $form->labelEx($model, 'commentaire');
+        echo $form->textArea($model, 'commentaire', array('maxlength' => 800, 'rows' => 5, 'cols' => 50, 'style' => 'resize:none'));
+        echo $form->error($model, 'commentaire');
         ?>
     </div>
-    
+
     <div class="row">
-<?php echo $form->labelEx($model, 'version'); ?>
+        <?php echo $form->labelEx($model, 'version'); ?>
         <?php echo $form->textField($model, 'version', array('size' => 2, 'maxlength' => 2)); ?>
         <?php echo $form->error($model, 'version'); ?>
     </div>
 
-    <div class="row buttons">
-<?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
-    </div>
 
-<?php $this->endWidget(); ?>
+    <?php $this->endWidget(); ?>
 
 </div><!-- form -->
