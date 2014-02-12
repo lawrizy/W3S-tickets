@@ -40,11 +40,6 @@
     </div>
 
     <div class="row">
-        <?php echo $form->label($model, 'version'); ?>
-        <?php echo $form->textField($model, 'version', array('size' => 2, 'maxlength' => 2)); ?>
-    </div>
-
-    <div class="row">
         <?php echo $form->label($model, 'commentaire'); ?>
         <?php echo $form->textArea($model, 'commentaire', array('rows' => 6, 'cols' => 50)); ?>
     </div>

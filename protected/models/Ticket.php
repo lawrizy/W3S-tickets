@@ -9,9 +9,10 @@
  * @property string $fk_categorie
  * @property string $fk_lieu
  * @property string $fk_user
- * @property string $version
  * @property string $commentaire
  * @property integer $fk_canal
+ * @property integer $fk_secteur
+ * @property string $date_intervention
  *
  * The followings are the available model relations:
  * @property HistoriqueTicket[] $historiqueTickets
@@ -29,17 +30,16 @@ class Ticket extends CActiveRecord {
      * @return array validation rules for model attributes.
      */
     public function rules() {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
+// NOTE: you should only define rules for those attributes that
+// will receive user inputs.
         return array(
             array('fk_categorie, fk_lieu, fk_canal', 'required'),
-            array('fk_canal', 'numerical', 'integerOnly' => true),
+            array('fk_canal, fk_secteur', 'numerical', 'integerOnly' => true),
             array('fk_statut, fk_categorie, fk_lieu, fk_user', 'length', 'max' => 10),
-            array('version', 'length', 'max' => 2),
-            array('commentaire', 'safe'),
-            // The following rule is used by search().
-            // @todo Please remove those attributes that should not be searched.
-            array('id_ticket, fk_statut, fk_categorie, fk_lieu, fk_user, version, commentaire, fk_canal', 'safe', 'on' => 'search'),
+            array('commentaire, date_intervention', 'safe'),
+// The following rule is used by search().
+// @todo Please remove those attributes that should not be searched.
+            array('id_ticket, fk_statut, fk_categorie, fk_lieu, fk_user, commentaire, fk_canal, fk_secteur, date_intervention', 'safe', 'on' => 'search'),
         );
     }
 
@@ -47,11 +47,10 @@ class Ticket extends CActiveRecord {
      * @return array relational rules.
      */
     public function relations() {
-        // NOTE: you may need to adjust the relation name and the related
-        // class name for the relations automatically generated below.
+// NOTE: you may need to adjust the relation name and the related
+// class name for the relations automatically generated below.
         return array(
             'historiqueTickets' => array(self::HAS_MANY, 'HistoriqueTicket', 'fk_ticket'),
-            'lsdfldf' => array(self::HAS_ONE, 'StatutTicket', 'fk_statut')
         );
     }
 
@@ -60,14 +59,15 @@ class Ticket extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'id_ticket' => 'Numéro du ticket',
-            'fk_statut' => 'Statut du ticket',
-            'fk_categorie' => 'Catégorie de l\'incident',
-            'fk_lieu' => 'Lieu',
-            'fk_user' => 'Utilisateur',
-            'version' => 'Version',
+            'id_ticket' => 'Id Ticket',
+            'fk_statut' => 'Fk Statut',
+            'fk_categorie' => 'Fk Categorie',
+            'fk_lieu' => 'Fk Lieu',
+            'fk_user' => 'Fk User',
             'commentaire' => 'Commentaire',
-            'fk_canal' => 'Canal de création',
+            'fk_canal' => 'Fk Canal',
+            'fk_secteur' => 'Fk Secteur',
+            'date_intervention' => 'Date Intervention',
         );
     }
 
@@ -84,7 +84,7 @@ class Ticket extends CActiveRecord {
      * based on the search/filter conditions.
      */
     public function search() {
-        // @todo Please modify the following code to remove attributes that should not be searched.
+// @todo Please modify the following code to remove attributes that should not be searched.
 
         $criteria = new CDbCriteria;
 
@@ -93,9 +93,10 @@ class Ticket extends CActiveRecord {
         $criteria->compare('fk_categorie', $this->fk_categorie, true);
         $criteria->compare('fk_lieu', $this->fk_lieu, true);
         $criteria->compare('fk_user', $this->fk_user, true);
-        $criteria->compare('version', $this->version, true);
         $criteria->compare('commentaire', $this->commentaire, true);
         $criteria->compare('fk_canal', $this->fk_canal);
+        $criteria->compare('fk_secteur', $this->fk_secteur);
+        $criteria->compare('date_intervention', $this->date_intervention, true);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
