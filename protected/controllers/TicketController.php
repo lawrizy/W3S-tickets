@@ -63,22 +63,37 @@ class TicketController extends Controller {
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
+        // Vérifie si a bien reçu un objet 'Ticket'
+        // ==> si non, c'est que c'est la première arrivée sur la page create,
+        // ==> si oui, c'est que c'est la page create elle-même qui renvoie ici pour la création d'un ticket
         if (isset($_POST['Ticket'])) {
             $var = $_POST['Ticket'];
+            
+            // Canal par défaut le temps du développement
             $var['fk_canal'] = 1;
+            
+            // Vérifie quel utilisateur est enregistré (si User ou Locataire)
             if (Yii::app()->session['Utilisateur'] == 'Locataire')
+                // Si locataire, on attribue le ticket a un user par défaut (le 1 dans ce cas-ci)
                 $var['fk_user'] = 1;
             else {
+                // Si user, c'est lui-même qui s'occupera de ce ticket-ci
                 $var1 = Yii::app()->session['Logged'];
                 $var['fk_user'] = $var1['id_user'];
             }
+            
+            // Notre modèle prend la valeur reçue de la page et on test un save
+            // (dans la méthode save, on fait d'abord une validation des attributs)
             $model->attributes = $var;
             if ($model->save()) {
+                // Si la sauvegarde du ticket s'est bien passé,
+                // on enregistre un évènement opened pour la création du ticket
                 $histo = new HistoriqueTicket();
-                $histo->date_update = date("Y-m-d", time());
+                $histo->date_update = date("Y-m-d H:i:s", time());
                 $histo->fk_ticket = $model->id_ticket;
+                // Lors de la création, statut forcément à opened
                 $histo->fk_statut_ticket = 1;
-                $histo->save(FALSE);
+                $histo->save(false);
                 $this->redirect(array('view', 'id' => $model->id_ticket));
             }
         }
