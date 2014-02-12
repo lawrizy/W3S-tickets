@@ -18,4 +18,4 @@ $this->menu = array(
 
 <h1>Update Ticket <?php echo $model->id_ticket; ?></h1>
 
-<?php $this->renderPartial('_form', array('model' => $model)); ?>
+<?php $this->renderPartial('_formUpdate', array('model' => $model)); ?>
