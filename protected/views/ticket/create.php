@@ -10,7 +10,4 @@ $this->breadcrumbs = array(
 
 <h1>Create Ticket</h1>
 
-<?php $this->renderPartial('_form', array('model' => $model)); ?>
-<div class="row buttons">
-    <?php echo CHtml::submitButton('Create'); ?>
-</div>
+<?php $this->renderPartial('_formCreate', array('model' => $model)); ?>
