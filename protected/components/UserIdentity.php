@@ -27,7 +27,8 @@ class UserIdentity extends CUserIdentity {
                     $this->_id = $record->id_locataire;
                     $this->errorCode = self::ERROR_NONE;
                     Yii::app()->session['Utilisateur'] = 'Locataire';
-                    Yii::app()->session['id_locataire']=$record;
+                    $record->password = '';
+                    Yii::app()->session['Logged'] = $record;
                 }
                 return !$this->errorCode;
             } elseif (($record = User::model()->findByAttributes(array('email' => $this->username))) !== NULL) {
@@ -38,6 +39,8 @@ class UserIdentity extends CUserIdentity {
                     $this->_id = $record->id_user;
                     $this->errorCode = self::ERROR_NONE;
                     Yii::app()->session['Utilisateur'] = 'User';
+                    $record->password='';
+                    Yii::app()->session['Logged'] = $record;
                 }
                 return !$this->errorCode;
             }
