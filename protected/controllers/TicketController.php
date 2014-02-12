@@ -66,6 +66,12 @@ class TicketController extends Controller {
         if (isset($_POST['Ticket'])) {
             $var = $_POST['Ticket'];
             $var['fk_canal'] = 1;
+            if (Yii::app()->session['Utilisateur'] == 'Locataire')
+                $var['fk_user'] = 1;
+            else {
+                $var1 = Yii::app()->session['Logged'];
+                $var['fk_user'] = $var1['id_user'];
+            }
             $model->attributes = $var;
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id_ticket));
