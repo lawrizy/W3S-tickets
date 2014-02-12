@@ -82,7 +82,11 @@ class SiteController extends Controller {
             $model->attributes = $_POST['LoginForm'];
             // validate user input and redirect to the previous page if valid
             if ($model->validate() && $model->login())
-                $this->redirect(array('./ticket'));
+                if (Yii::app()->session['Utilisateur'] == 'Locataire')
+                    $this->redirect(array('./ticket/create'));
+                else {
+                    $this->redirect(array('./ticket/admin'));
+                }
         }
         // display the login form
         $this->render('login', array('model' => $model));
