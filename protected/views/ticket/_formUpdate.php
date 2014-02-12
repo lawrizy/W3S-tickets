@@ -30,7 +30,7 @@
 
     <div class="row">
         <?php
-        if ((Yii::app()->session['Locataire'] == 'Locataire')) {
+        if ((Yii::app()->session['Utilisateur'] == 'Locataire')) {
             echo $form->labelEx($model, 'fk_lieu');
             echo $form->dropDownList($model, 'fk_lieu', array('' => '', CHtml::listData(Lieu::model()->findAllByAttributes(array('fk_locataire' => Yii::app()->session['Logged']->id_locataire)), 'id_lieu', 'adresse')));
             echo $form->error($model, 'fk_lieu');
