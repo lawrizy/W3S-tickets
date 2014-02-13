@@ -111,5 +111,22 @@ class Ticket extends CActiveRecord {
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
+    
+    public function getStatusTicket() {
+        $var = StatutTicket::model()->findByPk($this->fk_statut);
+        return $var->label;
+    }
 
+    public function getCategorieIncident() {
+        $var = CategorieIncident::model()->findByPk($this->fk_categorie);
+        return $var->label;
+    }
+
+    public function getLieu() {
+        $var = Lieu::model()->findByPk($this->fk_lieu);
+        $var1 = Batiment::model()->findByPk($var->fk_batiment);
+        //  $var1 = Locataire::model()->findByPk(2);
+        return $var1->adresse . ', ' . $var1->cp . ' ' . $var1->commune . ' apt ' . $var->appartement . '/' . $var->etage;
+    }
+    
 }
