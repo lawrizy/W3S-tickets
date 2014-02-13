@@ -60,8 +60,6 @@ class TicketController extends Controller {
     public function actionCreate() {
         $model = new Ticket;
 
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
         // Vérifie si a bien reçu un objet 'Ticket'
         // ==> si non, c'est que c'est la première arrivée sur la page create,
         // ==> si oui, c'est que c'est la page create elle-même qui renvoie ici pour la création d'un ticket
@@ -108,35 +106,45 @@ class TicketController extends Controller {
      * @param integer $id the ID of the model to be updated
      */
     public function actionUpdate($id) {
-        $model = $this->loadModel($id);
         // Stocke les anciennes valeurs du modèle, pour comparaison ultérieure.
-        $oldModel = $model;
-
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
+        $oldModel = $model = $this->loadModel($id);
+        
+        // Vérifie si a bien reçu un objet 'Ticket'
+        // ==> si non, c'est que c'est la première arrivée sur la page update,
+        // ==> si oui, c'est que c'est la page update elle-même qui renvoie ici pour la mise à jour d'un ticket
         if (isset($_POST['Ticket'])) {
             // Le changement du modèle s'opère ici.
             $model->attributes = $_POST['Ticket'];
-
+            
+            // Ensuite on sauvegarde les changements normalement.
+            if ($model->save()){
+                // Si la sauvegarde du ticket s'est bien passé,
+                // on enregistre un évènement pour le ticket
+                $histo = new HistoriqueTicket();
+                $histo->date_update = date("Y-m-d H:i:s", time());
+                $histo->fk_ticket = $model->id_ticket;
+                // TODO TODO
+                $histo->fk_statut_ticket = 1;
+            }
+            
+            /*
+            // TODO
             // Vérifier si le statut du ticket a changé.
             if ($oldModel->fk_statut != $model->fk_statut) {
-                /*
-                 * Si le statut du ticket a changé, récupérer l'email du locataire
-                 * et lui envoyer le mail de confirmation.
-                 *
-                 * L'email du locataire doit être retrouvée via le lieu associé à ce ticket.
-                 * -> Ticket -> Lieu -> Locataire -> Locataire.email
-                 */
+                //
+                // Si le statut du ticket a changé, récupérer l'email du locataire
+                // et lui envoyer le mail de confirmation.
+                //
+                // L'email du locataire doit être retrouvée via le lieu associé à ce ticket.
+                // -> Ticket -> Lieu -> Locataire -> Locataire.email
+                //
+                
                 $lieu = Lieu::model()->findByPk($model->fk_lieu);                   // Ticket -> Lieu
                 $locataire = Locataire::model()->findByPk($lieu->fk_locataire);     // Lieu -> Locataire
                 $email = $locataire->email;                                         // Locataire.email
-                $this->actionSendNotificationMail($email);                          // appel méthode d'envoi email
+                $this->actionSendNotificationMail($email);                       // appel méthode d'envoi email
             }
-
-            // Ensuite on sauvegarde les changements normalement.
-            if ($model->save())
-                $this->redirect(array('view', 'id' => $model->id_ticket));
+            //*/
         }
 
         $this->render('update', array(
@@ -212,6 +220,15 @@ class TicketController extends Controller {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
+    }
+    
+    public function getEntreprise($idTicket){
+        $model = $this->loadModel($idTicket);
+        $lieu = Lieu::model()->findByPk($model->fk_lieu);
+//        $batiment = Batiment::model()->findByPk($lieu->fk_batiment);
+//        $categorie = CategorieIncident::model()->findByPk($model->fk_categorie);
+        
+        return Secteur::model()->findAllByAttributes(array('fk_batiment'=>$lieu->fk_batiment,'fk_categorie'=>$model->fk_categorie));
     }
 
 }
