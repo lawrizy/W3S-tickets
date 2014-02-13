@@ -70,12 +70,11 @@ class TicketController extends Controller {
             $ticket['fk_canal'] = 1;
 
             // Vérifie quel utilisateur est enregistré (si User ou Locataire)
-            if (Yii::app()->session['Utilisateur'] == 'Locataire'){
-            // Si locataire, on attribue le ticket a un user par défaut (le 1 dans ce cas-ci)
+            if (Yii::app()->session['Utilisateur'] == 'Locataire') {
+                // Si locataire, on attribue le ticket a un user par défaut (le 1 dans ce cas-ci)
                 $ticket['fk_user'] = 1;
-                $user=0;
-            }
-            else {
+                $user = 0;
+            } else {
                 // Si user, c'est lui-même qui s'occupera de ce ticket-ci
                 $logged = Yii::app()->session['Logged'];
                 $ticket['fk_user'] = $logged['id_user'];
@@ -84,9 +83,10 @@ class TicketController extends Controller {
 
             // Notre modèle prend la valeur reçue de la page et on test un save
             // (dans la méthode save, on fait d'abord une validation des attributs)
-            $ticket['fk_priorite'] = 1;
             $model->attributes = $ticket;
-            if ($model->save()) {
+
+            try {
+                $model->save();
                 // Si la sauvegarde du ticket s'est bien passé,
                 // on enregistre un évènement opened pour la création du ticket
                 $histo = new HistoriqueTicket();
@@ -94,9 +94,11 @@ class TicketController extends Controller {
                 $histo->fk_ticket = $model->id_ticket;
                 // Lors de la création, statut forcément à opened
                 $histo->fk_statut_ticket = 1;
-                $histo->fk_user = $user;
+                $histo->fk_user = 0;
                 $histo->save(FALSE);
                 $this->redirect(array('view', 'id' => $model->id_ticket));
+            } catch (CDbException $e) {
+                Yii::app()->session['erreurDB'] = 'La base de donnnée est indisponible pour le moment';
             }
         }
 
@@ -113,16 +115,16 @@ class TicketController extends Controller {
     public function actionUpdate($id) {
         // Stocke les anciennes valeurs du modèle, pour comparaison ultérieure.
         $oldModel = $model = $this->loadModel($id);
-        
+
         // Vérifie si a bien reçu un objet 'Ticket'
         // ==> si non, c'est que c'est la première arrivée sur la page update,
         // ==> si oui, c'est que c'est la page update elle-même qui renvoie ici pour la mise à jour d'un ticket
         if (isset($_POST['Ticket'])) {
             // Le changement du modèle s'opère ici.
             $model->attributes = $_POST['Ticket'];
-            
+
             // Ensuite on sauvegarde les changements normalement.
-            if ($model->save()){
+            if ($model->save()) {
                 // Si la sauvegarde du ticket s'est bien passé,
                 // on enregistre un évènement pour le ticket
                 $histo = new HistoriqueTicket();
@@ -133,25 +135,25 @@ class TicketController extends Controller {
                 // TODO TODO
                 $histo->fk_statut_ticket = 1;
             }
-            
+
             /*
-            // TODO
-            // Vérifier si le statut du ticket a changé.
-            if ($oldModel->fk_statut != $model->fk_statut) {
-                //
-                // Si le statut du ticket a changé, récupérer l'email du locataire
-                // et lui envoyer le mail de confirmation.
-                //
-                // L'email du locataire doit être retrouvée via le lieu associé à ce ticket.
-                // -> Ticket -> Lieu -> Locataire -> Locataire.email
-                //
-                
-                $lieu = Lieu::model()->findByPk($model->fk_lieu);                   // Ticket -> Lieu
-                $locataire = Locataire::model()->findByPk($lieu->fk_locataire);     // Lieu -> Locataire
-                $email = $locataire->email;                                         // Locataire.email
-                $this->actionSendNotificationMail($email);                       // appel méthode d'envoi email
-            }
-            //*/
+              // TODO
+              // Vérifier si le statut du ticket a changé.
+              if ($oldModel->fk_statut != $model->fk_statut) {
+              //
+              // Si le statut du ticket a changé, récupérer l'email du locataire
+              // et lui envoyer le mail de confirmation.
+              //
+              // L'email du locataire doit être retrouvée via le lieu associé à ce ticket.
+              // -> Ticket -> Lieu -> Locataire -> Locataire.email
+              //
+
+              $lieu = Lieu::model()->findByPk($model->fk_lieu);                   // Ticket -> Lieu
+              $locataire = Locataire::model()->findByPk($lieu->fk_locataire);     // Lieu -> Locataire
+              $email = $locataire->email;                                         // Locataire.email
+              $this->actionSendNotificationMail($email);                       // appel méthode d'envoi email
+              }
+              // */
         }
 
         $this->render('update', array(
@@ -228,14 +230,14 @@ class TicketController extends Controller {
             Yii::app()->end();
         }
     }
-    
-    public function getEntreprise($idTicket){
+
+    public function getEntreprise($idTicket) {
         $model = $this->loadModel($idTicket);
         $lieu = Lieu::model()->findByPk($model->fk_lieu);
 //        $batiment = Batiment::model()->findByPk($lieu->fk_batiment);
 //        $categorie = CategorieIncident::model()->findByPk($model->fk_categorie);
-        
-        return Secteur::model()->findAllByAttributes(array('fk_batiment'=>$lieu->fk_batiment,'fk_categorie'=>$model->fk_categorie));
+
+        return Secteur::model()->findAllByAttributes(array('fk_batiment' => $lieu->fk_batiment, 'fk_categorie' => $model->fk_categorie));
     }
 
 }

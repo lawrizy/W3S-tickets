@@ -55,8 +55,8 @@
     <div class="row buttons">
         <?php echo CHtml::submitButton('Create'); ?>
     </div>
-
-
+    
+    
     <?php $this->endWidget(); ?>
 
 </div><!-- form -->

@@ -8,10 +8,12 @@
  * @property string $date_update
  * @property integer $fk_ticket
  * @property integer $fk_statut_ticket
+ * @property integer $fk_user
  *
  * The followings are the available model relations:
  * @property Ticket $fkTicket
  * @property StatutTicket $fkStatutTicket
+ * @property User $fkUser
  */
 class HistoriqueTicket extends CActiveRecord {
 
@@ -29,11 +31,11 @@ class HistoriqueTicket extends CActiveRecord {
 // NOTE: you should only define rules for those attributes that
 // will receive user inputs.
         return array(
-            array('date_update, fk_ticket, fk_statut_ticket', 'required'),
-            array('fk_ticket, fk_statut_ticket', 'numerical', 'integerOnly' => true),
+            array('date_update, fk_ticket, fk_statut_ticket, fk_user', 'required'),
+            array('fk_ticket, fk_statut_ticket, fk_user', 'numerical', 'integerOnly' => true),
 // The following rule is used by search().
 // @todo Please remove those attributes that should not be searched.
-            array('id_historique_ticket, date_update, fk_ticket, fk_statut_ticket', 'safe', 'on' => 'search'),
+            array('id_historique_ticket, date_update, fk_ticket, fk_statut_ticket, fk_user', 'safe', 'on' => 'search'),
         );
     }
 
@@ -46,6 +48,7 @@ class HistoriqueTicket extends CActiveRecord {
         return array(
             'fkTicket' => array(self::BELONGS_TO, 'Ticket', 'fk_ticket'),
             'fkStatutTicket' => array(self::BELONGS_TO, 'StatutTicket', 'fk_statut_ticket'),
+            'fkUser' => array(self::BELONGS_TO, 'User', 'fk_user'),
         );
     }
 
@@ -58,6 +61,7 @@ class HistoriqueTicket extends CActiveRecord {
             'date_update' => 'Date Update',
             'fk_ticket' => 'Fk Ticket',
             'fk_statut_ticket' => 'Fk Statut Ticket',
+            'fk_user' => 'Fk User',
         );
     }
 
@@ -82,6 +86,7 @@ class HistoriqueTicket extends CActiveRecord {
         $criteria->compare('date_update', $this->date_update, true);
         $criteria->compare('fk_ticket', $this->fk_ticket);
         $criteria->compare('fk_statut_ticket', $this->fk_statut_ticket);
+        $criteria->compare('fk_user', $this->fk_user);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
