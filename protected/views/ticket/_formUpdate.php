@@ -8,10 +8,6 @@
     <?php
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'ticket-form',
-        // Please note: When you enable ajax validation, make sure the corresponding
-        // controller action is handling ajax validation correctly.
-        // There is a call to performAjaxValidation() commented in generated controller code.
-        // See class documentation of CActiveForm for details on this.
         'enableAjaxValidation' => false,
     ));
     ?>
@@ -23,7 +19,7 @@
     <div class="row">
         <?php 
             echo $form->labelEx($model, 'fk_categorie');
-            echo $form->dropDownList($model, 'fk_categorie', array('prompt' => 'Catégorie principale', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL)), 'id_categorie_incident', 'label')));
+            echo $form->dropDownList($model, 'fk_categorie', array('' => '', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL)), 'id_categorie_incident', 'label')));
             echo $form->dropDownList($model, 'fk_categorie', array('' => '', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => !NULL)), 'id_categorie_incident', 'label')));
             echo $form->error($model, 'fk_categorie');
         ?>
@@ -43,14 +39,16 @@
             // Affichage de la sélection des entreprises
     if(Yii::app()->session['Utilisateur'] == 'User')
     {
+        $theData = Chtml::listData($this->getEntreprise($model->id_ticket), 'id_secteur', 'test');
         echo $form->labelEx($model, 'fk_secteur');
-        echo $form->dropDownList($model, 'fk_secteur', array('empty' => 'TODO!!'));
+        echo $form->dropDownList($model, 'fk_secteur', array('' => '', $theData));
         echo $form->error($model, 'fk_secteur');
     }
     ?>
     
     <div class="row">
         <!-- Div pour la PRIORITE -->
+        <!-- Champs caché -->
         <!-- TODO Priorité -->
     </div>
     
@@ -64,7 +62,13 @@
     
     <div class="row buttons">
         <?php
-            echo CHtml::submitButton('Save');
+            $redirectionURL = '../' . $model->id_ticket;
+            //echo CHtml::submitButton('Save');
+            $this->widget('zii.widgets.jui.CJuiButton', array(
+                'buttonType' => 'submit',
+                'name' => 'update',
+                'caption' => 'Save',
+            ));
             
             if(Yii::app()->session['Utilisateur'] == 'User')
             {
@@ -72,23 +76,37 @@
                 if($model->getStatusTicket() === "Closed");
                 else if($model->getStatusTicket() === "Opened")
                 {
-                    $nomMethode = "DummyAction"; //TODO
+                    $nomMethode = "Update"; //TODO
+                    $this->widget('zii.widgets.jui.CJuiButton', array(
+                        'buttonType' => 'submit',
+                        'name' => 'ticketToInProgress',
+                        'caption' => 'Passer le ticket \'En traitement\'',
+                    ));
+                    /*
                     echo CHtml::submitButton('Passer le ticket \'En traitement\'', 
                             array('button' => 'TicketController/' . $nomMethode,
-                                'submit' => array('ticket/admin'),
+                                'submit' => $redirectionURL,
                                 ));
+                     */
                 }
                 else
                 {
-                    $nomMethode = "DummyAction"; //TODO
+                    $nomMethode = "Update"; //TODO
+                    $this->widget('zii.widgets.jui.CJuiButton', array(
+                        'buttonType' => 'submit',
+                        'name' => 'ticketToClosed',
+                        'caption' => 'Clôturer le ticket',
+                    ));
+                    /*
                     echo CHtml::submitButton('Clôturer le ticket', array(
-                            'button' => array(  'TicketController/' . $nomMethode,
-                            'submit' => array('ticket/admin'),
+                            'button' => array('TicketController/' . $nomMethode,
+                            'submit' => $redirectionURL
                             )));
+                     */
                 }
             }
             
-            echo CHtml::submitButton('Annuler les changements', array('submit' => array('ticket/admin')));
+            echo CHtml::submitButton('Annuler les changements', array('submit' => array('')));
         ?>
     </div>
 
