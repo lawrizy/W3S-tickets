@@ -4,11 +4,11 @@
  * This is the model class for table "w3sys_ticket".
  *
  * The followings are the available columns in table 'w3sys_ticket':
- * @property string $id_ticket
- * @property string $fk_statut
- * @property string $fk_categorie
- * @property string $fk_lieu
- * @property string $fk_user
+ * @property integer $id_ticket
+ * @property integer $fk_statut
+ * @property integer $fk_categorie
+ * @property integer $fk_lieu
+ * @property integer $fk_user
  * @property string $commentaire
  * @property integer $fk_canal
  * @property integer $fk_secteur
@@ -33,9 +33,8 @@ class Ticket extends CActiveRecord {
 // NOTE: you should only define rules for those attributes that
 // will receive user inputs.
         return array(
-            array('fk_categorie, fk_lieu, fk_canal, commentaire', 'required'),
-            array('fk_canal, fk_secteur', 'numerical', 'integerOnly' => true),
-            array('fk_statut, fk_categorie, fk_lieu, fk_user', 'length', 'max' => 10),
+            array('fk_categorie, fk_lieu, fk_canal', 'required'),
+            array('fk_statut, fk_categorie, fk_lieu, fk_user, fk_canal, fk_secteur', 'numerical', 'integerOnly' => true),
             array('commentaire, date_intervention', 'safe'),
 // The following rule is used by search().
 // @todo Please remove those attributes that should not be searched.
@@ -59,15 +58,15 @@ class Ticket extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'id_ticket' => 'Numéro de ticket',
-            'fk_statut' => 'Statut du ticket',
-            'fk_categorie' => 'Catégorie de l\'incident',
-            'fk_lieu' => 'Lieu de l\'incident',
-            'fk_user' => 'Utilisateur assigné',
+            'id_ticket' => 'Id Ticket',
+            'fk_statut' => 'Fk Statut',
+            'fk_categorie' => 'Fk Categorie',
+            'fk_lieu' => 'Fk Lieu',
+            'fk_user' => 'Fk User',
             'commentaire' => 'Commentaire',
-            'fk_canal' => 'Voie de création (canal)',
-            'fk_secteur' => 'Secteur',
-            'date_intervention' => 'Date d\'intervention',
+            'fk_canal' => 'Fk Canal',
+            'fk_secteur' => 'Fk Secteur',
+            'date_intervention' => 'Date Intervention',
         );
     }
 
@@ -88,11 +87,11 @@ class Ticket extends CActiveRecord {
 
         $criteria = new CDbCriteria;
 
-        $criteria->compare('id_ticket', $this->id_ticket, true);
-        $criteria->compare('fk_statut', $this->fk_statut, true);
-        $criteria->compare('fk_categorie', $this->fk_categorie, true);
-        $criteria->compare('fk_lieu', $this->fk_lieu, true);
-        $criteria->compare('fk_user', $this->fk_user, true);
+        $criteria->compare('id_ticket', $this->id_ticket);
+        $criteria->compare('fk_statut', $this->fk_statut);
+        $criteria->compare('fk_categorie', $this->fk_categorie);
+        $criteria->compare('fk_lieu', $this->fk_lieu);
+        $criteria->compare('fk_user', $this->fk_user);
         $criteria->compare('commentaire', $this->commentaire, true);
         $criteria->compare('fk_canal', $this->fk_canal);
         $criteria->compare('fk_secteur', $this->fk_secteur);
@@ -111,27 +110,6 @@ class Ticket extends CActiveRecord {
      */
     public static function model($className = __CLASS__) {
         return parent::model($className);
-    }
-
-    public function getStatusTicket() {
-        $var = StatutTicket::model()->findByPk($this->fk_statut);
-        return $var->label;
-    }
-
-    public function getCategorieIncident() {
-        $var = CategorieIncident::model()->findByPk($this->fk_categorie);
-        return $var->label;
-    }
-
-    public function getLieu() {
-        $var = Lieu::model()->findByPk($this->fk_lieu);
-        $var1 = Batiment::model()->findByPk($var->fk_batiment);
-        //  $var1 = Locataire::model()->findByPk(2);
-        return $var1->adresse . ', ' . $var1->cp . ' ' . $var1->commune . ' apt ' . $var->appartement . '/' . $var->etage;
-    }
-    
-    public function getLieuByLocataire(){
-        
     }
 
 }
