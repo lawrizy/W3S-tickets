@@ -46,7 +46,19 @@
     </div>
     
     <div class="row buttons">
-        <?php echo CHtml::submitButton('Save'); ?>
+        <?php
+            echo CHtml::submitButton('Save');
+            if(Yii::app()->session['Utilisateur'] == 'User')
+            {
+                if($model->getStatusTicket() === "Closed");
+                //TODO : utiliser les actions du controleur
+                else if($model->getStatusTicket() === "Opened")
+                    echo CHtml::submitButton ('Passer le ticket \'En traitement\'', array('submit' => array('TicketController/')));
+                else
+                    echo CHtml::submitButton ('Clôturer le ticket');
+            }
+            echo CHtml::submitButton('Annuler les changements', array('submit' => array('ticket/admin')));
+        ?>
     </div>
 
     <?php $this->endWidget(); ?>
