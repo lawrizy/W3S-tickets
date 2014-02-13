@@ -38,9 +38,10 @@
     <?php
     // Affichage de la sélection des entreprises
     if (Yii::app()->session['Utilisateur'] == 'User') {
-        $theData = Chtml::listData($this->getEntreprise($model->id_ticket), 'id_entreprise', 'nom');
+        $theData = $this->getEntreprise($model->id_ticket);
         echo $form->labelEx($model, 'fk_secteur');
-        echo $form->dropDownList($model, 'fk_secteur', array('' => '', $theData));
+        echo $form->dropDownList($model, 'fk_secteur', array('' => '', CHtml::listData($theData, 'id_entreprise', 'nom')));
+        Yii::trace(CVarDumper::dumpAsString($theData),'cron');
         echo $form->error($model, 'fk_secteur');
     }
     ?>

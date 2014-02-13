@@ -34,7 +34,7 @@ class Ticket extends CActiveRecord {
 // will receive user inputs.
         return array(
             array('fk_categorie, fk_lieu, fk_canal', 'required'),
-            array('fk_statut, fk_categorie, fk_lieu, fk_user, fk_canal, fk_secteur', 'numerical', 'integerOnly' => true),
+            array('fk_statut, fk_categorie, fk_lieu, fk_user, fk_canal', 'numerical', 'integerOnly' => true),
             array('commentaire, date_intervention', 'safe'),
 // The following rule is used by search().
 // @todo Please remove those attributes that should not be searched.

@@ -60,8 +60,15 @@ return array(
             'routes' => array(
                 array(
                     'class' => 'CFileLogRoute',
-                    'levels' => 'error, warning',
-                ),
+                    'levels' => 'error, warning, trace',
+                    'logFile' => 'application.log',
+                     'categories' => 'cron',
+                    ),
+//            'routes' => array(
+//                'class' => 'CFileLogRoute',
+//                'levels' => 'trace, info',
+//                'logFile' => 'application.log',
+//                'categories' => 'cron',
             // uncomment the following to show log messages on web pages
             /*
               array(

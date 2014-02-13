@@ -122,9 +122,9 @@ class TicketController extends Controller {
         if (isset($_POST['Ticket'])) {
             // Le changement du modèle s'opère ici.
             $model->attributes = $_POST['Ticket'];
-            if ($model->fk_secteur != null) {
+            if ($model->fk_secteur !== NULL) {
                 $lieu = Lieu::model()->findByPk($model->fk_lieu);
-                $model->fk_secteur = $this->getSecteurByFk($model->fk_secteur, $model->fk_entreprise, $lieu->fk_batiment);
+                $model->fk_secteur = $this->getSecteurByFk($model->fk_secteur, $model->fk_categorie, $lieu->fk_batiment);
             }
             // Ensuite on sauvegarde les changements normalement.
             if ($model->save()) {
@@ -238,16 +238,19 @@ class TicketController extends Controller {
         $model = $this->loadModel($idTicket);
         $lieu = Lieu::model()->findByPk($model->fk_lieu);
         $secteurs = Secteur::model()->findAllByAttributes(array('fk_batiment' => $lieu->fk_batiment, 'fk_categorie' => $model->fk_categorie));
+        //$secteurs = Secteur::model()->findAllByAttributes(array('fk_batiment' => $lieu->fk_batiment, 'fk_categorie' => $model->fk_categorie));
         $entreprises = array();
         foreach ($secteurs as $secteur) {
-            $entreprise = $secteur->fk_entreprise;
+            $entreprise = Entreprise::model()->findByPk($secteur->fk_entreprise);
             array_push($entreprises,$entreprise);
         }
+        
         return $entreprises;
     }
     
     public function getSecteurByFk($entreprise, $categorie, $batiment) {
-        return Secteur::model()->findByAttributes(array('fk_batiment'=>$batiment,'fk_categorie'=>$categorie,'fk_entreprise'=>$entreprise));
+        $var = Secteur::model()->findByAttributes(array('fk_batiment'=>$batiment,'fk_categorie'=>$categorie,'fk_entreprise'=>$entreprise));
+        return $var->id_secteur;
     }
 
 }
