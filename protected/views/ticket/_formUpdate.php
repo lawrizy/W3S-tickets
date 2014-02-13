@@ -21,22 +21,34 @@
     <?php echo $form->errorSummary($model); ?>
 
     <div class="row">
-        <?php echo $form->labelEx($model, 'fk_categorie'); ?>
-        <?php echo $form->dropDownList($model, 'fk_categorie', array('' => '', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => !NULL)), 'id_categorie_incident', 'label'))); ?>
-        <?php echo $form->dropDownList($model, 'fk_categorie', array('' => '', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL)), 'id_categorie_incident', 'label'))); ?>
-        <?php echo $form->error($model, 'fk_categorie'); ?>
+        <?php 
+            echo $form->labelEx($model, 'fk_categorie');
+            echo $form->dropDownList($model, 'fk_categorie', array('prompt' => 'Catégorie principale', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL)), 'id_categorie_incident', 'label')));
+            echo $form->dropDownList($model, 'fk_categorie', array('' => '', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => !NULL)), 'id_categorie_incident', 'label')));
+            echo $form->error($model, 'fk_categorie');
+        ?>
     </div>
 
 
     <div class="row">
         <?php
         echo $form->labelEx($model, 'fk_lieu');
-        $lieu=  Lieu::model()->findByPk($model->fk_lieu);
+        $lieu = Lieu::model()->findByPk($model->fk_lieu);
         echo $form->dropDownList($model, 'fk_lieu', array('' => '', CHtml::listData(Lieu::model()->findAllByAttributes(array('fk_locataire' => Locataire::model()->findByPk($lieu->fk_locataire)->id_locataire)), 'id_lieu', 'adresse')));
         echo $form->error($model, 'fk_lieu');
         ?>
     </div>
 
+    <?php
+            // Affichage de la sélection des entreprises
+    if(Yii::app()->session['Utilisateur'] == 'User')
+    {
+        echo $form->labelEx($model, 'fk_secteur');
+        echo $form->dropDownList($model, 'fk_secteur', array('empty' => 'TODO!!'));
+        echo $form->error($model, 'fk_secteur');
+    }
+    ?>
+    
     <div class="row">
         <?php
         echo $form->labelEx($model, 'commentaire');
@@ -48,21 +60,29 @@
     <div class="row buttons">
         <?php
             echo CHtml::submitButton('Save');
+            
             if(Yii::app()->session['Utilisateur'] == 'User')
             {
                 $nomMethode = ""; // Nom de la méthode du TicketController sans le "action" ex: create et pas actionCreate
                 if($model->getStatusTicket() === "Closed");
                 else if($model->getStatusTicket() === "Opened")
                 {
-                    $nomMethode = ""; //TODO
-                    echo CHtml::submit('Passer le ticket \'En traitement\'', array('button' => array('TicketController/' + $nomMethode)));
+                    $nomMethode = "DummyAction"; //TODO
+                    echo CHtml::submitButton('Passer le ticket \'En traitement\'', 
+                            array('button' => 'TicketController/' . $nomMethode,
+                                'submit' => array('ticket/admin'),
+                                ));
                 }
                 else
                 {
-                    $nomMethode = ""; //TODO
-                    echo CHtml::submit('Clôturer le ticket', array('button' => array('TicketController/' + $nomMethode)));
+                    $nomMethode = "DummyAction"; //TODO
+                    echo CHtml::submitButton('Clôturer le ticket', array(
+                            'button' => array(  'TicketController/' . $nomMethode,
+                            'submit' => array('ticket/admin'),
+                            )));
                 }
             }
+            
             echo CHtml::submitButton('Annuler les changements', array('submit' => array('ticket/admin')));
         ?>
     </div>
