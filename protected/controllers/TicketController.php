@@ -93,7 +93,7 @@ class TicketController extends Controller {
                 $histo->fk_ticket = $model->id_ticket;
                 // Lors de la création, statut forcément à opened
                 $histo->fk_statut_ticket = 1;
-                $histo->save(false);
+           //     $histo->save(FALSE);
                 $this->redirect(array('view', 'id' => $model->id_ticket));
             }
         }
@@ -125,11 +125,14 @@ class TicketController extends Controller {
                 /*
                  * Si le statut du ticket a changé, récupérer l'email du locataire
                  * et lui envoyer le mail de confirmation.
+                 *
+                 * L'email du locataire doit être retrouvée via le lieu associé à ce ticket.
+                 * -> Ticket -> Lieu -> Locataire -> Locataire.email
                  */
-                $lieu = Lieu::model()->findByPk($model->fk_lieu);
-                $locataire = Locataire::model()->findByPk($lieu->fk_locataire);
-                $email = $locataire->email;
-                $this->actionSendNotificationMail($email);
+                $lieu = Lieu::model()->findByPk($model->fk_lieu);                   // Ticket -> Lieu
+                $locataire = Locataire::model()->findByPk($lieu->fk_locataire);     // Lieu -> Locataire
+                $email = $locataire->email;                                         // Locataire.email
+                $this->actionSendNotificationMail($email);                          // appel méthode d'envoi email
             }
 
             // Ensuite on sauvegarde les changements normalement.
@@ -141,6 +144,7 @@ class TicketController extends Controller {
             'model' => $model,
         ));
     }
+    
 
     /**
      * Deletes a particular model.
@@ -180,25 +184,11 @@ class TicketController extends Controller {
     }
 
     /**
-     * Cette méthode change le statut courant du ticket vers le statut indiqué en paramètre.
-     * Lorsque le changement de statut se fait, un mail est envoyé au LOCATAIRE
-     * pour lui indiquer le changement de statut de son ticket.
-     * @param integer $newStatusID L'ID du nouveau statut à attribuer au ticket.
-     */
-    public function actionChangeStatutTicket($newStatusID) {
-        
-    }
-
-    /**
      * Cette méthode est utilisée pour envoyer le mail de notification, lors
      * du changement de statut d'un ticket, au LOCATAIRE qui l'a créé.
      */
     private function actionSendNotificationMail($userEmail) {
-        echo "
-            <script>
-            alert('Envoi Email to client');
-            </script>
-            ";
+        // TODO : Envoi d'un mail au locataire en cas de changement de statut ticket
     }
 
     /**
