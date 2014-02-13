@@ -38,10 +38,9 @@
     <?php
     // Affichage de la sélection des entreprises
     if (Yii::app()->session['Utilisateur'] == 'User') {
-        $theData = $this->getEntreprise($model->id_ticket);
         echo $form->labelEx($model, 'fk_secteur');
-        echo $form->dropDownList($model, 'fk_secteur', array('' => '', CHtml::listData($theData, 'id_entreprise', 'nom')));
-        Yii::trace(CVarDumper::dumpAsString($theData),'cron');
+        echo $form->dropDownList($model, 'fk_secteur', array('' => '', CHtml::listData($this->getEntreprise($model->id_ticket), 'id_entreprise', 'nom')));
+        // Yii::trace(CVarDumper::dumpAsString($theData), 'cron');
         echo $form->error($model, 'fk_secteur');
     }
     ?>
@@ -102,8 +101,12 @@
                  */
             }
         }
-
-        echo CHtml::submitButton('Annuler les changements', array('submit' => array('')));
+        $this->widget('zii.widgets.jui.CJuiButton', array(
+            'buttonType' => 'link',
+            'name' => 'ticketToClosed',
+            'caption' => 'Clôturer le ticket',
+            'url' => '.'
+        ));
         ?>
     </div>
 

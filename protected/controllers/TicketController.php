@@ -114,7 +114,7 @@ class TicketController extends Controller {
      */
     public function actionUpdate($id) {
         // Stocke les anciennes valeurs du modèle, pour comparaison ultérieure.
-        $oldModel = $model = $this->loadModel($id);
+        $model = $this->loadModel($id);
 
         // Vérifie si a bien reçu un objet 'Ticket'
         // ==> si non, c'est que c'est la première arrivée sur la page update,
@@ -122,7 +122,8 @@ class TicketController extends Controller {
         if (isset($_POST['Ticket'])) {
             // Le changement du modèle s'opère ici.
             $model->attributes = $_POST['Ticket'];
-            if ($model->fk_secteur !== NULL) {
+            if ($model->fk_secteur != NULL) {
+                Yii::trace($model->fk_secteur, 'cron');
                 $lieu = Lieu::model()->findByPk($model->fk_lieu);
                 $model->fk_secteur = $this->getSecteurByFk($model->fk_secteur, $model->fk_categorie, $lieu->fk_batiment);
             }
@@ -242,14 +243,14 @@ class TicketController extends Controller {
         $entreprises = array();
         foreach ($secteurs as $secteur) {
             $entreprise = Entreprise::model()->findByPk($secteur->fk_entreprise);
-            array_push($entreprises,$entreprise);
+            array_push($entreprises, $entreprise);
         }
-        
+
         return $entreprises;
     }
-    
+
     public function getSecteurByFk($entreprise, $categorie, $batiment) {
-        $var = Secteur::model()->findByAttributes(array('fk_batiment'=>$batiment,'fk_categorie'=>$categorie,'fk_entreprise'=>$entreprise));
+        $var = Secteur::model()->findByAttributes(array('fk_batiment' => $batiment, 'fk_categorie' => $categorie, 'fk_entreprise' => $entreprise));
         return $var->id_secteur;
     }
 

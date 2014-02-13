@@ -34,7 +34,7 @@ class Ticket extends CActiveRecord {
 // will receive user inputs.
         return array(
             array('fk_categorie, fk_lieu, fk_canal', 'required'),
-            array('fk_statut, fk_categorie, fk_lieu, fk_user, fk_canal', 'numerical', 'integerOnly' => true),
+            array('fk_statut, fk_categorie, fk_lieu, fk_user, fk_canal, fk_secteur', 'numerical', 'integerOnly' => true),
             array('commentaire, date_intervention', 'safe'),
 // The following rule is used by search().
 // @todo Please remove those attributes that should not be searched.
@@ -58,15 +58,15 @@ class Ticket extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'id_ticket' => 'Id Ticket',
-            'fk_statut' => 'Fk Statut',
-            'fk_categorie' => 'Fk Categorie',
-            'fk_lieu' => 'Fk Lieu',
-            'fk_user' => 'Fk User',
+            'id_ticket' => 'Numéro ticket',
+            'fk_statut' => 'Statut',
+            'fk_categorie' => 'Sous - Catégorie',
+            'fk_lieu' => 'Lieu',
+            'fk_user' => 'Utilisateur',
             'commentaire' => 'Commentaire',
-            'fk_canal' => 'Fk Canal',
-            'fk_secteur' => 'Fk Secteur',
-            'date_intervention' => 'Date Intervention',
+            'fk_canal' => 'Voie de création',
+            'fk_secteur' => 'Entreprise',
+            'date_intervention' => 'Date  Intervention',
         );
     }
 
@@ -111,7 +111,7 @@ class Ticket extends CActiveRecord {
     public static function model($className = __CLASS__) {
         return parent::model($className);
     }
-    
+
     public function getStatusTicket() {
         $var = StatutTicket::model()->findByPk($this->fk_statut);
         return $var->label;
@@ -128,5 +128,5 @@ class Ticket extends CActiveRecord {
         //  $var1 = Locataire::model()->findByPk(2);
         return $var1->adresse . ', ' . $var1->cp . ' ' . $var1->commune . ' apt ' . $var->appartement . '/' . $var->etage;
     }
-    
+
 }
