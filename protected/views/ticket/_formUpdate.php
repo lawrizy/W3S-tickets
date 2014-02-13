@@ -50,12 +50,18 @@
             echo CHtml::submitButton('Save');
             if(Yii::app()->session['Utilisateur'] == 'User')
             {
+                $nomMethode = ""; // Nom de la méthode du TicketController sans le "action" ex: create et pas actionCreate
                 if($model->getStatusTicket() === "Closed");
-                //TODO : utiliser les actions du controleur
                 else if($model->getStatusTicket() === "Opened")
-                    echo CHtml::submitButton ('Passer le ticket \'En traitement\'', array('submit' => array('TicketController/')));
+                {
+                    $nomMethode = ""; //TODO
+                    echo CHtml::submit('Passer le ticket \'En traitement\'', array('button' => array('TicketController/' + $nomMethode)));
+                }
                 else
-                    echo CHtml::submitButton ('Clôturer le ticket');
+                {
+                    $nomMethode = ""; //TODO
+                    echo CHtml::submit('Clôturer le ticket', array('button' => array('TicketController/' + $nomMethode)));
+                }
             }
             echo CHtml::submitButton('Annuler les changements', array('submit' => array('ticket/admin')));
         ?>
