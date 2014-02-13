@@ -38,7 +38,7 @@
     <?php
     // Affichage de la sélection des entreprises
     if (Yii::app()->session['Utilisateur'] == 'User') {
-        $theData = Chtml::listData($this->getEntreprise($model->id_ticket), 'id_secteur', 'test');
+        $theData = Chtml::listData($this->getSecteur($model->id_ticket), 'id_secteur', 'id_secteur');
         echo $form->labelEx($model, 'fk_secteur');
         echo $form->dropDownList($model, 'fk_secteur', array('' => '', $theData));
         echo $form->error($model, 'fk_secteur');
@@ -75,34 +75,18 @@
                 ;
             else if ($model->getStatusTicket() === "Opened") {
                 $nomMethode = "Update"; //TODO
-                $this->widget('zii.widgets.jui.CJuiButton', array(
-                    'buttonType' => 'submit',
-                    'name' => 'ticketToInProgress',
-                    'caption' => 'Passer le ticket \'En traitement\'',
-                ));
-                /*
                   echo CHtml::submitButton('Passer le ticket \'En traitement\'',
-                  array('button' => 'TicketController/' . $nomMethode,
-                  'submit' => $redirectionURL,
+                    array('submit' => 'TicketController/' . $nomMethode,
                   ));
-                 */
             } else {
                 $nomMethode = "Update"; //TODO
-                $this->widget('zii.widgets.jui.CJuiButton', array(
-                    'buttonType' => 'submit',
-                    'name' => 'ticketToClosed',
-                    'caption' => 'Clôturer le ticket',
-                ));
-                /*
                   echo CHtml::submitButton('Clôturer le ticket', array(
-                  'button' => array('TicketController/' . $nomMethode,
-                  'submit' => $redirectionURL
+                    'submit' => array('TicketController/' . $nomMethode,
                   )));
-                 */
             }
         }
 
-        echo CHtml::submitButton('Annuler les changements', array('submit' => array('')));
+        echo CHtml::submitButton('Annuler les changements', array('submit' => array('TicketController/update')));
         ?>
     </div>
 
