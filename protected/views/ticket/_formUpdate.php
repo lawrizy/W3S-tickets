@@ -50,6 +50,11 @@
     ?>
     
     <div class="row">
+        <!-- Div pour la PRIORITE -->
+        <!-- TODO Priorité -->
+    </div>
+    
+    <div class="row">
         <?php
         echo $form->labelEx($model, 'commentaire');
         echo $form->textArea($model, 'commentaire', array('maxlength' => 800, 'rows' => 5, 'cols' => 50, 'style' => 'resize:none'));
