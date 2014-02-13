@@ -38,7 +38,7 @@
     <?php
     // Affichage de la sélection des entreprises
     if (Yii::app()->session['Utilisateur'] == 'User') {
-        $theData = Chtml::listData($this->getEntreprise($model->id_ticket), 'id_secteur', 'test');
+        $theData = Chtml::listData($this->getEntreprise($model->id_ticket), 'id_entreprise', 'nom');
         echo $form->labelEx($model, 'fk_secteur');
         echo $form->dropDownList($model, 'fk_secteur', array('' => '', $theData));
         echo $form->error($model, 'fk_secteur');
