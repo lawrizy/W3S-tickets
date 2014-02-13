@@ -2,14 +2,17 @@
 /* @var $this TicketController */
 /* @var $model Ticket */
 
-$this->breadcrumbs = array(
-    'Tickets' => array('index'),
-    $model->id_ticket,
-);
+if(Yii::app()->session['Utilisateur'] === 'User')
+{
+    $this->breadcrumbs = array(
+        'Tickets' => array('index'),
+        $model->id_ticket,
+    );
 
-$this->menu = array(
-    array('label' => 'Update Ticket', 'url' => array('update', 'id' => $model->id_ticket),'visible'=>  Yii::app()->session['Utilisateur']=='User'),
-);
+    $this->menu = array(
+        array('label' => 'Update Ticket', 'url' => array('update', 'id' => $model->id_ticket),'visible'=>  Yii::app()->session['Utilisateur']=='User'),
+    );
+}
 ?>
 
 <h1>View Ticket #<?php echo $model->id_ticket; ?></h1>
