@@ -84,11 +84,64 @@ class Ticket extends CActiveRecord {
      */
     public function search() {
 // @todo Please modify the following code to remove attributes that should not be searched.
-
         $criteria = new CDbCriteria;
 
         $criteria->compare('id_ticket', $this->id_ticket);
         $criteria->compare('fk_statut', $this->fk_statut);
+        $criteria->compare('fk_categorie', $this->fk_categorie);
+        $criteria->compare('fk_lieu', $this->fk_lieu);
+        $criteria->compare('fk_user', $this->fk_user);
+        $criteria->compare('commentaire', $this->commentaire, true);
+        $criteria->compare('fk_canal', $this->fk_canal);
+        $criteria->compare('fk_secteur', $this->fk_secteur);
+        $criteria->compare('date_intervention', $this->date_intervention, true);
+
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
+    }
+
+    public function searchOpened() {
+        $criteria = new CDbCriteria;
+
+        $criteria->compare('id_ticket', $this->id_ticket);
+        $criteria->compare('fk_statut', $this->fk_statut = 1);
+        $criteria->compare('fk_categorie', $this->fk_categorie);
+        $criteria->compare('fk_lieu', $this->fk_lieu);
+        $criteria->compare('fk_user', $this->fk_user);
+        $criteria->compare('commentaire', $this->commentaire, true);
+        $criteria->compare('fk_canal', $this->fk_canal);
+        $criteria->compare('fk_secteur', $this->fk_secteur);
+        $criteria->compare('date_intervention', $this->date_intervention, true);
+
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
+    }
+
+    public function searchInProgress() {
+        $criteria = new CDbCriteria;
+
+        $criteria->compare('id_ticket', $this->id_ticket);
+        $criteria->compare('fk_statut', $this->fk_statut = 2);
+        $criteria->compare('fk_categorie', $this->fk_categorie);
+        $criteria->compare('fk_lieu', $this->fk_lieu);
+        $criteria->compare('fk_user', $this->fk_user);
+        $criteria->compare('commentaire', $this->commentaire, true);
+        $criteria->compare('fk_canal', $this->fk_canal);
+        $criteria->compare('fk_secteur', $this->fk_secteur);
+        $criteria->compare('date_intervention', $this->date_intervention, true);
+
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
+    }
+
+    public function searchClosed() {
+        $criteria = new CDbCriteria;
+
+        $criteria->compare('id_ticket', $this->id_ticket);
+        $criteria->compare('fk_statut', $this->fk_statut = 3);
         $criteria->compare('fk_categorie', $this->fk_categorie);
         $criteria->compare('fk_lieu', $this->fk_lieu);
         $criteria->compare('fk_user', $this->fk_user);

@@ -30,7 +30,7 @@ class TicketController extends Controller {
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'admin', 'delete'),
+                'actions' => array('create', 'update', 'admin', 'delete', 'admin_open'),
                 'users' => array('@'),
             ),
 //			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -200,7 +200,7 @@ class TicketController extends Controller {
         if (isset($_GET['Ticket']))
             $model->attributes = $_GET['Ticket'];
 
-        $this->render('admin', array(
+        $this->render($_GET['var'], array(
             'model' => $model,
         ));
     }

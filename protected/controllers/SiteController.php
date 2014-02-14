@@ -85,7 +85,7 @@ class SiteController extends Controller {
                 if (Yii::app()->session['Utilisateur'] == 'Locataire')
                     $this->redirect(array('./ticket/create'));
                 else {
-                    $this->redirect(array('./ticket/admin'));
+                    $this->redirect(array('./ticket/admin?var=admin'));
                 }
         }
         // display the login form

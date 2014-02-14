@@ -9,6 +9,9 @@ $this->breadcrumbs = array(
 
 $this->menu = array(
     array('label' => 'Recherche locataire', 'url' => array('/locataire/admin')),
+    array('label' => 'Lister les tickets ouverts', 'url' => array('ticket/admin?var=admin_opened')),
+    array('label' => 'Lister les tickets en cours de traitement', 'url' => array('ticket/admin?var=admin_InProgress')),
+    array('label' => 'Lister les tickets en fermés', 'url' => array('ticket/admin?var=admin_closed'))
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -25,7 +28,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Manage Tickets</h1>
+<h1>Tous les tickets</h1>
 
 <p>
     You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
@@ -42,17 +45,30 @@ $('.search-form form').submit(function(){
 </div><!-- search-form -->
 
 <?php
+//$df =$model;
+$var=$model->fk_statut;
+if (!isset($model->id_ticket))
+    echo 'error';
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'ticket-grid',
     'dataProvider' => $model->search(),
-    'filter' => $model,
+    // 'filter' => $model,
     'columns' => array(
         'id_ticket',
-        'fk_statut',
-        'fk_categorie',
-        'fk_lieu',
-        'fk_user',
-        
+        array(
+            'name' => 'fk_statut',
+            'value' => 'StatutTicket::model()->findByPk($data->fk_statut)->label'
+        ),
+        array(
+            'name' => 'fk_categorie',
+            'value' => 'CategorieIncident::model()->findByPk($data->fk_categorie)->label'),
+        array(
+            'name' => 'fk_lieu',
+            'value' => 'Lieu::model()->findByPk($data->fk_lieu)->adresse'),
+        array(
+            'name' => 'fk_user',
+         'value' => 'User::model()->findByPk($data->fk_user)->nom'),
+       
         /*
           'commentaire',
           'fk_canal',
