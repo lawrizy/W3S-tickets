@@ -68,7 +68,7 @@ class TicketController extends Controller {
 
             // Canal par défaut le temps du développement
             $ticket['fk_canal'] = 1;
-
+            $user = 0;
             // Vérifie quel utilisateur est enregistré (si User ou Locataire)
             if (Yii::app()->session['Utilisateur'] == 'Locataire') {
                 // Si locataire, on attribue le ticket a un user par défaut (le 1 dans ce cas-ci)
@@ -94,7 +94,7 @@ class TicketController extends Controller {
                 $histo->fk_ticket = $model->id_ticket;
                 // Lors de la création, statut forcément à opened
                 $histo->fk_statut_ticket = 1;
-                $histo->fk_user = 0;
+                $histo->fk_user = $user;
                 $histo->save(FALSE);
                 $this->redirect(array('view', 'id' => $model->id_ticket));
             } catch (CDbException $e) {
@@ -126,6 +126,7 @@ class TicketController extends Controller {
                 Yii::trace($model->fk_secteur, 'cron');
                 $lieu = Lieu::model()->findByPk($model->fk_lieu);
                 $model->fk_secteur = $this->getSecteurByFk($model->fk_secteur, $model->fk_categorie, $lieu->fk_batiment);
+                $model->fk_statut = 2;
             }
             // Ensuite on sauvegarde les changements normalement.
             if ($model->save()) {
@@ -137,7 +138,9 @@ class TicketController extends Controller {
                 $logged = Yii::app()->session['Logged'];
                 $histo->fk_user = $logged['id_user'];
                 // TODO TODO
-                $histo->fk_statut_ticket = 1;
+                $histo->fk_statut_ticket = 2;
+                $histo->save();
+                $this->redirect(array('view', 'id' => $model->id_ticket));
             }
 
             /*
