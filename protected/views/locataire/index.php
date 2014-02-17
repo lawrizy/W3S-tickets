@@ -2,9 +2,6 @@
 /* @var $this LocataireController */
 /* @var $dataProvider CActiveDataProvider */
 
-$this->breadcrumbs = array(
-    'Locataires',
-);
 
 $this->menu = array(
     array('label' => 'Create Locataire', 'url' => array('create')),

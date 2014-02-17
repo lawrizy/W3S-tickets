@@ -2,10 +2,7 @@
 /* @var $this LocataireController */
 /* @var $model Locataire */
 
-$this->breadcrumbs = array(
-    'Locataires' => array('index'),
-    'Create',
-);
+
 
 $this->menu = array(
     array('label' => 'List Locataire', 'url' => array('index')),

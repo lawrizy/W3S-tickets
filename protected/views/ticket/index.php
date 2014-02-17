@@ -2,9 +2,6 @@
 /* @var $this TicketController */
 /* @var $dataProvider CActiveDataProvider */
 
-$this->breadcrumbs = array(
-    'Tickets',
-);
 
 $this->menu = array(
     array('label' => 'Create Ticket', 'url' => array('create')),

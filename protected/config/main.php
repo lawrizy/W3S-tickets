@@ -62,8 +62,8 @@ return array(
                     'class' => 'CFileLogRoute',
                     'levels' => 'error, warning, trace',
                     'logFile' => 'application.log',
-                     'categories' => 'cron',
-                    ),
+                    'categories' => 'cron',
+                ),
 //            'routes' => array(
 //                'class' => 'CFileLogRoute',
 //                'levels' => 'trace, info',

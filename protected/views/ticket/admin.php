@@ -2,16 +2,12 @@
 /* @var $this TicketController */
 /* @var $model Ticket */
 
-$this->breadcrumbs = array(
-    'Tickets' => array('index'),
-    'Manage',
-);
 
 $this->menu = array(
-    array('label' => 'Recherche locataire', 'url' => array('/locataire/admin')),/*
-    array('label' => 'Lister les tickets ouverts', 'url' => array('ticket/admin?var=admin_opened')),
-    array('label' => 'Lister les tickets en cours de traitement', 'url' => array('ticket/admin?var=admin_InProgress')),
-    array('label' => 'Lister les tickets en fermés', 'url' => array('ticket/admin?var=admin_closed'))//*/
+    array('label' => 'Recherche locataire', 'url' => array('/locataire/admin')), //*
+          array('label' => 'Lister les tickets ouverts', 'url' => array('ticket/admin?var=admin_opened')),
+          array('label' => 'Lister les tickets en cours de traitement', 'url' => array('ticket/admin?var=admin_InProgress')),
+          array('label' => 'Lister les tickets en fermés', 'url' => array('ticket/admin?var=admin_closed'))// */
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -63,8 +59,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'value' => 'Batiment::model()->findByPk($data->fk_batiment)->adresse'),
         array(
             'name' => 'fk_user',
-         'value' => 'User::model()->findByPk($data->fk_user)->nom'),
-       
+            'value' => 'User::model()->findByPk($data->fk_user)->nom'),
         /*
           'commentaire',
           'fk_canal',

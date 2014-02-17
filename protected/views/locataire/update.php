@@ -2,11 +2,7 @@
 /* @var $this LocataireController */
 /* @var $model Locataire */
 
-$this->breadcrumbs = array(
-    'Locataires' => array('index'),
-    $model->id_locataire => array('view', 'id' => $model->id_locataire),
-    'Update',
-);
+
 
 $this->menu = array(
     array('label' => 'List Locataire', 'url' => array('index')),

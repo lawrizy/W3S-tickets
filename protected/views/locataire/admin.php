@@ -3,7 +3,6 @@
 /* @var $model Locataire */
 
 $this->breadcrumbs = array(
-    'Locataires' => array('index'),
     'Manage',
 );
 
