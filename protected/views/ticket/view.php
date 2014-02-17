@@ -10,6 +10,7 @@ if (Yii::app()->session['Utilisateur'] === 'User') {
 
     $this->menu = array(
         array('label' => 'Update Ticket', 'url' => array('update', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
+        array('label' => 'Mettre en traitement', 'url' => array('traitement', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
     );
 }
 ?>
@@ -25,11 +26,12 @@ $this->widget('zii.widgets.CDetailView', array(
             'name' => 'fk_statut',
             'value' => StatutTicket::model()->findByPk($model->fk_statut)->label
         ),
-        array('name' => 'Categorie',
+        array(
+            'name' => 'Categorie',
             'value' => CategorieIncident::model()->findByPk(CategorieIncident::model()->findByPk($model->fk_categorie)->fk_parent)->label
         ),
         array(
-            'name' => 'fk_categorie',
+            'name' => 'Sous-Categorie',
             'value' => CategorieIncident::model()->findByPk($model->fk_categorie)->label),
         array(
             'name' => 'fk_batiment',

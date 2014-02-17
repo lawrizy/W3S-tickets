@@ -127,7 +127,7 @@ class TicketController extends Controller {
      */
     public function actionUpdate($id) {
         // Stocke les anciennes valeurs du modèle, pour comparaison ultérieure.
-        $model = $this->loadModel($id);
+        $model = $oldmodel = $this->loadModel($id);
 
         // Vérifie si a bien reçu un objet 'Ticket'
         // ==> si non, c'est que c'est la première arrivée sur la page update,
@@ -135,11 +135,13 @@ class TicketController extends Controller {
         if (isset($_POST['Ticket'])) {
             // Le changement du modèle s'opère ici.
             $model->attributes = $_POST['Ticket'];
-            if ($model->fk_secteur != NULL) {
-                $lieu = Lieu::model()->findByPk($model->fk_lieu);
-                $model->fk_secteur = $this->getSecteurByFk($model->fk_secteur, $model->fk_categorie, $lieu->fk_batiment);
+            if (($model->fk_entreprise != NULL) && ($model->date_intervention != NULL)) {
                 $model->fk_statut = 2;
+                
             }
+            
+            $model->code_ticket = $model->fk_batiment != $oldmodel->fk_batiment ? $this->createCodeTicket($model->fk_batiment) : $model->code_ticket;
+            
             // Ensuite on sauvegarde les changements normalement.
             if ($model->save()) {
                 // Si la sauvegarde du ticket s'est bien passé,
@@ -150,7 +152,7 @@ class TicketController extends Controller {
                 $logged = Yii::app()->session['Logged'];
                 $histo->fk_user = $logged['id_user'];
                 // TODO TODO
-                $histo->fk_statut_ticket = 2;
+                $histo->fk_statut_ticket = $model->fk_statut;
                 $histo->save();
                 $this->redirect(array('view', 'id' => $model->id_ticket));
             }
