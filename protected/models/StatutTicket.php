@@ -12,26 +12,9 @@
  */
 class StatutTicket extends CActiveRecord {
 
-    const OPENED = 1;
-    const IN_PROGRESS = 2;
-    const CLOSED = 3;
-
     /**
      * @return string the associated database table name
      */
-    public static function getStatutTicketConstantOpened() {
-        return self::OPENED;
-    }
-    public static  function getStatutTicketConstantInProgress()
-    {
-        return self::IN_PROGRESS;
-    }
-     public static  function getStatutTicketConstantClosed()
-    {
-        return self::CLOSED;
-    }
-
-
     public function tableName() {
         return 'w3sys_statut_ticket';
     }

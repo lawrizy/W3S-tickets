@@ -59,8 +59,8 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'name' => 'fk_categorie',
             'value' => 'CategorieIncident::model()->findByPk($data->fk_categorie)->label'),
         array(
-            'name' => 'fk_lieu',
-            'value' => 'Lieu::model()->findByPk($data->fk_lieu)->adresse'),
+            'name' => 'fk_batiment',
+            'value' => 'Batiment::model()->findByPk($data->fk_lieu)->adresse'),
         array(
             'name' => 'fk_user',
          'value' => 'User::model()->findByPk($data->fk_user)->nom'),

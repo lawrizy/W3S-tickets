@@ -30,8 +30,8 @@
     </div>
 
     <div class="row">
-        <?php echo $form->label($model, 'fk_lieu'); ?>
-        <?php echo $form->textField($model, 'fk_lieu', array('size' => 10, 'maxlength' => 10)); ?>
+        <?php echo $form->label($model, 'fk_batiment'); ?>
+        <?php echo $form->textField($model, 'fk_batiment', array('size' => 10, 'maxlength' => 10)); ?>
     </div>
 
     <div class="row">
@@ -40,8 +40,8 @@
     </div>
 
     <div class="row">
-        <?php echo $form->label($model, 'commentaire'); ?>
-        <?php echo $form->textArea($model, 'commentaire', array('rows' => 6, 'cols' => 50)); ?>
+        <?php echo $form->label($model, 'descriptif'); ?>
+        <?php echo $form->textArea($model, 'descriptif', array('rows' => 6, 'cols' => 50)); ?>
     </div>
 
     <div class="row">

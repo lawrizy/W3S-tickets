@@ -99,11 +99,11 @@ class Ticket extends CActiveRecord {
         $criteria->compare('id_ticket', $this->id_ticket);
         $criteria->compare('fk_statut', $this->fk_statut);
         $criteria->compare('fk_categorie', $this->fk_categorie);
-        $criteria->compare('fk_lieu', $this->fk_lieu);
+        $criteria->compare('fk_batiment', $this->fk_batiment);
         $criteria->compare('fk_user', $this->fk_user);
-        $criteria->compare('commentaire', $this->commentaire, true);
+        $criteria->compare('descriptif', $this->descriptif, true);
         $criteria->compare('fk_canal', $this->fk_canal);
-        $criteria->compare('fk_secteur', $this->fk_secteur);
+        $criteria->compare('fk_entreprise', $this->fk_entreprise);
         $criteria->compare('date_intervention', $this->date_intervention, true);
 
         return new CActiveDataProvider($this, array(
@@ -117,11 +117,11 @@ class Ticket extends CActiveRecord {
         $criteria->compare('id_ticket', $this->id_ticket);
         $criteria->compare('fk_statut', $this->fk_statut = 1);
         $criteria->compare('fk_categorie', $this->fk_categorie);
-        $criteria->compare('fk_lieu', $this->fk_lieu);
+        $criteria->compare('fk_batiment', $this->fk_batiment);
         $criteria->compare('fk_user', $this->fk_user);
-        $criteria->compare('commentaire', $this->commentaire, true);
+        $criteria->compare('descriptif', $this->descriptif, true);
         $criteria->compare('fk_canal', $this->fk_canal);
-        $criteria->compare('fk_secteur', $this->fk_secteur);
+        $criteria->compare('fk_entreprise', $this->fk_entreprise);
         $criteria->compare('date_intervention', $this->date_intervention, true);
 
         return new CActiveDataProvider($this, array(
@@ -135,11 +135,11 @@ class Ticket extends CActiveRecord {
         $criteria->compare('id_ticket', $this->id_ticket);
         $criteria->compare('fk_statut', $this->fk_statut = 2);
         $criteria->compare('fk_categorie', $this->fk_categorie);
-        $criteria->compare('fk_lieu', $this->fk_lieu);
+        $criteria->compare('fk_batiment', $this->fk_batiment);
         $criteria->compare('fk_user', $this->fk_user);
-        $criteria->compare('commentaire', $this->commentaire, true);
+        $criteria->compare('descriptif', $this->descriptif, true);
         $criteria->compare('fk_canal', $this->fk_canal);
-        $criteria->compare('fk_secteur', $this->fk_secteur);
+        $criteria->compare('fk_entreprise', $this->fk_entreprise);
         $criteria->compare('date_intervention', $this->date_intervention, true);
 
         return new CActiveDataProvider($this, array(
@@ -153,11 +153,11 @@ class Ticket extends CActiveRecord {
         $criteria->compare('id_ticket', $this->id_ticket);
         $criteria->compare('fk_statut', $this->fk_statut = 3);
         $criteria->compare('fk_categorie', $this->fk_categorie);
-        $criteria->compare('fk_lieu', $this->fk_lieu);
+        $criteria->compare('fk_batiment', $this->fk_batiment);
         $criteria->compare('fk_user', $this->fk_user);
-        $criteria->compare('commentaire', $this->commentaire, true);
+        $criteria->compare('descriptif', $this->descriptif, true);
         $criteria->compare('fk_canal', $this->fk_canal);
-        $criteria->compare('fk_secteur', $this->fk_secteur);
+        $criteria->compare('fk_entreprise', $this->fk_entreprise);
         $criteria->compare('date_intervention', $this->date_intervention, true);
 
         return new CActiveDataProvider($this, array(
@@ -185,11 +185,5 @@ class Ticket extends CActiveRecord {
         return $var->label;
     }
 
-    public function getLieu() {
-        $var = Lieu::model()->findByPk($this->fk_lieu);
-        $var1 = Batiment::model()->findByPk($var->fk_batiment);
-        //  $var1 = Locataire::model()->findByPk(2);
-        return $var1->adresse . ', ' . $var1->cp . ' ' . $var1->commune . ' apt ' . $var->appartement . '/' . $var->etage;
-    }
-
+   
 }

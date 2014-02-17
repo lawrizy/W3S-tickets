@@ -33,23 +33,23 @@
 
     <div class="row">
         <?php
-        echo $form->labelEx($model, 'fk_lieu');
-        if ((Yii::app()->session['Utilisateur'] == 'Locataire')) {
-            echo $form->dropDownList($model, 'fk_lieu', array('' => '', CHtml::listData(Lieu::model()->findAllByAttributes(array('fk_locataire' => Yii::app()->session['Logged']->id_locataire)), 'id_lieu', 'adresse')));
-            echo $form->error($model, 'fk_lieu');
-            $var = 0;
-            $var = Yii::app()->session['Logged'];
-        } else {
-            echo $form->dropDownList($model, 'fk_lieu', array('' => '', CHtml::listData(Lieu::model()->findAllByAttributes(array('fk_locataire' => $_GET['id'])), 'id_lieu', 'adresse')));
-        }
+        echo $form->labelEx($model, 'fk_batiment');
+//        if ((Yii::app()->session['Utilisateur'] == 'Locataire')) {
+//            echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAllByAttributes(array('id_batiment' => Yii::app()->session['Logged']->id_locataire)), 'id_batiment', 'adresse')));
+//            echo $form->error($model, 'fk_batiment');
+//            $var = 0;
+//            $var = Yii::app()->session['Logged'];
+//        } else {
+            echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAll(),'id_batiment', 'lieu')));
+        //}
         ?>
     </div>
 
     <div class="row">
         <?php
-        echo $form->labelEx($model, 'commentaire');
-        echo $form->textArea($model, 'commentaire', array('maxlength' => 800, 'rows' => 5, 'cols' => 50, 'style' => 'resize:none'));
-        echo $form->error($model, 'commentaire');
+        echo $form->labelEx($model, 'descriptif');
+        echo $form->textArea($model, 'descriptif', array('maxlength' => 800, 'rows' => 5, 'cols' => 50, 'style' => 'resize:none'));
+        echo $form->error($model, 'descriptif');
         ?>
     </div>
     <div class="row">
