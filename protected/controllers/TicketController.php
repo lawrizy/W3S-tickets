@@ -30,7 +30,7 @@ class TicketController extends Controller {
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'admin', 'delete', 'admin_open'),
+                'actions' => array('create', 'update', 'admin', 'delete', 'admin_open', 'traitement'),
                 'users' => array('@'),
             ),
 //			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -49,6 +49,46 @@ class TicketController extends Controller {
      */
     public function actionView($id) {
         $this->render('view', array(
+            'model' => $this->loadModel($id),
+        ));
+    }
+
+    public function actionTraitement($id) {
+        $oldmodel = $this->loadModel($id);
+        if (isset($_POST['Ticket'])) {
+            $model = $_POST['Ticket'];
+            if (($model['fk_entreprise'] == NULL) || ($model['date_intervention'] == NULL)) {
+                Yii::trace('entreprise ou date null', 'cron');
+                $this->redirect(array('traitement', 'id' => $oldmodel['id_ticket']));
+            }
+            Yii::trace('entreprise et date non null', 'cron');
+            $oldmodel['date_intervention'] = $model['date_intervention'];
+            $oldmodel['fk_entreprise'] = $model['fk_entreprise'];
+            $oldmodel['fk_statut'] = 2;
+            try {
+                Yii::trace('dans Try', 'cron');
+                $oldmodel->save(FALSE);
+                Yii::trace('apres save du model', 'cron');
+                // Si la sauvegarde du ticket s'est bien passé,
+                // on enregistre un évènement InProgress pour le traitement du ticket
+                $histo = new HistoriqueTicket();
+                $histo->date_update = date("Y-m-d H:i:s", time());
+                $histo->fk_ticket = $oldmodel->id_ticket;
+                // Lors du traitement, statut forcément à InProgress
+                $histo->fk_statut_ticket = 2;
+                $logged = Yii::app()->session['Logged'];
+                $histo->fk_user = $logged['id_user'];
+                $histo->save(FALSE);
+                Yii::trace('apres save de l\'historique', 'cron');
+                $this->redirect(array('view', 'id' => $oldmodel['id_ticket']));
+            } catch (CDbException $ex) {
+                Yii::trace('dans catch', 'cron');
+                echo 'erreru' . $ex->getMessage();
+                Yii::app()->session['erreurDB'] = 'Souci avec la base de données, veuillez contacter votre administrateur';
+            }
+            Yii::trace('Après catch', 'cron');
+        }
+        $this->render('traitement', array(
             'model' => $this->loadModel($id),
         ));
     }
@@ -135,10 +175,6 @@ class TicketController extends Controller {
         if (isset($_POST['Ticket'])) {
             // Le changement du modèle s'opère ici.
             $model->attributes = $_POST['Ticket'];
-            if (($model->fk_entreprise != NULL) && ($model->date_intervention != NULL)) {
-                $model->fk_statut = 2;
-            }
-
             $model->code_ticket = $model->fk_batiment != $oldmodel->fk_batiment ? $this->createCodeTicket($model->fk_batiment) : $model->code_ticket;
 
             // Ensuite on sauvegarde les changements normalement.

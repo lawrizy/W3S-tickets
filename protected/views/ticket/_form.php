@@ -22,11 +22,10 @@
 
     <div class="row">
         <?php echo $form->labelEx($model, 'fk_categorie'); ?>
-        <?php echo $form->dropDownList($model, 'fk_categorie', array('' => '', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL)), 'id_categorie_incident', 'label')));//,array('ajax'=>array('type'=>'POST', 'url'=> CController::createUrl('TicketController/dynamic'),'update'=>'#fk_parent')))); ?>
-        <div id="sousCategorie">1234</div>
-        <?php echo $form->labelEx($model, 'fk_categorie'); ?>
+        <?php echo $form->dropDownList($model, 'fk_categorie', array('' => '', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => !NULL)), 'id_categorie_incident', 'label')));//,array('ajax'=>array('type'=>'POST', 'url'=> CController::createUrl('TicketController/dynamic'),'update'=>'#fk_parent')))); ?>
+        <div id="sousCategorie"></div>
+        <?php //echo $form->labelEx($model, 'fk_categorie'); ?>
         <?php //echo $form->dropDownList('fk_categorie',' ', array()); ?>
-        <div id="sousCategorie">1234</div>
     </div>
 
 
