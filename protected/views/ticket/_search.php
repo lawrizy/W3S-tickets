@@ -21,7 +21,7 @@
 
     <div class="row">
         <?php echo $form->label($model, 'fk_statut'); ?>
-        <?php echo $form->textField($model, 'fk_statut', array('size' => 10, 'maxlength' => 10)); ?>
+        <?php echo $form->dropDownList($model, 'fk_statut', array('' => '', CHtml::listData(StatutTicket::model()->findAll(array('condition'=>'id_statut_ticket','order' => 'label DESC')),'id_statut_ticket', 'label'))); ?>
     </div>
 
     <div class="row">

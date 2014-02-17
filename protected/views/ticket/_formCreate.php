@@ -25,7 +25,8 @@
     <div class="row">
         <?php echo $form->labelEx($model, 'fk_categorie'); ?>
         <?php echo $form->dropDownList($model, 'fk_categorie', array('' => '', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL)), 'id_categorie_incident', 'label'))); ?>
-        <?php echo $form->dropDownList($model, 'fk_categorie', array('' => '', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => !NULL)), 'id_categorie_incident', 'label'))); ?>
+        <div id="sousCategorie">1234</div>
+
         <?php echo $form->error($model, 'fk_categorie'); ?>
     </div>
 
@@ -51,12 +52,17 @@
         echo $form->error($model, 'commentaire');
         ?>
     </div>
-
+    <div class="row">
+        <?php
+        echo $form->labelEx($model, 'Etage');
+        echo'<input type="text" />';
+        ?>
+    </div>
     <div class="row buttons">
         <?php echo CHtml::submitButton('Create'); ?>
     </div>
-    
-    
+
+
     <?php $this->endWidget(); ?>
 
 </div><!-- form -->

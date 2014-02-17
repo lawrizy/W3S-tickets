@@ -45,10 +45,6 @@ $('.search-form form').submit(function(){
 </div><!-- search-form -->
 
 <?php
-//$df =$model;
-$var=$model->fk_statut;
-if (!isset($model->id_ticket))
-    echo 'error';
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'ticket-grid',
     'dataProvider' => $model->search(),

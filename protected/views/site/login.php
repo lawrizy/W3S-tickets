@@ -51,6 +51,9 @@ $this->breadcrumbs = array(
     <p> <?php
         echo Yii::app()->session['erreurDB'];
         ?></p>
+    <div class="link-column">
+        <?php echo '<a href="#">Mot de passe oublié ?</a>'; ?>
+    </div>
 
     <?php $this->endWidget(); ?>
 </div><!-- form -->
