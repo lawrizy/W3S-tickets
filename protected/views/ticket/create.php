@@ -10,4 +10,4 @@ $this->breadcrumbs = array(
 
 <h1>Create Ticket</h1>
 
-<?php $this->renderPartial('_formCreate', array('model' => $model)); ?>
+<?php $this->renderPartial('_form', array('model' => $model)); ?>

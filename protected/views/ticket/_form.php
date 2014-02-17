@@ -20,14 +20,13 @@
 
     <?php echo $form->errorSummary($model); ?>
 
-
-
     <div class="row">
         <?php echo $form->labelEx($model, 'fk_categorie'); ?>
-        <?php echo $form->dropDownList($model, 'fk_categorie', array('' => '', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL)), 'id_categorie_incident', 'label'))); ?>
+        <?php echo $form->dropDownList($model, 'fk_categorie', array('' => '', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL)), 'id_categorie_incident', 'label')));//,array('ajax'=>array('type'=>'POST', 'url'=> CController::createUrl('TicketController/dynamic'),'update'=>'#fk_parent')))); ?>
         <div id="sousCategorie">1234</div>
-
-        <?php echo $form->error($model, 'fk_categorie'); ?>
+        <?php echo $form->labelEx($model, 'fk_categorie'); ?>
+        <?php //echo $form->dropDownList('fk_categorie',' ', array()); ?>
+        <div id="sousCategorie">1234</div>
     </div>
 
 
@@ -47,13 +46,13 @@
     <div class="row">
         <?php
         echo $form->labelEx($model, 'Etage');
-        echo'<input name="Ticket[fk_etage]" id="Ticket_fk_etage" type="text" />';
+        echo $form->textField($model, 'etage', array('size' => 1, 'maxlength' => 10, 'style' => 'resize:none', 'value' => $model->etage));
         ?>
     </div>
     <div class="row">
         <?php
         echo $form->labelEx($model, 'bureau');
-        echo'<input name="Ticket[fk_bureau]" id="Ticket_fk_bureau" "type="text" />';
+        echo $form->textField($model, 'bureau', array('size' => 15, 'maxlength' => 10, 'value' => $model->bureau));
         ?>
     </div>
     <div class="row">
@@ -65,7 +64,7 @@
     </div>
 
     <div class="row buttons">
-        <?php echo CHtml::submitButton('Create'); ?>
+        <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
     </div>
 
 

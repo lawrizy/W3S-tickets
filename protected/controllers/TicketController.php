@@ -67,7 +67,7 @@ class TicketController extends Controller {
             $ticket = $_POST['Ticket'];
             $ticket['fk_locataire'] = $_GET['id'];
             // Canal par défaut le temps du développement
-            
+
             $user = 0;
             $logged = Yii::app()->session['Logged'];
             // Vérifie quel utilisateur est enregistré (si User ou Locataire)
@@ -80,7 +80,7 @@ class TicketController extends Controller {
                 $ticket['fk_user'] = $user = $logged['id_user'];
                 $ticket['fk_canal'] = 1;
             }
-            
+
             // Génère le code_ticket (unique à chaque ticket) selon le batiment
             $ticket['code_ticket'] = $this->createCodeTicket($ticket['fk_batiment']);
             // Notre modèle prend la valeur reçue de la page et on test un save
@@ -108,8 +108,8 @@ class TicketController extends Controller {
             'model' => $model,
         ));
     }
-    
-    private function createCodeTicket($fk_batiment){
+
+    private function createCodeTicket($fk_batiment) {
         // Table batiment contient un code (3 premières lettres de son nom) et un compteur (qui s'incrémente de 1 à chaque ajout de ticket)
         $batiment = Batiment::model()->findByPk($fk_batiment);
         // On incrémente le ticket de 1
@@ -117,7 +117,7 @@ class TicketController extends Controller {
         // On save pour enregistrer l'incrémentation sinon recommence toujours du même nombre
         $batiment->save();
         // On return le string du code_ticket
-        return $batiment->code.$batiment->cpt;
+        return $batiment->code . $batiment->cpt;
     }
 
     /**
@@ -137,11 +137,10 @@ class TicketController extends Controller {
             $model->attributes = $_POST['Ticket'];
             if (($model->fk_entreprise != NULL) && ($model->date_intervention != NULL)) {
                 $model->fk_statut = 2;
-                
             }
-            
+
             $model->code_ticket = $model->fk_batiment != $oldmodel->fk_batiment ? $this->createCodeTicket($model->fk_batiment) : $model->code_ticket;
-            
+
             // Ensuite on sauvegarde les changements normalement.
             if ($model->save()) {
                 // Si la sauvegarde du ticket s'est bien passé,
@@ -270,11 +269,11 @@ class TicketController extends Controller {
         $var = Secteur::model()->findByAttributes(array('fk_batiment' => $batiment, 'fk_categorie' => $categorie, 'fk_entreprise' => $entreprise));
         return $var->id_secteur;
     }
-    
-    public function getBatiment(){
+
+    public function getBatiment() {
         $batiments = Batiment::model()->findAll();
-        foreach($batiment as $batiments) {
-            $batiment['name'] = $batiment->adresse.', '.$batiment->cp.' '.$batiment->commune.' - nom: '.$batiment->nom;
+        foreach ($batiment as $batiments) {
+            $batiment['name'] = $batiment->adresse . ', ' . $batiment->cp . ' ' . $batiment->commune . ' - nom: ' . $batiment->nom;
         }
         return $batiments;
     }
