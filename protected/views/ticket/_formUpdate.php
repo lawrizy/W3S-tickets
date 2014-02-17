@@ -18,8 +18,9 @@
 
     <div class="row">
         <?php
-        echo $form->labelEx($model, 'fk_categorie');
+        echo '<label for="#" class="required">Categorie <span class="required"> *</span></label>';
         echo $form->dropDownList($model, 'fk_categorie', array('' => '', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL)), 'id_categorie_incident', 'label')));
+        echo $form->labelEx($model, 'fk_categorie');
         echo $form->dropDownList($model, 'fk_categorie', array('' => '', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => !NULL)), 'id_categorie_incident', 'label')));
         echo $form->error($model, 'fk_categorie');
         ?>

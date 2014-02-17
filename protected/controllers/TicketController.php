@@ -123,7 +123,6 @@ class TicketController extends Controller {
             // Le changement du modèle s'opère ici.
             $model->attributes = $_POST['Ticket'];
             if ($model->fk_secteur != NULL) {
-                Yii::trace($model->fk_secteur, 'cron');
                 $lieu = Lieu::model()->findByPk($model->fk_lieu);
                 $model->fk_secteur = $this->getSecteurByFk($model->fk_secteur, $model->fk_categorie, $lieu->fk_batiment);
                 $model->fk_statut = 2;

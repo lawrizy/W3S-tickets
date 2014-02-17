@@ -9,10 +9,13 @@
  * @property integer $fk_categorie
  * @property integer $fk_lieu
  * @property integer $fk_user
- * @property string $commentaire
+ * @property string $descriptif
  * @property integer $fk_canal
- * @property integer $fk_secteur
  * @property string $date_intervention
+ * @property integer $fk_entreprise
+ * @property string $code_ticket
+ * @property string $etage
+ * @property string $bureau
  *
  * The followings are the available model relations:
  * @property HistoriqueTicket[] $historiqueTickets
@@ -33,12 +36,14 @@ class Ticket extends CActiveRecord {
 // NOTE: you should only define rules for those attributes that
 // will receive user inputs.
         return array(
-            array('fk_categorie, fk_lieu, fk_canal', 'required'),
-            array('fk_statut, fk_categorie, fk_lieu, fk_user, fk_canal, fk_secteur', 'numerical', 'integerOnly' => true),
-            array('commentaire, date_intervention', 'safe'),
+            array('fk_categorie, fk_lieu, fk_canal, code_ticket', 'required'),
+            array('fk_statut, fk_categorie, fk_lieu, fk_user, fk_canal, fk_entreprise', 'numerical', 'integerOnly' => true),
+            array('code_ticket', 'length', 'max' => 10),
+            array('etage, bureau', 'length', 'max' => 45),
+            array('descriptif, date_intervention', 'safe'),
 // The following rule is used by search().
 // @todo Please remove those attributes that should not be searched.
-            array('id_ticket, fk_statut, fk_categorie, fk_lieu, fk_user, commentaire, fk_canal, fk_secteur, date_intervention', 'safe', 'on' => 'search'),
+            array('id_ticket, fk_statut, fk_categorie, fk_lieu, fk_user, descriptif, fk_canal, date_intervention, fk_entreprise, code_ticket, etage, bureau', 'safe', 'on' => 'search'),
         );
     }
 
@@ -63,7 +68,7 @@ class Ticket extends CActiveRecord {
             'fk_categorie' => 'Sous - Catégorie',
             'fk_lieu' => 'Lieu',
             'fk_user' => 'Utilisateur',
-            'commentaire' => 'Commentaire',
+            'descriptif' => 'Descriptif',
             'fk_canal' => 'Voie de création',
             'fk_secteur' => 'Entreprise',
             'date_intervention' => 'Date  Intervention',
