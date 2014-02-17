@@ -17,7 +17,7 @@
     <?php echo CHtml::encode($data->getCategorieIncident()); ?>
     <br />
 
-    <b><?php echo CHtml::encode($data->getAttributeLabel('fk_lieu')); ?>:</b>
+    <b><?php echo CHtml::encode($data->getAttributeLabel('fk_batiment')); ?>:</b>
     <?php echo CHtml::encode($data->getLieu()); ?>
     <br />
 
@@ -25,8 +25,8 @@
     <?php echo CHtml::encode($data->fk_user); ?>
     <br />
 
-    <b><?php echo CHtml::encode($data->getAttributeLabel('commentaire')); ?>:</b>
-    <?php echo CHtml::encode($data->commentaire); ?>
+    <b><?php echo CHtml::encode($data->getAttributeLabel('descriptif')); ?>:</b>
+    <?php echo CHtml::encode($data->descriptif); ?>
     <br />
 
     <?php /*

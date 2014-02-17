@@ -66,7 +66,7 @@ class Ticket extends CActiveRecord {
         return array(
             'id_ticket' => 'Id du ticket',
             'fk_statut' => 'Statut',
-            'fk_categorie' => 'Sous-Categorie',
+            'fk_categorie' => 'Categorie',
             'fk_user' => 'Utilisateur en charge du dossier',
             'descriptif' => 'Descriptif',
             'fk_canal' => 'Canal de création',
@@ -185,5 +185,9 @@ class Ticket extends CActiveRecord {
         return $var->label;
     }
 
-   
+    public  function getLieu() {
+        $result = Batiment::model()->findByPk();
+        return $this->adresse . ', ' . $result->cp . ' ' . $result->commune . ' nom: ' . $result->nom;
+    }
+
 }

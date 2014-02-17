@@ -107,9 +107,6 @@ class Batiment extends CActiveRecord {
         return parent::model($className);
     }
 
-    public function getLieux() {
-        $result = Batiment::model()->findAll();
-        return $result->adresse . ', ' . $result->cp . ' ' . $result->commune . ' nom: ' . $result->nom;
-    }
+ 
 
 }

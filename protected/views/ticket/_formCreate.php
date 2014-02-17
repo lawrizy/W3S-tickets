@@ -40,11 +40,22 @@
 //            $var = 0;
 //            $var = Yii::app()->session['Logged'];
 //        } else {
-            echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAll(),'id_batiment', 'lieu')));
+        echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAll(), 'id_batiment', 'nom')));
         //}
         ?>
     </div>
-
+    <div class="row">
+        <?php
+        echo $form->labelEx($model, 'Etage');
+        echo'<input name="Ticket[fk_etage]" id="Ticket_fk_etage" type="text" />';
+        ?>
+    </div>
+    <div class="row">
+        <?php
+        echo $form->labelEx($model, 'bureau');
+        echo'<input name="Ticket[fk_bureau]" id="Ticket_fk_bureau" "type="text" />';
+        ?>
+    </div>
     <div class="row">
         <?php
         echo $form->labelEx($model, 'descriptif');
@@ -52,12 +63,7 @@
         echo $form->error($model, 'descriptif');
         ?>
     </div>
-    <div class="row">
-        <?php
-        echo $form->labelEx($model, 'Etage');
-        echo'<input type="text" />';
-        ?>
-    </div>
+
     <div class="row buttons">
         <?php echo CHtml::submitButton('Create'); ?>
     </div>

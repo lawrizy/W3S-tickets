@@ -2,15 +2,14 @@
 /* @var $this TicketController */
 /* @var $model Ticket */
 
-if(Yii::app()->session['Utilisateur'] === 'User')
-{
+if (Yii::app()->session['Utilisateur'] === 'User') {
     $this->breadcrumbs = array(
         'Tickets' => array('index'),
         $model->id_ticket,
     );
 
     $this->menu = array(
-        array('label' => 'Update Ticket', 'url' => array('update', 'id' => $model->id_ticket),'visible'=>  Yii::app()->session['Utilisateur']=='User'),
+        array('label' => 'Update Ticket', 'url' => array('update', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
     );
 }
 ?>
@@ -22,13 +21,31 @@ $this->widget('zii.widgets.CDetailView', array(
     'data' => $model,
     'attributes' => array(
         'id_ticket',
-        'fk_statut',
-        'fk_categorie',
-        'fk_lieu',
-        'fk_user',
-        'version',
-        'commentaire',
-        'fk_canal',
+        array(
+            'name' => 'fk_statut',
+            'value' => StatutTicket::model()->findByPk($model->fk_statut)->label
+        ),
+        array('name' => 'Categorie',
+            'value' => CategorieIncident::model()->findByPk(CategorieIncident::model()->findByPk($model->fk_categorie)->fk_parent)->label
+        ),
+        array(
+            'name' => 'fk_categorie',
+            'value' => CategorieIncident::model()->findByPk($model->fk_categorie)->label),
+        array(
+            'name' => 'fk_batiment',
+            'value' => Batiment::model()->findByPk($model->fk_batiment)->adresse),
+        array(
+            'name' => 'fk_user',
+            'value' => User::model()->findByPk($model->fk_user)->nom),
+        array(
+            'name' => 'descriptif',
+            'value' => $model->descriptif),
+        array(
+            'name' => 'fk_canal',
+            'value' => Canal::model()->findByPk($model->fk_canal)->label),
+        array(
+            'name' => 'code_ticket',
+            'value' => $model->code_ticket),
     ),
 ));
 ?>

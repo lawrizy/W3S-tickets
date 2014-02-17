@@ -29,10 +29,10 @@
 
     <div class="row">
         <?php
-        echo $form->labelEx($model, 'fk_lieu');
-        $lieu = Lieu::model()->findByPk($model->fk_lieu);
-        echo $form->dropDownList($model, 'fk_lieu', array('' => '', CHtml::listData(Lieu::model()->findAllByAttributes(array('fk_locataire' => Locataire::model()->findByPk($lieu->fk_locataire)->id_locataire)), 'id_lieu', 'adresse')));
-        echo $form->error($model, 'fk_lieu');
+        echo $form->labelEx($model, 'fk_batiment');
+        $lieu = Lieu::model()->findByPk($model->fk_batiment);
+        echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Lieu::model()->findAllByAttributes(array('fk_locataire' => Locataire::model()->findByPk($lieu->fk_locataire)->id_locataire)), 'id_lieu', 'adresse')));
+        echo $form->error($model, 'fk_batiment');
         ?>
     </div>
 
