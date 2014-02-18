@@ -25,13 +25,13 @@
         <?php echo $form->labelEx($model, 'Cat&eacute;gorie'); ?>
         <?php
         echo $form->dropDownList($model, 'fk_categorie', array('' => '',
-            CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => !NULL)), 'id_categorie_incident', 'label')), array(
-            'class' => 'tests',
-            'ajax' => array('type' => 'POST',
-                'url' => CController::createUrl('dynamic'),
-                'data' => array('id_categorie_incident' => 'js:this.value',
-                    'update' => '#CategorieIncident_fk_categorie',
-        ))));
+            CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => !NULL)), 'id_categorie_incident', 'label')) //array(
+//            'class' => 'tests',
+//            'ajax' => array('type' => 'POST',
+//                'url' => CController::createUrl('dynamic'), //annexer 
+//                'data' => array('id_categorie_incident' => 'js:this.value',
+//                    'update' => 'CategorieIncident_fk_categorie',
+ );
         ?>
         <div id="sousCategorie"></div>
         <?php echo $form->labelEx($model, 'Sous-Cat&eacute;gorie'); ?>
