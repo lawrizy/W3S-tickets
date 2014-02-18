@@ -105,7 +105,7 @@ class TicketController extends Controller {
         // ==> si oui, c'est que c'est la page create elle-même qui renvoie ici pour la création d'un ticket
         if (isset($_POST['Ticket'])) {
             $ticket = $_POST['Ticket'];
-            $ticket['fk_locataire'] = $_GET['id'];
+            //
             // Canal par défaut le temps du développement
 
             $user = 0;
@@ -115,10 +115,12 @@ class TicketController extends Controller {
                 // Si locataire, on attribue le ticket a un user par défaut (le 1 dans ce cas-ci)
                 $ticket['fk_user'] = 1;
                 $ticket['fk_canal'] = 2;
+                $ticket['fk_locataire'] =  $logged->id_locataire  ;
             } else {
                 // Si user, c'est lui-même qui s'occupera de ce ticket-ci
                 $ticket['fk_user'] = $user = $logged['id_user'];
                 $ticket['fk_canal'] = 1;
+                $ticket['fk_locataire'] = $_GET['id'];
             }
 
             // Génère le code_ticket (unique à chaque ticket) selon le batiment
