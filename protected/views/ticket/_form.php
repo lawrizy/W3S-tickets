@@ -32,15 +32,8 @@
     <div class="row">
         <?php
         echo $form->labelEx($model, 'fk_batiment');
-//        if ((Yii::app()->session['Utilisateur'] == 'Locataire')) {
-//            echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAllByAttributes(array('id_batiment' => Yii::app()->session['Logged']->id_locataire)), 'id_batiment', 'adresse')));
-//            echo $form->error($model, 'fk_batiment');
-//            $var = 0;
-//            $var = Yii::app()->session['Logged'];
-//        } else {
         echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAll(), 'id_batiment', 'nom')));
-        //}
-        ?>
+      ; ?>
     </div>
     <div class="row">
         <?php
