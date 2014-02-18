@@ -68,6 +68,7 @@ class TicketController extends Controller {
             try {
                 Yii::trace('dans Try', 'cron');
                 $oldmodel->save(FALSE);
+                Yii::app()->session['EmailSend'] = 'Un mail vous a été envoyé à l\' adresse : ' . Yii::app()->session['Logged']->email;
                 Yii::trace('apres save du model', 'cron');
                 // Si la sauvegarde du ticket s'est bien passé,
                 // on enregistre un évènement InProgress pour le traitement du ticket
@@ -115,7 +116,7 @@ class TicketController extends Controller {
                 // Si locataire, on attribue le ticket a un user par défaut (le 1 dans ce cas-ci)
                 $ticket['fk_user'] = 1;
                 $ticket['fk_canal'] = 2;
-                $ticket['fk_locataire'] =  $logged->id_locataire  ;
+                $ticket['fk_locataire'] = $logged->id_locataire;
             } else {
                 // Si user, c'est lui-même qui s'occupera de ce ticket-ci
                 $ticket['fk_user'] = $user = $logged['id_user'];
@@ -131,6 +132,7 @@ class TicketController extends Controller {
 
             try {
                 $model->save();
+                Yii::app()->session['EmailSend'] = 'Un mail vous a été envoyé à l\' adresse : ' . Yii::app()->session['Logged']->email;
                 // Si la sauvegarde du ticket s'est bien passé,
                 // on enregistre un évènement opened pour la création du ticket
                 $histo = new HistoriqueTicket();
@@ -181,6 +183,7 @@ class TicketController extends Controller {
 
             // Ensuite on sauvegarde les changements normalement.
             if ($model->save()) {
+                Yii::app()->session['EmailSend'] = 'Un mail vous a été envoyé à l\' adresse : ' . Yii::app()->session['Logged']->email;
                 // Si la sauvegarde du ticket s'est bien passé,
                 // on enregistre un évènement pour le ticket
                 $histo = new HistoriqueTicket();

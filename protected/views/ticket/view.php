@@ -11,13 +11,16 @@ if (Yii::app()->session['Utilisateur'] === 'User') {
     $this->menu = array(
         array('label' => 'Update Ticket', 'url' => array('update', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
         array('label' => 'Mettre en traitement', 'url' => array('traitement', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
-        array('label' => 'Cloturer le ticket', 'url' => array('#', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $model->fk_statut==2),
+        array('label' => 'Cloturer le ticket', 'url' => array('#', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $model->fk_statut == 2),
     );
 }
 ?>
 
 <h1>View Ticket #<?php echo $model->id_ticket; ?></h1>
-
+<?php
+echo '<h4></br><font color="green" >' . Yii::app()->session['EmailSend'] . '</font></h4></b> ';
+Yii::app()->session['EmailSend'] = '';
+?>
 <?php
 $this->widget('zii.widgets.CDetailView', array(
     'data' => $model,

@@ -29,11 +29,5 @@
     <?php echo CHtml::encode($data->descriptif); ?>
     <br />
 
-    <?php /*
-      <b><?php echo CHtml::encode($data->getAttributeLabel('fk_canal')); ?>:</b>
-      <?php echo CHtml::encode($data->fk_canal); ?>
-      <br />
-
-     */ ?>
-
+  
 </div>
