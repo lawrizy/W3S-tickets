@@ -23,28 +23,30 @@
 
     <div class="row">
         <?php echo $form->labelEx($model, 'Catégorie'); ?>
-        <?php echo $form->dropDownList($model, 'fk_categorie', array('' => '',
-                CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL)),
-                    'id_categorie_incident', 'label')),
-            array(
-                'class'=>'tests',
-                'ajax' => array('type' => 'POST',
-                    'url' => CController::createUrl('dynamic'),
-                    'data' => array('id_categorie_incident' => 'js:this.value',
-                        'update' => '#CategorieIncident_fk_categorie',
-                    ))));
+        <?php
+        echo $form->dropDownList($model, 'fk_categorie', array('' => '',
+            CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL)), 'id_categorie_incident', 'label')), array(
+            'class' => 'tests',
+            'ajax' => array('type' => 'POST',
+                'url' => CController::createUrl('dynamic'),
+                'data' => array('id_categorie_incident' => 'js:this.value',
+                    'update' => '#CategorieIncident_fk_categorie',
+        ))));
         ?>
         <div id="sousCategorie"></div>
         <?php echo $form->labelEx($model, 'Sous-Catégorie'); ?>
-        <?php echo CHtml::dropDownList('CategorieIncident_fk_categorie','', array(),
-        array('class' => 'tests',)); ?>
+        <?php
+        echo CHtml::dropDownList('CategorieIncident_fk_categorie', '', array(), array('class' => 'tests'));
+        ?>
     </div>
 
 
     <div class="row">
         <?php
         echo $form->labelEx($model, 'fk_batiment');
-        echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAll(), 'id_batiment', 'nom')));; ?>
+        echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAll(), 'id_batiment', 'nom')));
+        ;
+        ?>
     </div>
     <div class="row">
         <?php
