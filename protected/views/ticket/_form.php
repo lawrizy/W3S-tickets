@@ -22,10 +22,10 @@
     <?php echo $form->errorSummary($model); ?>
 
     <div class="row">
-        <?php echo $form->labelEx($model, 'Catégorie'); ?>
+        <?php echo $form->labelEx($model, 'Cat&eacute;gorie'); ?>
         <?php
         echo $form->dropDownList($model, 'fk_categorie', array('' => '',
-            CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL)), 'id_categorie_incident', 'label')), array(
+            CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => !NULL)), 'id_categorie_incident', 'label')), array(
             'class' => 'tests',
             'ajax' => array('type' => 'POST',
                 'url' => CController::createUrl('dynamic'),
@@ -34,7 +34,7 @@
         ))));
         ?>
         <div id="sousCategorie"></div>
-        <?php echo $form->labelEx($model, 'Sous-Catégorie'); ?>
+        <?php echo $form->labelEx($model, 'Sous-Cat&eacute;gorie'); ?>
         <?php
         echo CHtml::dropDownList('CategorieIncident_fk_categorie', '', array(), array('class' => 'tests'));
         ?>
