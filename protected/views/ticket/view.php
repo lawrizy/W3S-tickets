@@ -9,9 +9,9 @@ if (Yii::app()->session['Utilisateur'] === 'User') {
     );
 
     $this->menu = array(
-        array('label' => 'Update Ticket', 'url' => array('update', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
+        array('label' => 'Modifier le ticket', 'url' => array('update', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
         array('label' => 'Mettre en traitement', 'url' => array('traitement', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
-        array('label' => 'Cloturer le ticket', 'url' => array('#', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $model->fk_statut == 2),
+        array('label' => 'Cloturer le ticket', 'url' => array('close', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $model->fk_statut == 2),
     );
 }
 ?>

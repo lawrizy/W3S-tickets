@@ -23,7 +23,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1> Tickets en cours de traitement</h1>
+<h1> Tickets cloturés</h1>
 
 <p>
     You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
@@ -40,8 +40,6 @@ $('.search-form form').submit(function(){
 </div><!-- search-form -->
 
 <?php
-if (!isset($model->id_ticket))
-    echo 'error';
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'ticket-grid',
     'dataProvider' => $model->searchClosed(),

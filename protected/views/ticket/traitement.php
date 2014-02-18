@@ -7,7 +7,7 @@ if (Yii::app()->session['Utilisateur'] === 'User') {
     $this->breadcrumbs = array(
         'Tickets' => array('index'),
         $model->id_ticket => array('view', 'id' => $model->id_ticket),
-        'Update',
+        'Traitement ticket',
     );
 }
 ?>
