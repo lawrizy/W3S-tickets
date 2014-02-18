@@ -37,7 +37,7 @@ class Ticket extends CActiveRecord {
 // NOTE: you should only define rules for those attributes that
 // will receive user inputs.
         return array(
-            array('fk_categorie, fk_canal, code_ticket, fk_locataire, fk_batiment', 'required'),
+            array('fk_categorie, fk_canal, fk_locataire, fk_batiment', 'required'),
             array('fk_statut, fk_categorie, fk_user, fk_canal, fk_entreprise, fk_locataire, fk_batiment', 'numerical', 'integerOnly' => true),
             array('code_ticket', 'length', 'max' => 10),
             array('etage, bureau', 'length', 'max' => 45),
@@ -66,7 +66,7 @@ class Ticket extends CActiveRecord {
         return array(
             'id_ticket' => 'Id du ticket',
             'fk_statut' => 'Statut',
-            'fk_categorie' => 'Categorie',
+            'fk_categorie' => 'Sous-Catégorie',
             'fk_user' => 'Utilisateur en charge du dossier',
             'descriptif' => 'Descriptif',
             'fk_canal' => 'Canal de création',

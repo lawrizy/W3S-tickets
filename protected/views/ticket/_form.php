@@ -72,7 +72,9 @@
         <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
     </div>
 
-
+    <?php echo Yii::app()->session['erreurDB']; 
+        Yii::app()->session['erreurDB']=''; ?>
+    
     <?php $this->endWidget(); ?>
 
 </div><!-- form -->

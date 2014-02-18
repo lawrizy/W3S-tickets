@@ -114,8 +114,8 @@ class TicketController extends Controller
             $ticket = $_POST['Ticket'];
             //
             // Canal par défaut le temps du développement
-
-            $user = 0;
+            
+            
             $logged = Yii::app()->session['Logged'];
             // Vérifie quel utilisateur est enregistré (si User ou Locataire)
             if (Yii::app()->session['Utilisateur'] == 'Locataire') {
@@ -125,19 +125,20 @@ class TicketController extends Controller
                 $ticket['fk_locataire'] = $logged->id_locataire;
             } else {
                 // Si user, c'est lui-même qui s'occupera de ce ticket-ci
-                $ticket['fk_user'] = $user = $logged['id_user'];
+                $ticket['fk_user'] = $logged['id_user'];
                 $ticket['fk_canal'] = 1;
                 $ticket['fk_locataire'] = $_GET['id'];
             }
 
             // Génère le code_ticket (unique à chaque ticket) selon le batiment
-            $ticket['code_ticket'] = $this->createCodeTicket($ticket['fk_batiment']);
+            $ticket['code_ticket'] = $ticket['fk_batiment'] != null ? $this->createCodeTicket($ticket['fk_batiment']) : null;
             // Notre modèle prend la valeur reçue de la page et on test un save
             // (dans la méthode save, on fait d'abord une validation des attributs)
             $model->attributes = $ticket;
-
             try {
+                Yii::trace('Dans try avant save','cron');
                 $model->save();
+                Yii::trace('Dans try apres save','cron');
                 Yii::app()->session['EmailSend'] = 'Un mail vous a été envoyé à l\' adresse : ' . Yii::app()->session['Logged']->email;
                 // Si la sauvegarde du ticket s'est bien passé,
                 // on enregistre un évènement opened pour la création du ticket
@@ -146,11 +147,12 @@ class TicketController extends Controller
                 $histo->fk_ticket = $model->id_ticket;
                 // Lors de la création, statut forcément à opened
                 $histo->fk_statut_ticket = 1;
-                $histo->fk_user = $user;
+                $histo->fk_user = $model['fk_user'];
                 $histo->save(FALSE);
                 $this->redirect(array('view', 'id' => $model->id_ticket));
             } catch (CDbException $e) {
-                Yii::app()->session['erreurDB'] = 'La base de donnnée est indisponible pour le moment';
+                
+                Yii::app()->session['erreurDB'] = $e->getMessage();
             }
         }
 
@@ -161,10 +163,12 @@ class TicketController extends Controller
 
     private function createCodeTicket($fk_batiment)
     {
-        // Table batiment contient un code (3 premières lettres de son nom) et un compteur (qui s'incrémente de 1 à chaque ajout de ticket)
+        // Table batiment contient un code (4 caractères différents pour chaque bâtiment) et un compteur (qui s'incrémente de 1 à chaque ajout de ticket)
         $batiment = Batiment::model()->findByPk($fk_batiment);
-        // On incrémente le ticket de 1
-        $batiment->cpt = $batiment->cpt + 1;
+        // On incrémente le compteur de 1
+        Yii::trace('avant incrémentation: '.$batiment->cpt,'cron');
+        $batiment->cpt = ($batiment->cpt + 1);
+        Yii::trace('après incrémentation: '.$batiment->cpt,'cron');
         // On save pour enregistrer l'incrémentation sinon recommence toujours du même nombre
         $batiment->save();
         // On return le string du code_ticket
@@ -338,16 +342,16 @@ class TicketController extends Controller
         return $batiments;
     }
 
-    public function actionDynamic()
-    {
-        $data = CategorieIncident::model()->findAll('fk_parent=:fk_parents',
-            array(':fk_parents' => $_POST['id_categorie_incident']));
-        $data = CHtml::listData($data, 'id_categorie_incident', 'label');
-        foreach ($data as $key => $value) {
-            Yii::trace($key . ' ' . $value, 'cron');
-            echo '<p>test</p>';
-            //CHtml::tag('option', array('value' => $key), CHtml::encode($value), false)
-        }
-
-    }
+//    public function actionDynamic()
+//    {
+//        $data = CategorieIncident::model()->findAll('fk_parent=:fk_parents',
+//            array(':fk_parents' => $_POST['id_categorie_incident']));
+//        $data = CHtml::listData($data, 'id_categorie_incident', 'label');
+//        foreach ($data as $key => $value) {
+//            Yii::trace($key . ' ' . $value, 'cron');
+//            echo '<p>test</p>';
+//            //CHtml::tag('option', array('value' => $key), CHtml::encode($value), false)
+//        }
+//
+//    }
 }
