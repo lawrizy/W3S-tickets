@@ -1,6 +1,7 @@
 <?php
 
-class TicketController extends Controller {
+class TicketController extends Controller
+{
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -11,7 +12,8 @@ class TicketController extends Controller {
     /**
      * @return array action filters
      */
-    public function filters() {
+    public function filters()
+    {
         return array(
             'accessControl', // perform access control for CRUD operations
             'postOnly + delete', // we only allow deletion via POST request
@@ -23,14 +25,15 @@ class TicketController extends Controller {
      * This method is used by the 'accessControl' filter.
      * @return array access control rules
      */
-    public function accessRules() {
+    public function accessRules()
+    {
         return array(
             array('allow', // allow all users to perform 'index' and 'view' actions
                 'actions' => array('index', 'view'),
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'admin', 'delete', 'admin_open', 'traitement'),
+                'actions' => array('create', 'update', 'admin', 'delete', 'admin_open', 'traitement', 'dynamic', 'close'),
                 'users' => array('@'),
             ),
 //			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -47,13 +50,15 @@ class TicketController extends Controller {
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
      */
-    public function actionView($id) {
+    public function actionView($id)
+    {
         $this->render('view', array(
             'model' => $this->loadModel($id),
         ));
     }
 
-    public function actionTraitement($id) {
+    public function actionTraitement($id)
+    {
         $oldmodel = $this->loadModel($id);
         if (isset($_POST['Ticket'])) {
             $model = $_POST['Ticket'];
@@ -98,7 +103,8 @@ class TicketController extends Controller {
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
         $model = new Ticket;
 
         // Vérifie si a bien reçu un objet 'Ticket'
@@ -153,7 +159,8 @@ class TicketController extends Controller {
         ));
     }
 
-    private function createCodeTicket($fk_batiment) {
+    private function createCodeTicket($fk_batiment)
+    {
         // Table batiment contient un code (3 premières lettres de son nom) et un compteur (qui s'incrémente de 1 à chaque ajout de ticket)
         $batiment = Batiment::model()->findByPk($fk_batiment);
         // On incrémente le ticket de 1
@@ -169,7 +176,8 @@ class TicketController extends Controller {
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id)
+    {
         // Stocke les anciennes valeurs du modèle, pour comparaison ultérieure.
         $model = $oldmodel = $this->loadModel($id);
 
@@ -227,7 +235,8 @@ class TicketController extends Controller {
      * If deletion is successful, the browser will be redirected to the 'admin' page.
      * @param integer $id the ID of the model to be deleted
      */
-    public function actionDelete($id) {
+    public function actionDelete($id)
+    {
         $this->loadModel($id)->delete();
 
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
@@ -238,7 +247,9 @@ class TicketController extends Controller {
     /**
      * Lists all models.
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
+        Yii::trace('je parle', 'cron');
         $dataProvider = new CActiveDataProvider('Ticket');
         $this->render('index', array(
             'dataProvider' => $dataProvider,
@@ -248,9 +259,10 @@ class TicketController extends Controller {
     /**
      * Manages all models.
      */
-    public function actionAdmin() {
+    public function actionAdmin()
+    {
         $model = new Ticket('search');
-        $model->unsetAttributes();  // clear any default values
+        $model->unsetAttributes(); // clear any default values
         if (isset($_GET['Ticket']))
             $model->attributes = $_GET['Ticket'];
 
@@ -264,7 +276,8 @@ class TicketController extends Controller {
      * Cette méthode est utilisée pour envoyer le mail de notification, lors
      * du changement de statut d'un ticket, au LOCATAIRE qui l'a créé.
      */
-    private function actionSendNotificationMail($userEmail) {
+    private function actionSendNotificationMail($userEmail)
+    {
         // TODO : Envoi d'un mail au locataire en cas de changement de statut ticket
     }
 
@@ -275,7 +288,8 @@ class TicketController extends Controller {
      * @return Ticket the loaded model
      * @throws CHttpException
      */
-    public function loadModel($id) {
+    public function loadModel($id)
+    {
         $model = Ticket::model()->findByPk($id);
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
@@ -286,14 +300,16 @@ class TicketController extends Controller {
      * Performs the AJAX validation.
      * @param Ticket $model the model to be validated
      */
-    protected function performAjaxValidation($model) {
+    protected function performAjaxValidation($model)
+    {
         if (isset($_POST['ajax']) && $_POST['ajax'] === 'ticket-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
     }
 
-    public function getEntreprise($idTicket) {
+    public function getEntreprise($idTicket)
+    {
         $model = $this->loadModel($idTicket);
         $lieu = Lieu::model()->findByPk($model->fk_lieu);
         $secteurs = Secteur::model()->findAllByAttributes(array('fk_batiment' => $lieu->fk_batiment, 'fk_categorie' => $model->fk_categorie));
@@ -307,17 +323,31 @@ class TicketController extends Controller {
         return $entreprises;
     }
 
-    public function getSecteurByFk($entreprise, $categorie, $batiment) {
+    public function getSecteurByFk($entreprise, $categorie, $batiment)
+    {
         $var = Secteur::model()->findByAttributes(array('fk_batiment' => $batiment, 'fk_categorie' => $categorie, 'fk_entreprise' => $entreprise));
         return $var->id_secteur;
     }
 
-    public function getBatiment() {
+    public function getBatiment()
+    {
         $batiments = Batiment::model()->findAll();
-        foreach ($batiment as $batiments) {
+        foreach ($batiments as $batiment) {
             $batiment['name'] = $batiment->adresse . ', ' . $batiment->cp . ' ' . $batiment->commune . ' - nom: ' . $batiment->nom;
         }
         return $batiments;
     }
 
+    public function actionDynamic()
+    {
+        $data = CategorieIncident::model()->findAll('fk_parent=:fk_parents',
+            array(':fk_parents' => $_POST['id_categorie_incident']));
+        $data = CHtml::listData($data, 'id_categorie_incident', 'label');
+        foreach ($data as $key => $value) {
+            Yii::trace($key . ' ' . $value, 'cron');
+            echo '<p>test</p>';
+            //CHtml::tag('option', array('value' => $key), CHtml::encode($value), false)
+        }
+
+    }
 }
