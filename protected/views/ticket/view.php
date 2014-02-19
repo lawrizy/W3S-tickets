@@ -36,7 +36,8 @@ $this->widget('zii.widgets.CDetailView', array(
         ),
         array(
             'name' => 'Sous-Categorie',
-            'value' => CategorieIncident::model()->findByPk($model->fk_categorie)->label),
+            'value' => CategorieIncident::model()->findByPk($model->fk_categorie)->label
+        ),
         array(
             'name' => 'fk_batiment',
             'value' => Batiment::model()->findByPk($model->fk_batiment)->adresse),

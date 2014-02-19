@@ -33,7 +33,7 @@ class TicketController extends Controller
                 'users' => array('*'),
             ),
             array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'admin', 'delete', 'admin_open', 'traitement', 'dynamic', 'close'),
+                'actions' => array('create', 'update', 'admin', 'delete', 'admin_open', 'traitement', 'getsouscategoriesdynamiques', 'close'),
                 'users' => array('@'),
             ),
 //			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -114,8 +114,8 @@ class TicketController extends Controller
             $ticket = $_POST['Ticket'];
             //
             // Canal par défaut le temps du développement
-            
-            
+
+
             $logged = Yii::app()->session['Logged'];
             // Vérifie quel utilisateur est enregistré (si User ou Locataire)
             if (Yii::app()->session['Utilisateur'] == 'Locataire') {
@@ -129,6 +129,8 @@ class TicketController extends Controller
                 $ticket['fk_canal'] = 1;
                 $ticket['fk_locataire'] = $_GET['id'];
             }
+
+            $ticket['fk_categorie'] = $_POST['DD_sousCat'];
 
             // Génère le code_ticket (unique à chaque ticket) selon le batiment
             $ticket['code_ticket'] = $ticket['fk_batiment'] != null ? $this->createCodeTicket($ticket['fk_batiment']) : null;
@@ -151,7 +153,7 @@ class TicketController extends Controller
                 $histo->save(FALSE);
                 $this->redirect(array('view', 'id' => $model->id_ticket));
             } catch (CDbException $e) {
-                
+
                 Yii::app()->session['erreurDB'] = $e->getMessage();
             }
         }
@@ -342,16 +344,24 @@ class TicketController extends Controller
         return $batiments;
     }
 
-//    public function actionDynamic()
-//    {
-//        $data = CategorieIncident::model()->findAll('fk_parent=:fk_parents',
-//            array(':fk_parents' => $_POST['id_categorie_incident']));
-//        $data = CHtml::listData($data, 'id_categorie_incident', 'label');
-//        foreach ($data as $key => $value) {
-//            Yii::trace($key . ' ' . $value, 'cron');
-//            echo '<p>test</p>';
-//            //CHtml::tag('option', array('value' => $key), CHtml::encode($value), false)
-//        }
-//
-//    }
+    public function actionGetSousCategoriesDynamiques()
+    {
+        Yii::trace("Entrée dans la méthode de recherche des sous-catégories dynamiques...");
+
+        $data = CategorieIncident::model()->findAll('fk_parent=:toFind', array(':toFind' => $_POST['paramID']));
+        $dataList = CHtml::listData($data, 'id_categorie_incident', 'label');
+
+        foreach($dataList as $key=>$value)
+        {
+            Yii::trace("clé: " . $key . " | valeur: " . $value, "cron"); // Passe
+
+            echo CHtml::tag
+            (
+                'option',
+                array('value'=>$key),
+                CHtml::encode($value),
+                true
+            );
+        }
+    }
 }

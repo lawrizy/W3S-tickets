@@ -14,7 +14,6 @@
         // See class documentation of CActiveForm for details on this.
         'enableAjaxValidation' => false,
     ));
-    $modelesd = CategorieIncident::model();
     ?>
 
     <p class="note">Les champs marqués de <span class="required">*</span> sont requis.</p>
@@ -22,21 +21,33 @@
     <?php echo $form->errorSummary($model); ?>
 
     <div class="row">
-        <?php echo $form->labelEx($model, 'Cat&eacute;gorie'); ?>
         <?php
-        echo $form->dropDownList($model, 'fk_categorie', array('' => '',
-            CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => !NULL)), 'id_categorie_incident', 'label')) //array(
-//            'class' => 'tests',
-//            'ajax' => array('type' => 'POST',
-//                'url' => CController::createUrl('dynamic'), //annexer 
-//                'data' => array('id_categorie_incident' => 'js:this.value',
-//                    'update' => 'CategorieIncident_fk_categorie',
- );
-        ?>
-        <div id="sousCategorie"></div>
-        <?php echo $form->labelEx($model, 'Sous-Cat&eacute;gorie'); ?>
-        <?php
-        echo CHtml::dropDownList('CategorieIncident_fk_categorie', '', array(), array('class' => 'tests'));
+        // Form pour la sélection de la catégorie
+        echo $form->labelEx($model, 'Cat&eacute;gorie');
+        echo  CHtml::dropDownList
+        (
+            'Categorie',
+            'fk_categorie',
+            array
+            (
+                    '' => '',
+                    CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL)), 'id_categorie_incident', 'label')
+            ),
+            array
+            (
+                    'ajax' => array
+                    (
+                        'type' => 'POST',
+                        'url' => CController::createUrl('getsouscategoriesdynamiques'),
+                        'data' => array('paramID' => 'js:this.value'),
+                        'update' => '#DD_sousCat',
+                    )
+            )
+        );
+
+        // Form pour la sélection de la sous-catégorie (devrait être dynamiquement rempli à la sélection d'un catégorie)
+        echo $form->labelEx($model, 'Sous-Cat&eacute;gorie');
+        echo CHtml::dropDownList('DD_sousCat', '', array());
         ?>
     </div>
 
@@ -72,9 +83,9 @@
         <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
     </div>
 
-    <?php echo Yii::app()->session['erreurDB']; 
+    <?php echo Yii::app()->session['erreurDB'];
         Yii::app()->session['erreurDB']=''; ?>
-    
+
     <?php $this->endWidget(); ?>
 
 </div><!-- form -->

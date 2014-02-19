@@ -186,8 +186,8 @@ class Ticket extends CActiveRecord {
     }
 
     public  function getLieu() {
-        $result = Batiment::model()->findByPk();
-        return $this->adresse . ', ' . $result->cp . ' ' . $result->commune . ' nom: ' . $result->nom;
+        //$result = Batiment::model()->findByPk();
+        //return $this->adresse . ', ' . $result->cp . ' ' . $result->commune . ' nom: ' . $result->nom;
     }
 
 }
