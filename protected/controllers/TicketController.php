@@ -109,6 +109,7 @@ class TicketController extends Controller {
                 $histo->fk_user = $logged['id_user'];
                 $histo->save(FALSE);
                 Yii::trace('apres save de l\'historique', 'cron');
+                Yii::app()->session['NouveauTicket']='nouveau';
                 $this->redirect(array('view', 'id' => $oldmodel['id_ticket']));
             } catch (CDbException $ex) {
                 Yii::trace('dans catch', 'cron');
