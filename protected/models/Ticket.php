@@ -67,7 +67,7 @@ class Ticket extends CActiveRecord {
             'id_ticket' => 'Id du ticket',
             'fk_statut' => 'Statut',
             'fk_categorie' => 'Sous-Catégorie',
-            'fk_user' => 'Utilisateur en charge du dossier',
+            'fk_user' => 'Assigné à',
             'descriptif' => 'Descriptif',
             'fk_canal' => 'Canal de création',
             'date_intervention' => 'Date d\'Intervention',

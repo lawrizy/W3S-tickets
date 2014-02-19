@@ -46,17 +46,23 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'dataProvider' => $model->search(),
     // 'filter' => $model,
     'columns' => array(
-        'id_ticket',
+        'code_ticket',
+        array(
+            'name' => 'fk_locataire',
+            'value' => 'Locataire::model()->findByPk($data->fk_locataire)->nom'),
         array(
             'name' => 'fk_statut',
             'value' => 'StatutTicket::model()->findByPk($data->fk_statut)->label'
         ),
         array(
+            'name' => 'Cat&eacute;gorie',
+            'value' => 'CategorieIncident::model()->findByPk(CategorieIncident::model()->findByPk($data->fk_categorie)->fk_parent)->label'),
+        array(
             'name' => 'fk_categorie',
             'value' => 'CategorieIncident::model()->findByPk($data->fk_categorie)->label'),
         array(
             'name' => 'fk_batiment',
-            'value' => 'Batiment::model()->findByPk($data->fk_batiment)->adresse'),
+            'value' => 'Batiment::model()->findByPk($data->fk_batiment)->nom'),
         array(
             'name' => 'fk_user',
             'value' => 'User::model()->findByPk($data->fk_user)->nom'),
@@ -72,4 +78,6 @@ $this->widget('zii.widgets.grid.CGridView', array(
         ),
     ),
 ));
+
+
 ?>
