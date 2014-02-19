@@ -152,7 +152,11 @@ class TicketController extends Controller {
                 $ticket['fk_locataire'] = $_GET['id'];
             }
 
-            $ticket['fk_categorie'] = $_POST['DD_sousCat'];
+            // On met à jour la sous-catégorie (qui est liée elle-même à une catégorie mère unique).
+            if(isset($_POST['DD_sousCat']))
+                $ticket['fk_categorie'] = $_POST['DD_sousCat'];
+            else
+                $ticket['fk_categorie'] = 'null';
 
             // Génère le code_ticket (unique à chaque ticket) selon le batiment
             $ticket['code_ticket'] = $ticket['fk_batiment'] != null ? $this->createCodeTicket($ticket['fk_batiment']) : null;
@@ -214,6 +218,12 @@ class TicketController extends Controller {
             $model->attributes = $_POST['Ticket'];
             // On génère un code ticket selon le bâtiment selectionné SEULEMENT si le batiment a changé
             $model->code_ticket = $model->fk_batiment != $oldmodel->fk_batiment ? $this->createCodeTicket($model->fk_batiment) : $model->code_ticket;
+
+            // On met à jour la sous-catégorie (qui est liée elle-même à une catégorie mère unique).
+            if(isset($_POST['DD_sousCat']))
+                $model->fk_categorie = $_POST['DD_sousCat'];
+            else
+                $ticket['fk_categorie'] = 'null';
 
             // Ensuite on sauvegarde les changements normalement.
             try {

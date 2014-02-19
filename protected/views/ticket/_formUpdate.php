@@ -8,6 +8,10 @@
     <?php
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'ticket-form',
+        // Please note: When you enable ajax validation, make sure the corresponding
+        // controller action is handling ajax validation correctly.
+        // There is a call to performAjaxValidation() commented in generated controller code.
+        // See class documentation of CActiveForm for details on this.
         'enableAjaxValidation' => false,
     ));
     ?>
@@ -18,28 +22,57 @@
 
     <div class="row">
         <?php
-        echo '<label for="#" class="required">Categorie</label>';
-        echo $form->dropDownList($model, 'fk_categorie', array('' => '', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL)), 'id_categorie_incident', 'label')));
-        echo $form->labelEx($model, 'fk_categorie');
-        echo $form->dropDownList($model, 'fk_categorie', array('' => '', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => !NULL)), 'id_categorie_incident', 'label')));
-        echo $form->error($model, 'fk_categorie');
+        // Form pour la sélection de la catégorie
+        echo $form->labelEx($model, 'Cat&eacute;gorie');
+        //$defaultCat =
+        echo  CHtml::dropDownList
+            (
+                'Categorie',
+                'fk_categorie',
+                array
+                (
+                    '' => '',
+                    CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL)), 'id_categorie_incident', 'label'),
+                ),
+                array
+                (
+                    'options' => array($model->getCategorieFromSousCategorie() => array('selected' => true) ),
+                    'ajax' => array
+                    (
+                        'type' => 'POST',
+                        'url' => CController::createUrl('getsouscategoriesdynamiques'),
+                        'data' => array('paramID' => 'js:this.value'),
+                        'update' => '#DD_sousCat',
+                    )
+                )
+            );
+
+        // Form pour la sélection de la sous-catégorie (devrait être dynamiquement rempli à la sélection d'un catégorie)
+        echo $form->labelEx($model, 'Sous-Cat&eacute;gorie');
+        echo CHtml::dropDownList('DD_sousCat', '', array());
         ?>
     </div>
 
 
     <div class="row">
         <?php
+        echo $form->labelEx($model, 'fk_batiment');
         echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAll(), 'id_batiment', 'nom')));
-        echo $form->error($model, 'fk_batiment');
+        ;
         ?>
     </div>
-
     <div class="row">
-        <!-- Div pour la PRIORITE -->
-        <!-- Champs caché -->
-        <!-- TODO Priorité -->
+        <?php
+        echo $form->labelEx($model, 'Etage');
+        echo $form->textField($model, 'etage', array('size' => 1, 'maxlength' => 10, 'style' => 'resize:none', 'value' => $model->etage));
+        ?>
     </div>
-
+    <div class="row">
+        <?php
+        echo $form->labelEx($model, 'bureau');
+        echo $form->textField($model, 'bureau', array('size' => 15, 'maxlength' => 10, 'value' => $model->bureau));
+        ?>
+    </div>
     <div class="row">
         <?php
         echo $form->labelEx($model, 'descriptif');
@@ -49,25 +82,11 @@
     </div>
 
     <div class="row buttons">
-        <?php
-        $redirectionURL = '../' . $model->id_ticket;
-//echo CHtml::submitButton('Save');
-        $this->widget('zii.widgets.jui.CJuiButton', array(
-            'buttonType' => 'submit',
-            'name' => 'update',
-            'caption' => 'Save',
-        ));
-
-
-
-        $this->widget('zii.widgets.jui.CJuiButton', array(
-            'buttonType' => 'link',
-            'name' => 'ticketToClosed',
-            'caption' => 'Cancel',
-            'url' => '../view?id=' . $_GET['id']
-        ));
-        ?>
+        <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
     </div>
+
+    <?php echo Yii::app()->session['erreurDB'];
+    Yii::app()->session['erreurDB']=''; ?>
 
     <?php $this->endWidget(); ?>
 
