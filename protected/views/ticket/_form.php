@@ -26,14 +26,14 @@
         echo $form->labelEx($model, 'Cat&eacute;gorie');
         echo  CHtml::dropDownList
         (
-            'Categorie',
-            'fk_categorie',
-            array
+            'Categorie', // Le nom de cette dropDownList
+            'fk_categorie', // La colonne à sélectionner
+            array // Cette array remplit la dropDownList avec les catégories mères disponibles dans la DB.
             (
-                    '' => '',
-                    CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL)), 'id_categorie_incident', 'label')
+                '' => '',
+                CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL)), 'id_categorie_incident', 'label')
             ),
-            array
+            array // Cette array définit le chargement dynamique des valeurs dans la dropDownList des sous-catégories. (Voir dropDownList suivante appelée DD_sousCat)
             (
                     'ajax' => array
                     (
@@ -45,8 +45,9 @@
             )
         );
 
-        // Form pour la sélection de la sous-catégorie (devrait être dynamiquement rempli à la sélection d'un catégorie)
+        // Form pour la sélection de la sous-catégorie.
         echo $form->labelEx($model, 'Sous-Cat&eacute;gorie');
+        // Cette dropDownList est initialisée vide car elle sera remplie après la sélection d'une catégorie ci-dessus.
         echo CHtml::dropDownList('DD_sousCat', '', array());
         ?>
     </div>

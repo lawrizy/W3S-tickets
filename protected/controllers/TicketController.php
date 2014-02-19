@@ -322,6 +322,11 @@ class TicketController extends Controller {
         }
     }
 
+    /**
+     * Retourne une liste d'entreprises pouvant être contactées dans le cadre d'un ticket
+     * @param $idTicket L'identifiant du ticket concerné
+     * @return array La liste des entreprises "sélectionnables"
+     */
     public function getEntreprise($idTicket) {
         $model = $this->loadModel($idTicket);
         $lieu = Lieu::model()->findByPk($model->fk_lieu);
@@ -336,11 +341,22 @@ class TicketController extends Controller {
         return $entreprises;
     }
 
+    /**
+     * Retourne une liste de secteurs possibles pour une catégorie d'incident donnée
+     * @param $entreprise ???
+     * @param $categorie La catégorie d'incident concernée
+     * @param $batiment Le bâtiment concerné
+     * @return array|mixed|null
+     */
     public function getSecteurByFk($entreprise, $categorie, $batiment) {
         $var = Secteur::model()->findByAttributes(array('fk_batiment' => $batiment, 'fk_categorie' => $categorie, 'fk_entreprise' => $entreprise));
         return $var->id_secteur;
     }
 
+    /**
+     * Retourne la liste de tous les bâtiments de la DB.
+     * @return array|CActiveRecord|mixed|null La liste de tous les bâtiments de la DB
+     */
     public function getBatiment() {
         $batiments = Batiment::model()->findAll();
         foreach ($batiments as $batiment) {
@@ -349,22 +365,33 @@ class TicketController extends Controller {
         return $batiments;
     }
 
+    /**
+     * Cette méthode s'occupe du chargement dynamique des sous-catégories en fonction de la catégorie principale sélectionnée.
+     * Elle crée elle même les tags <option value="...">...</option> qui formeront le form (qui se trouve dans la vue).
+     */
     public function actionGetSousCategoriesDynamiques()
     {
-        Yii::trace("Entrée dans la méthode de recherche des sous-catégories dynamiques...");
+        // Yii::trace("Entrée dans la méthode de recherche des sous-catégories dynamiques..."); // Passe
 
+        // Exécution d'une query qui récupère toutes les sous-catégories possibles pour la catégorie principale choisie.
         $data = CategorieIncident::model()->findAll('fk_parent=:toFind', array(':toFind' => $_POST['paramID']));
+        // On formatte les données reçues dans une DataList
         $dataList = CHtml::listData($data, 'id_categorie_incident', 'label');
 
+        // Pour chaque clé=>valeur contenues dans la DataList, on crée un tag <options...> avec les valeurs récupérées.
         foreach($dataList as $key=>$value)
         {
-            Yii::trace("clé: " . $key . " | valeur: " . $value, "cron"); // Passe
+            // Yii::trace("clé: " . $key . " | valeur: " . $value, "cron"); // Passe
 
             echo CHtml::tag
             (
-                'option',
-                array('value'=>$key),
+                // Le type de tag, ex.: <option..>, <input..>, ...
+                    'option',
+                // On attribue la valeur ("cachée") à attribuer au champs ex.: <option value="1">...</option>
+                    array('value'=>$key, 'name'=>'clef'),
+                // On attribue un label au champs ex.: <option value="1">Sanitaire</option>
                 CHtml::encode($value),
+                // true pour fermer le tag, false pour le laisser ouvert
                 true
             );
         }
