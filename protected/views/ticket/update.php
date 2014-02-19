@@ -12,6 +12,6 @@ if (Yii::app()->session['Utilisateur'] === 'User') {
 }
 ?>
 
-<h1>Update Ticket <?php echo $model->id_ticket; ?></h1>
+<h1>Mettre à jour un ticket<?php echo $model->id_ticket; ?></h1>
 
 <?php $this->renderPartial('_formUpdate', array('model' => $model)); ?>
