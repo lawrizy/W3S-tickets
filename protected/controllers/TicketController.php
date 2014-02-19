@@ -1,7 +1,6 @@
 <?php
 
-class TicketController extends Controller
-{
+class TicketController extends Controller {
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -12,8 +11,7 @@ class TicketController extends Controller
     /**
      * @return array action filters
      */
-    public function filters()
-    {
+    public function filters() {
         return array(
             'accessControl', // perform access control for CRUD operations
             'postOnly + delete', // we only allow deletion via POST request
@@ -25,8 +23,7 @@ class TicketController extends Controller
      * This method is used by the 'accessControl' filter.
      * @return array access control rules
      */
-    public function accessRules()
-    {
+    public function accessRules() {
         return array(
             array('allow', // allow all users to perform 'index' and 'view' actions
                 'actions' => array('index', 'view'),
@@ -50,17 +47,43 @@ class TicketController extends Controller
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
      */
-    public function actionView($id)
-    {
+    public function actionView($id) {
         $this->render('view', array(
             'model' => $this->loadModel($id),
         ));
     }
 
-    public function actionTraitement($id)
-    {
-        $oldmodel = $this->loadModel($id);
+    public function actionClose($id) {
         if (isset($_POST['Ticket'])) {
+            $var = $_POST['Ticket'];
+            $model = $this->loadModel($id);
+            $model->descriptif = $model->descriptif . '\n---------- Cloture ----------\n' . $var['descriptif'];
+            $model->fk_statut = 3;
+            try {
+                $model->save(false);
+                $histo = new HistoriqueTicket();
+                $histo->date_update = date("Y-m-d H:i:s", time());
+                $histo->fk_ticket = $model->id_ticket;
+                // Lors de la cloture, statut forcément à Closed
+                $histo->fk_statut_ticket = 3;
+                $logged = Yii::app()->session['Logged'];
+                $histo->fk_user = $logged['id_user'];
+                $histo->save(FALSE);
+                Yii::trace('apres save de l\'historique', 'cron');
+                $this->redirect(array('view', 'id' => $model['id_ticket']));
+            } catch (CDbException $ex) {
+
+            }
+        } else {
+            $this->render('close', array(
+                'model' => $this->loadModel($id),
+            ));
+        }
+    }
+
+    public function actionTraitement($id) {
+        if (isset($_POST['Ticket'])) {
+            $oldmodel = $this->loadModel($id);
             $model = $_POST['Ticket'];
             if (($model['fk_entreprise'] == NULL) || ($model['date_intervention'] == NULL)) {
                 Yii::trace('entreprise ou date null', 'cron');
@@ -103,8 +126,7 @@ class TicketController extends Controller
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
-    public function actionCreate()
-    {
+    public function actionCreate() {
         $model = new Ticket;
 
         // Vérifie si a bien reçu un objet 'Ticket'
@@ -112,21 +134,21 @@ class TicketController extends Controller
         // ==> si oui, c'est que c'est la page create elle-même qui renvoie ici pour la création d'un ticket
         if (isset($_POST['Ticket'])) {
             $ticket = $_POST['Ticket'];
-            //
-            // Canal par défaut le temps du développement
-
-
             $logged = Yii::app()->session['Logged'];
             // Vérifie quel utilisateur est enregistré (si User ou Locataire)
             if (Yii::app()->session['Utilisateur'] == 'Locataire') {
                 // Si locataire, on attribue le ticket a un user par défaut (le 1 dans ce cas-ci)
                 $ticket['fk_user'] = 1;
+                // Si locataire, on met le canal à web automatiquement
                 $ticket['fk_canal'] = 2;
+                // Et si locataire, on reprend son propre id pour la création du ticket
                 $ticket['fk_locataire'] = $logged->id_locataire;
             } else {
                 // Si user, c'est lui-même qui s'occupera de ce ticket-ci
                 $ticket['fk_user'] = $logged['id_user'];
+                // Si user, c'est que le locataire a appelé pour créer le ticket, donc canal à 1
                 $ticket['fk_canal'] = 1;
+                // Et si user, on reprend l'id passé en paramètre précedemment
                 $ticket['fk_locataire'] = $_GET['id'];
             }
 
@@ -138,9 +160,9 @@ class TicketController extends Controller
             // (dans la méthode save, on fait d'abord une validation des attributs)
             $model->attributes = $ticket;
             try {
-                Yii::trace('Dans try avant save','cron');
+                Yii::trace('Dans try avant save', 'cron');
                 $model->save();
-                Yii::trace('Dans try apres save','cron');
+                Yii::trace('Dans try apres save', 'cron');
                 Yii::app()->session['EmailSend'] = 'Un mail vous a été envoyé à l\' adresse : ' . Yii::app()->session['Logged']->email;
                 // Si la sauvegarde du ticket s'est bien passé,
                 // on enregistre un évènement opened pour la création du ticket
@@ -151,6 +173,7 @@ class TicketController extends Controller
                 $histo->fk_statut_ticket = 1;
                 $histo->fk_user = $model['fk_user'];
                 $histo->save(FALSE);
+                // Si tout s'est bien passé, on redirige vers la page view
                 $this->redirect(array('view', 'id' => $model->id_ticket));
             } catch (CDbException $e) {
 
@@ -163,16 +186,13 @@ class TicketController extends Controller
         ));
     }
 
-    private function createCodeTicket($fk_batiment)
-    {
+    private function createCodeTicket($fk_batiment) {
         // Table batiment contient un code (4 caractères différents pour chaque bâtiment) et un compteur (qui s'incrémente de 1 à chaque ajout de ticket)
         $batiment = Batiment::model()->findByPk($fk_batiment);
         // On incrémente le compteur de 1
-        Yii::trace('avant incrémentation: '.$batiment->cpt,'cron');
-        $batiment->cpt = ($batiment->cpt + 1);
-        Yii::trace('après incrémentation: '.$batiment->cpt,'cron');
+        $batiment->cpt += 1;
         // On save pour enregistrer l'incrémentation sinon recommence toujours du même nombre
-        $batiment->save();
+        $batiment->save(false);
         // On return le string du code_ticket
         return $batiment->code . $batiment->cpt;
     }
@@ -182,21 +202,22 @@ class TicketController extends Controller
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
      */
-    public function actionUpdate($id)
-    {
-        // Stocke les anciennes valeurs du modèle, pour comparaison ultérieure.
+    public function actionUpdate($id) {
         $model = $oldmodel = $this->loadModel($id);
 
         // Vérifie si a bien reçu un objet 'Ticket'
         // ==> si non, c'est que c'est la première arrivée sur la page update,
         // ==> si oui, c'est que c'est la page update elle-même qui renvoie ici pour la mise à jour d'un ticket
         if (isset($_POST['Ticket'])) {
+            // Stocke les anciennes valeurs du modèle, pour comparaison ultérieure.
             // Le changement du modèle s'opère ici.
             $model->attributes = $_POST['Ticket'];
+            // On génère un code ticket selon le bâtiment selectionné SEULEMENT si le batiment a changé
             $model->code_ticket = $model->fk_batiment != $oldmodel->fk_batiment ? $this->createCodeTicket($model->fk_batiment) : $model->code_ticket;
 
             // Ensuite on sauvegarde les changements normalement.
-            if ($model->save()) {
+            try {
+                $model->save();
                 Yii::app()->session['EmailSend'] = 'Un mail vous a été envoyé à l\' adresse : ' . Yii::app()->session['Logged']->email;
                 // Si la sauvegarde du ticket s'est bien passé,
                 // on enregistre un évènement pour le ticket
@@ -209,26 +230,9 @@ class TicketController extends Controller
                 $histo->fk_statut_ticket = $model->fk_statut;
                 $histo->save();
                 $this->redirect(array('view', 'id' => $model->id_ticket));
+            } catch (Exception $ex) {
+
             }
-
-            /*
-              // TODO
-              // Vérifier si le statut du ticket a changé.
-              if ($oldModel->fk_statut != $model->fk_statut) {
-              //
-              // Si le statut du ticket a changé, récupérer l'email du locataire
-              // et lui envoyer le mail de confirmation.
-              //
-              // L'email du locataire doit être retrouvée via le lieu associé à ce ticket.
-              // -> Ticket -> Lieu -> Locataire -> Locataire.email
-              //
-
-              $lieu = Lieu::model()->findByPk($model->fk_lieu);                   // Ticket -> Lieu
-              $locataire = Locataire::model()->findByPk($lieu->fk_locataire);     // Lieu -> Locataire
-              $email = $locataire->email;                                         // Locataire.email
-              $this->actionSendNotificationMail($email);                       // appel méthode d'envoi email
-              }
-              // */
         }
 
         $this->render('update', array(
@@ -241,8 +245,7 @@ class TicketController extends Controller
      * If deletion is successful, the browser will be redirected to the 'admin' page.
      * @param integer $id the ID of the model to be deleted
      */
-    public function actionDelete($id)
-    {
+    public function actionDelete($id) {
         $this->loadModel($id)->delete();
 
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
@@ -253,8 +256,7 @@ class TicketController extends Controller
     /**
      * Lists all models.
      */
-    public function actionIndex()
-    {
+    public function actionIndex() {
         Yii::trace('je parle', 'cron');
         $dataProvider = new CActiveDataProvider('Ticket');
         $this->render('index', array(
@@ -265,8 +267,7 @@ class TicketController extends Controller
     /**
      * Manages all models.
      */
-    public function actionAdmin()
-    {
+    public function actionAdmin() {
         $model = new Ticket('search');
         $model->unsetAttributes(); // clear any default values
         if (isset($_GET['Ticket']))
@@ -282,8 +283,7 @@ class TicketController extends Controller
      * Cette méthode est utilisée pour envoyer le mail de notification, lors
      * du changement de statut d'un ticket, au LOCATAIRE qui l'a créé.
      */
-    private function actionSendNotificationMail($userEmail)
-    {
+    private function actionSendNotificationMail($userEmail) {
         // TODO : Envoi d'un mail au locataire en cas de changement de statut ticket
     }
 
@@ -294,8 +294,7 @@ class TicketController extends Controller
      * @return Ticket the loaded model
      * @throws CHttpException
      */
-    public function loadModel($id)
-    {
+    public function loadModel($id) {
         $model = Ticket::model()->findByPk($id);
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
@@ -306,16 +305,14 @@ class TicketController extends Controller
      * Performs the AJAX validation.
      * @param Ticket $model the model to be validated
      */
-    protected function performAjaxValidation($model)
-    {
+    protected function performAjaxValidation($model) {
         if (isset($_POST['ajax']) && $_POST['ajax'] === 'ticket-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
     }
 
-    public function getEntreprise($idTicket)
-    {
+    public function getEntreprise($idTicket) {
         $model = $this->loadModel($idTicket);
         $lieu = Lieu::model()->findByPk($model->fk_lieu);
         $secteurs = Secteur::model()->findAllByAttributes(array('fk_batiment' => $lieu->fk_batiment, 'fk_categorie' => $model->fk_categorie));
@@ -329,14 +326,12 @@ class TicketController extends Controller
         return $entreprises;
     }
 
-    public function getSecteurByFk($entreprise, $categorie, $batiment)
-    {
+    public function getSecteurByFk($entreprise, $categorie, $batiment) {
         $var = Secteur::model()->findByAttributes(array('fk_batiment' => $batiment, 'fk_categorie' => $categorie, 'fk_entreprise' => $entreprise));
         return $var->id_secteur;
     }
 
-    public function getBatiment()
-    {
+    public function getBatiment() {
         $batiments = Batiment::model()->findAll();
         foreach ($batiments as $batiment) {
             $batiment['name'] = $batiment->adresse . ', ' . $batiment->cp . ' ' . $batiment->commune . ' - nom: ' . $batiment->nom;
