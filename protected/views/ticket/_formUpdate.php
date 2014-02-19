@@ -65,6 +65,7 @@
         <?php
         echo $form->labelEx($model, 'Etage');
         echo $form->textField($model, 'etage', array('size' => 1, 'maxlength' => 10, 'style' => 'resize:none', 'value' => $model->etage));
+
         ?>
     </div>
     <div class="row">
