@@ -7,7 +7,7 @@ $this->pageTitle = Yii::app()->name;
 <h1>Dashboard</h1>
 
 <p>
-    <h2>Graphiques de test</h2>
+    <h2>Fréquence des incidents</h2>
 </p>
 
 <p>
@@ -18,12 +18,12 @@ $this->pageTitle = Yii::app()->name;
             'width' => 600,
             'height' => 300,
             'htmlOptions' => array(),
-            'labels' => array("January","February","March","April","May","June"),
+            'labels' => array("Chauffage/climatisation", "Electricité", "Sanitaire", "Ascenceur", "Sécurité", "Divers"),
             'datasets' => array(
                 array(
                     "fillColor" => "#DDDDDD",
                     "strokeColor" => "#AAAAAA",
-                    "data" => array(100, 20, 300, 70, 50, 140)
+                    "data" => array(18, 23, 7, 2, 13, 5)
                 )
             ),
             'options' => array()
@@ -40,25 +40,20 @@ $this->pageTitle = Yii::app()->name;
             //'animation' => false,
             'datasets' => array(
                 array(
-                    "value" => 50,
-                    "color" => "rgba(220,30, 70,1)",
-                    "label" => "Hunde"
+                    "value" => 7,
+                    "color" => "rgba(220, 0,0,1)",
+                    "label" => "Nouveau"
                 ),
                 array(
-                    "value" => 25,
-                    "color" => "rgba(66,66,66,1)",
-                    "label" => "Katzen"
+                    "value" => 42,
+                    "color" => "rgba(242,106,22,1)",
+                    "label" => "En cours"
                 ),
                 array(
-                    "value" => 40,
-                    "color" => "rgba(100,100,220,1)",
-                    "label" => "Vögel"
+                    "value" => 19,
+                    "color" => "rgba(66,242,22,1)",
+                    "label" => "Clôturé"
                 ),
-                array(
-                    "value" => 15,
-                    "color" => "rgba(20,120,120,1)",
-                    "label" => "Mäuse"
-                )
             ),
             'options' => array
             (
