@@ -61,7 +61,12 @@ class DashboardController extends Controller {
     public function getDataForCategoriesStats() {
         
     }
-
+    public function getNombreIncidentElectricite(){
+    return (int) CategorieIncident::model()->countByAttributes(array('fk_parent'=>2));
+    }
+    public function getNombreIncidentSanitaire(){
+    return (int) CategorieIncident::model()->countByAttributes(array('fk_parent'=>1));
+    }
     public function getTicketByCategorie() {
         $vars = $this->getCategories();
         $list = array();

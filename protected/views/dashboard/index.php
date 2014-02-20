@@ -22,7 +22,7 @@ $this->pageTitle = Yii::app()->name;
             array(
                 "fillColor" => "rgba(34,167,212,1)",
                 "strokeColor" => "#AAAAAA",
-                "data" => array(18, 23, 7, 2, 13, 5)
+                "data" =>array((int) Ticket::model()->countByAttributes(array('fk_categorie'=>6)),(int) CategorieIncident::model()->countByAttributes(array('fk_parent'=>2)),1,1,2,5)
             )
         ),
         'options' => array()
