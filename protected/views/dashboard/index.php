@@ -1,81 +1,62 @@
-<!-- TODO commenter la classe -->
-<head>
-    <!--[if lte IE 8]>
-    <script src="ie8-fallback/excanvas.js"></script>
-    <![endif]-->
-
-    <?php
+<?php
 /* @var $this DashboardController */
 
 $this->pageTitle = Yii::app()->name;
 ?>
 
-</head>
-<body onload="load()">
 <h1>Dashboard</h1>
 
 <p>
-    <h2>Fréquence des incidents</h2>
+<h2>Fréquence des incidents</h2>
 </p>
 
 <p>
     <?php
     $this->widget(
-        'chartjs.widgets.ChBars',
-        array(
-            'width' => 600,
-            'height' => 300,
-            'htmlOptions' => array(),
-            'labels' => array("Chauffage/climatisation", "Electricité", "Sanitaire", "Ascenceur", "Sécurité", "Divers"),
-            'datasets' => array(
-                array(
-                    "fillColor" => "rgba(34,167,212,1)",
-                    "strokeColor" => "#AAAAAA",
-                    "data" => array(18, 23, 7, 2, 13, 5)
-                )
-            ),
-            'options' => array
-            (
-                'scaleOverride' => true,
-                'scaleSteps' => 12,
-                'scaleStepWidth' => 2,
-                'scaleStartValue' => 0,
-                'scaleLineWidth' => 1,
+            'chartjs.widgets.ChBars', array(
+        'width' => 800,
+        'height' => 300,
+        'htmlOptions' => array(),
+        'labels' => $this->getCategoriesLabel(),
+        'datasets' => array(
+            array(
+                "fillColor" => "rgba(34,167,212,1)",
+                "strokeColor" => "#AAAAAA",
+                "data" => array(18, 23, 7, 2, 13, 5)
             )
-        )
+        ),
+        'options' => array()
+            )
     );
     echo "<br/><br/><br/>";
     $this->widget(
-        'chartjs.widgets.ChPie',
-        array(
-            'width' => 600,
-            'height' => 300,
-            'htmlOptions' => array(),
-            'drawLabels' => true,
-            //'animation' => false,
-            'datasets' => array(
-                array(
-                    "value" => 7,
-                    "color" => "rgba(220, 0,0,1)",
-                    "label" => "Nouveau"
-                ),
-                array(
-                    "value" => 42,
-                    "color" => "rgba(242,106,22,1)",
-                    "label" => "En cours"
-                ),
-                array(
-                    "value" => 19,
-                    "color" => "rgba(89,196,18,1)",
-                    "label" => "Clôturé"
-                ),
+            'chartjs.widgets.ChPie', array(
+        'width' => 600,
+        'height' => 300,
+        'htmlOptions' => array(),
+        'drawLabels' => true,
+        //'animation' => false,
+        'datasets' => array(
+            array(
+                "value" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 1)),
+                "color" => "rgba(220, 0,0,1)",
+                "label" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 1)) . " nouveau(x)"
             ),
-            'options' => array
-            (
-
-            )
+            array(
+                "value" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 2)),
+                "color" => "rgba(242,106,22,1)",
+                "label" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 2)) . " en cours"
+            ),
+            array(
+                "value" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 3)),
+                "color" => "rgba(66,200,22,1)",
+                "label" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 3)) . " clôturé(s)"
+            ),
+        ),
+        'options' => array
+        (
         )
+            )
     );
     ?>
 </p>
-</body>

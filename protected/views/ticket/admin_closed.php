@@ -5,7 +5,7 @@
 $this->menu = array(
     array('label' => 'Recherche locataire', 'url' => array('/locataire/admin')),
     array('label' => 'Lister tous les tickets ', 'url' => array('/ticket/admin/?var=admin')),
-    array('label' => 'Lister les tickets ouverts', 'url' => array('/ticket/admin?var=admin_opened')),
+    array('label' => 'Lister les nouveaux tickets ', 'url' => array('/ticket/admin?var=admin_opened')),
     array('label' => 'Lister les tickets en cours de traitement', 'url' => array('/ticket/admin?var=admin_InProgress')),
 );
 

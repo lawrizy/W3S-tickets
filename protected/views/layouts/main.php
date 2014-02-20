@@ -26,7 +26,7 @@
                     if (Yii::app()->getController()->getAction()->id == 'traitement')
                         echo "../../../images/landing_logo.png";
                     elseif (Yii::app()->getController()->getAction()->id == 'index') {
-                        echo "../images/landing_logo.png";
+                        echo "./images/landing_logo.png";
                     } else {
                         echo '../../images/landing_logo.png';
                     }
@@ -36,24 +36,24 @@
             </div><!-- header -->
 
             <div id="mainmenu">
-<?php
-$this->widget('zii.widgets.CMenu', array(
-    'items' => array(
-        array('label' => 'Connexion', 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
-        array('label' => 'Déconnexion (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
-        array('label' => 'A propos', 'url' => array('/site/page', 'view' => 'about')),
-        array('label' => 'Contact', 'url' => array('/site/contact')),
-        array('label' => 'Créer un nouveau ticket', 'url' => array('/locataire/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
-        array('label' => 'Liste des tickets', 'url' => array('/ticket/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
-        array('label' => 'Créer un ' . Yii::app()->session['NouveauTicket'] . ' ticket', 'url' => array('/ticket/create'), 'visible' => Yii::app()->session['Utilisateur'] == 'Locataire'),
-        array('label' => 'Dashboard', 'url' => array('/dashboard')),
-        array('label' => 'Créer un ' . Yii::app()->session['NouveauTicket'] . ' ticket', 'url' => array('/ticket/create'), 'visible' => Yii::app()->session['Utilisateur'] == 'Locataire')
-    ),
-));
-Yii::app()->session['NouveauTicket'] = '';
-?>
+                <?php
+                $var = Yii::app()->session['Logged'];
+                $this->widget('zii.widgets.CMenu', array(
+                    'items' => array(
+                        array('label' => 'Connexion', 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
+                        array('label' => 'Déconnexion (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
+                        array('label' => 'A propos', 'url' => array('/site/page', 'view' => 'about')),
+                        array('label' => 'Contact', 'url' => array('/site/contact')),
+                        array('label' => 'Créer un nouveau ticket', 'url' => array('/locataire/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
+                        array('label' => 'Liste des tickets', 'url' => array('/ticket/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
+                        array('label' => 'Dashboard', 'url' => array('dashboard/vue'), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $var['fk_fonction'] == 2),
+                        array('label' => 'Créer un ' . Yii::app()->session['NouveauTicket'] . ' ticket', 'url' => array('/ticket/create'), 'visible' => Yii::app()->session['Utilisateur'] == 'Locataire')
+                    ),
+                ));
+                Yii::app()->session['NouveauTicket'] = '';
+                ?>
             </div><!-- mainmenu -->
-                <?php if (isset($this->breadcrumbs)): ?>
+            <?php if (isset($this->breadcrumbs)): ?>
                 <?php
                 $this->widget('zii.widgets.CBreadcrumbs', array(
                     'links' => $this->breadcrumbs,
@@ -68,7 +68,7 @@ Yii::app()->session['NouveauTicket'] = '';
             <div id="footer">
                 Copyright &copy; <?php echo date('Y'); ?> by Web3Sys.<br/>
                 All Rights Reserved.<br/>
-<?php echo Yii::powered(); ?>
+                <?php echo Yii::powered(); ?>
             </div><!-- footer -->
 
         </div><!-- page -->
