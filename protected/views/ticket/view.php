@@ -57,7 +57,7 @@ $this->widget('zii.widgets.CDetailView', array(
 ));
 
 echo '<br /><br />';
-
+echo '<h1><center><u>Historique</u></center></h1>';
 $histo = new HistoriqueTicket();
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'ticket-grid',
