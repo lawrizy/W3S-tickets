@@ -3,7 +3,7 @@
 /* @var $model Ticket */
 ?>
 <h1>
-    <img src="/images/age.png"><br>
+<!--    <img src="/images/age.png"><br>-->
     Créer un nouveau ticket
 </h1>
 

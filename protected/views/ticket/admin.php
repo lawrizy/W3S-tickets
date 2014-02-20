@@ -1,3 +1,4 @@
+
 <?php
 /* @var $this TicketController */
 /* @var $model Ticket */
@@ -73,8 +74,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array
             (
             'class' => 'CButtonColumn',
-            'template' => '{update} {view}',
-            'visible' => Yii::app()->session['Utilisateur'] == 'User'
+            'template' => '{update} {view}'
         ),
     ),
 ));

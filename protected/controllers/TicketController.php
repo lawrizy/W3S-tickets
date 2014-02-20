@@ -178,6 +178,7 @@ class TicketController extends Controller {
                 $histo->fk_user = $model['fk_user'];
                 $histo->save(FALSE);
                 // Si tout s'est bien passé, on redirige vers la page view
+                Yii::app()->session['NouveauTicket']='nouveau';
                 $this->redirect(array('view', 'id' => $model->id_ticket));
             } catch (CDbException $e) {
 

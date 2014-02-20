@@ -7,7 +7,7 @@ $this->menu = array(
     array('label' => 'Recherche locataire', 'url' => array('/locataire/admin')),
     array('label' => 'Lister tous les tickets ', 'url' => array('/ticket/admin/?var=admin')),
     array('label' => 'Lister les tickets en cours de traitement', 'url' => array('ticket/admin?var=admin_InProgress')),
-    array('label' => 'Lister les tickets en fermés', 'url' => array('ticket/admin?var=admin_closed')),
+    array('label' => 'Lister les tickets  fermés', 'url' => array('ticket/admin?var=admin_closed')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -25,11 +25,11 @@ $('.search-form form').submit(function(){
 ?>
 
 <h1>Tickets ouverts</h1>
-
+<!--
 <p>
     You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
     or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
-</p>
+</p>-->
 
 <?php echo CHtml::link('Advanced Search', '#', array('class' => 'search-button')); ?>
 <div class="search-form" style="display:none">
@@ -43,7 +43,7 @@ $('.search-form form').submit(function(){
 <?php
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'ticket-grid',
-    'dataProvider' => $model->search(),
+    'dataProvider' => $model->searchOpened(),
     // 'filter' => $model,
     'columns' => array(
         'code_ticket',
@@ -73,8 +73,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
         array
             (
             'class' => 'CButtonColumn',
-            'template' => '{update} {view}',
-            'visible' => Yii::app()->session['Utilisateur'] == 'User'
+            'template' => '{update} {view}'
         ),
     ),
 ));

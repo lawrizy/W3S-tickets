@@ -9,9 +9,9 @@ $this->breadcrumbs = array(
 );
 ?>
 
-<h1>Login</h1>
+<h1>Connexion</h1>
 
-<p>Please fill out the following form with your login credentials:</p>
+<p>Remplisser les champs avec vos données de connexion:</p>
 
 <div class="form">
     <?php
@@ -27,13 +27,13 @@ $this->breadcrumbs = array(
     <p class="note">Les champs marqués de <span class="required">*</span> sont requis.</p>
 
     <div class="row">
-        <?php echo $form->labelEx($model, 'username'); ?>
+        <?php echo $form->labelEx($model, 'Email: '); ?>
         <?php echo $form->textField($model, 'username'); ?>
         <?php echo $form->error($model, 'username'); ?>
     </div>
 
     <div class="row">
-        <?php echo $form->labelEx($model, 'password'); ?>
+        <?php echo $form->labelEx($model, 'Mot de passe: '); ?>
         <?php echo $form->passwordField($model, 'password'); ?>
         <?php echo $form->error($model, 'password'); ?>
     </div>
@@ -46,7 +46,7 @@ $this->breadcrumbs = array(
 
     <div class="row buttons">
         <?php echo $form->error($model, 'DBConnectionFail'); ?>
-        <?php echo CHtml::submitButton('Login'); ?>
+        <?php echo CHtml::submitButton('Connexion'); ?>
     </div>
     <p> <?php
         echo Yii::app()->session['erreurDB'];
