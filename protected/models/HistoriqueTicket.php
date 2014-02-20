@@ -92,6 +92,22 @@ class HistoriqueTicket extends CActiveRecord {
             'criteria' => $criteria,
         ));
     }
+    
+    public function searchByTicket($idTicket) {
+// @todo Please modify the following code to remove attributes that should not be searched.
+
+        $criteria = new CDbCriteria;
+
+        $criteria->compare('id_historique_ticket', $this->id_historique_ticket);
+        $criteria->compare('date_update', $this->date_update, true);
+        $criteria->compare('fk_ticket', $idTicket);
+        $criteria->compare('fk_statut_ticket', $this->fk_statut_ticket);
+        $criteria->compare('fk_user', $this->fk_user);
+
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
+    }
 
     /**
      * Returns the static model of the specified AR class.
