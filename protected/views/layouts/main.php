@@ -22,15 +22,38 @@
         <div class="container" id="page">
 
             <div id="header">
-                <div id="logo"><img src=<?php
-                    if (Yii::app()->getController()->getAction()->id == 'traitement')
-                        echo "../../../images/landing_logo.png";
-                    elseif (Yii::app()->getController()->getAction()->id == 'index') {
-                        echo "./images/landing_logo.png";
-                    } else {
-                        echo '../../images/landing_logo.png';
-                    }
-                    ?>></img></div>
+                <div id="logo"><table>
+                        <tr>
+                            <td width="50%"><img  src="http://web3sys.com/tickets/images/HServices.png"
+                                <?php
+//                                if (Yii::app()->getController()->getAction()->id == 'traitement' || Yii::app()->getController()->getAction()->id == 'update' || Yii::app()->getController()->getAction()->id == 'close'|| Yii::app()->getController()->getAction()->id == 'create')
+//                                    echo "../../../images/HServices.png";
+//                                elseif (Yii::app()->getController()->getAction()->id == 'index') {
+//                                    echo "./images/HServices.png";
+//                                } elseif (Yii::app()->getController()->getAction() == 'dashboard/index') {
+//                                    echo "../images/HServices.png";
+//                                } else {
+//                                    echo '../../images/HServices.png';
+//                                }
+                                ?>
+                                                  ></img></td>
+
+                            <td width="50%"> <img align="right" width="65%"   src="http://web3sys.com/tickets/images/logoW3S.jpg"
+                                <?php
+//                                if (Yii::app()->getController()->getAction()->id == 'traitement' || Yii::app()->getController()->getAction()->id == 'update' || Yii::app()->getController()->getAction()->id == 'close' || Yii::app()->getController()->getAction()->id == 'create')
+//                                    echo "../../../images/logoW3S.jpg";
+//                                elseif (Yii::app()->getController()->getAction()->id == 'index') {
+//                                    echo "./images/logoW3S.jpg";
+//                                } elseif (Yii::app()->getController()->getAction() == 'dashboard/index') {
+//                                    echo "../images/logoW3S.png";
+//                                } else {
+//                                    echo '../../images/logoW3S.jpg';
+//                                }
+                                ?>
+                                                  >
+                                </img></td> 
+
+                        </tr></table> </div>
 
 
             </div><!-- header -->
