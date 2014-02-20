@@ -3,9 +3,9 @@
 /* @var $model LoginForm */
 /* @var $form CActiveForm  */
 
-$this->pageTitle = Yii::app()->name . ' - Login';
+$this->pageTitle = Yii::app()->name . ' - Connexion';
 $this->breadcrumbs = array(
-    'Login',
+    'Connexion',
 );
 ?>
 
@@ -27,13 +27,13 @@ $this->breadcrumbs = array(
     <p class="note">Les champs marqués de <span class="required">*</span> sont requis.</p>
 
     <div class="row">
-        <?php echo $form->labelEx($model, 'Email: '); ?>
+        <?php echo '<label > Email :  <span class="required">*<br></span>';?>
         <?php echo $form->textField($model, 'username'); ?>
         <?php echo $form->error($model, 'username'); ?>
     </div>
 
     <div class="row">
-        <?php echo $form->labelEx($model, 'Mot de passe: '); ?>
+     <?php echo '<label > Mot de passe :  <span class="required">*<br></span>';?>
         <?php echo $form->passwordField($model, 'password'); ?>
         <?php echo $form->error($model, 'password'); ?>
     </div>
