@@ -45,34 +45,32 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'dataProvider' => $model->searchClosed(),
     // 'filter' => $model,
     'columns' => array(
-        'code_ticket',
         array(
-            'name' => 'fk_locataire',
+            'name' => 'Code ticket',
+            'value' => '$data->code_ticket'),
+        array(
+            'name' => 'Locataire',
             'value' => 'Locataire::model()->findByPk($data->fk_locataire)->nom'),
         array(
-            'name' => 'fk_statut',
+            'name' => 'Statut du ticket',
             'value' => 'StatutTicket::model()->findByPk($data->fk_statut)->label'
         ),
         array(
             'name' => 'Cat&eacute;gorie',
             'value' => 'CategorieIncident::model()->findByPk(CategorieIncident::model()->findByPk($data->fk_categorie)->fk_parent)->label'),
         array(
-            'name' => 'fk_categorie',
+            'name' => 'Sous - Cat&eacute;gorie',
             'value' => 'CategorieIncident::model()->findByPk($data->fk_categorie)->label'),
         array(
-            'name' => 'fk_batiment',
+            'name' => 'B&acirc;timent',
             'value' => 'Batiment::model()->findByPk($data->fk_batiment)->nom'),
         array(
-            'name' => 'fk_user',
+            'name' => 'Assign&eacute; &agrave;',
             'value' => 'User::model()->findByPk($data->fk_user)->nom'),
-        /*
-          'commentaire',
-          'fk_canal',
-         */
         array
             (
             'class' => 'CButtonColumn',
-            'template' => '{update} {view}'
+            'template' => ' {view}'
         ),
     ),
 ));

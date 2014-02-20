@@ -15,18 +15,18 @@
     ?>
 
     <div class="row">
-        <?php echo $form->label($model, 'id_ticket'); ?>
-        <?php echo $form->textField($model, 'id_ticket', array('size' => 10, 'maxlength' => 10)); ?>
+        <?php echo $form->label($model, 'code_ticket'); ?>
+        <?php echo $form->textField($model, 'code_ticket', array('size' => 10, 'maxlength' => 10)); ?>
     </div>
 
     <div class="row">
         <?php echo $form->label($model, 'fk_statut'); ?>
-        <?php echo $form->dropDownList($model, 'fk_statut', array('' => '', CHtml::listData(StatutTicket::model()->findAll(array('condition'=>'id_statut_ticket','order' => 'label DESC')),'id_statut_ticket', 'label'))); ?>
+        <?php echo $form->dropDownList($model, 'fk_statut', array('' => '', CHtml::listData(StatutTicket::model()->findAll(array('condition' => 'id_statut_ticket', 'order' => 'label DESC')), 'id_statut_ticket', 'label'))); ?>
     </div>
 
     <div class="row">
         <?php echo $form->label($model, 'fk_categorie'); ?>
-        <?php echo $form->textField($model, 'fk_categorie', array('size' => 10, 'maxlength' => 10)); ?>
+        <?php echo $form->dropDownList($model, 'fk_categorie', array('' => '', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent'=>NULL)), 'id_categorie_incident', 'label'))); ?>
     </div>
 
     <div class="row">

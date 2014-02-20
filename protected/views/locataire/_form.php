@@ -7,6 +7,7 @@
 <div class="form">
 
     <?php
+  
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'locataire-form',
         // Please note: When you enable ajax validation, make sure the corresponding
@@ -23,19 +24,19 @@
 
     <div class="row">
         <?php echo $form->labelEx($model, 'nom'); ?>
-        <?php // echo $form->textField($model, 'nom', array('size' => 60, 'maxlength' => 64)); ?>
+        <?php echo $form->textField($model, 'nom', array('size' => 25, 'maxlength' => 64)); ?>
         <?php echo $form->error($model, 'nom'); ?>
     </div>
 
     <div class="row">
         <?php echo $form->labelEx($model, 'email'); ?>
-        <?php echo $form->textField($model, 'email', array('size' => 60, 'maxlength' => 64)); ?>
+        <?php echo $form->textField($model, 'email', array('size' => 25, 'maxlength' => 64)); ?>
         <?php echo $form->error($model, 'email'); ?>
     </div>
 
     <div class="row">
         <?php echo $form->labelEx($model, 'password'); ?>
-        <?php echo $form->passwordField($model, 'password', array('size' => 32, 'maxlength' => 32)); ?>
+        <?php echo $form->passwordField($model, 'password', array('size' => 25, 'maxlength' => 32)); ?>
         <?php echo $form->error($model, 'password'); ?>
     </div>
 
