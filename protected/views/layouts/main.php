@@ -22,9 +22,9 @@
         <div class="container" id="page">
 
             <div id="header">
-                <div id="logo"><table>
+                <div id="aaaa"><table>
                         <tr>
-                            <td width="50%"><img  src="http://web3sys.com/tickets/images/HServices.png"
+                            <td width="50%"><img  src="http://web3sys.com/tickets/images/HServices.png" wirth="65%"></td>
                                 <?php
 //                                if (Yii::app()->getController()->getAction()->id == 'traitement' || Yii::app()->getController()->getAction()->id == 'update' || Yii::app()->getController()->getAction()->id == 'close'|| Yii::app()->getController()->getAction()->id == 'create')
 //                                    echo "../../../images/HServices.png";
@@ -36,9 +36,9 @@
 //                                    echo '../../images/HServices.png';
 //                                }
                                 ?>
-                                                  ></img></td>
+                                                  
 
-                            <td width="50%"> <img align="right" width="65%"   src="http://web3sys.com/tickets/images/logoW3S.jpg"
+                            <td width="50%"> <img align="right" width="70%"   src="http://web3sys.com/tickets/images/logoW3S.jpg"></td> 
                                 <?php
 //                                if (Yii::app()->getController()->getAction()->id == 'traitement' || Yii::app()->getController()->getAction()->id == 'update' || Yii::app()->getController()->getAction()->id == 'close' || Yii::app()->getController()->getAction()->id == 'create')
 //                                    echo "../../../images/logoW3S.jpg";
@@ -50,8 +50,7 @@
 //                                    echo '../../images/logoW3S.jpg';
 //                                }
                                 ?>
-                                                  >
-                                </img></td> 
+                                                  
 
                         </tr></table> </div>
 

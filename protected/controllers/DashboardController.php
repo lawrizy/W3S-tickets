@@ -67,24 +67,44 @@ class DashboardController extends Controller {
     public function getNombreIncidentSanitaire(){
     return (int) CategorieIncident::model()->countByAttributes(array('fk_parent'=>1));
     }
+    
+    
+    
+    
+    
+    
+    
+    
     public function getTicketByCategorie() {
-        $vars = $this->getCategories();
-        $list = array();
-        foreach ($vars as $var) {
-            Ticket::model()->findAllByAttributes(array(''));
-            array_push($list, $var['label']);
+        $categories = $this->getCategories();
+        $nbFinal = array();
+        foreach ($categories as $categorie) {
+            $nbCategorie=0;
+            $sousCategories = CategorieIncident::model()->findAllByAttributes(array('fk_parent'=>$categorie['id_categorie_incident']));
+            foreach ($sousCategories as $sousCategorie) {
+                $nbCategorie += Ticket::model()->countByAttributes(array('fk_categorie' => $sousCategorie['id_categorie_incident']));
+            }
+            array_push($nbFinal, $nbCategorie);
         }
-        return $list;
+        return $nbFinal;
     }
 
     public function getCategories() { //retrurn list of categories
         $datas = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL));
-        $listLabel = array();
+        $listCategorie = array();
         foreach ($datas as $data) {
-            array_push($listLabel, $data);
+            array_push($listCategorie, $data);
         }
-        return $listLabel;
+        return $listCategorie;
     }
+    
+    
+    
+    
+    
+    
+    
+    
 
     public function getCategoriesLabel() { //return list categorie's label
         $datas = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL));

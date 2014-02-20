@@ -164,6 +164,25 @@ class Ticket extends CActiveRecord {
             'criteria' => $criteria,
         ));
     }
+    
+    public function searchByLocataire($id) {
+        $criteria = new CDbCriteria;
+
+        $criteria->compare('id_ticket', $this->id_ticket);
+        $criteria->compare('fk_statut', $this->fk_statut);
+        $criteria->compare('fk_categorie', $this->fk_categorie);
+        $criteria->compare('fk_batiment', $this->fk_batiment);
+        $criteria->compare('fk_user', $this->fk_user);
+        $criteria->compare('descriptif', $this->descriptif, true);
+        $criteria->compare('fk_canal', $this->fk_canal);
+        $criteria->compare('fk_entreprise', $this->fk_entreprise);
+        $criteria->compare('date_intervention', $this->date_intervention, true);
+        $criteria->compare('fk_locataire', $this->fk_locataire = $id);
+
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
+    }
 
     /**
      * Returns the static model of the specified AR class.
