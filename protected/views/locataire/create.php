@@ -4,12 +4,9 @@
 
 
 
-$this->menu = array(
-    array('label' => 'List Locataire', 'url' => array('index')),
-    array('label' => 'Manage Locataire', 'url' => array('admin')),
-);
+
 ?>
 
-<h1>Create Locataire</h1>
+<h1>Créer un locataire</h1>
 
 <?php $this->renderPartial('_form', array('model' => $model)); ?>

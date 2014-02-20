@@ -3,10 +3,13 @@
 
 $this->pageTitle = Yii::app()->name . ' - About';
 $this->breadcrumbs = array(
-    'About',
+    'A propos',
 );
 ?>
-<h1>About</h1>
+<h1>A propos</h1>
 
-<p>This is a "static" page. You may change the content of this page
-    by updating the file <code><?php echo __FILE__; ?></code>.</p>
+<p>This application <br> 
+<u> was developped by: </u><br>
+<b>
+<br>
+Ridounet , Capelle and Desaedeleer</b> </p>

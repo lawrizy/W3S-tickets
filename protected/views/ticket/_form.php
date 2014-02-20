@@ -46,7 +46,7 @@
         );
 
         // Form pour la sélection de la sous-catégorie.
-         echo '<label  >Sélectionner une sous catégorie<span class="required"> *</span> </label>';
+         echo '<label  >Sélectionner une sous-catégorie<span class="required"> *</span> </label>';
         // Cette dropDownList est initialisée vide car elle sera remplie après la sélection d'une catégorie ci-dessus.
         echo CHtml::dropDownList('DD_sousCat', '', array());
         ?>
@@ -55,7 +55,7 @@
 
     <div class="row">
         <?php
-         echo '<label  >Sélectionner un batiment<span class="required"> *</span> </label>';
+         echo '<label  >Sélectionner un bâtiment<span class="required"> *</span> </label>';
         echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAll(), 'id_batiment', 'nom')));
         ;
         ?>
