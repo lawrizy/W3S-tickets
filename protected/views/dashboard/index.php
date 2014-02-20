@@ -7,7 +7,7 @@ $this->pageTitle = Yii::app()->name;
 <h1>Dashboard</h1>
 
 <p>
-    <h2>Graphique de test</h2>
+    <h2>Graphiques de test</h2>
 </p>
 
 <p>
@@ -42,22 +42,22 @@ $this->pageTitle = Yii::app()->name;
                 array(
                     "value" => 50,
                     "color" => "rgba(220,30, 70,1)",
-                    "label" => "Chien"
+                    "label" => "Hunde"
                 ),
                 array(
                     "value" => 25,
                     "color" => "rgba(66,66,66,1)",
-                    "label" => "Chat"
+                    "label" => "Katzen"
                 ),
                 array(
                     "value" => 40,
                     "color" => "rgba(100,100,220,1)",
-                    "label" => "Oiseau"
+                    "label" => "Vögel"
                 ),
                 array(
                     "value" => 15,
                     "color" => "rgba(20,120,120,1)",
-                    "label" => "Souris"
+                    "label" => "Mäuse"
                 )
             ),
             'options' => array
