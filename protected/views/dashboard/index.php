@@ -1,9 +1,17 @@
-<?php
+<!-- TODO commenter la classe -->
+<head>
+    <!--[if lte IE 8]>
+    <script src="ie8-fallback/excanvas.js"></script>
+    <![endif]-->
+
+    <?php
 /* @var $this DashboardController */
 
 $this->pageTitle = Yii::app()->name;
 ?>
 
+</head>
+<body onload="load()">
 <h1>Dashboard</h1>
 
 <p>
@@ -21,7 +29,7 @@ $this->pageTitle = Yii::app()->name;
             'labels' => array("Chauffage/climatisation", "Electricité", "Sanitaire", "Ascenceur", "Sécurité", "Divers"),
             'datasets' => array(
                 array(
-                    "fillColor" => "#DDDDDD",
+                    "fillColor" => "rgba(34,167,212,1)",
                     "strokeColor" => "#AAAAAA",
                     "data" => array(18, 23, 7, 2, 13, 5)
                 )
@@ -58,7 +66,7 @@ $this->pageTitle = Yii::app()->name;
                 ),
                 array(
                     "value" => 19,
-                    "color" => "rgba(66,242,22,1)",
+                    "color" => "rgba(89,196,18,1)",
                     "label" => "Clôturé"
                 ),
             ),
@@ -70,3 +78,4 @@ $this->pageTitle = Yii::app()->name;
     );
     ?>
 </p>
+</body>
