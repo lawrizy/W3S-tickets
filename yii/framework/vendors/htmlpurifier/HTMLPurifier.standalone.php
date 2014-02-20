@@ -457,7 +457,7 @@ abstract class HTMLPurifier_AttrDef {
     }
 
     /**
-     * Parses a possibly escaped CSS string and returns the "pure" 
+     * Parses a possibly escaped CSS string and returns the "pure"
      * version of it.
      */
     protected function expandCSSEscape($string) {
@@ -2970,7 +2970,7 @@ class HTMLPurifier_Encoder {
      * Error-handler that mutes errors, alternative to shut-up operator.
      */
     public static function muteErrorHandler() {
-        
+
     }
 
     /**
@@ -3174,7 +3174,7 @@ class HTMLPurifier_Encoder {
                                 // Codepoints outside the Unicode range are illegal
                                 ($mUcs4 > 0x10FFFF)
                         ) {
-                            
+
                         } elseif (0xFEFF != $mUcs4 && // omit BOM
                                 // check for valid Char unicode codepoints
                                 (
@@ -3944,7 +3944,7 @@ class HTMLPurifier_ErrorStruct {
  * are from here.
  */
 class HTMLPurifier_Exception extends Exception {
-    
+
 }
 
 /**
@@ -4907,7 +4907,7 @@ class HTMLPurifier_HTMLModule {
      * @param $config Instance of HTMLPurifier_Config
      */
     public function setup($config) {
-        
+
     }
 
 }
@@ -5585,14 +5585,14 @@ abstract class HTMLPurifier_Injector {
      * Handler that is called when a text token is processed
      */
     public function handleText(&$token) {
-        
+
     }
 
     /**
      * Handler that is called when a start or empty token is processed
      */
     public function handleElement(&$token) {
-        
+
     }
 
     /**
@@ -5608,7 +5608,7 @@ abstract class HTMLPurifier_Injector {
      * @deprecated
      */
     public function notifyEnd($token) {
-        
+
     }
 
 }
@@ -5713,7 +5713,7 @@ class HTMLPurifier_Language {
         $ret = '';
         for ($i = 0, $c = count($array); $i < $c; $i++) {
             if ($i == 0) {
-                
+
             } elseif ($i + 1 < $c) {
                 $ret .= $sep;
             } else {
@@ -7440,7 +7440,7 @@ class HTMLPurifier_URIParser {
 
 
 
-            
+
 // seperate out parts
         $scheme = !empty($matches[1]) ? $matches[2] : null;
         $authority = !empty($matches[3]) ? $matches[4] : null;
@@ -8053,7 +8053,7 @@ class HTMLPurifier_VarParser {
  * Exception type for HTMLPurifier_VarParser
  */
 class HTMLPurifier_VarParserException extends HTMLPurifier_Exception {
-    
+
 }
 
 /**
@@ -8323,7 +8323,7 @@ class HTMLPurifier_AttrDef_Lang extends HTMLPurifier_AttrDef {
 
 
 
-            
+
 // process primary subtag : $subtags[0]
         $length = strlen($subtags[0]);
         switch ($length) {
@@ -9225,7 +9225,7 @@ class HTMLPurifier_AttrDef_CSS_FontFamily extends HTMLPurifier_AttrDef {
             $this->mask .= $c; // cast-y, but should be fine
 
 
-            
+
 // special bytes used by UTF-8
         for ($i = 0x80; $i <= 0xFF; $i++) {
             // We don't bother excluding invalid bytes in this range,
@@ -9953,7 +9953,7 @@ class HTMLPurifier_AttrDef_HTML_FrameTarget extends HTMLPurifier_AttrDef_Enum {
     protected $case_sensitive = false;
 
     public function __construct() {
-        
+
     }
 
     public function validate($string, $config, $context) {
@@ -11192,7 +11192,7 @@ class HTMLPurifier_ChildDef_Empty extends HTMLPurifier_ChildDef {
     public $type = 'empty';
 
     public function __construct() {
-        
+
     }
 
     public function validateChildren($tokens_of_children, $config, $context) {
@@ -11601,7 +11601,7 @@ class HTMLPurifier_ChildDef_Table extends HTMLPurifier_ChildDef {
         'tfoot' => true, 'caption' => true, 'colgroup' => true, 'col' => true);
 
     public function __construct() {
-        
+
     }
 
     public function validateChildren($tokens_of_children, $config, $context) {
@@ -11808,7 +11808,7 @@ class HTMLPurifier_DefinitionCache_Decorator extends HTMLPurifier_DefinitionCach
     public $cache;
 
     public function __construct() {
-        
+
     }
 
     /**
@@ -13355,7 +13355,7 @@ class HTMLPurifier_HTMLModule_Tidy extends HTMLPurifier_HTMLModule {
      * associative array of fix name to fix implementation.
      */
     public function makeFixes() {
-        
+
     }
 
 }
@@ -13590,7 +13590,7 @@ class HTMLPurifier_HTMLModule_Tidy_XHTML extends HTMLPurifier_HTMLModule_Tidy {
  * Injector that auto paragraphs text in the root node based on
  * double-spacing.
  * @todo Ensure all states are unit tested, including variations as well.
- * @todo Make a graph of the flow control for this Injector.
+ * @todo Make a dashboard of the flow control for this Injector.
  */
 class HTMLPurifier_Injector_AutoParagraph extends HTMLPurifier_Injector {
 
@@ -13921,7 +13921,7 @@ class HTMLPurifier_Injector_DisplayLinkURI extends HTMLPurifier_Injector {
     public $needed = array('a');
 
     public function handleElement(&$token) {
-        
+
     }
 
     public function handleEnd(&$token) {
@@ -14116,7 +14116,7 @@ class HTMLPurifier_Injector_RemoveSpansWithoutAttributes extends HTMLPurifier_In
         $nesting = 0;
         $spanContentTokens = array();
         while ($this->forwardUntilEndToken($i, $current, $nesting)) {
-            
+
         }
 
         if ($current instanceof HTMLPurifier_Token_End && $current->name === 'span') {
@@ -14419,7 +14419,7 @@ class HTMLPurifier_Lexer_DOMLex extends HTMLPurifier_Lexer {
      * An error handler that mutes all errors
      */
     public function muteErrorHandler($errno, $errstr) {
-        
+
     }
 
     /**
@@ -15566,8 +15566,8 @@ class HTMLPurifier_Strategy_MakeWellFormed extends HTMLPurifier_Strategy {
                     }
 
                     if ($autoclose && $definition->info[$token->name]->wrap) {
-                        // Check if an element can be wrapped by another 
-                        // element to make it valid in a context (for 
+                        // Check if an element can be wrapped by another
+                        // element to make it valid in a context (for
                         // example, <ul><ul> needs a <li> in between)
                         $wrapname = $definition->info[$token->name]->wrap;
                         $wrapdef = $definition->info[$wrapname];
@@ -16027,7 +16027,7 @@ class HTMLPurifier_Strategy_RemoveForeignElements extends HTMLPurifier_Strategy 
                     continue;
                 }
             } elseif ($token instanceof HTMLPurifier_Token_Text) {
-                
+
             } else {
                 continue;
             }
@@ -16288,7 +16288,7 @@ class HTMLPurifier_Token_Tag extends HTMLPurifier_Token {
  * Concrete empty token class.
  */
 class HTMLPurifier_Token_Empty extends HTMLPurifier_Token_Tag {
-    
+
 }
 
 /**
@@ -16312,7 +16312,7 @@ class HTMLPurifier_Token_End extends HTMLPurifier_Token_Tag {
  * Concrete start token class.
  */
 class HTMLPurifier_Token_Start extends HTMLPurifier_Token_Tag {
-    
+
 }
 
 /**
@@ -16732,7 +16732,7 @@ class HTMLPurifier_URIScheme_data extends HTMLPurifier_URIScheme {
     }
 
     public function muteErrorHandler($errno, $errstr) {
-        
+
     }
 
 }
