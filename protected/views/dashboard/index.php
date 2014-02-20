@@ -26,7 +26,14 @@ $this->pageTitle = Yii::app()->name;
                     "data" => array(18, 23, 7, 2, 13, 5)
                 )
             ),
-            'options' => array()
+            'options' => array
+            (
+                'scaleOverride' => true,
+                'scaleSteps' => 12,
+                'scaleStepWidth' => 2,
+                'scaleStartValue' => 0,
+                'scaleLineWidth' => 1,
+            )
         )
     );
     echo "<br/><br/><br/>";
