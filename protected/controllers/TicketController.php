@@ -61,6 +61,8 @@ class TicketController extends Controller {
             $model->fk_statut = 3;
             try {
                 $model->save(false);
+                $loc = Locataire::model()->findByPk($model['fk_locataire']);
+                Yii::app()->session['EmailSend'] = 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email'];
                 $histo = new HistoriqueTicket();
                 $histo->date_update = date("Y-m-d H:i:s", time());
                 $histo->fk_ticket = $model->id_ticket;
@@ -96,7 +98,8 @@ class TicketController extends Controller {
             try {
                 Yii::trace('dans Try', 'cron');
                 $oldmodel->save(FALSE);
-                Yii::app()->session['EmailSend'] = 'Un mail vous a été envoyé à l\' adresse : ' . Yii::app()->session['Logged']->email;
+                $loc = Locataire::model()->findByPk($oldmodel['fk_locataire']);
+                Yii::app()->session['EmailSend'] = 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email'];
                 Yii::trace('apres save du model', 'cron');
                 // Si la sauvegarde du ticket s'est bien passé,
                 // on enregistre un évènement InProgress pour le traitement du ticket
@@ -167,7 +170,8 @@ class TicketController extends Controller {
                 Yii::trace('Dans try avant save', 'cron');
                 $model->save();
                 Yii::trace('Dans try apres save', 'cron');
-                Yii::app()->session['EmailSend'] = 'Un mail vous a été envoyé à l\' adresse : ' . Yii::app()->session['Logged']->email;
+                $loc = Locataire::model()->findByPk($model['fk_locataire']);
+                Yii::app()->session['EmailSend'] = 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email'];
                 // Si la sauvegarde du ticket s'est bien passé,
                 // on enregistre un évènement opened pour la création du ticket
                 $histo = new HistoriqueTicket();
@@ -229,7 +233,8 @@ class TicketController extends Controller {
             // Ensuite on sauvegarde les changements normalement.
             try {
                 $model->save();
-                Yii::app()->session['EmailSend'] = 'Un mail vous a été envoyé à l\' adresse : ' . Yii::app()->session['Logged']->email;
+                $loc = Locataire::model()->findByPk($model['fk_locataire']);
+                Yii::app()->session['EmailSend'] = 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email'];
                 // Si la sauvegarde du ticket s'est bien passé,
                 // on enregistre un évènement pour le ticket
                 $histo = new HistoriqueTicket();
