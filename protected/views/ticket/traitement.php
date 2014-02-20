@@ -13,5 +13,5 @@ if (Yii::app()->session['Utilisateur'] === 'User') {
 ?>
 
 <h1>Traitement du Ticket <?php echo $model->code_ticket; ?></h1>
-
+<?php echo Yii::app()->getController()->getAction()->id;?>
 <?php $this->renderPartial('_formTraitement', array('model' => $model)); ?>

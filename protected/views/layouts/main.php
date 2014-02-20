@@ -22,7 +22,13 @@
         <div class="container" id="page">
 
             <div id="header">
-                <div id="logo"><img src="../../images/age.png"></img></div>
+                <div id="logo"><img src=<?php
+                    if (Yii::app()->getController()->getAction()->id== 'traitement')
+                        echo "../../../images/landing_logo.png";
+                    else {
+                        echo '../../images/landing_logo.png';
+                    }
+                    ?>></img></div>
             </div><!-- header -->
 
             <div id="mainmenu">
