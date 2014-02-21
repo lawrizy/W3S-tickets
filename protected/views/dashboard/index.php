@@ -12,6 +12,21 @@ $this->pageTitle = Yii::app()->name;
 
 <p>
     <?php
+    // DDL pour sélectionner un bâtiment spécifique
+    echo '<p>';
+    echo '<label>Sélectionnez un bâtiment</label>';
+    echo CHtml::dropDownList(
+        // Nom de la DDL
+        'batiment_selector',
+        // Selection
+        '',
+        // Data
+        array('empty' => 'Tous les bâtiments'),
+        // htmlOptions
+        array('length' => 100)
+    );
+    echo '</p>';
+
     $this->widget(
             'chartjs.widgets.ChBars', array(
         'width' => 800,
@@ -28,7 +43,9 @@ $this->pageTitle = Yii::app()->name;
         'options' => array()
             )
     );
+
     echo "<br/><br/><br/>";
+
     $this->widget(
             'chartjs.widgets.ChPie', array(
         'width' => 600,
