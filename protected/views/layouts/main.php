@@ -24,7 +24,7 @@
             <div id="header">
                 <div id="aaaa"><table>
                         <tr>
-                            <td width="50%"><img  src="http://web3sys.com/tickets/images/HServices.png" wirth="65%"></td>
+                            <td width="50%"><a href=<?php echo Yii::app()->request->baseUrl; ?>><img  src="http://web3sys.com/tickets/images/HServices.png"></img></a></td>
                                 <?php
 //                                if (Yii::app()->getController()->getAction()->id == 'traitement' || Yii::app()->getController()->getAction()->id == 'update' || Yii::app()->getController()->getAction()->id == 'close'|| Yii::app()->getController()->getAction()->id == 'create')
 //                                    echo "../../../images/HServices.png";
@@ -38,7 +38,7 @@
                                 ?>
 
 
-                            <td width="50%"> <img align="right" width="70%"   src="http://web3sys.com/tickets/images/logoW3S.jpg"></td>
+                            <td width="50%"><a href="http://web3sys.com"><img align="right" width="70%"   src="http://web3sys.com/tickets/images/logoW3S.jpg"></img></a></td>
                                 <?php
 //                                if (Yii::app()->getController()->getAction()->id == 'traitement' || Yii::app()->getController()->getAction()->id == 'update' || Yii::app()->getController()->getAction()->id == 'close' || Yii::app()->getController()->getAction()->id == 'create')
 //                                    echo "../../../images/logoW3S.jpg";
@@ -89,7 +89,7 @@
             <div class="clear"></div>
 
             <div id="footer">
-                Copyright &copy; <?php echo date('Y'); ?> by Web3Sys.<br/>
+                Copyright &copy; <?php echo date('Y'); ?> by <a href="http://web3sys.com">Web3Sys</a>.<br/>
                 All Rights Reserved.<br/>
                 <?php echo Yii::powered(); ?>
             </div><!-- footer -->

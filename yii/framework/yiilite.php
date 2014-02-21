@@ -6358,7 +6358,7 @@ class CAccessControlFilter extends CFilter {
         elseif ($this->message !== null)
             return $this->message;
         else
-            return Yii::t('yii', 'You are not authorized to perform this action.');
+            return Yii::t('yii', 'Vous n\' êtes pas autorisé a accéder à cette page.');
     }
 
     protected function accessDenied($user, $message) {

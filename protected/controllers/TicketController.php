@@ -23,10 +23,10 @@ class TicketController extends Controller {
      * This method is used by the 'accessControl' filter.
      * @return array access control rules
      */
-    public function accessRules() {
+    public function accessRules() { //
 
 
-        if (Yii::app()->session['Utilisateur'] == 'Locataire')
+        if (Yii::app()->session['Utilisateur'] == 'Locataire') {
             return array(
                 array('allow', // allow all users to perform 'index' and 'view' actions
                     'actions' => array('index', 'view'),
@@ -40,7 +40,7 @@ class TicketController extends Controller {
                     'users' => array('*'),
                 ),
             );
-        elseif (Yii::app()->session['Utilisateur'] == 'User') {
+        } elseif (Yii::app()->session['Utilisateur'] == 'User') {
             return array(
                 array('allow', // allow all users to perform 'index' and 'view' actions
                     'actions' => array('index', 'view'),
@@ -56,7 +56,6 @@ class TicketController extends Controller {
             );
         } else {
             return array(
-          
                 array('deny', // deny all users
                     'users' => array('?'),
                 ),
