@@ -12,7 +12,7 @@ return array(
     'name' => 'Ticket System',
     // preloading 'log' component
     'preload' => array
-    (
+        (
         'log',
         'chartjs',
     ),
@@ -86,7 +86,7 @@ return array(
         ),
         // Ajout du composant chart JS pour afficher des graphiques, etc..
         'chartjs' => array
-        (
+            (
             'class' => 'chartjs.components.ChartJs',
         )
     ),

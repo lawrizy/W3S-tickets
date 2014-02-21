@@ -45,14 +45,13 @@ class LoginForm extends CFormModel {
     public function authenticate($attribute, $params) {
         if (!$this->hasErrors()) {
             $this->_identity = new UserIdentity($this->username, $this->password);
-            
-            /* 
+
+            /*
              * Lorsqu'une erreur de connection à la DB est détectée, renvoie le message suivant.
              * TODO : Trouver à quoi correspond l'attribut dans $this->addError($attribute, $errorMessage);
              */
-            if (!$this->_identity->authenticate())
-            {
-                if(isset(Yii::app()->session['erreurDB']))
+            if (!$this->_identity->authenticate()) {
+                if (isset(Yii::app()->session['erreurDB']))
                     $this->addError('DBConnectionFail', 'La connexion à la base de données a échoué.');
                 else
                     $this->addError('username', 'Le mot de passe ou le nom d\'utilisateur est incorrect.');

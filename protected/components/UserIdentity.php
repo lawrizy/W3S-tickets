@@ -22,27 +22,26 @@ class UserIdentity extends CUserIdentity {
         try {
             if (($record = Locataire::model()->findByAttributes(array('email' => $this->username))) !== null) { //recupération d'un record en fonction de l'email
                 if ($record->password !== md5($this->password)) // si le mot de passe est différent du mot de passe de la db en md5
-                    $this->errorCode = self::ERROR_PASSWORD_INVALID;// code error est password error
+                    $this->errorCode = self::ERROR_PASSWORD_INVALID; // code error est password error
                 else {
-                   $this->_id = $record->id_locataire;    //recupération  de l'id du locataire
+                    $this->_id = $record->id_locataire;    //recupération  de l'id du locataire
                     $this->errorCode = self::ERROR_NONE;   // aucune erreur
                     Yii::app()->session['Utilisateur'] = 'Locataire'; // création d'une variable de session pour stocker le type d'user
                     $record->password = ''; // vidage du mot de passe 
-                    Yii::app()->session['Logged'] = $record;// enregistrement du record dans la session 
+                    Yii::app()->session['Logged'] = $record; // enregistrement du record dans la session 
                 }
                 return !$this->errorCode; // return le code d'erreur
             } elseif (($record = User::model()->findByAttributes(array('email' => $this->username))) !== NULL) {  //recuperation d'un record User
-
                 if ($record->password !== md5($this->password)) // si le mot de passe est différent du mot de passe de la db en md5
-                    $this->errorCode = self::ERROR_PASSWORD_INVALID;// code error est password error
+                    $this->errorCode = self::ERROR_PASSWORD_INVALID; // code error est password error
                 else {
-                    $this->_id = $record->id_user;//recupération  de l'id du user
-                    $this->errorCode = self::ERROR_NONE;// aucune erreur
-                    Yii::app()->session['Utilisateur'] = 'User';// création d'une variable de session pour stocker le type d'user
-                    $record->password='';// vidage du mot de passe 
-                    Yii::app()->session['Logged'] = $record;// enregistrement du record dans la session 
+                    $this->_id = $record->id_user; //recupération  de l'id du user
+                    $this->errorCode = self::ERROR_NONE; // aucune erreur
+                    Yii::app()->session['Utilisateur'] = 'User'; // création d'une variable de session pour stocker le type d'user
+                    $record->password = ''; // vidage du mot de passe 
+                    Yii::app()->session['Logged'] = $record; // enregistrement du record dans la session 
                 }
-                return !$this->errorCode;// return le code d'erreur
+                return !$this->errorCode; // return le code d'erreur
             }
             return self::ERROR_UNKNOWN_IDENTITY; //return utilisateur inconnu
         } catch (CDbException $ex) {

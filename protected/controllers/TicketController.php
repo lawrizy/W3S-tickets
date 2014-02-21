@@ -23,42 +23,30 @@ class TicketController extends Controller {
      * This method is used by the 'accessControl' filter.
      * @return array access control rules
      */
-    public function accessRules() {
-
-
-        if (Yii::app()->session['Utilisateur'] == 'Locataire')
+    public function accessRules() { // // droit des utilisateur sur les urls
+        if (Yii::app()->session['Utilisateur'] == 'Locataire') {
             return array(
-                array('allow', // allow all users to perform 'index' and 'view' actions
-                    'actions' => array('index', 'view'),
-                    'users' => array('*'),
+                array('allow', // le locataire peut juste creer un ticket et voir
+                    'actions' => array('view', 'create', 'getsouscategoriesdynamiques'),
+                    'users' => array('@'), // user logger
                 ),
-                array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                    'actions' => array('create', 'getsouscategoriesdynamiques'),
-                    'users' => array('@'),
-                ),
-                array('deny', // deny all users
+                array('deny', // refuse autre users
                     'users' => array('*'),
+                    'message' => 'Vous n\'avez pas accès à cette page.'
                 ),
             );
-        elseif (Yii::app()->session['Utilisateur'] == 'User') {
+        } elseif (Yii::app()->session['Utilisateur'] == 'User') { // Utilisateur peut creer ,voir ,manager,traiter et fermer des ticket
             return array(
-                array('allow', // allow all users to perform 'index' and 'view' actions
-                    'actions' => array('index', 'view'),
-                    'users' => array('*'),
-                ),
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                    'actions' => array('create', 'update', 'admin', 'delete', 'admin_open', 'traitement', 'getsouscategoriesdynamiques', 'close'),
-                    'users' => array('@'),
-                ),
-                array('deny', // deny all users
-                    'users' => array('*'),
+                    'actions' => array('create', 'update', 'view', 'admin', 'traitement', 'getsouscategoriesdynamiques', 'close'),
+                    'users' => array('@'), //user logger
                 ),
             );
         } else {
             return array(
-          
-                array('deny', // deny all users
-                    'users' => array('?'),
+                array('deny',
+                    'users' => array('?'), //user non loger peut rien faire
+                    'message' => 'Vous n\'avez pas accès à cette page.'
                 ),
             );
         }
@@ -78,7 +66,7 @@ class TicketController extends Controller {
         if (isset($_POST['Ticket'])) {
             $var = $_POST['Ticket'];
             $model = $this->loadModel($id);
-            $model->descriptif = $model->descriptif . '\n---------- Cloture ----------\n' . $var['descriptif'];
+            $model->descriptif = $model->descriptif . ' ---------- Cloture ---------- ' . $var['descriptif'];
             $model->fk_statut = 3;
             try {
                 $model->save(false);
@@ -109,15 +97,12 @@ class TicketController extends Controller {
             $oldmodel = $this->loadModel($id);
             $model = $_POST['Ticket'];
             if (($model['fk_entreprise'] == NULL) || ($model['date_intervention'] == NULL)) {
-                Yii::trace('entreprise ou date null', 'cron');
                 $this->redirect(array('traitement', 'id' => $oldmodel['id_ticket']));
             }
-            Yii::trace('entreprise et date non null', 'cron');
             $oldmodel['date_intervention'] = $model['date_intervention'];
             $oldmodel['fk_entreprise'] = $model['fk_entreprise'];
             $oldmodel['fk_statut'] = 2;
             try {
-                Yii::trace('dans Try', 'cron');
                 $oldmodel->save(FALSE);
                 $loc = Locataire::model()->findByPk($oldmodel['fk_locataire']);
                 Yii::app()->session['EmailSend'] = 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email'];
