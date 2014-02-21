@@ -5,10 +5,9 @@
 
 
 $this->menu = array(
-    array('label' => 'Recherche locataire', 'url' => array('/locataire/admin')), //*
     array('label' => 'Lister les nouveaux tickets ', 'url' => array('ticket/admin?var=admin_opened')),
     array('label' => 'Lister les tickets en cours de traitement', 'url' => array('ticket/admin?var=admin_InProgress')),
-    array('label' => 'Lister les tickets en fermés', 'url' => array('ticket/admin?var=admin_closed'))// */
+    array('label' => 'Lister les tickets fermés', 'url' => array('ticket/admin?var=admin_closed'))// */
 );
 
 Yii::app()->clientScript->registerScript('search', "
