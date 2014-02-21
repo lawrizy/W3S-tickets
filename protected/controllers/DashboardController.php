@@ -24,24 +24,36 @@ class DashboardController extends Controller {
      * @return array access control rules
      */
     public function accessRules() {
-        // TODO: ne rendre accessible le dashboard que pour l'administrateur
-        return array(
-            array('allow', // allow all users to perform 'index' and 'view' actions
-                'actions' => array('vue'),
-                'users' => array('*'),
-            ),
-            array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array(),
-                'users' => array('@'),
-            ),
-//			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-//				'actions'=>array('admin','delete'),
-//				'users'=>array('admin'),
-//			),
-            array('deny', // deny all users
-                'users' => array('*'),
-            ),
-        );
+        if (Yii::app()->session['Utilisateur'] == 'Locataire') {
+            return array(
+                array('deny', // deny all users
+                    'actions' => array('vue'),
+                    'users' => array('*'),
+                ),
+            );
+        } elseif (isset (Yii::app ()->session['Looged'])&&Yii::app()->session['Looged']->fk_fonction == 2) {
+            return array(
+                array('deny', // deny all users
+                    'users' => array('?'),
+                ),
+            );
+        } elseif (isset (Yii::app()->session['Looged']) && Yii::app()->session['Looged']->fk_fonction == 1) {
+            return array(
+                array('allow', // allow authenticated user to perform 'create' and 'update' actions
+                    'actions' => array(),
+                    'users' => array('@'),
+                ),
+//		
+            );
+        } else {
+            return array(
+                array('deny', // allow authenticated user to perform 'create' and 'update' actions
+                    'actions' => array(),
+                    'users' => array('?'),
+                ),
+//		
+            );
+        }
     }
 
     /**
@@ -61,26 +73,21 @@ class DashboardController extends Controller {
     public function getDataForCategoriesStats() {
         
     }
-    public function getNombreIncidentElectricite(){
-    return (int) CategorieIncident::model()->countByAttributes(array('fk_parent'=>2));
+
+    public function getNombreIncidentElectricite() {
+        return (int) CategorieIncident::model()->countByAttributes(array('fk_parent' => 2));
     }
-    public function getNombreIncidentSanitaire(){
-    return (int) CategorieIncident::model()->countByAttributes(array('fk_parent'=>1));
+
+    public function getNombreIncidentSanitaire() {
+        return (int) CategorieIncident::model()->countByAttributes(array('fk_parent' => 1));
     }
-    
-    
-    
-    
-    
-    
-    
-    
+
     public function getTicketByCategorie() {
         $categories = $this->getCategories();
         $nbFinal = array();
         foreach ($categories as $categorie) {
-            $nbCategorie=0;
-            $sousCategories = CategorieIncident::model()->findAllByAttributes(array('fk_parent'=>$categorie['id_categorie_incident']));
+            $nbCategorie = 0;
+            $sousCategories = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => $categorie['id_categorie_incident']));
             foreach ($sousCategories as $sousCategorie) {
                 $nbCategorie += Ticket::model()->countByAttributes(array('fk_categorie' => $sousCategorie['id_categorie_incident']));
             }
@@ -97,14 +104,6 @@ class DashboardController extends Controller {
         }
         return $listCategorie;
     }
-    
-    
-    
-    
-    
-    
-    
-    
 
     public function getCategoriesLabel() { //return list categorie's label
         $datas = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL));
