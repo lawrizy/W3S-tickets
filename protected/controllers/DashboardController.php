@@ -1,6 +1,7 @@
 <?php
 
-class DashboardController extends Controller {
+class DashboardController extends Controller
+{
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -11,7 +12,8 @@ class DashboardController extends Controller {
     /**
      * @return array action filters
      */
-    public function filters() {
+    public function filters()
+    {
         return array(
             'accessControl', // perform access control for CRUD operations
             'postOnly + delete', // we only allow deletion via POST request
@@ -23,15 +25,16 @@ class DashboardController extends Controller {
      * This method is used by the 'accessControl' filter.
      * @return array access control rules
      */
-    public function accessRules() {
+    public function accessRules()
+    {
         if (Yii::app()->session['Utilisateur'] == 'Locataire') {
             return array(
                 array('deny', 'users' => array('*')),
             );
-        } elseif (isset (Yii::app ()->session['Logged'])&&Yii::app()->session['Logged']->fk_fonction == 2) {
+        } elseif (isset (Yii::app()->session['Logged']) && Yii::app()->session['Logged']->fk_fonction == 2) {
             return array(
                 array('allow',
-                    'actions' => array('vue', 'filterbybatiment'),
+                    'actions' => array('vue', 'filterbybatiment', 'getticketbycategorie', 'getcategorieslabel'),
                     'users' => array('*'),
                 ),
                 array('deny', 'users' => array('*')),
@@ -54,7 +57,8 @@ class DashboardController extends Controller {
     /**
      * Lists all models.
      */
-    public function actionVue() {
+    public function actionVue()
+    {
         $dataProvider = new CActiveDataProvider('Ticket');
         $this->render('index', array(
             'dataProvider' => $dataProvider,
@@ -65,19 +69,24 @@ class DashboardController extends Controller {
      * Retourne une liste contenant un label de catégorie lié à une valeur représentant la fréquence de cette catégorie dans la DB.
      * Format : array( [labelCatégorie] => [fréqCatégorie] )
      */
-    public function getDataForCategoriesStats() {
+    public function getDataForCategoriesStats()
+    {
 
     }
 
-    public function getNombreIncidentElectricite() {
-        return (int) CategorieIncident::model()->countByAttributes(array('fk_parent' => 2));
+    public function getNombreIncidentElectricite()
+    {
+        return (int)CategorieIncident::model()->countByAttributes(array('fk_parent' => 2));
     }
 
-    public function getNombreIncidentSanitaire() {
-        return (int) CategorieIncident::model()->countByAttributes(array('fk_parent' => 1));
+    public function getNombreIncidentSanitaire()
+    {
+        return (int)CategorieIncident::model()->countByAttributes(array('fk_parent' => 1));
     }
 
-    public function getTicketByCategorie() {
+    public function actionGetTicketByCategorie()
+    {
+        Yii::trace("actionGetTicketByCategorie", "cron");
         $categories = $this->getCategories();
         $nbFinal = array();
         foreach ($categories as $categorie) {
@@ -91,7 +100,8 @@ class DashboardController extends Controller {
         return $nbFinal;
     }
 
-    public function getCategories() { //retrurn list of categories
+    public function getCategories()
+    { //retrurn list of categories
         $datas = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL));
         $listCategorie = array();
         foreach ($datas as $data) {
@@ -100,7 +110,9 @@ class DashboardController extends Controller {
         return $listCategorie;
     }
 
-    public function getCategoriesLabel() { //return list categorie's label
+    public function actionGetCategoriesLabel()
+    { //return list categorie's label
+        Yii::trace("getTicketByCategorie", "cron");
         $datas = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL));
         $listLabel = array();
         foreach ($datas as $data) {
@@ -111,8 +123,5 @@ class DashboardController extends Controller {
 
     public function actionFilterByBatiment()
     {
-        Yii::trace("test", "cron");
-        $idBatiment = $_POST['idBatiment'];
-        Yii::trace($idBatiment, "cron");
     }
 }

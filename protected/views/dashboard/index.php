@@ -17,88 +17,90 @@ $this->pageTitle = Yii::app()->name;
     echo '<label>Sélectionnez un bâtiment pour filtrer les résultats</label>';
     echo '</p>';
     echo '<p>';
-/*
-    $defaultSelection = 'ALL';
-    if(isset($_POST['idBatiment']))
-    {
-        $defaultSelection = $_POST['idBatiment'];
-        echo $defaultSelection;
-    }
-*/
+    /*
+        $defaultSelection = 'ALL';
+        if(isset($_POST['idBatiment']))
+        {
+            $defaultSelection = $_POST['idBatiment'];
+            echo $defaultSelection;
+        }
+    */
     echo CHtml::beginForm('', 'POST');
     echo CHtml::dropDownList
-    (
+        (
         // Nom de la DDL
-        'batiment_selector',
-        // Selection
-        'ALL',
-        // Data
-        array
-        (
-           'ALL' => 'Tous les bâtiments',
-            CHtml::listData(Batiment::model()->findAll(), 'id_batiment', 'nom'),
-        ),
-        // htmlOptions
-        array
-        (
-            'ajax'=>array
+            'batiment_selector',
+            // Selection
+            'ALL',
+            // Data
+            array
             (
-                'type'=> 'POST',
-                'url' => CController::createUrl('filterbybatiment'),
-                'data' => array('idBatiment'=>'js:this.value'),
+                'ALL' => 'Tous les bâtiments',
+                CHtml::listData(Batiment::model()->findAll(), 'id_batiment', 'nom'),
             ),
-        )
-    );
+            // htmlOptions
+            array
+            (
+                'ajax' => array
+                (
+                    'type' => 'POST',
+                    'url' => CController::createUrl('filterbybatiment'),
+                    'data' => array('idBatiment' => 'js:this.value'),
+                    'update' => '#graphs',
+                ),
+            )
+        );
     echo '</p>';
     echo CHtml::endForm();
 
+    echo '<div id="graphs">';
     $this->widget(
-            'chartjs.widgets.ChBars', array(
-        'width' => 800,
-        'height' => 300,
-        'htmlOptions' => array(),
-        'labels' => $this->getCategoriesLabel(),
-        'datasets' => array(
-            array(
-                "fillColor" => "rgba(34,167,212,1)",
-                "strokeColor" => "#AAAAAA",
-                "data" => $this->getTicketByCategorie()
-            )
-        ),
-        'options' => array()
-            )
+        'chartjs.widgets.ChBars', array(
+            'width' => 800,
+            'height' => 300,
+            'htmlOptions' => array(),
+            'labels' => $this->actionGetCategoriesLabel(),
+            'datasets' => array(
+                array(
+                    "fillColor" => "rgba(34,167,212,1)",
+                    "strokeColor" => "#AAAAAA",
+                    "data" => $this->actionGetTicketByCategorie()
+                )
+            ),
+            'options' => array()
+        )
     );
 
     echo "<br/><br/><br/>";
 
+    echo '</div>';
     $this->widget(
-            'chartjs.widgets.ChPie', array(
-        'width' => 600,
-        'height' => 300,
-        'htmlOptions' => array(),
-        'drawLabels' => true,
-        //'animation' => false,
-        'datasets' => array(
-            array(
-                "value" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 1)),
-                "color" => "rgba(220, 0,0,1)",
-                "label" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 1)) . " nouveau(x)"
+        'chartjs.widgets.ChPie', array(
+            'width' => 600,
+            'height' => 300,
+            'htmlOptions' => array(),
+            'drawLabels' => true,
+            //'animation' => false,
+            'datasets' => array(
+                array(
+                    "value" => (int)Ticket::model()->countByAttributes(array('fk_statut' => 1)),
+                    "color" => "rgba(220, 0,0,1)",
+                    "label" => (int)Ticket::model()->countByAttributes(array('fk_statut' => 1)) . " nouveau(x)"
+                ),
+                array(
+                    "value" => (int)Ticket::model()->countByAttributes(array('fk_statut' => 2)),
+                    "color" => "rgba(242,106,22,1)",
+                    "label" => (int)Ticket::model()->countByAttributes(array('fk_statut' => 2)) . " en cours"
+                ),
+                array(
+                    "value" => (int)Ticket::model()->countByAttributes(array('fk_statut' => 3)),
+                    "color" => "rgba(66,200,22,1)",
+                    "label" => (int)Ticket::model()->countByAttributes(array('fk_statut' => 3)) . " clôturé(s)"
+                ),
             ),
-            array(
-                "value" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 2)),
-                "color" => "rgba(242,106,22,1)",
-                "label" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 2)) . " en cours"
-            ),
-            array(
-                "value" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 3)),
-                "color" => "rgba(66,200,22,1)",
-                "label" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 3)) . " clôturé(s)"
-            ),
-        ),
-        'options' => array
-        (
+            'options' => array
+            ()
         )
-            )
     );
     ?>
 </p>
