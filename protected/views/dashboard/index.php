@@ -37,7 +37,7 @@ $this->pageTitle = Yii::app()->name;
             array(
                 "fillColor" => "rgba(34,167,212,1)",
                 "strokeColor" => "#AAAAAA",
-                "data" => $this->getTicketByCategorie()// array((int) Ticket::model()->countByAttributes(array('fk_categorie'=>6)),(int) CategorieIncident::model()->countByAttributes(array('fk_parent'=>2)),1,1,2,5)
+                "data" => $this->getTicketByCategorie()
             )
         ),
         'options' => array()

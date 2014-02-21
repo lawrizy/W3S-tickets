@@ -5,10 +5,9 @@
 
 
 $this->menu = array(
-    array('label' => 'Recherche locataire', 'url' => array('/locataire/admin')), //*
     array('label' => 'Lister les nouveaux tickets ', 'url' => array('ticket/admin?var=admin_opened')),
     array('label' => 'Lister les tickets en cours de traitement', 'url' => array('ticket/admin?var=admin_InProgress')),
-    array('label' => 'Lister les tickets en fermés', 'url' => array('ticket/admin?var=admin_closed'))// */
+    array('label' => 'Lister les tickets fermés', 'url' => array('ticket/admin?var=admin_closed'))// */
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -32,7 +31,7 @@ $('.search-form form').submit(function(){
     or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
 </p>-->
 
-<?php echo CHtml::link('Advanced Search', '#', array('class' => 'search-button')); ?>
+<?php echo CHtml::link('Recherche Avancée', '#', array('class' => 'search-button')); ?>
 <div class="search-form" style="display:none">
     <?php
     $this->renderPartial('_search', array(
