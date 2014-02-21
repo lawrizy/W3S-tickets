@@ -26,27 +26,22 @@
 
     <div class="row">
         <?php echo $form->label($model, 'fk_categorie'); ?>
-        <?php echo $form->dropDownList($model, 'fk_categorie', array('' => '', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent'=>NULL)), 'id_categorie_incident', 'label'))); ?>
+        <?php echo $form->dropDownList($model, 'fk_categorie', array('' => '', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL)), 'id_categorie_incident', 'label'))); ?>
     </div>
 
     <div class="row">
         <?php echo $form->label($model, 'fk_batiment'); ?>
-        <?php echo $form->textField($model, 'fk_batiment', array('size' => 10, 'maxlength' => 10)); ?>
+        <?php echo $form->dropDownList($model, 'fk_batiment', array(CHtml::listData(Batiment::model()->findAll(), 'id_batiment', 'nom'))); ?>
     </div>
-
-    <div class="row">
-        <?php echo $form->label($model, 'fk_user'); ?>
-        <?php echo $form->textField($model, 'fk_user', array('size' => 10, 'maxlength' => 10)); ?>
-    </div>
-
-    <div class="row">
-        <?php echo $form->label($model, 'descriptif'); ?>
-        <?php echo $form->textArea($model, 'descriptif', array('rows' => 6, 'cols' => 50)); ?>
-    </div>
-
+    <?php if (Yii::app()->session['Logged']->fk_fonction == 2) { ?>
+        <div class="row">
+            <?php echo $form->label($model, 'fk_user'); ?>
+            <?php echo $form->textField($model, 'fk_user', array('size' => 10, 'maxlength' => 10)); ?>
+        </div>
+    <?php } ?>
     <div class="row">
         <?php echo $form->label($model, 'fk_canal'); ?>
-        <?php echo $form->textField($model, 'fk_canal'); ?>
+        <?php echo $form->dropDownList($model, 'fk_canal', array(CHtml::listData(Canal::model()->findAll(), 'id_canal', 'label'))); ?>
     </div>
 
     <div class="row buttons">
