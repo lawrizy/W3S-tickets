@@ -28,10 +28,10 @@ class TicketController extends Controller {
             return array(
                 array('allow', // le locataire peut juste creer un ticket et voir
                     'actions' => array('view', 'create', 'getsouscategoriesdynamiques'),
-                    'users' => array('@'), // user logger
+                    'users' => array('@'), // user authentifier
                 ),
                 array('deny', // refuse autre users
-                    'users' => array('*'),
+                    'users' => array('*'), //tous utilisateur
                     'message' => 'Vous n\'avez pas accès à cette page.'
                 ),
             );
