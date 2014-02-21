@@ -27,18 +27,18 @@ class TicketController extends Controller {
         if (Yii::app()->session['Utilisateur'] == 'Locataire') {
             return array(
                 array('allow', // le locataire peut juste creer un ticket et voir
-                    'actions' => array('view', 'create', 'getsouscategoriesdynamiques', 'sendnotificationmail'),
-                    'users' => array('@'), // user logger
+                    'actions' => array('view', 'create', 'getsouscategoriesdynamiques'),
+                    'users' => array('@'), // user authentifier
                 ),
                 array('deny', // refuse autre users
-                    'users' => array('*'),
+                    'users' => array('*'), //tous utilisateur
                     'message' => 'Vous n\'avez pas accès à cette page.'
                 ),
             );
         } elseif (Yii::app()->session['Utilisateur'] == 'User') { // Utilisateur peut creer ,voir ,manager,traiter et fermer des ticket
             return array(
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                    'actions' => array('create', 'update', 'view', 'admin', 'traitement', 'getsouscategoriesdynamiques', 'close', 'sendnotificationmail'),
+                    'actions' => array('create', 'update', 'view', 'admin', 'traitement', 'getsouscategoriesdynamiques', 'close'),
                     'users' => array('@'), //user logger
                 ),
             );
@@ -80,14 +80,10 @@ class TicketController extends Controller {
                 $logged = Yii::app()->session['Logged'];
                 $histo->fk_user = $logged['id_user'];
                 $histo->save(FALSE);
-
-                // Envoi du mail au locataire
-                $this->actionSendNotificationMail($var['id_ticket']);
-
                 Yii::trace('apres save de l\'historique', 'cron');
                 $this->redirect(array('view', 'id' => $model['id_ticket']));
             } catch (CDbException $ex) {
-
+                
             }
         } else {
             $this->render('close', array(
@@ -122,14 +118,10 @@ class TicketController extends Controller {
                 $histo->fk_user = $logged['id_user'];
                 $histo->save(FALSE);
                 Yii::trace('apres save de l\'historique', 'cron');
-
-                // Envoi du mail au locataire
-                $this->actionSendNotificationMail($model['id_ticket']);
-
                 $this->redirect(array('view', 'id' => $oldmodel['id_ticket']));
             } catch (CDbException $ex) {
                 Yii::trace('dans catch', 'cron');
-                echo 'erreur' . $ex->getMessage();
+                echo 'erreru' . $ex->getMessage();
                 Yii::app()->session['erreurDB'] = 'Souci avec la base de données, veuillez contacter votre administrateur';
             }
             Yii::trace('Après catch', 'cron');
@@ -197,10 +189,6 @@ class TicketController extends Controller {
                 $histo->save(FALSE);
 // Si tout s'est bien passé, on redirige vers la page view
                 Yii::app()->session['NouveauTicket'] = 'nouveau';
-
-                // Envoi du mail au locataire
-                $this->actionSendNotificationMail($ticket['id_ticket']);
-
                 $this->redirect(array('view', 'id' => $model->id_ticket));
             } catch (CDbException $e) {
 
@@ -260,14 +248,12 @@ class TicketController extends Controller {
                 $histo->fk_ticket = $model->id_ticket;
                 $logged = Yii::app()->session['Logged'];
                 $histo->fk_user = $logged['id_user'];
+// TODO TODO
                 $histo->fk_statut_ticket = $model->fk_statut;
                 $histo->save();
                 $this->redirect(array('view', 'id' => $model->id_ticket));
-
-// Envoi du mail au locataire
-                $this->actionSendNotificationMail($ticket['id_ticket']);
             } catch (Exception $ex) {
-
+                
             }
         }
 
@@ -319,16 +305,8 @@ class TicketController extends Controller {
      * Cette méthode est utilisée pour envoyer le mail de notification, lors
      * du changement de statut d'un ticket, au LOCATAIRE qui l'a créé.
      */
-    private function actionSendNotificationMail($idTicket)
-    {
-        // TODO : Envoi d'un mail au locataire en cas de changement de statut ticket
-        // @property Ticket $ticket
-        // @property Locataire $locataire
-        // @property string $emailLocataire
-        $ticket = $this->loadModel($idTicket);
-        $locataire = Locataire::model()->findByPk($ticket->fk_locataire);
-        $emailLocataire = $locataire->email;
-        Yii::trace("Email du locataire : " . $emailLocataire , "cron");
+    private function actionSendNotificationMail($userEmail) {
+// TODO : Envoi d'un mail au locataire en cas de changement de statut ticket
     }
 
     /**

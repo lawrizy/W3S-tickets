@@ -13,7 +13,7 @@ $this->menu = array(
 );
 ?>
 
-<h1>View Locataire #<?php echo $model->id_locataire; ?></h1>
+<h1>Locataire: <?php echo $model->id_locataire; ?></h1>
 
 <?php
 $this->widget('zii.widgets.CDetailView', array(
