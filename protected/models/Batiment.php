@@ -31,7 +31,7 @@ class Batiment extends CActiveRecord {
 // NOTE: you should only define rules for those attributes that
 // will receive user inputs.
         return array(
-            array('adresse, commune, cp, nom, code', 'required'),
+            array('adresse, commune, cp, nom, code', 'required', 'message' => 'La valeur de {attribute} ne peut être vide.'),
             array('cp, cpt', 'numerical', 'integerOnly' => true),
             array('adresse, commune, nom', 'length', 'max' => 45),
             array('code', 'length', 'max' => 3),
@@ -107,6 +107,6 @@ class Batiment extends CActiveRecord {
         return parent::model($className);
     }
 
- 
+
 
 }

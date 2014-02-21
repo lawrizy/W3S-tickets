@@ -29,7 +29,8 @@ class DashboardController extends Controller
     {
         if (Yii::app()->session['Utilisateur'] == 'Locataire') {
             return array(
-                array('deny', 'users' => array('*')),
+                array('deny', 'users' => array('*'),
+                'message' => 'Vous n\'avez pas accès à cette page.'),
             );
         } elseif (isset (Yii::app()->session['Logged']) && Yii::app()->session['Logged']->fk_fonction == 2) {
             return array(
@@ -41,7 +42,7 @@ class DashboardController extends Controller
             );
         } elseif (isset (Yii::app()->session['Logged']) && Yii::app()->session['Logged']->fk_fonction == 1) {
             return array(
-                array('deny', 'users' => array('*')),
+                array('deny', 'users' => array('*'),'message' => 'Vous n\'avez pas accès à cette page.'),
             );
         } else {
             return array(

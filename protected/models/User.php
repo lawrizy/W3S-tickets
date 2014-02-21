@@ -87,7 +87,7 @@ class User extends CActiveRecord
 
         $criteria = new CDbCriteria;
 
-        
+
 		$criteria->compare('id_user',$this->id_user);
 		$criteria->compare('nom',$this->nom,true);
 		$criteria->compare('email',$this->email,true);
