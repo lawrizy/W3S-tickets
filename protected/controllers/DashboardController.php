@@ -27,9 +27,9 @@ class DashboardController extends Controller {
         if (Yii::app()->session['Utilisateur'] == 'Locataire') { // locataire
             return array(
                 array('deny', 'users' => array('*'), //pas de dashboard
-                    'message' => 'Vous n\'avez pas accès à cette page.'), //message 
+                    'message' => 'Vous n\'avez pas accès à cette page.'), //message
             );
-        } elseif (isset(Yii::app()->session['Logged']) && Yii::app()->session['Logged']->fk_fonction == 2) { //user admin 
+        } elseif (isset(Yii::app()->session['Logged']) && Yii::app()->session['Logged']->fk_fonction == 2) { //user admin
             return array(
                 array('allow',
                     'actions' => array('vue', 'filterbybatiment', 'getticketbycategorie', 'getcategorieslabel'), //peut tout faire
@@ -69,7 +69,7 @@ class DashboardController extends Controller {
      * Format : array( [labelCatégorie] => [fréqCatégorie] )
      */
     public function getDataForCategoriesStats() {
-        
+
     }
 
     public function getNombreIncidentElectricite() {
@@ -81,7 +81,7 @@ class DashboardController extends Controller {
     }
 
     public function actionGetTicketByCategorie() {
-        Yii::trace("actionGetTicketByCategorie", "cron");
+        //Yii::trace("actionGetTicketByCategorie", "cron");
         $categories = $this->getCategories();
         $nbFinal = array();
         foreach ($categories as $categorie) {
@@ -95,6 +95,25 @@ class DashboardController extends Controller {
         return $nbFinal;
     }
 
+    public function actionGetTicketByCategorieForBatimentID($idBatiment) {
+        //Yii::trace("actionGetTicketByCategorie", "cron");
+        $categories = $this->getCategories();
+        $nbFinal = array();
+
+        foreach ($categories as $categorie)
+        {
+            $nbCategorie = 0;
+            $sousCategories = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => $categorie['id_categorie_incident']));
+
+            foreach ($sousCategories as $sousCategorie)
+                $nbCategorie += Ticket::model()->countByAttributes(array('fk_categorie' => $sousCategorie['id_categorie_incident'], 'fk_batiment' => $idBatiment));
+
+            array_push($nbFinal, $nbCategorie);
+        }
+
+        return $nbFinal;
+    }
+
     public function getCategories() { //retrurn list of categories
         $datas = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL));
         $listCategorie = array();
@@ -105,7 +124,7 @@ class DashboardController extends Controller {
     }
 
     public function actionGetCategoriesLabel() { //return list categorie's label
-        Yii::trace("getTicketByCategorie", "cron");
+        //Yii::trace("getTicketByCategorie", "cron");
         $datas = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL));
         $listLabel = array();
         foreach ($datas as $data) {
@@ -115,7 +134,7 @@ class DashboardController extends Controller {
     }
 
     public function actionFilterByBatiment() {
-        
+
     }
 
 }
