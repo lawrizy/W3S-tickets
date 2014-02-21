@@ -36,9 +36,9 @@
 //                                    echo '../../images/HServices.png';
 //                                }
                                 ?>
-                                                  
 
-                            <td width="50%"> <img align="right" width="70%"   src="http://web3sys.com/tickets/images/logoW3S.jpg"></td> 
+
+                            <td width="50%"> <img align="right" width="70%"   src="http://web3sys.com/tickets/images/logoW3S.jpg"></td>
                                 <?php
 //                                if (Yii::app()->getController()->getAction()->id == 'traitement' || Yii::app()->getController()->getAction()->id == 'update' || Yii::app()->getController()->getAction()->id == 'close' || Yii::app()->getController()->getAction()->id == 'create')
 //                                    echo "../../../images/logoW3S.jpg";
@@ -50,7 +50,7 @@
 //                                    echo '../../images/logoW3S.jpg';
 //                                }
                                 ?>
-                                                  
+
 
                         </tr></table> </div>
 
@@ -63,13 +63,14 @@
                 $this->widget('zii.widgets.CMenu', array(
                     'items' => array(
                         array('label' => 'Connexion', 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
-                        array('label' => 'Déconnexion (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
                         array('label' => 'A propos', 'url' => array('/site/page', 'view' => 'about')),
                         array('label' => 'Contact', 'url' => array('/site/contact')),
                         array('label' => 'Créer un nouveau ticket', 'url' => array('/locataire/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
                         array('label' => 'Liste des tickets', 'url' => array('/ticket/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
                         array('label' => 'Dashboard', 'url' => array('dashboard/vue'), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $var['fk_fonction'] == 2),
-                        array('label' => 'Créer un ' . Yii::app()->session['NouveauTicket'] . ' ticket', 'url' => array('/ticket/create'), 'visible' => Yii::app()->session['Utilisateur'] == 'Locataire')
+                        array('label' => 'Créer un ' . Yii::app()->session['NouveauTicket'] . ' ticket', 'url' => array('/ticket/create'), 'visible' => Yii::app()->session['Utilisateur'] == 'Locataire'),
+
+                        array('label' => 'Déconnexion (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
                     ),
                 ));
                 Yii::app()->session['NouveauTicket'] = '';

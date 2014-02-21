@@ -14,18 +14,43 @@ $this->pageTitle = Yii::app()->name;
     <?php
     // DDL pour sélectionner un bâtiment spécifique
     echo '<p>';
-    echo '<label>Sélectionnez un bâtiment</label>';
-    echo CHtml::dropDownList(
+    echo '<label>Sélectionnez un bâtiment pour filtrer les résultats</label>';
+    echo '</p>';
+    echo '<p>';
+/*
+    $defaultSelection = 'ALL';
+    if(isset($_POST['idBatiment']))
+    {
+        $defaultSelection = $_POST['idBatiment'];
+        echo $defaultSelection;
+    }
+*/
+    echo CHtml::beginForm('', 'POST');
+    echo CHtml::dropDownList
+    (
         // Nom de la DDL
         'batiment_selector',
         // Selection
-        '',
+        'ALL',
         // Data
-        array('empty' => 'Tous les bâtiments'),
+        array
+        (
+           'ALL' => 'Tous les bâtiments',
+            CHtml::listData(Batiment::model()->findAll(), 'id_batiment', 'nom'),
+        ),
         // htmlOptions
-        array('length' => 100)
+        array
+        (
+            'ajax'=>array
+            (
+                'type'=> 'POST',
+                'url' => CController::createUrl('filterbybatiment'),
+                'data' => array('idBatiment'=>'js:this.value'),
+            ),
+        )
     );
     echo '</p>';
+    echo CHtml::endForm();
 
     $this->widget(
             'chartjs.widgets.ChBars', array(

@@ -26,23 +26,19 @@ class DashboardController extends Controller {
     public function accessRules() {
         if (Yii::app()->session['Utilisateur'] == 'Locataire') {
             return array(
-                array('deny', // deny all users
-                    'actions' => array('vue'),
-                    'users' => array('*'),
-                ),
+                array('deny', 'users' => array('*')),
             );
         } elseif (isset (Yii::app ()->session['Logged'])&&Yii::app()->session['Logged']->fk_fonction == 2) {
             return array(
-                array('allow', // deny all users
-                    'users' => array('@'),
+                array('allow',
+                    'actions' => array('vue', 'filterbybatiment'),
+                    'users' => array('*'),
                 ),
+                array('deny', 'users' => array('*')),
             );
         } elseif (isset (Yii::app()->session['Logged']) && Yii::app()->session['Logged']->fk_fonction == 1) {
             return array(
-                array('deny', // deny all users
-                    'actions' => array('vue'),
-                    'users' => array('*'),
-                ),
+                array('deny', 'users' => array('*')),
             );
         } else {
             return array(
@@ -115,6 +111,8 @@ class DashboardController extends Controller {
 
     public function actionFilterByBatiment()
     {
+        Yii::trace("test", "cron");
         $idBatiment = $_POST['idBatiment'];
+        Yii::trace($idBatiment, "cron");
     }
 }
