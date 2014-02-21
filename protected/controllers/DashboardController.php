@@ -31,19 +31,18 @@ class DashboardController extends Controller {
                     'users' => array('*'),
                 ),
             );
-        } elseif (isset (Yii::app ()->session['Looged'])&&Yii::app()->session['Looged']->fk_fonction == 2) {
+        } elseif (isset (Yii::app ()->session['Logged'])&&Yii::app()->session['Logged']->fk_fonction == 2) {
             return array(
-                array('deny', // deny all users
-                    'users' => array('?'),
-                ),
-            );
-        } elseif (isset (Yii::app()->session['Looged']) && Yii::app()->session['Looged']->fk_fonction == 1) {
-            return array(
-                array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                    'actions' => array(),
+                array('allow', // deny all users
                     'users' => array('@'),
                 ),
-//		
+            );
+        } elseif (isset (Yii::app()->session['Logged']) && Yii::app()->session['Logged']->fk_fonction == 1) {
+            return array(
+                array('deny', // deny all users
+                    'actions' => array('vue'),
+                    'users' => array('*'),
+                ),
             );
         } else {
             return array(
@@ -51,7 +50,7 @@ class DashboardController extends Controller {
                     'actions' => array(),
                     'users' => array('?'),
                 ),
-//		
+//
             );
         }
     }
@@ -71,7 +70,7 @@ class DashboardController extends Controller {
      * Format : array( [labelCatégorie] => [fréqCatégorie] )
      */
     public function getDataForCategoriesStats() {
-        
+
     }
 
     public function getNombreIncidentElectricite() {
@@ -114,4 +113,8 @@ class DashboardController extends Controller {
         return $listLabel;
     }
 
+    public function actionFilterByBatiment()
+    {
+        $idBatiment = $_POST['idBatiment'];
+    }
 }
