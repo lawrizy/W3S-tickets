@@ -164,7 +164,7 @@ class Ticket extends CActiveRecord {
             'criteria' => $criteria,
         ));
     }
-    
+
     public function searchByLocataire($id) {
         $criteria = new CDbCriteria;
 
@@ -204,14 +204,13 @@ class Ticket extends CActiveRecord {
         return $var->label;
     }
 
-    public function getCategorieFromSousCategorie()
-    {
+    public function getCategorieFromSousCategorie() {
         $sousCat = CategorieIncident::model()->findByPk($this->fk_categorie);
         $cat = CategorieIncident::model()->findByPk($sousCat->fk_parent);
         return $cat->id_categorie_incident;
     }
 
-    public  function getLieu() {
+    public function getLieu() {
         //$result = Batiment::model()->findByPk();
         //return $this->adresse . ', ' . $result->cp . ' ' . $result->commune . ' nom: ' . $result->nom;
     }

@@ -107,6 +107,4 @@ class Batiment extends CActiveRecord {
         return parent::model($className);
     }
 
-
-
 }

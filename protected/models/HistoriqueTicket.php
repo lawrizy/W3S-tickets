@@ -92,7 +92,7 @@ class HistoriqueTicket extends CActiveRecord {
             'criteria' => $criteria,
         ));
     }
-    
+
     public function searchByTicket($idTicket) {
 // @todo Please modify the following code to remove attributes that should not be searched.
 

@@ -13,62 +13,56 @@
  * The followings are the available model relations:
  * @property Fonction $fkFonction
  */
+class User extends CActiveRecord {
 
-class User extends CActiveRecord
-{
-	/**
-	 * @return string the associated database table name
-	 */
-	public function tableName()
-	{
-		return 'w3sys_user';
-	}
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName() {
+        return 'w3sys_user';
+    }
 
-	/**
-	 * @return array validation rules for model attributes.
-	 */
-	public function rules()
-	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
-		return array(
-			array('nom, email, password, fk_fonction', 'required'),
-			array('fk_fonction', 'numerical', 'integerOnly'=>true),
-			array('nom, email', 'length', 'max'=>64),
-                        array('email', 'email'),
-			array('password', 'length', 'max'=>32),
-			// The following rule is used by search().
-			// @todo Please remove those attributes that should not be searched.
-			array('id_user, nom, email, password, fk_fonction', 'safe', 'on'=>'search'),
-		);
-	}
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules() {
+        // NOTE: you should only define rules for those attributes that
+        // will receive user inputs.
+        return array(
+            array('nom, email, password, fk_fonction', 'required'),
+            array('fk_fonction', 'numerical', 'integerOnly' => true),
+            array('nom, email', 'length', 'max' => 64),
+            array('email', 'email'),
+            array('password', 'length', 'max' => 32),
+            // The following rule is used by search().
+            // @todo Please remove those attributes that should not be searched.
+            array('id_user, nom, email, password, fk_fonction', 'safe', 'on' => 'search'),
+        );
+    }
 
-	/**
-	 * @return array relational rules.
-	 */
-	public function relations()
-	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
-		return array(
-			'fkFonction' => array(self::BELONGS_TO, 'Fonction', 'fk_fonction'),
-		);
-	}
+    /**
+     * @return array relational rules.
+     */
+    public function relations() {
+        // NOTE: you may need to adjust the relation name and the related
+        // class name for the relations automatically generated below.
+        return array(
+            'fkFonction' => array(self::BELONGS_TO, 'Fonction', 'fk_fonction'),
+        );
+    }
 
-	/**
-	 * @return array customized attribute labels (name=>label)
-	 */
-	public function attributeLabels()
-	{
-		return array(
-			'id_user' => 'Id User',
-			'nom' => 'Nom',
-			'email' => 'Email (sera utilisé pour se connecter)',
-			'password' => 'Mot de passe',
-			'fk_fonction' => 'Fonction de l\'utilisateur (1 = user, 2 = admin)',
-		);
-	}
-
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels() {
+        return array(
+            'id_user' => 'Id User',
+            'nom' => 'Nom',
+            'email' => 'Email (sera utilisé pour se connecter)',
+            'password' => 'Mot de passe',
+            'fk_fonction' => 'Fonction de l\'utilisateur (1 = user, 2 = admin)',
+        );
+    }
 
     /**
      * Retrieves a list of models based on the current search/filter conditions.
@@ -88,11 +82,11 @@ class User extends CActiveRecord
         $criteria = new CDbCriteria;
 
 
-		$criteria->compare('id_user',$this->id_user);
-		$criteria->compare('nom',$this->nom,true);
-		$criteria->compare('email',$this->email,true);
-		$criteria->compare('password',$this->password,true);
-		$criteria->compare('fk_fonction',$this->fk_fonction);
+        $criteria->compare('id_user', $this->id_user);
+        $criteria->compare('nom', $this->nom, true);
+        $criteria->compare('email', $this->email, true);
+        $criteria->compare('password', $this->password, true);
+        $criteria->compare('fk_fonction', $this->fk_fonction);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
