@@ -35,7 +35,7 @@ class DashboardController extends Controller
         } elseif (isset(Yii::app()->session['Logged']) && Yii::app()->session['Logged']->fk_fonction == 2) { //user admin
             return array(
                 array('allow',
-                    'actions' => array('vue', 'filterbybatiment', 'getticketbycategorie', 'getcategorieslabel'), //peut tout faire
+                    'actions' => array('vue', 'filterbybatiment', 'getticketbystatusforbatimentid', 'getticketbycategorie', 'getcategorieslabel'), //peut tout faire
                     'users' => array('*')
                 ),
                 array('deny', 'users' => array('*'),
@@ -120,6 +120,21 @@ class DashboardController extends Controller
 
         return $nbFinal;
     }
+    
+    public function actionGetTicketByStatusForBatimentID($idBatiment) {
+        $nbStatutTicket = array();
+        for ($idStatut = 1; $idStatut <= 3; ++$idStatut) {
+            $nbTicket = Ticket::model()->countByAttributes(array('fk_batiment' => $idBatiment, 'fk_statut' => $idStatut));
+            $label = $idStatut != 1 ? $idStatut == 2 ? ' en cours' : ' clôturé(s)' : ' nouveau(x)';
+            $color = $idStatut != 1 ? $idStatut == 2 ? "rgba(242,106,22,1)" : "rgba(66,200,22,1)" : "rgba(220, 0,0,1)";
+            $value = array(
+                "value" => (int) $nbTicket,
+                "color" => $color,
+                "label" => (int)($nbTicket) . $label);
+            array_push($nbStatutTicket, $value);
+        }
+        return $nbStatutTicket;
+    }
 
     public function getCategories()
     { //retrurn list of categories
@@ -148,7 +163,5 @@ class DashboardController extends Controller
         $data['idBatiment'] = $_POST['idBatiment'];
         $this->renderPartial('_ajaxUpdateGraphs', $data, false, true);
     }
-
-
-
+    
 }
