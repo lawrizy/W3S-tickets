@@ -218,6 +218,7 @@ class TicketController extends Controller {
      * @param integer $id the ID of the model to be updated
      */
     public function actionUpdate($id) {
+        //COMMENTS
         $model = $oldmodel = $this->loadModel($id);
 
 // Vérifie si a bien reçu un objet 'Ticket'
