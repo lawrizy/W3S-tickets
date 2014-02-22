@@ -30,8 +30,8 @@ class Secteur extends CActiveRecord {
 // NOTE: you should only define rules for those attributes that
 // will receive user inputs.
         return array(
-            array('fk_entreprise, fk_batiment, fk_categorie', 'required'),
-            array('fk_entreprise, fk_batiment, fk_categorie', 'numerical', 'integerOnly' => true),
+            array('fk_entreprise, fk_batiment, fk_categorie', 'required', 'message' => 'Le champs {attribute} ne peut être vide.'),
+            array('fk_entreprise, fk_batiment, fk_categorie', 'numerical', 'integerOnly' => true, 'message' => 'Le champs {attribute} ne peut contenir que des nombres.'),
 // The following rule is used by search().
 // @todo Please remove those attributes that should not be searched.
             array('fk_entreprise, fk_batiment, id_secteur, fk_categorie', 'safe', 'on' => 'search'),

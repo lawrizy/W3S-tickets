@@ -32,7 +32,7 @@ class Batiment extends CActiveRecord {
 // will receive user inputs.
         return array(
             array('adresse, commune, cp, nom, code', 'required', 'message' => 'La valeur de {attribute} ne peut être vide.'),
-            array('cp, cpt', 'numerical', 'integerOnly' => true),
+            array('cp, cpt', 'numerical', 'integerOnly' => true, 'message' => 'Veuillez n\'entrer que des nombres dans le champs suivant : {attribute}'),
             array('adresse, commune, nom', 'length', 'max' => 45),
             array('code', 'length', 'max' => 3),
 // The following rule is used by search().

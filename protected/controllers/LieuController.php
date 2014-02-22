@@ -39,6 +39,7 @@ class LieuController extends Controller {
 //			),
             array('deny', // deny all users
                 'users' => array('*'),
+                'message' => 'Vous n\'avez pas accès à cette page.',
             ),
         );
     }

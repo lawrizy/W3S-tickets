@@ -11,7 +11,7 @@ $this->breadcrumbs = array(
 
 <h1>Connexion</h1>
 
-<p>Remplisser les champs avec vos données de connexion:</p>
+<p>Remplissez les champs avec vos données de connexion:</p>
 
 <div class="form">
     <?php

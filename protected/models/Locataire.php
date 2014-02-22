@@ -25,7 +25,7 @@ class Locataire extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('nom, email, password', 'required'),
+            array('nom, email, password', 'required', 'message' => 'Le champs {attribute} ne peut être vide.'),
             array('nom, email', 'length', 'max' => 64),
             array('email', 'email'),
             array('password', 'length', 'max' => 32),

@@ -31,8 +31,8 @@ class Entreprise extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('nom, adresse, tva, commune, cp, tel', 'required'),
-            array('cp', 'numerical', 'integerOnly' => true),
+            array('nom, adresse, tva, commune, cp, tel', 'message' => 'required', 'Le champs {attribute} ne peut être vide.'),
+            array('cp', 'numerical', 'integerOnly' => true, 'message' => 'Le champs {attribute} ne peut contenir que des nombres.'),
             array('nom, adresse, tva, commune, tel', 'length', 'max' => 45),
             // The following rule is used by search().
             // @todo Please remove those attributes that should not be searched.

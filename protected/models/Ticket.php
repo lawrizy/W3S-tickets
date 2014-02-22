@@ -37,8 +37,9 @@ class Ticket extends CActiveRecord {
 // NOTE: you should only define rules for those attributes that
 // will receive user inputs.
         return array(
-            array('fk_categorie, fk_canal, fk_locataire, fk_batiment', 'required'),
-            array('fk_statut, fk_categorie, fk_user, fk_canal, fk_entreprise, fk_locataire, fk_batiment', 'numerical', 'integerOnly' => true),
+            array('fk_categorie, fk_canal, fk_locataire, fk_batiment', 'required', 'message' => 'Le champs {attribute} ne peut être vide.'),
+            array('fk_statut, fk_categorie, fk_user, fk_canal, fk_entreprise, fk_locataire, fk_batiment', 'numerical', 'integerOnly' => true,
+                                                                'message' => 'Le champs {attribute} ne peut contenir que des nombres.'),
             array('code_ticket', 'length', 'max' => 10),
             array('etage, bureau', 'length', 'max' => 45),
             array('descriptif, date_intervention', 'safe'),

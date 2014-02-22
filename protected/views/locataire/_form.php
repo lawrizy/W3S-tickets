@@ -7,7 +7,7 @@
 <div class="form">
 
     <?php
-  
+
     $form = $this->beginWidget('CActiveForm', array(
         'id' => 'locataire-form',
         // Please note: When you enable ajax validation, make sure the corresponding
@@ -20,7 +20,7 @@
 
     <p class="note">Les champs marqués de <span class="required">*</span> sont requis.</p>
 
-    <?php echo $form->errorSummary($model); ?>
+    <?php echo $form->errorSummary($model, 'Veuillez régler les probl&egrave;mes suivants'); ?>
 
     <div class="row">
         <?php echo $form->labelEx($model, 'nom'); ?>

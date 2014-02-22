@@ -28,8 +28,8 @@ class CategorieIncident extends CActiveRecord {
 // NOTE: you should only define rules for those attributes that
 // will receive user inputs.
         return array(
-            array('label, fk_priorite', 'required'),
-            array('fk_parent, fk_priorite', 'numerical', 'integerOnly' => true),
+            array('label, fk_priorite', 'required', 'message' => 'Le champs {attribute} ne peut être vide.'),
+            array('fk_parent, fk_priorite', 'numerical', 'integerOnly' => true, 'message' => 'Veuillez n\'entrer qu\'un nombre dans le champs suivant : {attribute}'),
             array('label', 'length', 'max' => 64),
 // The following rule is used by search().
 // @todo Please remove those attributes that should not be searched.

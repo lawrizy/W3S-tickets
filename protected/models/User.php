@@ -29,7 +29,7 @@ class User extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('nom, email, password, fk_fonction', 'required'),
+            array('nom, email, password, fk_fonction', 'required', 'message' => 'Le champs {attribute} ne peut être vide.'),
             array('fk_fonction', 'numerical', 'integerOnly' => true),
             array('nom, email', 'length', 'max' => 64),
             array('email', 'email'),

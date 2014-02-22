@@ -31,8 +31,8 @@ class HistoriqueTicket extends CActiveRecord {
 // NOTE: you should only define rules for those attributes that
 // will receive user inputs.
         return array(
-            array('date_update, fk_ticket, fk_statut_ticket, fk_user', 'required'),
-            array('fk_ticket, fk_statut_ticket, fk_user', 'numerical', 'integerOnly' => true),
+            array('date_update, fk_ticket, fk_statut_ticket, fk_user', 'required', 'message' => 'Le champs {attribute} ne peut être vide.'),
+            array('fk_ticket, fk_statut_ticket, fk_user', 'numerical', 'integerOnly' => true, 'message' => 'Le champs {attribute} ne peut contenir que des nombres.'),
 // The following rule is used by search().
 // @todo Please remove those attributes that should not be searched.
             array('id_historique_ticket, date_update, fk_ticket, fk_statut_ticket, fk_user', 'safe', 'on' => 'search'),

@@ -24,8 +24,8 @@ class Lieu extends CActiveRecord {
 // NOTE: you should only define rules for those attributes that
 // will receive user inputs.
         return array(
-            array('fk_locataire, fk_batiment', 'required'),
-            array('fk_locataire, fk_batiment', 'numerical', 'integerOnly' => true),
+            array('fk_locataire, fk_batiment', 'required', 'message' => 'Le champs {attribute} ne peut être vide.'),
+            array('fk_locataire, fk_batiment', 'numerical', 'integerOnly' => true, 'message' => 'Le champs {attribute} ne peut contenir que des nombres.'),
 // The following rule is used by search().
 // @todo Please remove those attributes that should not be searched.
             array('id_lieu, fk_locataire, fk_batiment', 'safe', 'on' => 'search'),
