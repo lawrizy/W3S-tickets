@@ -74,7 +74,7 @@
                 ));
                 Yii::app()->session['NouveauTicket'] = '';
                 ?>
-            </div> mainmenu 
+            </div> 
             <?php if (isset($this->breadcrumbs)): ?>
                 <?php
                 $this->widget('zii.widgets.CBreadcrumbs', array(

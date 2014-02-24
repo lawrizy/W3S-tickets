@@ -4,9 +4,9 @@
 
 
 $this->menu = array(
-    array('label' => 'Lister tous les tickets ', 'url' => array('/ticket/admin/?var=admin')),
-    array('label' => 'Lister les nouveaux tickets ', 'url' => array('/ticket/admin?var=admin_opened')),
-    array('label' => 'Lister les tickets en cours de traitement', 'url' => array('/ticket/admin?var=admin_InProgress')),
+    array('label' => 'Tous les tickets ', 'url' => array('/ticket/admin/?var=admin')),
+    array('label' => 'Nouveaux tickets ', 'url' => array('/ticket/admin?var=admin_opened')),
+    array('label' => 'Tickets en cours de traitement', 'url' => array('/ticket/admin?var=admin_InProgress')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
