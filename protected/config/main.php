@@ -96,4 +96,5 @@ return array(
         // this is used in contact page
         'adminEmail' => 'webmaster@example.com',
     ),
+    'onBeginRequest' => array('MyApp', 'beginRequest')
 );

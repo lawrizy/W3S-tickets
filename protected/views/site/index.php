@@ -1,9 +1,11 @@
 <?php
-
 $this->pageTitle = Yii::app()->name;
 ?>
 
-<h1>Bienvenue sur <?php echo CHtml::encode(Yii::app()->name); ?></i></h1>
+<h1><?php
+   echo Yii::t('MainMenu','Message');
+    echo CHtml::encode(Yii::app()->name);
+    ?></i></h1>
 
 <!--<p>Congratulations! You have successfully created your Yii application.</p>
 

@@ -108,4 +108,18 @@ class SiteController extends Controller {
         $this->render('getLocataire');
     }
 
+    public function actionChooseLanguageFr() {
+//        Yii::app()->language = 'fr';
+
+        Yii::app()->session['_lang'] = 'fr';
+        $this->render('index');
+    }
+
+    public function actionChooseLanguageEn() {
+        // Yii::app()->language = 'en';
+        Yii::app()->session['_lang'] = 'en';
+       // MyApp::beginRequest('en');
+        $this->render('index');
+    }
+
 }

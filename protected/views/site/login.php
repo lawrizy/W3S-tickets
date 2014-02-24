@@ -2,14 +2,14 @@
 /* @var $this SiteController */
 /* @var $model LoginForm */
 /* @var $form CActiveForm  */
-
+Yii::app()->language=Yii::app()->session['_lang'];
 $this->pageTitle = Yii::app()->name . ' - Connexion';
 $this->breadcrumbs = array(
     'Connexion',
 );
 ?>
 
-<h1>Connexion</h1>
+<h1><?php echo Yii::t('Connexion','ConnexionTitre');?></h1>
 
 <p>Remplissez les champs avec vos données de connexion:</p>
 
