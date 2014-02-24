@@ -60,10 +60,12 @@ if ($idBatiment == 'ALL') {
     //Yii::trace("Batiment ID " . $idBatiment, "cron");
 
 
-    echo '<p><h2>Fréquence des catégories d\'incidents (Bâtiment : <?php echo "TODO"; ?>)</h2></p>';
-    
-    
-    
+    echo '<p><h2>Fréquence des catégories d\'incidents (Bâtiment : ';
+    echo Batiment::model()->findByAttributes(array('id_batiment' => $idBatiment))->nom;
+    ?><?php echo') </h2></p>'; ?>
+
+    <?php
+
     $this->widget(
             'chartjs.widgets.ChBars', array(
         'width' => 800,
@@ -80,17 +82,16 @@ if ($idBatiment == 'ALL') {
         'options' => array()
             )
     );
-print_r($this->actionGetTicketByStatusForBatimentID($idBatiment)); 
     echo '<p><h2>Fréquence des statuts de tickets</h2></p>';
 
-    
+
     $this->widget(
             'chartjs.widgets.ChPie', array(
         'width' => 225,
         'height' => 225,
         'htmlOptions' => array(),
         'drawLabels' => true,
-        //'animation' => false,
+//'animation' => false,
         'datasets' => $this->actionGetTicketByStatusForBatimentID($idBatiment),
         'options' => array
         ()
