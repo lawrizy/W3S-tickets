@@ -52,6 +52,7 @@ $this->renderPartial('_ajaxUpdateGraphs', array('idBatiment' => 'ALL'));
 echo '</div>';
 ?>
 
+<!--
 <div id="quickstats">
 <br/><br/>
 <h3 style="text-align: center;">Quick stats</h3>
@@ -59,5 +60,6 @@ echo '</div>';
     <li>Bâtiment avec le plus de tickets ouverts: </li>
 </ul>
 </div>
+-->
 
 </p>
