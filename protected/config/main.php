@@ -15,11 +15,14 @@ return array(
         (
         'log',
         'chartjs',
+        'yiimail',
     ),
     // autoloading model and component classes
     'import' => array(
         'application.models.*',
         'application.components.*',
+        'ext.yii-mail.YiiMailMessage',
+        //'application.extensions.yii-mail.YiiMailMessage',
     ),
     'modules' => array(
         // uncomment the following to enable the Gii tool
@@ -32,6 +35,21 @@ return array(
     ),
     // application components
     'components' => array(
+        'mail' => array(
+            'class'=>'ext.yii-mail.YiiMail',
+            'transportType' => 'smtp',
+            'transportOptions'=>array(
+                'host'=>'ssl0.ovh.net',
+                'encryption'=>'ssl', // use ssl
+                //TODO changer l'adresse mail utilisée pour envoyer les mails
+                'username'=>'emmanuel@web3sys.com',
+                'password'=>'oscuro87',
+                'port'=>465, // ssl port for gmail
+            ),
+            'viewPath' => 'application.views.mail',
+            'logging' => true,
+            'dryRun' => false
+        ),
         'user' => array(
             // enable cookie-based authentication
             'allowAutoLogin' => true,
@@ -81,7 +99,7 @@ return array(
               array(
               'class'=>'CWebLogRoute',
               ),
-             */
+            */
             ),
         ),
         // Ajout du composant chart JS pour afficher des graphiques, etc..
@@ -96,5 +114,7 @@ return array(
         // this is used in contact page
         'adminEmail' => 'webmaster@example.com',
     ),
-    'onBeginRequest' => array('MyApp', 'beginRequest')
+    'onBeginRequest' => array(
+        'MyApp', 'beginRequest'
+    ),
 );

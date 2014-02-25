@@ -27,7 +27,7 @@ class TicketController extends Controller {
         if (Yii::app()->session['Utilisateur'] == 'Locataire') {
             return array(
                 array('allow', // le locataire peut juste creer un ticket et voir
-                    'actions' => array('view', 'create', 'getsouscategoriesdynamiques'),
+                    'actions' => array('view', 'create', 'getsouscategoriesdynamiques', 'sendnotificationmail'),
                     'users' => array('@'), // user authentifier
                 ),
                 array('deny', // refuse autre users
@@ -38,7 +38,7 @@ class TicketController extends Controller {
         } elseif (Yii::app()->session['Utilisateur'] == 'User') { // Utilisateur peut creer ,voir ,manager,traiter et fermer des ticket
             return array(
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                    'actions' => array('create', 'update', 'view', 'admin', 'traitement', 'getsouscategoriesdynamiques', 'close'),
+                    'actions' => array('create', 'update', 'view', 'admin', 'traitement', 'getsouscategoriesdynamiques', 'close', 'sendnotificationmail'),
                     'users' => array('@'), //user logger
                 ),
             );
@@ -81,9 +81,10 @@ class TicketController extends Controller {
                 $histo->fk_user = $logged['id_user'];
                 $histo->save(FALSE);
                 Yii::trace('apres save de l\'historique', 'cron');
+                $this->actionSendNotificationMail($model);
                 $this->redirect(array('view', 'id' => $model['id_ticket']));
             } catch (CDbException $ex) {
-                
+
             }
         } else {
             $this->render('close', array(
@@ -118,10 +119,11 @@ class TicketController extends Controller {
                 $histo->fk_user = $logged['id_user'];
                 $histo->save(FALSE);
                 Yii::trace('apres save de l\'historique', 'cron');
+                $this->actionSendNotificationMail($oldmodel);
                 $this->redirect(array('view', 'id' => $oldmodel['id_ticket']));
             } catch (CDbException $ex) {
                 Yii::trace('dans catch', 'cron');
-                echo 'erreru' . $ex->getMessage();
+                echo 'erreur' . $ex->getMessage();
                 Yii::app()->session['erreurDB'] = 'Souci avec la base de données, veuillez contacter votre administrateur';
             }
             Yii::trace('Après catch', 'cron');
@@ -187,6 +189,7 @@ class TicketController extends Controller {
                 $histo->fk_statut_ticket = 1;
                 $histo->fk_user = $model['fk_user'];
                 $histo->save(FALSE);
+                $this->actionSendNotificationMail($model);
 // Si tout s'est bien passé, on redirige vers la page view
                 Yii::app()->session['NouveauTicket'] = 'nouveau';
                 $this->redirect(array('view', 'id' => $model->id_ticket));
@@ -252,9 +255,10 @@ class TicketController extends Controller {
 // TODO TODO
                 $histo->fk_statut_ticket = $model->fk_statut;
                 $histo->save();
+                $this->actionSendNotificationMail($model);
                 $this->redirect(array('view', 'id' => $model->id_ticket));
             } catch (Exception $ex) {
-                
+
             }
         }
 
@@ -306,8 +310,64 @@ class TicketController extends Controller {
      * Cette méthode est utilisée pour envoyer le mail de notification, lors
      * du changement de statut d'un ticket, au LOCATAIRE qui l'a créé.
      */
-    private function actionSendNotificationMail($userEmail) {
-// TODO : Envoi d'un mail au locataire en cas de changement de statut ticket
+    private function actionSendNotificationMail($modelTicket) {
+        $message = new YiiMailMessage;
+        $locataire = Locataire::model()->findByPk($modelTicket->fk_locataire);
+        $nom = $locataire->nom;
+        $message->from = 'mailer@web3sys.com';
+        $message->addTo('capelle.e@gmail.com');
+
+        switch($modelTicket->fk_statut)
+        {
+            case 1: // Cas création d'un ticket
+                $message->subject = "Un nouveau ticket a été créé";
+                $message->setBody(
+                    "Votre ticket n&ordm; " . $modelTicket->id_ticket . " a &eacute;t&eacute; cr&eacute;&eacute;. <br/><br/>"
+                    . "R&eacute;sum&eacute; des informations du ticket:<br/>"
+                    . "Cr&eacute;ateur du ticket: " . $locataire->nom . "<br/>"
+                    . "Catégorie du ticket: " . CategorieIncident::model()->findByPk(CategorieIncident::model()->findByPk($modelTicket->fk_categorie)->fk_parent)->label . "<br/>"
+                    . "Sous-catégorie du ticket: " . CategorieIncident::model()->findByPk($modelTicket->fk_categorie)->label . "<br/>"
+                    . "Bâtiment concern&eacute;: " . Batiment::model()->findByPk($modelTicket->fk_batiment)->nom . "<br/>"
+                    . "Adresse: " . Batiment::model()->findByPk($modelTicket->fk_batiment)->adresse . "<br/>"
+                    . "Gestionnaire de votre ticket: " . User::model()->findByPk($modelTicket->fk_user)->nom . "<br/>"
+                    . "<br/>"
+                    . "Merci d'avoir rapporté votre problème."
+                    , 'text/html'
+                );
+                break;
+
+            case 2: // Cas en traitement
+                $message->subject = "Le statut de votre ticket a chang&eacute;."    ;
+                $message->setBody(
+                    "Le statut de votre ticket n° " . $modelTicket->id_ticket . " a chang&eacute;."
+                    . "<br/><br/><br/>"
+                    . "R&eacute;sum&eacute; des informations du ticket:<br/>"
+                    . "Cr&eacute;ateur du ticket: " . $locataire->nom . "<br/>"
+                    . "Catégorie du ticket: " . CategorieIncident::model()->findByPk(CategorieIncident::model()->findByPk($modelTicket->fk_categorie)->fk_parent)->label . "<br/>"
+                    . "Sous-catégorie du ticket: " . CategorieIncident::model()->findByPk($modelTicket->fk_categorie)->label . "<br/>"
+                    . "Bâtiment concern&eacute;: " . Batiment::model()->findByPk($modelTicket->fk_batiment)->nom . "<br/>"
+                    . "Adresse : " . Batiment::model()->findByPk($modelTicket->fk_batiment)->adresse . "<br/>"
+                    . "Gestionnaire de votre ticket: " . User::model()->findByPk($modelTicket->fk_user)->nom
+                    , 'text/html'
+                );
+                break;
+
+            case 3: // Cas clôture
+                $message->subject = "Votre ticket n° " . $modelTicket->id_ticket . " à été clôturé";
+                $message->setBody(
+                    "Votre ticket n&ordm; " . $modelTicket->id_ticket ." &agrave; &eacute;t&eacute; cl&ocirc;tur&eacute;."
+                . "<br/><br/>"
+                . "Si votre probl&egrave;me persiste, veuillez r&eacute;ouvrir un ticket &agrave; l'adresse suivante: "
+                . "http://localhost/w3s-tickets" // TODO changer l'adresse ici!!
+                    , 'text/html'
+                );
+                break;
+
+            default:
+                return;
+        }
+
+        Yii::app()->mail->send($message);
     }
 
     /**
