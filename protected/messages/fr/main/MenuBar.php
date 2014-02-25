@@ -3,10 +3,11 @@
 return array(
     'APropos' => 'A Propos',
     'Contact' => 'Contact',
-    'CreerTicket'=>'Créer un nouveau ticket',
-    'ListeTicket'=>'Liste des tickets',
+    'CreerTicket' => 'Créer un nouveau ticket',
+    'ListeTicket' => 'Liste des tickets',
+    'DashBoard' => 'Tableaux de bord',
     'Connexion' => 'Connexion',
-    'Par' => 'par',
-    'DroitsReserve' => 'Tous Droits Réservés.'
+    'Creer' => 'Créer',
+    'DeConnexion' => 'Déconnexion'
 );
 

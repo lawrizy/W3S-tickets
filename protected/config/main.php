@@ -99,7 +99,7 @@ return array(
               array(
               'class'=>'CWebLogRoute',
               ),
-            */
+             */
             ),
         ),
         // Ajout du composant chart JS pour afficher des graphiques, etc..
@@ -114,7 +114,5 @@ return array(
         // this is used in contact page
         'adminEmail' => 'webmaster@example.com',
     ),
-    'onBeginRequest' => array(
-        'MyApp', 'beginRequest'
-    ),
+    'onBeginRequest' => array('MyApp', 'beginRequest'),
 );
