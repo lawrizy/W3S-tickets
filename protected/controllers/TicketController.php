@@ -313,9 +313,8 @@ class TicketController extends Controller {
     private function actionSendNotificationMail($modelTicket) {
         $message = new YiiMailMessage;
         $locataire = Locataire::model()->findByPk($modelTicket->fk_locataire);
-        $nom = $locataire->nom;
         $message->from = 'mailer@web3sys.com';
-        $message->addTo('capelle.e@gmail.com');
+        $message->addTo($locataire->email);
 
         switch($modelTicket->fk_statut)
         {
@@ -329,6 +328,7 @@ class TicketController extends Controller {
                     . "Sous-catégorie du ticket: " . CategorieIncident::model()->findByPk($modelTicket->fk_categorie)->label . "<br/>"
                     . "Bâtiment concern&eacute;: " . Batiment::model()->findByPk($modelTicket->fk_batiment)->nom . "<br/>"
                     . "Adresse: " . Batiment::model()->findByPk($modelTicket->fk_batiment)->adresse . "<br/>"
+                    . "Commentaire: " . $modelTicket->descriptif . "<br/>"
                     . "Gestionnaire de votre ticket: " . User::model()->findByPk($modelTicket->fk_user)->nom . "<br/>"
                     . "<br/>"
                     . "Merci d'avoir rapporté votre problème."
@@ -347,6 +347,7 @@ class TicketController extends Controller {
                     . "Sous-catégorie du ticket: " . CategorieIncident::model()->findByPk($modelTicket->fk_categorie)->label . "<br/>"
                     . "Bâtiment concern&eacute;: " . Batiment::model()->findByPk($modelTicket->fk_batiment)->nom . "<br/>"
                     . "Adresse : " . Batiment::model()->findByPk($modelTicket->fk_batiment)->adresse . "<br/>"
+                    . "Commentaire: " . $modelTicket->descriptif . "<br/>"
                     . "Gestionnaire de votre ticket: " . User::model()->findByPk($modelTicket->fk_user)->nom
                     , 'text/html'
                 );
@@ -355,7 +356,8 @@ class TicketController extends Controller {
             case 3: // Cas clôture
                 $message->subject = "Votre ticket n° " . $modelTicket->id_ticket . " à été clôturé";
                 $message->setBody(
-                    "Votre ticket n&ordm; " . $modelTicket->id_ticket ." &agrave; &eacute;t&eacute; cl&ocirc;tur&eacute;."
+                    "Votre ticket n&ordm; " . $modelTicket->id_ticket ." &agrave; &eacute;t&eacute; cl&ocirc;tur&eacute;. <br/>"
+                    . "Commentaire: " . $modelTicket->descriptif . "<br/>"
                 . "<br/><br/>"
                 . "Si votre probl&egrave;me persiste, veuillez r&eacute;ouvrir un ticket &agrave; l'adresse suivante: "
                 . "http://localhost/w3s-tickets" // TODO changer l'adresse ici!!
