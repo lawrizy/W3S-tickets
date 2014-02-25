@@ -46,26 +46,28 @@ $this->widget('zii.widgets.grid.CGridView', array(
     // 'filter' => $model,
     'columns' => array(
         array(
-            'name' => 'Code ticket',
+            'name' => Yii::t('/model/ticket', 'CodeTicket'),
             'value' => '$data->code_ticket'),
         array(
-            'name' => 'Locataire',
+            'name' => Yii::t('/model/ticket', 'LocataireTicket'),
             'value' => 'Locataire::model()->findByPk($data->fk_locataire)->nom'),
         array(
-            'name' => 'Statut du ticket',
-            'value' => 'StatutTicket::model()->findByPk($data->fk_statut)->label'
+            'name' => Yii::t('/model/ticket', 'StatutTicket'),
+            'value' => 'Yii::t(\'/model/statutTicket\',StatutTicket::model()->findByPk($data->fk_statut)->label);'
         ),
         array(
-            'name' => 'Cat&eacute;gorie',
-            'value' => 'CategorieIncident::model()->findByPk(CategorieIncident::model()->findByPk($data->fk_categorie)->fk_parent)->label'),
+            'name' => Yii::t('/model/ticket', 'CategTicket'),
+            'value' => 'Yii::t(\'/model/categorieIncident\',CategorieIncident::model()->findByPk(CategorieIncident::model()->findByPk($data->fk_categorie)->fk_parent)->label);'
+        ),
         array(
-            'name' => 'Sous - Cat&eacute;gorie',
-            'value' => 'CategorieIncident::model()->findByPk($data->fk_categorie)->label'),
+            'name' => Yii::t('/model/ticket', 'CategorieTicket'),
+            'value' => 'Yii::t(\'/model/categorieIncident\',CategorieIncident::model()->findByPk($data->fk_categorie)->label);'
+        ),
         array(
-            'name' => 'B&acirc;timent',
+            'name' => Yii::t('/model/ticket', 'BatimentTicket'),
             'value' => 'Batiment::model()->findByPk($data->fk_batiment)->nom'),
         array(
-            'name' => 'Assign&eacute; &agrave;',
+            'name' => Yii::t('/model/ticket', 'UserTicket'),
             'value' => 'User::model()->findByPk($data->fk_user)->nom'),
         array
             (

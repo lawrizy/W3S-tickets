@@ -6,7 +6,7 @@
 
 $this->menu = array(
     array('label' => 'Tous les tickets ', 'url' => array('/ticket/admin/?var=admin')),
-    array('label' => 'Nouveaux tickets s', 'url' => array('/ticket/admin?var=admin_opened')),
+    array('label' => 'Nouveaux tickets ', 'url' => array('/ticket/admin?var=admin_opened')),
     array('label' => 'Tickets fermés', 'url' => array('/ticket/admin?var=admin_closed')),
 );
 
@@ -48,33 +48,31 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'ticket-grid',
     'dataProvider' => $model->searchInProgress(),
     // 'filter' => $model,
-    'columns' => array(
-        array(
-            'name' => 'Code ticket',
-            'value' => '$data->code_ticket'),
+     'columns' => array(
         array(
             'name' => Yii::t('/model/ticket', 'CodeTicket'),
-            'value' => 'Locataire::model()->findByPk($data->fk_locataire)->nom'),
+            'value' => '$data->code_ticket'),
         array(
             'name' => Yii::t('/model/ticket', 'LocataireTicket'),
-            'value' => 'Yii::t(\'/model/statutTicket\',StatutTicket::model()->findByPk($data->fk_statut)->label);',
+            'value' => 'Locataire::model()->findByPk($data->fk_locataire)->nom'),
+        array(
+            'name' => Yii::t('/model/ticket', 'StatutTicket'),
+            'value' => 'Yii::t(\'/model/statutTicket\',StatutTicket::model()->findByPk($data->fk_statut)->label);'
         ),
         array(
             'name' => Yii::t('/model/ticket', 'CategTicket'),
-            'value' => 'CategorieIncident::model()->findByPk(CategorieIncident::model()->findByPk($data->fk_categorie)->fk_parent)->label'),
+            'value' => 'Yii::t(\'/model/categorieIncident\',CategorieIncident::model()->findByPk(CategorieIncident::model()->findByPk($data->fk_categorie)->fk_parent)->label);'
+            ),
         array(
             'name' => Yii::t('/model/ticket', 'CategorieTicket'),
-            'value' => 'CategorieIncident::model()->findByPk($data->fk_categorie)->label'),
+            'value' => 'Yii::t(\'/model/categorieIncident\',CategorieIncident::model()->findByPk($data->fk_categorie)->label);'
+        ),
         array(
             'name' => Yii::t('/model/ticket', 'BatimentTicket'),
             'value' => 'Batiment::model()->findByPk($data->fk_batiment)->nom'),
         array(
             'name' => Yii::t('/model/ticket', 'UserTicket'),
             'value' => 'User::model()->findByPk($data->fk_user)->nom'),
-        /*
-          'commentaire',
-          'fk_canal',
-         */
         array
             (
             'class' => 'CButtonColumn',

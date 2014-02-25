@@ -54,14 +54,16 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'value' => 'Locataire::model()->findByPk($data->fk_locataire)->nom'),
         array(
             'name' => Yii::t('/model/ticket', 'StatutTicket'),
-            'value' => 'StatutTicket::model()->findByPk($data->fk_statut)->label'
+            'value' => 'Yii::t(\'/model/statutTicket\',StatutTicket::model()->findByPk($data->fk_statut)->label);'
         ),
         array(
             'name' => Yii::t('/model/ticket', 'CategTicket'),
-            'value' => 'CategorieIncident::model()->findByPk(CategorieIncident::model()->findByPk($data->fk_categorie)->fk_parent)->label'),
+            'value' => 'Yii::t(\'/model/categorieIncident\',CategorieIncident::model()->findByPk(CategorieIncident::model()->findByPk($data->fk_categorie)->fk_parent)->label);'
+            ),
         array(
             'name' => Yii::t('/model/ticket', 'CategorieTicket'),
-            'value' => 'CategorieIncident::model()->findByPk($data->fk_categorie)->label'),
+            'value' => 'Yii::t(\'/model/categorieIncident\',CategorieIncident::model()->findByPk($data->fk_categorie)->label);'
+        ),
         array(
             'name' => Yii::t('/model/ticket', 'BatimentTicket'),
             'value' => 'Batiment::model()->findByPk($data->fk_batiment)->nom'),
