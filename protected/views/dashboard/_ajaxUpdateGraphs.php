@@ -4,14 +4,16 @@
 
 if ($idBatiment == 'ALL') {
     ?>
-    <p><h2 style="text-align: center;">Fréquence des catégories d'incidents (Tous les bâtiments)</h2></p>
+    <p><h3 style="text-align: center;">Fréquence des catégories d'incidents (Tous les bâtiments)</h3></p>
     <?php
 
-    Yii::trace("Tous les batiments", "cron");
+    ?>
+    <div><?php
+
     $this->widget(
         'chartjs.widgets.ChBars', array(
-            'width' => 800,
-            'height' => 300,
+            'width' => 500,
+            'height' => 200,
             'htmlOptions' => array(),
             'labels' => $this->actionGetCategoriesLabel(),
             'datasets' => array(
@@ -24,14 +26,14 @@ if ($idBatiment == 'ALL') {
             'options' => array()
         )
     );
+    ?></div><?php
 
-
-    echo '<p><h2 style="text-align: center;">Fréquence des statuts de tickets</h2></p>';
+    echo '<p><h3 style="text-align: center;">Fréquence des statuts de tickets</h3></p>';
 
     $this->widget(
         'chartjs.widgets.ChPie', array(
-            'width' => 225,
-            'height' => 225,
+            'width' => 175,
+            'height' => 175,
             'htmlOptions' => array(),
             'drawLabels' => true,
             //'animation' => false,
@@ -60,19 +62,16 @@ if ($idBatiment == 'ALL') {
     // TODO ajouter graphique -> nombre d'incidents (en fonction du statut) par bâtiment
 
 } else {
-    //Yii::trace("Batiment ID " . $idBatiment, "cron");
-
-
-    echo '<p><h2 style="text-align: center;">Fréquence des catégories d\'incidents (Bâtiment : ';
+    echo '<p><h3 style="text-align: center;">Fréquence des catégories d\'incidents (Bâtiment : ';
     echo Batiment::model()->findByAttributes(array('id_batiment' => $idBatiment))->nom;
-    ?><?php echo ') </h2></p>'; ?>
+    ?><?php echo ') </h3></p>'; ?>
 
     <?php
 
     $this->widget(
         'chartjs.widgets.ChBars', array(
-            'width' => 800,
-            'height' => 300,
+            'width' => 500,
+            'height' => 200,
             'htmlOptions' => array(),
             'labels' => $this->actionGetCategoriesLabel(),
             'datasets' => array(
@@ -85,13 +84,13 @@ if ($idBatiment == 'ALL') {
             'options' => array()
         )
     );
-    echo '<p><h2>Fréquence des statuts de tickets</h2></p>';
+    echo '<p><h3>Fréquence des statuts de tickets</h3></p>';
 
 
     $this->widget(
         'chartjs.widgets.ChPie', array(
-            'width' => 225,
-            'height' => 225,
+            'width' => 175,
+            'height' => 175,
             'htmlOptions' => array(),
             'drawLabels' => true,
 //'animation' => false,
@@ -101,4 +100,5 @@ if ($idBatiment == 'ALL') {
         )
     );
 }
+
 ?>
