@@ -321,26 +321,28 @@ class TicketController extends Controller {
             case 1: // Cas création d'un ticket
                 $message->subject = "Un nouveau ticket a été créé";
                 $message->setBody(
-                    "Votre ticket n&ordm; " . $modelTicket->id_ticket . " a &eacute;t&eacute; cr&eacute;&eacute;. <br/><br/>"
-                    . "R&eacute;sum&eacute; des informations du ticket:<br/>"
-                    . "Cr&eacute;ateur du ticket: " . $locataire->nom . "<br/>"
-                    . "Catégorie du ticket: " . CategorieIncident::model()->findByPk(CategorieIncident::model()->findByPk($modelTicket->fk_categorie)->fk_parent)->label . "<br/>"
-                    . "Sous-catégorie du ticket: " . CategorieIncident::model()->findByPk($modelTicket->fk_categorie)->label . "<br/>"
-                    . "Bâtiment concern&eacute;: " . Batiment::model()->findByPk($modelTicket->fk_batiment)->nom . "<br/>"
-                    . "Adresse: " . Batiment::model()->findByPk($modelTicket->fk_batiment)->adresse . "<br/>"
-                    . "Commentaire: " . $modelTicket->descriptif . "<br/>"
-                    . "Gestionnaire de votre ticket: " . User::model()->findByPk($modelTicket->fk_user)->nom . "<br/>"
+                    "<div style='text-align: center;'><h2>Votre ticket n&ordm; " . $modelTicket->code_ticket . " a &eacute;t&eacute; cr&eacute;&eacute;.</h2></div>"
+                    . "<div style='border-style: solid; border-width: 2px; margin-left: 10em; margin-right: 10em; padding: 2em; border-radius: 3em;'>"
+                    . "<u>R&eacute;sum&eacute; des informations du ticket:</u><br/><br/>"
+                    . "<b>Cr&eacute;ateur du ticket</b>: " . $locataire->nom . "<br/>"
+                    . "<b>Catégorie du ticket</b>: " . CategorieIncident::model()->findByPk(CategorieIncident::model()->findByPk($modelTicket->fk_categorie)->fk_parent)->label . "<br/>"
+                    . "<b>Sous-catégorie du ticket</b>: " . CategorieIncident::model()->findByPk($modelTicket->fk_categorie)->label . "<br/>"
+                    . "<b>Bâtiment concern&eacute;</b>: " . Batiment::model()->findByPk($modelTicket->fk_batiment)->nom . "<br/>"
+                    . "<b>Adresse</b>: " . Batiment::model()->findByPk($modelTicket->fk_batiment)->adresse . "<br/>"
+                    . "<b>Commentaire</b>: " . $modelTicket->descriptif . "<br/>"
+                    . "<b>Gestionnaire de votre ticket</b>: " . User::model()->findByPk($modelTicket->fk_user)->nom . "<br/>"
                     . "<br/>"
-                    . "Merci d'avoir rapporté votre problème."
+                    . "<b><center>Merci d'avoir rapporté votre problème.</center>   </b>"
+                    . "</div>"
                     , 'text/html'
                 );
                 break;
 
             case 2: // Cas en traitement
-                $message->subject = "Le statut de votre ticket a chang&eacute;."    ;
+                $message->subject = "Le statut de votre ticket a changé."    ;
                 $message->setBody(
-                    "Le statut de votre ticket n° " . $modelTicket->id_ticket . " a chang&eacute;."
-                    . "<br/><br/><br/>"
+                    "<div style='text-align: center;'><h2>Le statut de votre ticket n° " . $modelTicket->code_ticket . " a chang&eacute;.</h2></div>"
+                    . "<div style='border-style: solid; border-width: 2px; margin-left: 10em; margin-right: 10em; padding: 2em; border-radius: 3em;'>"
                     . "R&eacute;sum&eacute; des informations du ticket:<br/>"
                     . "Cr&eacute;ateur du ticket: " . $locataire->nom . "<br/>"
                     . "Catégorie du ticket: " . CategorieIncident::model()->findByPk(CategorieIncident::model()->findByPk($modelTicket->fk_categorie)->fk_parent)->label . "<br/>"
@@ -349,18 +351,21 @@ class TicketController extends Controller {
                     . "Adresse : " . Batiment::model()->findByPk($modelTicket->fk_batiment)->adresse . "<br/>"
                     . "Commentaire: " . $modelTicket->descriptif . "<br/>"
                     . "Gestionnaire de votre ticket: " . User::model()->findByPk($modelTicket->fk_user)->nom
+                    . "</div>"
                     , 'text/html'
                 );
                 break;
 
             case 3: // Cas clôture
-                $message->subject = "Votre ticket n° " . $modelTicket->id_ticket . " à été clôturé";
+                $message->subject = "Votre ticket n° " . $modelTicket->code_ticket . " à été clôturé";
                 $message->setBody(
-                    "Votre ticket n&ordm; " . $modelTicket->id_ticket ." &agrave; &eacute;t&eacute; cl&ocirc;tur&eacute;. <br/>"
-                    . "Commentaire: " . $modelTicket->descriptif . "<br/>"
+                "<div style='border-style: solid; border-width: 2px; margin-left: 10em; margin-right: 10em; padding: 2em; border-radius: 3em;'>"
+                . "Votre ticket n&ordm; " . $modelTicket->code_ticket ." &agrave; &eacute;t&eacute; cl&ocirc;tur&eacute;. <br/>"
+                . "Commentaire: " . $modelTicket->descriptif . "<br/>"
                 . "<br/><br/>"
                 . "Si votre probl&egrave;me persiste, veuillez r&eacute;ouvrir un ticket &agrave; l'adresse suivante: "
                 . "http://localhost/w3s-tickets" // TODO changer l'adresse ici!!
+                . "</div>"
                     , 'text/html'
                 );
                 break;

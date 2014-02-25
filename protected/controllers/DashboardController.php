@@ -120,7 +120,7 @@ class DashboardController extends Controller
 
         return $nbFinal;
     }
-    
+
     public function actionGetTicketByStatusForBatimentID($idBatiment) {
         $nbStatutTicket = array();
         for ($idStatut = 1; $idStatut <= 3; ++$idStatut) {
@@ -163,5 +163,5 @@ class DashboardController extends Controller
         $data['idBatiment'] = $_POST['idBatiment'];
         $this->renderPartial('_ajaxUpdateGraphs', $data, false, true);
     }
-    
+
 }
