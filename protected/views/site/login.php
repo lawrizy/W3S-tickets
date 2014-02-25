@@ -9,9 +9,9 @@ $this->breadcrumbs = array(
 );
 ?>
 
-<h1><?php echo Yii::t('Connexion','ConnexionTitre');?></h1>
+<h1><?php echo Yii::t('/site/login','ConnexionTitre');?></h1>
 
-<p>Remplissez les champs avec vos données de connexion:</p>
+<p><?php echo Yii::t('/site/login','Indication');?></p>
 
 <div class="form">
     <?php
@@ -24,7 +24,7 @@ $this->breadcrumbs = array(
     ));
     ?>
 
-    <p class="note">Les champs marqués de <span class="required">*</span> sont requis.</p>
+    <p class="note"><?php echo Yii::t('/site/login','Required');?></p>
 
     <div class="row">
         <?php echo '<label > Email :  <span class="required">*<br></span>';?>
@@ -46,13 +46,13 @@ $this->breadcrumbs = array(
 
     <div class="row buttons">
         <?php echo $form->error($model, 'DBConnectionFail'); ?>
-        <?php echo CHtml::submitButton('Connexion'); ?>
+        <?php echo CHtml::submitButton(Yii::t('/site/login','ConnexionButton')); ?>
     </div>
     <p> <?php
         echo Yii::app()->session['erreurDB'];
         ?></p>
     <div class="link-column">
-        <?php echo '<a href="#">Mot de passe oublié ?</a>'; ?>
+        <?php echo '<a href="#">'?> <?php echo Yii::t('/site/login','MdpOublie'). '</a>'; ?>
     </div>
 
     <?php $this->endWidget(); ?>

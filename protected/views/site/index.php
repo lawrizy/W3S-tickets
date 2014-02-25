@@ -1,9 +1,10 @@
 <?php
+Yii::app()->language=Yii::app()->session['_lang'];
 $this->pageTitle = Yii::app()->name;
 ?>
 
 <h1><?php
-   echo Yii::t('MainMenu','Message');
+   echo Yii::t('/index','Message');
     echo CHtml::encode(Yii::app()->name);
     ?></i></h1>
 

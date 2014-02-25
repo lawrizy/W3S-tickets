@@ -2,6 +2,7 @@
 
 class SiteController extends Controller {
 
+    private $id ;
     /**
      * Declares class-based actions.
      */

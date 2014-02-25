@@ -20,7 +20,7 @@ class LoginForm extends CFormModel {
     public function rules() {
         return array(
             // username and password are required
-            array('username, password', 'required', 'message' => 'Le champs {attribute} ne peut être vide.'),
+            array('username, password', 'required', 'message' => Yii::t('/model/locataire','ChampVide')),
             array('username', 'email'),
             // rememberMe needs to be a boolean
             array('rememberMe', 'boolean'),
@@ -34,7 +34,9 @@ class LoginForm extends CFormModel {
      */
     public function attributeLabels() {
         return array(
-            'rememberMe' => 'Se rappeler de moi',
+            'rememberMe' => Yii::t('/site/login', 'SeSouvenir'),
+            'password'=>  Yii::t('/site/login','MdpForm'),
+            'username'=>  Yii::t('/site/login','EmailForm'),
         );
     }
 

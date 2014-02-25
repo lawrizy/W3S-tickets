@@ -1,4 +1,6 @@
-<?php /* @var $this Controller */ ?>
+<?php /* @var $this Controller */ 
+Yii::app()->language=Yii::app()->session['_lang'];
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
@@ -62,16 +64,16 @@
                 $var = Yii::app()->session['Logged'];
                 $this->widget('zii.widgets.CMenu', array(
                     'items' => array(
-                        array('label' => Yii::t('MainMenu','APropos'), 'url' => array('/site/page', 'view' => 'about')),
-                        array('label' => 'Contact', 'url' => array('/site/contact')),
-                        array('label' => 'Créer un nouveau ticket', 'url' => array('/locataire/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
-                        array('label' => 'Liste des tickets', 'url' => array('/ticket/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
+                        array('label' => Yii::t('main/MenuBar','APropos'), 'url' => array('/site/page', 'view' => 'about')),
+                        array('label' =>  Yii::t('main/MenuBar','Contact'), 'url' => array('/site/contact')),
+                        array('label' =>  Yii::t('/main/MenuBar','CreerTicket'), 'url' => array('/locataire/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
+                        array('label' => Yii::t('/main/MenuBar','ListeTicket'), 'url' => array('/ticket/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
                         array('label' => 'Dashboard', 'url' => array('dashboard/vue'), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $var['fk_fonction'] == 2),
                         array('label' => 'Créer un ' . Yii::app()->session['NouveauTicket'] . ' ticket', 'url' => array('/ticket/create'), 'visible' => Yii::app()->session['Utilisateur'] == 'Locataire'),
-                        array('label' => Yii::t('MainMenu', 'Connexion'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
+                        array('label' => Yii::t('main/MenuBar', 'Connexion'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
                         array('label' => 'Déconnexion (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
-                        array('label' => 'FR', 'url' => CController::createUrl('chooselanguagefr')),
-                        array('label' => 'EN', 'url' => CController::createUrl('chooselanguageen'))
+                        array('label' => 'FR', 'url' => array('site/chooselanguagefr')),
+                        array('label' => 'EN', 'url' => array('site/chooselanguageen'))
                     ),
                 ));
                 Yii::app()->session['NouveauTicket'] = '';
@@ -91,7 +93,7 @@
 
             <div id="footer">
                 Copyright &copy; <?php echo date('Y') .' '. Yii::t('MainMenu','Par'); ?>  <a href="http://web3sys.com">Web3Sys</a>.<br/>
-               <?php echo Yii::t('MainMenu','DroitsReserve');?><br/>
+               <?php echo Yii::t('/main/MenuBar','DroitsReserve');?><br/>
             </div><!-- footer -->
 
         </div><!-- page -->

@@ -29,7 +29,7 @@ class User extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('nom, email, password, fk_fonction', 'required', 'message' => 'Le champs {attribute} ne peut être vide.'),
+            array('nom, email, password, fk_fonction', 'required', 'message' => Yii::t('/model/user','ChampVide')),
             array('fk_fonction', 'numerical', 'integerOnly' => true),
             array('nom, email', 'length', 'max' => 64),
             array('email', 'email'),
@@ -56,11 +56,11 @@ class User extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'id_user' => 'Id User',
-            'nom' => 'Nom',
-            'email' => 'Email (sera utilisé pour se connecter)',
-            'password' => 'Mot de passe',
-            'fk_fonction' => 'Fonction de l\'utilisateur (1 = user, 2 = admin)',
+            'id_user' => Yii::t('/model/user','IdUser'),
+            'nom' => Yii::t('/model/user','NomUser'),
+            'email' => Yii::t('/model/user','EmailUser'),
+            'password' => Yii::t('/model/user','MdpUser'),
+            'fk_fonction' =>Yii::t('/model/user','FonctionUser'),
         );
     }
 
