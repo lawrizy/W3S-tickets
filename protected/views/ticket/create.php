@@ -3,9 +3,7 @@
 /* @var $model Ticket */
 ?>
 <h1>
-<!--    <img src="/images/age.png"><br>-->
-    Créer un nouveau ticket
+    <?php echo Yii::t('/ticket/create','CreateTitre') ;?>
 </h1>
-<?php echo Yii::app()->getController()->getAction()->id ?>
 
 <?php $this->renderPartial('_form', array('model' => $model)); ?>

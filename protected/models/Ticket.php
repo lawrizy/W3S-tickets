@@ -37,9 +37,9 @@ class Ticket extends CActiveRecord {
 // NOTE: you should only define rules for those attributes that
 // will receive user inputs.
         return array(
-            array('fk_categorie, fk_canal, fk_locataire, fk_batiment', 'required', 'message' => 'Le champs {attribute} ne peut être vide.'),
+            array('fk_categorie, fk_canal, fk_locataire, fk_batiment', 'required', 'message' => Yii::t('model/ticket','ChampVide')),
             array('fk_statut, fk_categorie, fk_user, fk_canal, fk_entreprise, fk_locataire, fk_batiment', 'numerical', 'integerOnly' => true,
-                                                                'message' => 'Le champs {attribute} ne peut contenir que des nombres.'),
+                'message' => 'Le champs {attribute} ne peut contenir que des nombres.'),
             array('code_ticket', 'length', 'max' => 10),
             array('etage, bureau', 'length', 'max' => 45),
             array('descriptif, date_intervention', 'safe'),
@@ -65,19 +65,19 @@ class Ticket extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'id_ticket' => 'Id du ticket',
-            'fk_statut' => 'Statut',
-            'fk_categorie' => 'Sous-Catégorie',
-            'fk_user' => 'Assigné à',
-            'descriptif' => 'Descriptif',
-            'fk_canal' => 'Canal de création',
-            'date_intervention' => 'Date d\'Intervention',
-            'fk_entreprise' => 'Entreprise',
-            'code_ticket' => 'Code Ticket',
-            'etage' => 'Etage',
-            'bureau' => 'Bureau',
-            'fk_locataire' => 'Locataire',
-            'fk_batiment' => 'Batiment',
+            'id_ticket' => Yii::t('/model/ticket', 'IdTicket'),
+            'fk_statut' => Yii::t('/model/ticket', 'StatutTicket'),
+            'fk_categorie' => Yii::t('/model/ticket', 'CategorieTicket'),
+            'fk_user' => Yii::t('/model/ticket', 'UserTicket'),
+            'descriptif' => Yii::t('/model/ticket', 'DescriptifTicket'),
+            'fk_canal' => Yii::t('/model/ticket', 'CanalTicket'),
+            'date_intervention' => Yii::t('/model/ticket', 'DateInterventionTicket'),
+            'fk_entreprise' => Yii::t('/model/ticket', 'EntrepriseTicket'),
+            'code_ticket' => Yii::t('/model/ticket', 'CodeTicket'),
+            'etage' => Yii::t('/model/ticket', 'EtageTicket'),
+            'bureau' => Yii::t('/model/ticket', 'BureauTicket'),
+            'fk_locataire' => Yii::t('/model/ticket', 'LocataireTicket'),
+            'fk_batiment' => Yii::t('/model/ticket', 'BatimentTicket'),
         );
     }
 

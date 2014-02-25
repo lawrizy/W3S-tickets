@@ -2,16 +2,16 @@
 /* @var $this SiteController */
 /* @var $model LoginForm */
 /* @var $form CActiveForm  */
-Yii::app()->language=Yii::app()->session['_lang'];
+Yii::app()->language = Yii::app()->session['_lang'];
 $this->pageTitle = Yii::app()->name . ' - Connexion';
 $this->breadcrumbs = array(
     'Connexion',
 );
 ?>
 
-<h1><?php echo Yii::t('/site/login','ConnexionTitre');?></h1>
+<h1><?php echo Yii::t('/site/login', 'ConnexionTitre'); ?></h1>
 
-<p><?php echo Yii::t('/site/login','Indication');?></p>
+<p><?php echo Yii::t('/site/login', 'Indication'); ?></p>
 
 <div class="form">
     <?php
@@ -24,16 +24,16 @@ $this->breadcrumbs = array(
     ));
     ?>
 
-    <p class="note"><?php echo Yii::t('/site/login','Required');?></p>
+    <p class="note"><?php echo Yii::t('/site/login', 'Required'); ?></p>
 
     <div class="row">
-        <?php echo '<label > Email :  <span class="required">*<br></span>';?>
+        <?php echo '<label > Email :  <span class="required">*<br></span>'; ?>
         <?php echo $form->textField($model, 'username'); ?>
         <?php echo $form->error($model, 'username'); ?>
     </div>
 
     <div class="row">
-     <?php echo '<label > Mot de passe :  <span class="required">*<br></span>';?>
+        <?php echo '<label > Mot de passe :  <span class="required">*<br></span>'; ?>
         <?php echo $form->passwordField($model, 'password'); ?>
         <?php echo $form->error($model, 'password'); ?>
     </div>
@@ -46,13 +46,13 @@ $this->breadcrumbs = array(
 
     <div class="row buttons">
         <?php echo $form->error($model, 'DBConnectionFail'); ?>
-        <?php echo CHtml::submitButton(Yii::t('/site/login','ConnexionButton')); ?>
+        <?php echo CHtml::submitButton(Yii::t('/site/login', 'ConnexionButton')); ?>
     </div>
     <p> <?php
         echo Yii::app()->session['erreurDB'];
         ?></p>
     <div class="link-column">
-        <?php echo '<a href="#">'?> <?php echo Yii::t('/site/login','MdpOublie'). '</a>'; ?>
+        <?php echo '<a href="#">' ?> <?php echo Yii::t('/site/login', 'MdpOublie') . '</a>'; ?>
     </div>
 
     <?php $this->endWidget(); ?>

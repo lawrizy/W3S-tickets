@@ -24,14 +24,14 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1> Tickets en cours de traitement</h1>
+<h1><?php echo Yii::t('/ticket/admin', 'AdminTraitementTitre'); ?> </h1>
 <!--
 <p>
     You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
     or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
 </p>-->
 
-<?php echo CHtml::link('Recherche Avancée', '#', array('class' => 'search-button')); ?>
+<?php echo CHtml::link(Yii::t('/ticket/admin', 'RechercheAvancee'), '#', array('class' => 'search-button')); ?>
 <div class="search-form" style="display:none">
     <?php
     $this->renderPartial('_search', array(
@@ -41,6 +41,9 @@ $('.search-form form').submit(function(){
 </div><!-- search-form -->
 
 <?php
+
+
+
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'ticket-grid',
     'dataProvider' => $model->searchInProgress(),
@@ -50,23 +53,23 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'name' => 'Code ticket',
             'value' => '$data->code_ticket'),
         array(
-            'name' => 'Locataire',
+            'name' => Yii::t('/model/ticket', 'CodeTicket'),
             'value' => 'Locataire::model()->findByPk($data->fk_locataire)->nom'),
         array(
-            'name' => 'Statut du ticket',
-            'value' => 'StatutTicket::model()->findByPk($data->fk_statut)->label'
+            'name' => Yii::t('/model/ticket', 'LocataireTicket'),
+            'value' => 'Yii::t(\'/model/statutTicket\',StatutTicket::model()->findByPk($data->fk_statut)->label);',
         ),
         array(
-            'name' => 'Cat&eacute;gorie',
+            'name' => Yii::t('/model/ticket', 'CategTicket'),
             'value' => 'CategorieIncident::model()->findByPk(CategorieIncident::model()->findByPk($data->fk_categorie)->fk_parent)->label'),
         array(
-            'name' => 'Sous - Cat&eacute;gorie',
+            'name' => Yii::t('/model/ticket', 'CategorieTicket'),
             'value' => 'CategorieIncident::model()->findByPk($data->fk_categorie)->label'),
         array(
-            'name' => 'B&acirc;timent',
+            'name' => Yii::t('/model/ticket', 'BatimentTicket'),
             'value' => 'Batiment::model()->findByPk($data->fk_batiment)->nom'),
         array(
-            'name' => 'Assign&eacute; &agrave;',
+            'name' => Yii::t('/model/ticket', 'UserTicket'),
             'value' => 'User::model()->findByPk($data->fk_user)->nom'),
         /*
           'commentaire',
