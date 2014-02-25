@@ -2,7 +2,8 @@
 
 class SiteController extends Controller {
 
-    private $id ;
+    private $id;
+
     /**
      * Declares class-based actions.
      */
@@ -97,8 +98,10 @@ class SiteController extends Controller {
      * Logs out the current user and redirect to homepage.
      */
     public function actionLogout() {
+        $langApp = Yii::app()->session['_lang'];
         Yii::app()->user->logout();
-        $this->redirect(Yii::app()->homeUrl);
+        Yii::app()->session['_lang'] = $langApp;
+        $this->render('index');
     }
 
     public function actionAction() {
@@ -110,17 +113,15 @@ class SiteController extends Controller {
     }
 
     public function actionChooseLanguageFr() {
-//        Yii::app()->language = 'fr';
-
+        $ctr = $_GET['ctr'];
         Yii::app()->session['_lang'] = 'fr';
-        $this->render('index');
+        header("Location: $ctr");
     }
 
     public function actionChooseLanguageEn() {
-        // Yii::app()->language = 'en';
+        $ctr = $_GET['ctr'];
         Yii::app()->session['_lang'] = 'en';
-       // MyApp::beginRequest('en');
-        $this->render('index');
+        header("Location: $ctr");
     }
 
 }

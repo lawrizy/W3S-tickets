@@ -1,5 +1,7 @@
 <?php
 
 return array(
-        'Message' => 'Welcome ',
+    'Message' => 'Welcome ',
+    'Par' => 'by',
+    'DroitsReserve' => 'All Rights Reserved.'
 );

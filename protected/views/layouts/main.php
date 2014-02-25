@@ -1,5 +1,6 @@
-<?php /* @var $this Controller */ 
-Yii::app()->language=Yii::app()->session['_lang'];
+<?php
+/* @var $this Controller */
+Yii::app()->language = Yii::app()->session['_lang'];
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
@@ -24,6 +25,30 @@ Yii::app()->language=Yii::app()->session['_lang'];
         <div class="container" id="page">
 
             <div id="header">
+                <div id="language" style="text-align: right;margin-right: 50px; margin-top: 10px;" >
+                    <?php
+                    switch (Yii::app()->session['_lang']) {
+                        case 'fr':
+                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php/site/chooselanguageen?ctr=' . Yii::app()->request->url . '" style="margin-right: 10px;" >';
+                            echo '<img src="' . Yii::app()->request->baseUrl . '/images/en.png" /></a>';
+                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php/site/chooselanguagenl?ctr=' . Yii::app()->request->url . '">';
+                            echo '<img src="' . Yii::app()->request->baseUrl . '/images/nl.png" /></a>';
+                            break;
+                        case'en':
+                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php/site/chooselanguagefr?ctr=' . Yii::app()->request->url . '" style="margin-right: 10px;">';
+                            echo '<img src="' . Yii::app()->request->baseUrl . '/images/fr.png" /></a>';
+                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php/site/chooselanguagenl?ctr=' . Yii::app()->request->url . '">';
+                            echo '<img src="' . Yii::app()->request->baseUrl . '/images/nl.png" /></a>';
+                            break;
+                        default :
+                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php/site/chooselanguagefr?ctr=' . Yii::app()->request->url . '" style="margin-right: 10px;">';
+                            echo '<img src="' . Yii::app()->request->baseUrl . '/images/fr.png" /></a>';
+                            echo '<a href="' . Yii::app()->request->baseUrl . '/index.php/site/chooselanguageen?ctr=' . Yii::app()->request->url . '">';
+                            echo '<img src="' . Yii::app()->request->baseUrl . '/images/en.png" /></a>';
+                            break;
+                    }
+                    ?>
+                </div>
                 <div id="aaaa"><table>
                         <tr>
                             <td width="50%"><a href=<?php echo Yii::app()->request->baseUrl; ?>><img  src="http://web3sys.com/tickets/images/HServices.png"></img></a></td>
@@ -64,16 +89,14 @@ Yii::app()->language=Yii::app()->session['_lang'];
                 $var = Yii::app()->session['Logged'];
                 $this->widget('zii.widgets.CMenu', array(
                     'items' => array(
-                        array('label' => Yii::t('main/MenuBar','APropos'), 'url' => array('/site/page', 'view' => 'about')),
-                        array('label' =>  Yii::t('main/MenuBar','Contact'), 'url' => array('/site/contact')),
-                        array('label' =>  Yii::t('/main/MenuBar','CreerTicket'), 'url' => array('/locataire/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
-                        array('label' => Yii::t('/main/MenuBar','ListeTicket'), 'url' => array('/ticket/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
-                        array('label' => 'Dashboard', 'url' => array('dashboard/vue'), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $var['fk_fonction'] == 2),
-                        array('label' => 'Créer un ' . Yii::app()->session['NouveauTicket'] . ' ticket', 'url' => array('/ticket/create'), 'visible' => Yii::app()->session['Utilisateur'] == 'Locataire'),
+                        array('label' => Yii::t('main/MenuBar', 'APropos'), 'url' => array('/site/page', 'view' => 'about')),
+                        array('label' => Yii::t('main/MenuBar', 'Contact'), 'url' => array('/site/contact')),
+                        array('label' => Yii::t('/main/MenuBar', 'CreerTicket'), 'url' => array('/locataire/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
+                        array('label' => Yii::t('/main/MenuBar', 'ListeTicket'), 'url' => array('/ticket/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
+                        array('label' => Yii::t('/main/MenuBar', 'DashBoard'), 'url' => array('dashboard/vue'), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $var['fk_fonction'] == 2),
+                        array('label' => Yii::t('/main/MenuBar', 'Creer') . Yii::app()->session['NouveauTicket'] . ' ticket', 'url' => array('/ticket/create'), 'visible' => Yii::app()->session['Utilisateur'] == 'Locataire'),
                         array('label' => Yii::t('main/MenuBar', 'Connexion'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
-                        array('label' => 'Déconnexion (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
-                        array('label' => 'FR', 'url' => array('site/chooselanguagefr')),
-                        array('label' => 'EN', 'url' => array('site/chooselanguageen'))
+                        array('label' => Yii::t('main/MenuBar', 'DeConnexion') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
                     ),
                 ));
                 Yii::app()->session['NouveauTicket'] = '';
@@ -92,8 +115,8 @@ Yii::app()->language=Yii::app()->session['_lang'];
             <div class="clear"></div>
 
             <div id="footer">
-                Copyright &copy; <?php echo date('Y') .' '. Yii::t('MainMenu','Par'); ?>  <a href="http://web3sys.com">Web3Sys</a>.<br/>
-               <?php echo Yii::t('/main/MenuBar','DroitsReserve');?><br/>
+                Copyright &copy; <?php echo date('Y') . ' ' . Yii::t('index', 'Par'); ?>  <a href="http://web3sys.com">Web3Sys</a>.<br/>
+                <?php echo Yii::t('index', 'DroitsReserve'); ?><br/>
             </div><!-- footer -->
 
         </div><!-- page -->
