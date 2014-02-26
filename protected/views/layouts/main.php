@@ -89,14 +89,15 @@ Yii::app()->language = Yii::app()->session['_lang'];
                 $var = Yii::app()->session['Logged'];
                 $this->widget('zii.widgets.CMenu', array(
                     'items' => array(
-                        array('label' => Yii::t('main/MenuBar', 'APropos'), 'url' => array('/site/page', 'view' => 'about')),
-                        array('label' => Yii::t('main/MenuBar', 'Contact'), 'url' => array('/site/contact')),
-                        array('label' => Yii::t('/main/MenuBar', 'CreerTicket'), 'url' => array('/locataire/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
-                        array('label' => Yii::t('/main/MenuBar', 'ListeTicket'), 'url' => array('/ticket/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
-                        array('label' => Yii::t('/main/MenuBar', 'DashBoard'), 'url' => array('dashboard/vue'), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $var['fk_fonction'] == 2),
-                        array('label' => Yii::t('/main/MenuBar', 'Creer') . Yii::app()->session['NouveauTicket'] . ' ticket', 'url' => array('/ticket/create'), 'visible' => Yii::app()->session['Utilisateur'] == 'Locataire'),
-                        array('label' => Yii::t('main/MenuBar', 'Connexion'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
-                        array('label' => Yii::t('main/MenuBar', 'DeConnexion') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
+                        array('label' => Yii::t('main/MenuBar', 'APropos'), 'url' => array('/site/page', 'view' => 'about'), 'template' => '| {menu}'),
+                        array('label' => Yii::t('main/MenuBar', 'Contact'), 'url' => array('/site/contact'), 'template' => '| {menu}'),
+                        array('label' => Yii::t('/main/MenuBar', 'CreerTicket'), 'url' => array('/locataire/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User', 'template' => '| {menu}'),
+                        array('label' => Yii::t('/main/MenuBar', 'ListeTicket'), 'url' => array('/ticket/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User','template' => '| {menu}'),
+                        array('label' => Yii::t('/main/MenuBar', 'DashBoard'), 'url' => array('dashboard/vue'), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $var['fk_fonction'] == 2,'template' => '| {menu}'),
+                        array('label' => Yii::t('/main/MenuBar', 'Creer') . Yii::app()->session['NouveauTicket'] . ' ticket', 'url' => array('/ticket/create'), 'visible' => Yii::app()->session['Utilisateur'] == 'Locataire','template' => '| {menu}'),
+                        array('label' => Yii::t('main/MenuBar', 'Connexion'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest,'template' => '| {menu}'),
+                        array('label' => Yii::t('main/MenuBar', 'DeConnexion') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest,'template' => '| {menu}'),
+                        array('label'=>'','template' => '| {menu}')
                     ),
                 ));
                 Yii::app()->session['NouveauTicket'] = '';
