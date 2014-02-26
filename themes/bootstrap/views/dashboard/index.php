@@ -13,7 +13,7 @@ $this->pageTitle = Yii::app()->name;
 
 <h1 style="text-align: center;">Tableau de bord</h1>
 
-<div class="graphsDropDownList">
+<div class="graphsDropDownList" style="text-align: center; align-content: center;">
     <?php
     // DDL pour sélectionner un bâtiment spécifique
     echo '<p>';

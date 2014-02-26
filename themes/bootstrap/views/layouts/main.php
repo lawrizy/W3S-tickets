@@ -57,9 +57,11 @@ Yii::app()->session['NouveauTicket'] = '';
 
     <br/><br/><br/>
     <div id="footer">
+        <div id="copyright" style="text-align: center;">
         Copyright &copy; <?php echo date('Y') . ' ' . Yii::t('index', 'Par'); ?>  <a href="http://web3sys.com">Web3Sys</a>.<br/>
         <?php echo Yii::t('index', 'DroitsReserve'); ?><br/>
         <?php echo Yii::powered(); ?>
+        </div>
         <div id="aaaa">
             <table>
                 <tr>
@@ -71,7 +73,7 @@ Yii::app()->session['NouveauTicket'] = '';
                 </tr>
             </table>
         </div>
-        <div id="language" style="text-align: center; margin-top: 20px;">
+        <div id="language" style="text-align: center; margin-top: 5px;">
             <?php
             switch (Yii::app()->session['_lang'])
             {
