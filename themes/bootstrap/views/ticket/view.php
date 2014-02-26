@@ -24,7 +24,7 @@ Yii::app()->session['EmailSend'] = '';
 ?>
 <?php
 $batiment = Batiment::model()->findByPk($model->fk_batiment);
-$this->widget('zii.widgets.CDetailView', array(
+$this->widget('bootstrap.widgets.TbDetailView', array(
     'data' => $model,
     'attributes' => array(
         'id_ticket',
@@ -59,7 +59,7 @@ $this->widget('zii.widgets.CDetailView', array(
 echo '<br /><br />';
 echo '<h1><center><u>Historique</u></center></h1>';
 $histo = new HistoriqueTicket();
-$this->widget('zii.widgets.grid.CGridView', array(
+$this->widget('bootstrap.widgets.TbGridView', array(
     'id' => 'ticket-grid',
     'dataProvider' => $histo->searchByTicket($model->id_ticket),
     // 'filter' => $model,

@@ -2,7 +2,7 @@
 
 return array(
     'Nouveau' => 'New',
-    'En Traitement' => 'In Traitement',
+    'En Traitement' => 'In progress',
     'Cloturé' => 'Closed',
 );
 

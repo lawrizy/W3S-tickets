@@ -71,6 +71,31 @@ Yii::app()->session['NouveauTicket'] = '';
                 </tr>
             </table>
         </div>
+        <div id="language" style="text-align: center; margin-top: 20px;">
+            <?php
+            switch (Yii::app()->session['_lang'])
+            {
+                case 'fr':
+                    echo '<a href="' . Yii::app()->request->baseUrl . '/index.php/site/chooselanguageen?ctr=' . Yii::app()->request->url . '" style="margin-right: 10px;" >';
+                    echo '<img src="' . Yii::app()->request->baseUrl . '/images/en.png" /></a>';
+                    echo '<a href="' . Yii::app()->request->baseUrl . '/index.php/site/chooselanguagenl?ctr=' . Yii::app()->request->url . '">';
+                    echo '<img src="' . Yii::app()->request->baseUrl . '/images/nl.png" /></a>';
+                    break;
+                case'en':
+                    echo '<a href="' . Yii::app()->request->baseUrl . '/index.php/site/chooselanguagefr?ctr=' . Yii::app()->request->url . '" style="margin-right: 10px;">';
+                    echo '<img src="' . Yii::app()->request->baseUrl . '/images/fr.png" /></a>';
+                    echo '<a href="' . Yii::app()->request->baseUrl . '/index.php/site/chooselanguagenl?ctr=' . Yii::app()->request->url . '">';
+                    echo '<img src="' . Yii::app()->request->baseUrl . '/images/nl.png" /></a>';
+                    break;
+                default :
+                    echo '<a href="' . Yii::app()->request->baseUrl . '/index.php/site/chooselanguagefr?ctr=' . Yii::app()->request->url . '" style="margin-right: 10px;">';
+                    echo '<img src="' . Yii::app()->request->baseUrl . '/images/fr.png" /></a>';
+                    echo '<a href="' . Yii::app()->request->baseUrl . '/index.php/site/chooselanguageen?ctr=' . Yii::app()->request->url . '">';
+                    echo '<img src="' . Yii::app()->request->baseUrl . '/images/en.png" /></a>';
+                    break;
+            }
+            ?>
+        </div>
     </div>
     <!-- footer -->
 

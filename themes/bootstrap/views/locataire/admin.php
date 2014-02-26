@@ -24,6 +24,16 @@ $('.search-form form').submit(function(){
 
 <h1>Choisir un locataire</h1>
 
+
+<?php echo CHtml::link('Recherche avancée', '#', array('class' => 'search-button')); ?>
+<div class="search-form" style="display:none">
+    <?php
+    $this->renderPartial('_search', array(
+        'model' => $model,
+    ));
+    ?>
+</div><!-- search-form -->
+
 <?php
 $this->widget('bootstrap.widgets.TbGridView', array(
     'id' => 'locataire-grid',

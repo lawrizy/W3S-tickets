@@ -2,7 +2,7 @@
 
 return array(
     'Sanitaire' => 'Sanitary',
-    'Electricit&eacute;' => 'Electricity;',
+    'Electricité' => 'Electricity',
     'Ascenseurs' => 'Lift',
     'HVAC' => 'HVAC',
     'Panne d\'électricité' => 'Eletricity breakdown',
@@ -26,7 +26,7 @@ return array(
     'Mauvaise odeur au niveau des canalisations' => 'Foul smell in the piping',
     'Prise défectueuse' => 'Defective plug',
     'Badge éfectueux' => 'Defective badge',
-    'Lecteur de badge d&eacute;fectueux' => 'Defective badge reader',
+    'Lecteur de badge défectueux' => 'Defective badge reader',
     'Probléme d\'accès au batiment' => 'Building access problem',
     'Problème d\'accès au parking' => 'Parking access problem',
     'Caméra défectueuse' => 'Defective security camera',

@@ -1,9 +1,12 @@
 div.graphs
 {
+    text-align: center;
+    align-content: center;
     border: 3px outset black;
     border-radius: 2px;
     background-color: white;
     padding: 2em;
+    width: 100%;
 }
 
 div.graphs h3

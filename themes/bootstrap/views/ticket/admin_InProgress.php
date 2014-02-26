@@ -44,7 +44,7 @@ $('.search-form form').submit(function(){
 
 
 
-$this->widget('zii.widgets.grid.CGridView', array(
+$this->widget('bootstrap.widgets.TbGridView', array(
     'id' => 'ticket-grid',
     'dataProvider' => $model->searchInProgress(),
     // 'filter' => $model,

@@ -40,7 +40,7 @@ $('.search-form form').submit(function(){
 </div><!-- search-form -->
 
 <?php
-$this->widget('zii.widgets.grid.CGridView', array(
+$this->widget('bootstrap.widgets.TbGridView', array(
     'id' => 'ticket-grid',
     'dataProvider' => $model->searchClosed(),
     // 'filter' => $model,

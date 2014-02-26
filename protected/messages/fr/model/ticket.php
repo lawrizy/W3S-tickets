@@ -3,10 +3,10 @@
 return array(
 'IdTicket' => 'Id du ticket',
  'StatutTicket' => 'Statut',
- 'CategorieTicket' => 'Sous-cat&eacute;gorie',
- 'UserTicket' => 'Assign&eacute; à',
+ 'CategorieTicket' => 'Sous-catégorie',
+ 'UserTicket' => 'Assigné à',
  'DescriptifTicket' => 'Description',
- 'CanalTicket' => 'Voie de cr&eacute;ation',
+ 'CanalTicket' => 'Voie de création',
  'DateInterventionTicket' => 'Date d\'intervention',
  'EntrepriseTicket' => 'Entreprise',
  'CodeTicket' => 'Code du ticket',
@@ -14,6 +14,6 @@ return array(
  'BureauTicket' => 'Bureau',
  'LocataireTicket' => 'Locataire',
  'BatimentTicket' => 'B&acirctiment',
- 'CategTicket' => 'Cat&eacute;gorie',
+ 'CategTicket' => 'Catégorie',
 'ChampVide' => 'Le champs {attribute} ne peut être vide.',
 );

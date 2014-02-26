@@ -19,10 +19,10 @@ $this->pageTitle = Yii::app()->name;
     echo '<p>';
 
     $this->widget('bootstrap.widgets.TbLabel', array(
-        'type'=>'default', // 'success', 'warning', 'important', 'info' or 'inverse'
-        'label'=>'Sélectionnez un bâtiment pour filtrer les résultats:',
+        'type' => 'info', // 'success', 'warning', 'important', 'info' or 'inverse'
+        'label' => 'Sélectionnez un bâtiment pour filtrer les résultats:',
     ));
-    
+
     echo '</p>';
 
     echo '<p>';
@@ -30,7 +30,32 @@ $this->pageTitle = Yii::app()->name;
         $defaultSelection = $_POST['idBatiment'];
     else
         $defaultSelection = 'ALL';
-    
+
+    // TODO utiliser le widget du bootstrap pour faire la DDL
+/*
+    $this->widget('bootstrap.widgets.TbButtonGroup',
+        array
+        (
+            'type' => 'primary', // '', 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+            'buttons' => array
+            (
+                array
+                (
+                    'label' => 'Choisissez un bâtiment',
+                    'items' => array
+                    (
+                        array('label' => 'test', 'value' => 5, 'url' => '#', 'buttonType' => 'ajaxButton', 'ajaxOptions' => array
+                        (
+                            'type' => 'POST',
+                            'url' => CController::createUrl('filterbybatiment'),
+                            'data' => array('idBatiment' => 'js: this.value'),
+                            'update' => "#graphs",
+                        ),),
+                    )
+                ),
+            ),
+        ));
+*/
     echo CHtml::dropDownList
         (
         // Nom de la DDL
