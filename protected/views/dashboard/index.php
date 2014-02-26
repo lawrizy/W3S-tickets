@@ -17,7 +17,12 @@ $this->pageTitle = Yii::app()->name;
     <?php
     // DDL pour sélectionner un bâtiment spécifique
     echo '<p>';
-    echo '<label>Sélectionnez un bâtiment pour filtrer les résultats :</label>';
+
+    $this->widget('bootstrap.widgets.TbLabel', array(
+        'type'=>'default', // 'success', 'warning', 'important', 'info' or 'inverse'
+        'label'=>'Sélectionnez un bâtiment pour filtrer les résultats:',
+    ));
+    
     echo '</p>';
 
     echo '<p>';
@@ -25,7 +30,7 @@ $this->pageTitle = Yii::app()->name;
         $defaultSelection = $_POST['idBatiment'];
     else
         $defaultSelection = 'ALL';
-
+    
     echo CHtml::dropDownList
         (
         // Nom de la DDL

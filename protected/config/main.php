@@ -6,6 +6,7 @@
 // CWebApplication properties can be configured here.
 
 Yii::setPathOfAlias('chartjs', dirname(__FILE__) . '/../extensions/yii-chartjs');
+Yii::setPathOfAlias('bootstrap', dirname(__FILE__) . '/../extensions/bootstrap');
 
 return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
@@ -24,9 +25,14 @@ return array(
         'ext.yii-mail.YiiMailMessage',
         //'application.extensions.yii-mail.YiiMailMessage',
     ),
+    'theme' => 'classic',
+    //'theme' => 'bootstrap',
     'modules' => array(
         // uncomment the following to enable the Gii tool
         'gii' => array(
+            'generatorPaths' => array(
+                'bootstrap.gii',
+            ),
             'class' => 'system.gii.GiiModule',
             'password' => 'giipass',
             // If removed, Gii defaults to localhost only. Edit carefully to taste.
@@ -35,6 +41,9 @@ return array(
     ),
     // application components
     'components' => array(
+        'bootstrap' => array(
+            'class' => 'bootstrap.components.Bootstrap',
+        ),
         'mail' => array(
             'class'=>'ext.yii-mail.YiiMail',
             'transportType' => 'smtp',
