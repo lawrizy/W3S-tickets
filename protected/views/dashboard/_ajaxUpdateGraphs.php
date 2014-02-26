@@ -1,10 +1,15 @@
 <?php
 
+/**
+ * @var $this DashboardController
+ */
+
 // Graphique en bâtonnets -> fréquence des catégories d'incidents (Pour tous les bâtiments ou pour un bâtiment spécifique)
 
-if ($idBatiment == 'ALL') {
+if ($idBatiment == 'ALL')
+{ // Cas 1 : sélectionner tous les bâtiments
     ?>
-    <p><h3 style="text-align: center;">Fréquence des catégories d'incidents (Tous les bâtiments)</h3></p>
+    <p><h3>Fréquence des catégories d'incidents (Tous les bâtiments)</h3></p>
     <?php
 
     ?>
@@ -28,7 +33,7 @@ if ($idBatiment == 'ALL') {
     );
     ?></div><?php
 
-    echo '<p><h3 style="text-align: center;">Fréquence des statuts de tickets</h3></p>';
+    echo '<p><h3>Fréquence des statuts de tickets (Tous les bâtiments)</h3></p>';
 
     $this->widget(
         'chartjs.widgets.ChPie', array(
@@ -58,11 +63,10 @@ if ($idBatiment == 'ALL') {
             ()
         )
     );
-
-    // TODO ajouter graphique -> nombre d'incidents (en fonction du statut) par bâtiment
-
-} else {
-    echo '<p><h3 style="text-align: center;">Fréquence des catégories d\'incidents (Bâtiment : ';
+}
+else
+{ // Cas 2 : Un bâtiment spécifique a été sélectionné
+    echo '<p><h3>Fréquence des catégories d\'incidents (Bâtiment : ';
     echo Batiment::model()->findByAttributes(array('id_batiment' => $idBatiment))->nom;
     ?><?php echo ') </h3></p>'; ?>
 
@@ -84,7 +88,9 @@ if ($idBatiment == 'ALL') {
             'options' => array()
         )
     );
-    echo '<p><h3>Fréquence des statuts de tickets</h3></p>';
+    echo '<p><h3>Fréquence des statuts de tickets (Bâtiment: '
+        . Batiment::model()->findByAttributes(array('id_batiment' => $idBatiment))->nom
+        . ')</h3></p>';
 
 
     $this->widget(
@@ -101,4 +107,66 @@ if ($idBatiment == 'ALL') {
     );
 }
 
+                // Placer les graphiques indépendants ci-dessous
+
+// Graphique des fréquences des entreprises appelées
+
+?>
+<br/><br/><br/>
+
+<h3>Fréquence d'appel des entreprises (pour tous les tickets)</h3>
+<?php
+$entrepriseFreqAllData = $this->actionGetFrequenceCalledEntreprise();
+//print_r($entrepriseFreqAllData);
+$color_step = 100;
+$r = 0;
+$g = 0;
+$b = 0;
+$entryCount = 1;
+$entrepriseFreqDataSet = array();
+
+foreach ($entrepriseFreqAllData as $key => $value)
+{
+    // Change couleur
+    switch ($entryCount * rand(1, 1000) % 3)
+    {
+        case 0:
+            $r += $color_step;
+            if ($r > 255) $r -= 255;
+            break;
+        case 1:
+            $g += $color_step;
+            if ($g > 255) $g -= 255;
+            break;
+        case 2:
+            $b += $color_step;
+            if ($b > 255) $b -= 255;
+            break;
+    }
+    $entryCount;
+    ++$entryCount;
+
+    // Construire le dataset
+    $name = array_keys($value)[0];
+    $count = array_values($value)[0];
+    $set = array(
+        "color" => "rgba(" . $r . "," . $g . "," . $b . ", 1)",
+        "label" => $name . ": " . $count,
+        "value" => (int)$count,
+    );
+
+    array_push($entrepriseFreqDataSet, $set);
+}
+
+$this->widget(
+    'chartjs.widgets.ChPie', array(
+        'width' => 175,
+        'height' => 175,
+        'htmlOptions' => array(),
+        'drawLabels' => true,
+        'datasets' => $entrepriseFreqDataSet,
+        'options' => array()
+    )
+);
+// ******************** END ************************
 ?>

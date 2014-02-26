@@ -1,56 +1,67 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/graphs.css"
+          media="screen, projection"/>
+</head>
+
+<body>
 <?php
 /* @var $this DashboardController */
 
 $this->pageTitle = Yii::app()->name;
 ?>
 
-    <center><h1>Tableau de bord</h1></center>
+<h1 style="text-align: center;">Tableau de bord</h1>
 
-    <p>
-<?php
-// DDL pour sélectionner un bâtiment spécifique
-echo '<p>';
-echo '<label>Sélectionnez un bâtiment pour filtrer les résultats :</label>';
-echo '</p>';
-echo '<p>';
+<div class="graphsDropDownList">
+    <?php
+    // DDL pour sélectionner un bâtiment spécifique
+    echo '<p>';
+    echo '<label>Sélectionnez un bâtiment pour filtrer les résultats :</label>';
+    echo '</p>';
 
-if (isset($_POST['idBatiment']))
-    $defaultSelection = $_POST['idBatiment'];
-else
-    $defaultSelection = 'ALL';
+    echo '<p>';
+    if (isset($_POST['idBatiment']))
+        $defaultSelection = $_POST['idBatiment'];
+    else
+        $defaultSelection = 'ALL';
 
-echo CHtml::dropDownList
-    (
-    // Nom de la DDL
-        'batiment_selector',
-        // Selection
-        $defaultSelection,
-        // Data
-        array
+    echo CHtml::dropDownList
         (
-            'ALL' => 'Tous les bâtiments',
-            CHtml::listData(Batiment::model()->findAll(), 'id_batiment', 'nom'),
-        ),
-        // htmlOptions
-        array
-        (
-            'ajax' => array
+        // Nom de la DDL
+            'batiment_selector',
+            // Selection
+            $defaultSelection,
+            // Data
+            array
             (
-                'type' => 'POST',
-                'url' => CController::createUrl('filterbybatiment'),
-                'data' => array('idBatiment' => 'js: this.value'),
-                'update' => "#graphs",
+                'ALL' => 'Tous les bâtiments',
+                CHtml::listData(Batiment::model()->findAll(), 'id_batiment', 'nom'),
             ),
-        )
-    );
+            // htmlOptions
+            array
+            (
+                'ajax' => array
+                (
+                    'type' => 'POST',
+                    'url' => CController::createUrl('filterbybatiment'),
+                    'data' => array('idBatiment' => 'js: this.value'),
+                    'update' => "#graphs",
+                ),
+            )
+        );
+    ?>
+</div>
+<!-- FIN DIV DROPDOWNLIST GRAPHS -->
 
-echo '</p>'; // Fin paragraphe dropDownList + bouton rafraichir
+<div id="graphs" class="graphs">
+    <?php
+    // Voir le fichier _ajaxUpdateGraphs.php pour la construction des graphiques.
+    $this->renderPartial('_ajaxUpdateGraphs', array('idBatiment' => 'ALL'));
+    ?>
 
-echo '<div id="graphs">';
-// Voir le fichier _ajaxUpdateGraphs.php pour la construction des graphiques.
-$this->renderPartial('_ajaxUpdateGraphs', array('idBatiment' => 'ALL'));
-echo '</div>';
-?>
+</div>
+<!-- END DIV Graphs -->
 
 <!--
 <div id="quickstats">
@@ -61,5 +72,5 @@ echo '</div>';
 </ul>
 </div>
 -->
-
-</p>
+</body>
+</html>

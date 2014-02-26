@@ -1,0 +1,21 @@
+div.graphs
+{
+    border: 3px outset black;
+    border-radius: 2px;
+    background-color: white;
+    padding: 2em;
+}
+
+div.graphs h3
+{
+    text-align: center;
+    font-family: Verdana;
+}
+
+div.graphsDropDownList
+{
+    content: normal;
+    text-align: center;
+    font-weight: 900;
+    font-family: Verdana;
+}
