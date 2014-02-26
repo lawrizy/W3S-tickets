@@ -25,8 +25,8 @@ return array(
         'ext.yii-mail.YiiMailMessage',
         //'application.extensions.yii-mail.YiiMailMessage',
     ),
-    'theme' => 'classic',
-    //'theme' => 'bootstrap',
+    //'theme' => 'classic',
+    'theme' => 'bootstrap',
     'modules' => array(
         // uncomment the following to enable the Gii tool
         'gii' => array(

@@ -98,6 +98,7 @@ class Ticket extends CActiveRecord {
         $criteria = new CDbCriteria;
 
         $criteria->compare('id_ticket', $this->id_ticket);
+        $criteria->compare('code_ticket', $this->code_ticket);
         $criteria->compare('fk_statut', $this->fk_statut);
         $criteria->compare('fk_categorie', $this->fk_categorie);
         $criteria->compare('fk_batiment', $this->fk_batiment);
@@ -116,6 +117,7 @@ class Ticket extends CActiveRecord {
         $criteria = new CDbCriteria;
 
         $criteria->compare('id_ticket', $this->id_ticket);
+        $criteria->compare('code_ticket', $this->code_ticket);
         $criteria->compare('fk_statut', $this->fk_statut = 1);
         $criteria->compare('fk_categorie', $this->fk_categorie);
         $criteria->compare('fk_batiment', $this->fk_batiment);
@@ -134,6 +136,7 @@ class Ticket extends CActiveRecord {
         $criteria = new CDbCriteria;
 
         $criteria->compare('id_ticket', $this->id_ticket);
+        $criteria->compare('code_ticket', $this->code_ticket);
         $criteria->compare('fk_statut', $this->fk_statut = 2);
         $criteria->compare('fk_categorie', $this->fk_categorie);
         $criteria->compare('fk_batiment', $this->fk_batiment);
@@ -152,6 +155,7 @@ class Ticket extends CActiveRecord {
         $criteria = new CDbCriteria;
 
         $criteria->compare('id_ticket', $this->id_ticket);
+        $criteria->compare('code_ticket', $this->code_ticket);
         $criteria->compare('fk_statut', $this->fk_statut = 3);
         $criteria->compare('fk_categorie', $this->fk_categorie);
         $criteria->compare('fk_batiment', $this->fk_batiment);
@@ -170,6 +174,7 @@ class Ticket extends CActiveRecord {
         $criteria = new CDbCriteria;
 
         $criteria->compare('id_ticket', $this->id_ticket);
+        $criteria->compare('code_ticket', $this->code_ticket);
         $criteria->compare('fk_statut', $this->fk_statut);
         $criteria->compare('fk_categorie', $this->fk_categorie);
         $criteria->compare('fk_batiment', $this->fk_batiment);
@@ -210,10 +215,4 @@ class Ticket extends CActiveRecord {
         $cat = CategorieIncident::model()->findByPk($sousCat->fk_parent);
         return $cat->id_categorie_incident;
     }
-
-    public function getLieu() {
-        //$result = Batiment::model()->findByPk();
-        //return $this->adresse . ', ' . $result->cp . ' ' . $result->commune . ' nom: ' . $result->nom;
-    }
-
 }
