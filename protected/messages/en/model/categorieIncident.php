@@ -2,10 +2,10 @@
 
 return array(
     'Sanitaire' => 'Sanitary',
-    'Electricit&eacute;' => 'Electricity;',
+    'Electricité' => 'Electricity',
     'Ascenseurs' => 'Lift',
     'HVAC' => 'HVAC',
-    'Panne d\'électricité' => 'Eletricity breakdown',
+    'Panne d\'électricité' => 'Electricity breakdown',
     'Ampoule / néon défectueux' => 'Bulb /defective neon',
     'Fuite eau' => 'Water leak',
     'WC bouché' => 'Blocked WC',

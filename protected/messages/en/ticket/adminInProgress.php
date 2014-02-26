@@ -1,10 +1,9 @@
 <?php
 
 return array(
-    'MenuTicketEnCours' => 'Tickets in progress',
+    'AdminInProgressTitre' => 'Tickets in progress',
     'MenuTicketNouveau' => 'News tickets',
+    'MenuTicketTout' => 'All tickets',
     'MenuTicketFerme' => 'Tickets closed',
     'RechercheAvancee' => 'Advanced search',
-    'AdminTitre' => 'All tickets',
-    'AdminTraitementTitre' => 'Tickets in progress ',
 );

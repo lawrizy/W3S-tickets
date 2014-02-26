@@ -1,11 +1,9 @@
 <?php
 
 return array(
+    'AdminOpenedTitre' => 'Nouveaux tickets ',
     'MenuTicketEnCours' => 'Tickets en cours de traitement',
-    'MenuTicketNouveau' => 'Nouveaux tickets',
+    'MenuTicketTout' => 'Tous les tickets',
     'MenuTicketFerme' => 'Tickets cloturés',
     'RechercheAvancee' => 'Recherche avancée',
-    'AdminTitre' => 'Tous les tickets',
-    'AdminTraitementTitre' => 'Tickets en cours de traitement',
 );
-
