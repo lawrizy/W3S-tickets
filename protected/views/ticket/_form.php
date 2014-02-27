@@ -31,7 +31,7 @@
                 array // Cette array remplit la dropDownList avec les catégories mères disponibles dans la DB.
             (
             '' => '',
-            CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL)), 'id_categorie_incident', 'label')
+            CHtml::encodeArray($this->getCategoriesLabel(), 'id_categorie_incident', 'label')
                 ), array // Cette array définit le chargement dynamique des valeurs dans la dropDownList des sous-catégories. (Voir dropDownList suivante appelée DD_sousCat)
             (
             'ajax' => array
@@ -40,10 +40,17 @@
                 'url' => CController::createUrl('getsouscategoriesdynamiques'),
                 'data' => array('paramID' => 'js:this.value'),
                 'update' => '#DD_sousCat',
-            )
+            )   
                 )
         );
 
+//        echo '<br> <br>';
+//        print_r($this->getCategoriesLabel());
+//        echo '<br> <br>';
+//
+//        print_r(CHtml::listData($this->getCategoriesLabel(), 'id_categorie_incident', 'label'));
+//        echo '<br> <br>';
+        //   print_r(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL)));
         // Form pour la sélection de la sous-catégorie.
         echo $form->labelEx($model, 'fk_categorie');
         // Cette dropDownList est initialisée vide car elle sera remplie après la sélection d'une catégorie ci-dessus.

@@ -1,9 +1,4 @@
 <?php
-if (isset(Yii::app()->session['_lang'])) {
-    Yii::app()->language = Yii::app()->session['_lang'];
-} else {
-    Yii::app()->language = 'en';
-}
 $this->pageTitle = Yii::app()->name;
 ?>
 
