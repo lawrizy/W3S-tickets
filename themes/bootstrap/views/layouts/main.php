@@ -28,7 +28,10 @@ $this->widget('bootstrap.widgets.TbNavbar', array(
                 array('label' => Yii::t('main/MenuBar', 'Contact'), 'url' => array('/site/contact')),
                 array('label' => Yii::t('/main/MenuBar', 'CreerTicket'), 'url' => array('/locataire/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
                 array('label' => Yii::t('/main/MenuBar', 'ListeTicket'), 'url' => array('/ticket/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
-                array('label' => Yii::t('/main/MenuBar', 'DashBoard'), 'url' => array('dashboard/vue'), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $var['fk_fonction'] == 2),
+                //array('label' => Yii::t('/main/MenuBar', 'DashBoard'), 'url' => array('dashboard/vue'), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $var['fk_fonction'] == 2),
+                array('label' => Yii::t('/main/MenuBar', 'DashBoard'), 'url' => array(''),
+                    'items' => array(array('label' => 'Graphiques', 'url' => array('dashboard/vue'))),
+                    'visible' => Yii::app()->session['Utilisateur'] == 'User' && $var['fk_fonction'] == 2),
                 array('label' => Yii::t('/main/MenuBar', 'Creer') . Yii::app()->session['NouveauTicket'] . ' ticket', 'url' => array('/ticket/create'), 'visible' => Yii::app()->session['Utilisateur'] == 'Locataire'),
                 array('label' => Yii::t('main/MenuBar', 'Connexion'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
                 array('label' => Yii::t('main/MenuBar', 'DeConnexion') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
@@ -41,6 +44,7 @@ Yii::app()->session['NouveauTicket'] = '';
 </div>
 
 <!-- END HEADER -->
+
 
 <!-- CONTAINER -->
 <div class="container" id="page">
@@ -57,7 +61,8 @@ Yii::app()->session['NouveauTicket'] = '';
 
     <br/><br/><br/>
     <div id="footer">
-        <div id="copyright" style="text-align: center;">
+        <hr>
+        <div id="copyright">
         Copyright &copy; <?php echo date('Y') . ' ' . Yii::t('index', 'Par'); ?>  <a href="http://web3sys.com">Web3Sys</a>.<br/>
         <?php echo Yii::t('index', 'DroitsReserve'); ?><br/>
         <?php echo Yii::powered(); ?>

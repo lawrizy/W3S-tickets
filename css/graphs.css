@@ -1,15 +1,18 @@
-div.graphs
+table.tableGraphs td
 {
+    vertical-align: top;
     text-align: center;
     align-content: center;
-    <!--border: 3px outset black;-->
+}
+
+div.graphs
+{
     border-radius: 2px;
     background-color: white;
-    padding: 2em;
     width: 100%;
 }
 
-div.graphs h3
+div.graphs h5
 {
     text-align: center;
     font-family: Verdana;

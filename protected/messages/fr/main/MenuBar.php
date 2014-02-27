@@ -5,7 +5,7 @@ return array(
     'Contact' => 'Contact',
     'CreerTicket' => 'Créer un nouveau ticket',
     'ListeTicket' => 'Liste des tickets',
-    'DashBoard' => 'Tableaux de bord',
+    'DashBoard' => 'Tableau de bord',
     'Connexion' => 'Connexion',
     'Creer' => 'Créer',
     'DeConnexion' => 'Déconnexion'

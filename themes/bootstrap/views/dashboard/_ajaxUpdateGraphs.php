@@ -4,7 +4,7 @@
  */
 ?>
 
-<table>
+<table class="tableGraphs">
     <tr>
         <?php
         if ($idBatiment == 'ALL')

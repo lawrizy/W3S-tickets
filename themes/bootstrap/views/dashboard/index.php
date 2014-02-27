@@ -13,7 +13,7 @@ $this->pageTitle = Yii::app()->name;
 
 <h1 style="text-align: center;">Tableau de bord</h1>
 
-<div class="graphsDropDownList" style="text-align: center; align-content: center;">
+<div class="graphsDropDownList" style="text-align: left; align-content: left;">
     <?php
     // DDL pour sélectionner un bâtiment spécifique
     echo '<p>';
@@ -25,12 +25,12 @@ $this->pageTitle = Yii::app()->name;
 
     echo '</p>';
 
-    echo '<p>';
     if (isset($_POST['idBatiment']))
         $defaultSelection = $_POST['idBatiment'];
     else
         $defaultSelection = 'ALL';
 
+    echo '<p>';
     // TODO utiliser le widget du bootstrap pour faire la DDL
 /*
     $this->widget('bootstrap.widgets.TbButtonGroup',
