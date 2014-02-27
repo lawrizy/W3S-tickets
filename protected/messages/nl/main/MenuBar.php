@@ -7,6 +7,6 @@ return array(
     'ListeTicket' => 'Overzicht van de tickets',
     'DashBoard' => 'Dashboard',
     'Connexion' => 'Inloggen',
-    'Creer' => 'Maken',
+    'Creer' => 'Maaken',
     'DeConnexion' => 'Uitloggen',
 );
