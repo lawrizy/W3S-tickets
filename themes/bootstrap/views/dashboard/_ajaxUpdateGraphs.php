@@ -165,8 +165,9 @@
             "label" => $name . ": " . $count,
             "value" => (int)$count,
         );
-
-        array_push($entrepriseFreqDataSet, $set);
+        
+        if($count > 0)
+            array_push($entrepriseFreqDataSet, $set);
     }
 
     $this->widget(

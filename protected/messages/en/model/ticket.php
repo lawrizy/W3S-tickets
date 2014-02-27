@@ -1,7 +1,7 @@
 <?php
 
 return array(
-    'IdTicket' => 'Id du ticket',
+    'IdTicket' => 'Ticket ID',
     'StatutTicket' => 'Status',
     'CategorieTicket' => 'Sub-category',
     'UserTicket' => 'Assigned to ',
@@ -12,7 +12,7 @@ return array(
     'CodeTicket' => 'Ticket code ',
     'EtageTicket' => 'Floor',
     'BureauTicket' => 'Office',
-    'LocataireTicket' => 'Roommate',
+    'LocataireTicket' => 'Tenant',
     'BatimentTicket' => 'Building',
     'CategTicket' => 'Category',
     'ChampVide' => 'The field {attribute} cannot be blank.',
