@@ -51,7 +51,7 @@ Yii::app()->language = Yii::app()->session['_lang'];
                 </div>
                 <div id="aaaa"><table>
                         <tr>
-                            <td width="50%"><a href=<?php echo Yii::app()->request->baseUrl; ?>><img  src="http://web3sys.com/tickets/images/HServices.png"></img></a></td>
+                            <td width="50%"><a href=<?php echo Yii::app()->request->baseUrl.'/index.php'; ?>><img  src="http://web3sys.com/tickets/images/HServices.png"></img></a></td>
                             <?php
 //                                if (Yii::app()->getController()->getAction()->id == 'traitement' || Yii::app()->getController()->getAction()->id == 'update' || Yii::app()->getController()->getAction()->id == 'close'|| Yii::app()->getController()->getAction()->id == 'create')
 //                                    echo "../../../images/HServices.png";

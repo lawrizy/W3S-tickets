@@ -2,7 +2,7 @@
 
 return array(
     'MenuTicketEnCours' => 'Tickets in progress',
-    'MenuTicketNouveau' => 'News tickets',
+    'MenuTicketNouveau' => 'New tickets',
     'MenuTicketFerme' => 'Tickets closed',
     'RechercheAvancee' => 'Advanced search',
     'AdminTitre' => 'All tickets',

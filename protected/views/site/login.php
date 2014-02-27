@@ -27,13 +27,13 @@ $this->breadcrumbs = array(
     <p class="note"><?php echo Yii::t('/site/login', 'Required'); ?></p>
 
     <div class="row">
-        <?php echo '<label > Email :  <span class="required">*<br></span>'; ?>
+        <?php echo '<label >'.Yii::t('/site/login','EmailForm').' <span class="required">*<br></span>'; ?>
         <?php echo $form->textField($model, 'username'); ?>
         <?php echo $form->error($model, 'username'); ?>
     </div>
 
     <div class="row">
-        <?php echo '<label > Mot de passe :  <span class="required">*<br></span>'; ?>
+        <?php echo '<label >'.Yii::t('/site/login','MdpForm').' <span class="required">*<br></span>'; ?>
         <?php echo $form->passwordField($model, 'password'); ?>
         <?php echo $form->error($model, 'password'); ?>
     </div>

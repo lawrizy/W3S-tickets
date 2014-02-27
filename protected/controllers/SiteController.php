@@ -123,5 +123,9 @@ class SiteController extends Controller {
         Yii::app()->session['_lang'] = 'en';
         header("Location: $ctr");
     }
-
+    public function actionChooseLanguageNl() {
+        $ctr = $_GET['ctr'];
+        Yii::app()->session['_lang'] = 'nl';
+        header("Location: $ctr");
+    }
 }

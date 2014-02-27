@@ -8,6 +8,8 @@ return array(
     'AjaxStatutClosed' => ' closed',
     'AjaxFrenquenceEntreprise' => 'Ticket\'s number by entreprise (all tickets)',
     'AjaxFrequenceUnBatiment' => 'Ticket\'s number by categorie (Building : ',
-    'AjaxFrequenceStatutTicket' => 'Ticket\'s number by status (Bâtiment: ',
+    'AjaxFrequenceStatutTicket' => 'Ticket\'s number by status (Building: ',
 );
+
+
 

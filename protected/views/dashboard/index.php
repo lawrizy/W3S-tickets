@@ -11,6 +11,7 @@
         $this->pageTitle = Yii::app()->name;
         ?>
 
+
         <h1 style="text-align: center;"><?php echo Yii::t('/dashboard/index', 'Titre') ?></h1>
 
         <div class="graphsDropDownList">
@@ -20,7 +21,7 @@
 
             $this->widget('bootstrap.widgets.TbLabel', array(
                 'type' => 'default', // 'success', 'warning', 'important', 'info' or 'inverse'
-                'label' => Yii::t('/dashboard/index','SelectionnerBat'),
+                'label' => Yii::t('/dashboard/index', 'SelectionnerBat'),
             ));
 
             echo '</p>';
@@ -40,7 +41,7 @@
                     // Data
                     array
                 (
-                'ALL' =>  Yii::t('/dashboard/index','AllBatiment'),
+                'ALL' => Yii::t('/dashboard/index', 'AllBatiment'),
                 CHtml::listData(Batiment::model()->findAll(), 'id_batiment', 'nom'),
                     ),
                     // htmlOptions
@@ -65,17 +66,16 @@
             $this->renderPartial('_ajaxUpdateGraphs', array('idBatiment' => 'ALL'));
             ?>
 
-        </div>
-        <!-- END DIV Graphs -->
+            <!-- END DIV Graphs -->
 
-        <!--
-        <div id="quickstats">
-        <br/><br/>
-        <h3 style="text-align: center;">Quick stats</h3>
-        <ul>
-            <li>Bâtiment avec le plus de tickets ouverts: </li>
-        </ul>
-        </div>
-        -->
+            <!--
+            <div id="quickstats">
+            <br/><br/>
+            <h3 style="text-align: center;">Quick stats</h3>
+            <ul>
+                <li>Bâtiment avec le plus de tickets ouverts: </li>
+            </ul>
+            </div>
+            -->
     </body>
 </html>

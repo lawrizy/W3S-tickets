@@ -2,7 +2,7 @@
 
 return array(
     'AdminInProgressTitre' => 'Tickets in progress',
-    'MenuTicketNouveau' => 'News tickets',
+    'MenuTicketNouveau' => 'New tickets',
     'MenuTicketTout' => 'All tickets',
     'MenuTicketFerme' => 'Tickets closed',
     'RechercheAvancee' => 'Advanced search',

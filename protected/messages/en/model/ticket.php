@@ -3,7 +3,7 @@
 return array(
     'IdTicket' => 'Id du ticket',
     'StatutTicket' => 'Status',
-    'CategorieTicket' => 'Sub-categorie',
+    'CategorieTicket' => 'Sub-category',
     'UserTicket' => 'Assigned to ',
     'DescriptifTicket' => 'Description',
     'CanalTicket' => 'Way of creation',
@@ -12,8 +12,8 @@ return array(
     'CodeTicket' => 'Ticket code ',
     'EtageTicket' => 'Floor',
     'BureauTicket' => 'Office',
-    'LocataireTicket' => 'Roomate',
+    'LocataireTicket' => 'Roommate',
     'BatimentTicket' => 'Building',
-    'CategTicket' => 'Categorie',
+    'CategTicket' => 'Category',
     'ChampVide' => 'The field {attribute} cannot be blank.',
 );
