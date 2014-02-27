@@ -4,9 +4,9 @@
 
 
 $this->menu = array(
-    array('label' => 'Tous les tickets ', 'url' => array('/ticket/admin/?var=admin')),
-    array('label' => 'Nouveaux tickets ', 'url' => array('/ticket/admin?var=admin_opened')),
-    array('label' => 'Tickets en cours de traitement', 'url' => array('/ticket/admin?var=admin_InProgress')),
+    array('label' =>Yii::t('/ticket/adminClosed','MenuTicketTout'), 'url' => array('/ticket/admin/?var=admin')),
+    array('label' =>Yii::t('/ticket/adminClosed','MenuTicketNouveau'), 'url' => array('/ticket/admin?var=admin_opened')),
+    array('label' =>Yii::t('/ticket/adminClosed','MenuTicketInProgress'), 'url' => array('/ticket/admin?var=admin_InProgress')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -23,14 +23,14 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1> Tickets cloturés</h1>
+<h1><?php echo Yii::t('/ticket/adminClosed','AdminClosedTitre');?></h1>
 
 <!--<p>
     You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
     or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
 </p>-->
 
-<?php echo CHtml::link('Recherche Avancée', '#', array('class' => 'search-button')); ?>
+<?php echo CHtml::link(Yii::t('/ticket/adminClosed','RechercheAvancee'), '#', array('class' => 'search-button')); ?>
 <div class="search-form" style="display:none">
     <?php
     $this->renderPartial('_search', array(

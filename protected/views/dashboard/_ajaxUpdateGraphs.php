@@ -1,22 +1,16 @@
 <?php
-
 /**
  * @var $this DashboardController
  */
-
 // Graphique en bâtonnets -> fréquence des catégories d'incidents (Pour tous les bâtiments ou pour un bâtiment spécifique)
 
-if ($idBatiment == 'ALL')
-{ // Cas 1 : sélectionner tous les bâtiments
+if ($idBatiment == 'ALL') { // Cas 1 : sélectionner tous les bâtiments
     ?>
-    <p><h3>Fréquence des catégories d'incidents (Tous les bâtiments)</h3></p>
-    <?php
-
-    ?>
+    <p><h3><?php echo Yii::t('/dashboard/ajax', 'AjaxTitre'); ?></h3></p>
+    <?php ?>
     <div><?php
-
-    $this->widget(
-        'chartjs.widgets.ChBars', array(
+        $this->widget(
+                'chartjs.widgets.ChBars', array(
             'width' => 500,
             'height' => 200,
             'htmlOptions' => array(),
@@ -29,92 +23,87 @@ if ($idBatiment == 'ALL')
                 )
             ),
             'options' => array()
-        )
-    );
-    ?></div><?php
-
-    echo '<p><h3>Fréquence des statuts de tickets (Tous les bâtiments)</h3></p>';
+                )
+        );
+        ?></div><?php
+    echo '<p><h3>' . Yii::t('dashboard/ajax', 'AjaxStatutTicket') . '</h3></p>';
 
     $this->widget(
-        'chartjs.widgets.ChPie', array(
-            'width' => 175,
-            'height' => 175,
-            'htmlOptions' => array(),
-            'drawLabels' => true,
-            //'animation' => false,
-            'datasets' => array(
-                array(
-                    "value" => (int)Ticket::model()->countByAttributes(array('fk_statut' => 1)),
-                    "color" => "rgba(220, 0,0,1)",
-                    "label" => (int)Ticket::model()->countByAttributes(array('fk_statut' => 1)) . " nouveau(x)"
-                ),
-                array(
-                    "value" => (int)Ticket::model()->countByAttributes(array('fk_statut' => 2)),
-                    "color" => "rgba(242,106,22,1)",
-                    "label" => (int)Ticket::model()->countByAttributes(array('fk_statut' => 2)) . " en cours"
-                ),
-                array(
-                    "value" => (int)Ticket::model()->countByAttributes(array('fk_statut' => 3)),
-                    "color" => "rgba(66,200,22,1)",
-                    "label" => (int)Ticket::model()->countByAttributes(array('fk_statut' => 3)) . " clôturé(s)"
-                ),
+            'chartjs.widgets.ChPie', array(
+        'width' => 175,
+        'height' => 175,
+        'htmlOptions' => array(),
+        'drawLabels' => true,
+        //'animation' => false,
+        'datasets' => array(
+            array(
+                "value" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 1)),
+                "color" => "rgba(220, 0,0,1)",
+                "label" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 1)) . Yii::t('dashboard/ajax', 'AjaxStatutNew')
             ),
-            'options' => array
-            ()
-        )
+            array(
+                "value" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 2)),
+                "color" => "rgba(242,106,22,1)",
+                "label" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 2)) . Yii::t('dashboard/ajax', 'AjaxStatutInProgress')
+            ),
+            array(
+                "value" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 3)),
+                "color" => "rgba(66,200,22,1)",
+                "label" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 3)) . Yii::t('dashboard/ajax', 'AjaxStatutClosed')
+            ),
+        ),
+        'options' => array
+        ()
+            )
     );
-}
-else
-{ // Cas 2 : Un bâtiment spécifique a été sélectionné
-    echo '<p><h3>Fréquence des catégories d\'incidents (Bâtiment : ';
-    echo Batiment::model()->findByAttributes(array('id_batiment' => $idBatiment))->nom;
-    ?><?php echo ') </h3></p>'; ?>
+} else { // Cas 2 : Un bâtiment spécifique a été sélectionné
+    echo '<p><h3>'.Yii::t('/dashboard/ajax','AjaxFrequenceUnBatiment').
+    Batiment::model()->findByAttributes(array('id_batiment' => $idBatiment))->nom
+    . ') </h3></p>';
+    ?>
 
     <?php
-
     $this->widget(
-        'chartjs.widgets.ChBars', array(
-            'width' => 500,
-            'height' => 200,
-            'htmlOptions' => array(),
-            'labels' => $this->actionGetCategoriesLabel(),
-            'datasets' => array(
-                array(
-                    "fillColor" => "rgba(34,167,212,1)",
-                    "strokeColor" => "#AAAAAA",
-                    "data" => $this->actionGetTicketByCategorieForBatimentID($idBatiment),
-                )
-            ),
-            'options' => array()
-        )
+            'chartjs.widgets.ChBars', array(
+        'width' => 500,
+        'height' => 200,
+        'htmlOptions' => array(),
+        'labels' => $this->actionGetCategoriesLabel(),
+        'datasets' => array(
+            array(
+                "fillColor" => "rgba(34,167,212,1)",
+                "strokeColor" => "#AAAAAA",
+                "data" => $this->actionGetTicketByCategorieForBatimentID($idBatiment),
+            )
+        ),
+        'options' => array()
+            )
     );
-    echo '<p><h3>Fréquence des statuts de tickets (Bâtiment: '
-        . Batiment::model()->findByAttributes(array('id_batiment' => $idBatiment))->nom
-        . ')</h3></p>';
+    echo '<p><h3>'.Yii::t('/dashboard/ajax','AjaxFrequenceStatutTicket')
+    . Batiment::model()->findByAttributes(array('id_batiment' => $idBatiment))->nom
+    . ')</h3></p>';
 
 
     $this->widget(
-        'chartjs.widgets.ChPie', array(
-            'width' => 175,
-            'height' => 175,
-            'htmlOptions' => array(),
-            'drawLabels' => true,
+            'chartjs.widgets.ChPie', array(
+        'width' => 175,
+        'height' => 175,
+        'htmlOptions' => array(),
+        'drawLabels' => true,
 //'animation' => false,
-            'datasets' => $this->actionGetTicketByStatusForBatimentID($idBatiment),
-            'options' => array
-            ()
-        )
+        'datasets' => $this->actionGetTicketByStatusForBatimentID($idBatiment),
+        'options' => array
+        ()
+            )
     );
 }
 
-                // Placer les graphiques indépendants ci-dessous
-
+// Placer les graphiques indépendants ci-dessous
 // Graphique des fréquences des entreprises appelées
-
 ?>
 <br/><br/><br/>
 
-<h3>Fréquence d'appel des entreprises (pour tous les tickets)</h3>
+<h3><?php echo Yii::t('dashboard/ajax', 'AjaxFrenquenceEntreprise'); ?></h3>
 <?php
 $entrepriseFreqAllData = $this->actionGetFrequenceCalledEntreprise();
 //print_r($entrepriseFreqAllData);
@@ -125,22 +114,23 @@ $b = 0;
 $entryCount = 1;
 $entrepriseFreqDataSet = array();
 
-foreach ($entrepriseFreqAllData as $key => $value)
-{
+foreach ($entrepriseFreqAllData as $key => $value) {
     // Change couleur
-    switch ($entryCount * rand(1, 1000) % 3)
-    {
+    switch ($entryCount * rand(1, 1000) % 3) {
         case 0:
             $r += $color_step;
-            if ($r > 255) $r -= 255;
+            if ($r > 255)
+                $r -= 255;
             break;
         case 1:
             $g += $color_step;
-            if ($g > 255) $g -= 255;
+            if ($g > 255)
+                $g -= 255;
             break;
         case 2:
             $b += $color_step;
-            if ($b > 255) $b -= 255;
+            if ($b > 255)
+                $b -= 255;
             break;
     }
     $entryCount;
@@ -152,21 +142,21 @@ foreach ($entrepriseFreqAllData as $key => $value)
     $set = array(
         "color" => "rgba(" . $r . "," . $g . "," . $b . ", 1)",
         "label" => $name . ": " . $count,
-        "value" => (int)$count,
+        "value" => (int) $count,
     );
 
     array_push($entrepriseFreqDataSet, $set);
 }
 
 $this->widget(
-    'chartjs.widgets.ChPie', array(
-        'width' => 175,
-        'height' => 175,
-        'htmlOptions' => array(),
-        'drawLabels' => true,
-        'datasets' => $entrepriseFreqDataSet,
-        'options' => array()
-    )
+        'chartjs.widgets.ChPie', array(
+    'width' => 175,
+    'height' => 175,
+    'htmlOptions' => array(),
+    'drawLabels' => true,
+    'datasets' => $entrepriseFreqDataSet,
+    'options' => array()
+        )
 );
 // ******************** END ************************
 ?>

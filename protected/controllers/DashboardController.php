@@ -178,7 +178,7 @@ class DashboardController extends Controller
         $listLabel = array();
         foreach ($datas as $data)
         {
-            array_push($listLabel, $data['label']);
+            array_push($listLabel, Yii::t('model/categorieIncident',$data['label']));
         }
         return $listLabel;
     }

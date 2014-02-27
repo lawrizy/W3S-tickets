@@ -28,7 +28,8 @@ class UserIdentity extends CUserIdentity {
                     $this->errorCode = self::ERROR_NONE;   // aucune erreur
                     Yii::app()->session['Utilisateur'] = 'Locataire'; // création d'une variable de session pour stocker le type d'user
                     $record->password = ''; // vidage du mot de passe 
-                    Yii::app()->session['Logged'] = $record; // enregistrement du record dans la session 
+                    Yii::app()->session['Logged'] = $record; // enregistrement du record dans la session
+                    $this->getLanguage($record);
                 }
                 return !$this->errorCode; // return le code d'erreur
             } elseif (($record = User::model()->findByAttributes(array('email' => $this->username))) !== NULL) {  //recuperation d'un record User
@@ -40,9 +41,11 @@ class UserIdentity extends CUserIdentity {
                     Yii::app()->session['Utilisateur'] = 'User'; // création d'une variable de session pour stocker le type d'user
                     $record->password = ''; // vidage du mot de passe 
                     Yii::app()->session['Logged'] = $record; // enregistrement du record dans la session 
+                    $this->getLanguage($record);
                 }
                 return !$this->errorCode; // return le code d'erreur
             }
+            Yii::app()->session['Language'] = 'EN';
             return self::ERROR_UNKNOWN_IDENTITY; //return utilisateur inconnu
         } catch (CDbException $ex) {
             Yii::app()->session['erreurDB'] = 'La base de donnnée est indisponible pour le moment'; // message d'erreur lors de db i
@@ -51,6 +54,16 @@ class UserIdentity extends CUserIdentity {
 
     public function getId() {
         return $this->_id; // recupere l'id
+    }
+
+    public function getLanguage($record) {
+        if ($record->fk_langue == 1) {
+            Yii::app()->session['Language'] = 'FR';
+        } elseif ($record->fk_langue == 2) {
+            Yii::app()->session['Language'] = 'EN';
+        } else {
+            Yii::app()->session['Language'] = 'NL';
+        }
     }
 
 }

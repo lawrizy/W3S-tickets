@@ -1,12 +1,16 @@
 <?php
-Yii::app()->language=Yii::app()->session['_lang'];
+if (isset(Yii::app()->session['_lang'])) {
+    Yii::app()->language = Yii::app()->session['_lang'];
+} else {
+    Yii::app()->language = 'en';
+}
 $this->pageTitle = Yii::app()->name;
 ?>
 
 <h1><?php
-   echo Yii::t('/index','Message');
-    echo CHtml::encode(Yii::app()->name);
-    ?></i></h1>
+echo Yii::t('/index', 'Message');
+echo CHtml::encode(Yii::app()->name);
+?></i></h1>
 
 <!--<p>Congratulations! You have successfully created your Yii application.</p>
 
