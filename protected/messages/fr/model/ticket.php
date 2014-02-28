@@ -8,7 +8,7 @@ return array(
  'DescriptifTicket' => 'Description',
  'CanalTicket' => 'Voie de cr&eacute;ation',
  'DateInterventionTicket' => 'Date d\'intervention',
- 'EntrepriseTicket' => 'Entreprise',
+ 'EntrepriseTicket' => 'Sous-traitant',
  'CodeTicket' => 'Code du ticket',
  'EtageTicket' => 'Etage',
  'BureauTicket' => 'Bureau',

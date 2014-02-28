@@ -12,7 +12,7 @@
     <?php echo $form->errorSummary($model); ?>
 
 
-    <label for="Ticket_descriptif">Descriptif</label>
+   <?php echo $form->labelEx($model,'descriptif'); ?>
     <textarea maxlength="800" rows="5" cols="50" style="resize:none" name="Ticket[descriptif]" id="Ticket_descriptif"></textarea>
 
 
@@ -21,7 +21,7 @@
         $this->widget('zii.widgets.jui.CJuiButton', array(
             'buttonType' => 'submit',
             'name' => 'traitement',
-            'caption' => 'Cloturer le ticket',
+            'caption' => Yii::t('/ticket/_formClose','Button'),
         ));
         ?>
 

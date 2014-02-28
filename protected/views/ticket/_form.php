@@ -31,7 +31,7 @@
                 array // Cette array remplit la dropDownList avec les catégories mères disponibles dans la DB.
             (
             '' => '',
-            CHtml::encodeArray($this->getCategoriesLabel(), 'id_categorie_incident', 'label')
+            $this->getCategoriesLabel(),
                 ), array // Cette array définit le chargement dynamique des valeurs dans la dropDownList des sous-catégories. (Voir dropDownList suivante appelée DD_sousCat)
             (
             'ajax' => array
@@ -40,7 +40,7 @@
                 'url' => CController::createUrl('getsouscategoriesdynamiques'),
                 'data' => array('paramID' => 'js:this.value'),
                 'update' => '#DD_sousCat',
-            )   
+            )
                 )
         );
 
@@ -48,7 +48,7 @@
 //        print_r($this->getCategoriesLabel());
 //        echo '<br> <br>';
 //
-//        print_r(CHtml::listData($this->getCategoriesLabel(), 'id_categorie_incident', 'label'));
+//        print_r(CHtml::encodeArray($this->getCategoriesLabel(), 'id_categorie_incident', 'label'));
 //        echo '<br> <br>';
         //   print_r(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL)));
         // Form pour la sélection de la sous-catégorie.
@@ -87,7 +87,7 @@
     </div>
 
     <div class="row buttons">
-        <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+        <?php echo CHtml::submitButton(Yii::t('/ticket/_form','Button')); ?>
     </div>
 
 

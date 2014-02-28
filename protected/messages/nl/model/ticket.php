@@ -8,7 +8,7 @@ return array(
     'DescriptifTicket' => 'Beschrijving',
     'CanalTicket' => 'Manier van de schepping',
     'DateInterventionTicket' => 'Reactie datum',
-    'EntrepriseTicket' => 'Vennootschap',
+    'EntrepriseTicket' => 'Onderaannemer',
     'CodeTicket' => 'Ticket code ',
     'EtageTicket' => 'Verdieping',
     'BureauTicket' => 'Officie',

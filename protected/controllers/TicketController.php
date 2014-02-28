@@ -466,7 +466,7 @@ class TicketController extends Controller {
                     // On attribue la valeur ("cachée") à attribuer au champs ex.: <option value="1">...</option>
                     array('value' => $key, 'name' => 'clef'),
                     // On attribue un label au champs ex.: <option value="1">Sanitaire</option>
-                    CHtml::encode($value),
+                    CHtml::encode(Yii::t('/model/categorieIncident',$value)),
                     // true pour fermer le tag, false pour le laisser ouvert
                     true
             );
@@ -475,13 +475,16 @@ class TicketController extends Controller {
 
     public function getCategoriesLabel() { //return list categorie's label
         $datas = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL));
-        $listLabel = array();
-        $arras = array();
-        foreach ($datas as $data) {
-            $arras = array($data->id_categorie_incident => Yii::t('model/categorieIncident', $data->label));
-            array_push($listLabel, $arras);
+        $datasList = CHtml::listData($datas, 'id_categorie_incident', 'label');
+        
+        foreach($datasList as $key=>$value)
+        {
+            $datasList[$key] = CHtml::encode(Yii::t('model/categorieIncident', $datasList[$key]));
         }
-        return $listLabel;
+        
+        //print_r($datasList);
+        
+        return $datasList;
     }
 
 }

@@ -8,7 +8,7 @@ return array(
     'DescriptifTicket' => 'Description',
     'CanalTicket' => 'Way of creation',
     'DateInterventionTicket' => 'Response time /!\ ',
-    'EntrepriseTicket' => 'Entreprise',
+    'EntrepriseTicket' => 'Subcontractor',
     'CodeTicket' => 'Ticket code ',
     'EtageTicket' => 'Floor',
     'BureauTicket' => 'Office',

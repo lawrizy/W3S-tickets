@@ -6,6 +6,6 @@ return array(
     'MenuMettreEnTraitementTicket' => 'Mettre en traitement',
     'MenuCloseTicket' => 'Cloturer le ticket ',
     'ViewHistoriqueTitre' => 'Historique',
-    'ViewHistoriqueDate' => 'Date de mise à mise jour',
+    'ViewHistoriqueDate' => 'Date de mise à jour',
     'ViewHistoriqueType'=>'Type',
 );
