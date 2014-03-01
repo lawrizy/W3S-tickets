@@ -5,9 +5,9 @@
 *
 * The followings are the available columns in table 'w3sys_trad':
     * @property string $code
-    * @property string $FR
-    * @property string $EN
-    * @property string $NL
+    * @property string $fr
+    * @property string $en
+    * @property string $nl
 */
 class Trad extends CActiveRecord
 {
@@ -28,10 +28,10 @@ public function rules()
 // will receive user inputs.
 return array(
     array('code', 'required'),
-    array('code, FR, EN, NL', 'length', 'max'=>32),
+    array('code, fr, en, nl', 'length', 'max'=>32),
 // The following rule is used by search().
 // @todo Please remove those attributes that should not be searched.
-array('code, FR, EN, NL', 'safe', 'on'=>'search'),
+array('code, fr, en, nl', 'safe', 'on'=>'search'),
 );
 }
 
@@ -53,9 +53,9 @@ public function attributeLabels()
 {
 return array(
     'code' => 'Code',
-    'FR' => 'Fr',
-    'EN' => 'En',
-    'NL' => 'Nl',
+    'fr' => 'Fr',
+    'en' => 'En',
+    'nl' => 'Nl',
 );
 }
 
@@ -78,9 +78,9 @@ public function search()
 $criteria=new CDbCriteria;
 
 		$criteria->compare('code',$this->code,true);
-		$criteria->compare('FR',$this->FR,true);
-		$criteria->compare('EN',$this->EN,true);
-		$criteria->compare('NL',$this->NL,true);
+		$criteria->compare('fr',$this->fr,true);
+		$criteria->compare('en',$this->en,true);
+		$criteria->compare('nl',$this->nl,true);
 
 return new CActiveDataProvider($this, array(
 'criteria'=>$criteria,

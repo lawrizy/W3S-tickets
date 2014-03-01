@@ -4,12 +4,12 @@ class Translate {
     
     public static function trad($txt) {
         $result = Trad::model()->findByPk($txt);
-        return $result[Yii::app()->session['Language']];
+        return $result[Yii::app()->session['_lang']];
     }
     
     public static function tradText($txt) {
         $result = TradTexte::model()->findByPk($txt);
-        return $result[Yii::app()->session['Language']];
+        return $result[Yii::app()->session['_lang']];
     }
     
 }
