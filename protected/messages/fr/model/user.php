@@ -7,4 +7,5 @@ return array(
     'MdpUser' => 'Mot de passe',
     'FonctionUser' => 'Fonction de l\'utilisateur (1 = user, 2 = admin)',
     'ChampVide' => 'Le champ {attribute} ne peut être vide.',
+    'LanguageUser' => 'Langage'
 );

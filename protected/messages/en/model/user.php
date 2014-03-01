@@ -7,4 +7,5 @@ return array(
     'MdpUser' => 'Password',
     'FonctionUser' => 'User\'s function (1 = user, 2 = admin)',
     'ChampVide' => 'The field {attribute} cannot be blank.',
+    'LanguageUser' => 'Language'
 );
