@@ -110,9 +110,6 @@ class SiteController extends Controller {
         header('Location: ' . Yii::app()->request->baseUrl . '/index.php');
     }
 
-    public function actionAdmin() {
-        $this->render('admin');
-    }
 
     public function actionGetLocataire() {
         $this->render('getLocataire');
