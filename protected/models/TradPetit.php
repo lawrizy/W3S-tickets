@@ -1,22 +1,22 @@
 <?php
 
 /**
-* This is the model class for table "w3sys_trad_texte".
+* This is the model class for table "w3sys_trad_petit".
 *
-* The followings are the available columns in table 'w3sys_trad_texte':
+* The followings are the available columns in table 'w3sys_trad_petit':
     * @property string $code
     * @property string $fr
     * @property string $en
     * @property string $nl
 */
-class TradTexte extends CActiveRecord
+class TradPetit extends CActiveRecord
 {
 /**
 * @return string the associated database table name
 */
 public function tableName()
 {
-return 'w3sys_trad_texte';
+return 'w3sys_trad_petit';
 }
 
 /**
@@ -28,8 +28,7 @@ public function rules()
 // will receive user inputs.
 return array(
     array('code', 'required'),
-    array('code', 'length', 'max'=>32),
-    array('fr, en, nl', 'length', 'max'=>128),
+    array('code, fr, en, nl', 'length', 'max'=>32),
 // The following rule is used by search().
 // @todo Please remove those attributes that should not be searched.
 array('code, fr, en, nl', 'safe', 'on'=>'search'),
@@ -92,7 +91,7 @@ return new CActiveDataProvider($this, array(
 * Returns the static model of the specified AR class.
 * Please note that you should have this exact method in all your CActiveRecord descendants!
 * @param string $className active record class name.
-* @return TradTexte the static model class
+* @return TradPetit the static model class
 */
 public static function model($className=__CLASS__)
 {

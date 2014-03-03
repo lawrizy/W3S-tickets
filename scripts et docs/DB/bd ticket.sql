@@ -260,26 +260,39 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `db_ticketing`.`w3sys_trad`
+-- Table `db_ticketing`.`w3sys_trad_petit`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_trad` (
+CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_trad_petit` (
   `code` VARCHAR(32) NOT NULL,
-  `FR` VARCHAR(32) NULL,
-  `EN` VARCHAR(32) NULL,
-  `NL` VARCHAR(32) NULL,
+  `fr` VARCHAR(32) NULL,
+  `en` VARCHAR(32) NULL,
+  `nl` VARCHAR(32) NULL,
   PRIMARY KEY (`code`),
   UNIQUE INDEX `code_UNIQUE` (`code` ASC))
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `db_ticketing`.`w3sys_trad_texte`
+-- Table `db_ticketing`.`w3sys_trad_grand`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_trad_texte` (
+CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_trad_grand` (
   `code` VARCHAR(32) NOT NULL,
-  `FR` VARCHAR(128) NULL,
-  `EN` VARCHAR(128) NULL,
-  `NL` VARCHAR(128) NULL,
+  `fr` VARCHAR(128) NULL,
+  `en` VARCHAR(128) NULL,
+  `nl` VARCHAR(128) NULL,
+  PRIMARY KEY (`code`),
+  UNIQUE INDEX `code_UNIQUE` (`code` ASC))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `db_ticketing`.`w3sys_trad_moyen`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_trad_moyen` (
+  `code` VARCHAR(32) NOT NULL,
+  `fr` VARCHAR(64) NULL,
+  `en` VARCHAR(64) NULL,
+  `nl` VARCHAR(64) NULL,
   PRIMARY KEY (`code`),
   UNIQUE INDEX `code_UNIQUE` (`code` ASC))
 ENGINE = InnoDB;
