@@ -45,13 +45,12 @@ return false;
 $this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'batiment-grid',
     'dataProvider' => $model->search(),
-    
     'columns' => array(
-        'adresse',
-        'commune',
-        'cp',
         'nom',
         'code',
+        'adresse',
+        'cp',
+        'commune',
         array(
             'class' => 'CButtonColumn',
         ),

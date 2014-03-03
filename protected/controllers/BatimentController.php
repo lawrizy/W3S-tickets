@@ -24,11 +24,11 @@ class BatimentController extends Controller {
      * @return array access control rules
      */
     public function accessRules() {
-        if ((Yii::app()->session['Utilisateur'] == 'User') && (Yii::app()->session['Logged']->fk_fonction == 2)) {
-            return array(
+        if ((Yii::app()->session['Utilisateur'] == 'User') && (Yii::app()->session['Logged']->fk_fonction == 2)) { // Si 'User' et fonction à 2, alors c'est un admin
+            return array( // L'admin à tous les droits
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                    'actions' => array('create', 'update', 'view', 'admin', 'traitement', 'getsouscategoriesdynamiques', 'close', 'sendnotificationmail'),
-                    'users' => array('*'), //user logger
+                    'actions' => array('create', 'update', 'view', 'admin'),
+                    'users' => array('*'), // Droits accordés à tout le monde mais il faut être admin pour arriver là
                 ),
             );
         } else {

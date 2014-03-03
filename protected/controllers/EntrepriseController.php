@@ -26,15 +26,15 @@ class EntrepriseController extends Controller {
     public function accessRules() {
         if ((Yii::app()->session['Utilisateur'] == 'User') && (Yii::app()->session['Logged']->fk_fonction == 2)) {
             return array(
-                array('allow',
-                    'actions' => array('create', 'update', 'view', 'admin'),
-                    'users' => array('*'),
+                array('allow', // allow authenticated user to perform 'create' and 'update' actions
+                    'actions' => array('create', 'update', 'view', 'admin', 'secteur'),
+                    'users' => array('*'), //user logger
                 ),
             );
         } else {
             return array(
                 array('deny',
-                    'users' => array('*'),
+                    'users' => array('*'), //user non loger peut rien faire
                     'message' => 'Vous n\'avez pas accès à cette page.'
                 ),
             );
@@ -50,6 +50,12 @@ class EntrepriseController extends Controller {
             'model' => $this->loadModel($id),
         ));
     }
+    
+    public function actionSecteur($id) {
+        $this->render('secteur', array(
+            'model' => $this->loadModel($id),
+        ));
+    }
 
     /**
      * Creates a new model.
@@ -58,8 +64,8 @@ class EntrepriseController extends Controller {
     public function actionCreate() {
         $model = new Entreprise;
 
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
+// Uncomment the following line if AJAX validation is needed
+// $this->performAjaxValidation($model);
 
         if (isset($_POST['Entreprise'])) {
             $model->attributes = $_POST['Entreprise'];
@@ -80,8 +86,8 @@ class EntrepriseController extends Controller {
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
 
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
+// Uncomment the following line if AJAX validation is needed
+// $this->performAjaxValidation($model);
 
         if (isset($_POST['Entreprise'])) {
             $model->attributes = $_POST['Entreprise'];
@@ -102,7 +108,7 @@ class EntrepriseController extends Controller {
     public function actionDelete($id) {
         $this->loadModel($id)->delete();
 
-        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }

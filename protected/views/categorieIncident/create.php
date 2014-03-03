@@ -8,11 +8,10 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-array('label'=>'List CategorieIncident', 'url'=>array('index')),
-array('label'=>'Manage CategorieIncident', 'url'=>array('admin')),
+array('label'=>'Manage Categories', 'url'=>array('admin')),
 );
 ?>
 
 <h1>Create CategorieIncident</h1>
 
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php $this->renderPartial('_formCreate', array('model'=>$model)); ?>

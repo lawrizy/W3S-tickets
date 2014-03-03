@@ -9,13 +9,11 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-array('label'=>'List CategorieIncident', 'url'=>array('index')),
-array('label'=>'Create CategorieIncident', 'url'=>array('create')),
-array('label'=>'View CategorieIncident', 'url'=>array('view', 'id'=>$model->id_categorie_incident)),
-array('label'=>'Manage CategorieIncident', 'url'=>array('admin')),
+array('label'=>'View Categorie', 'url'=>array('view', 'id'=>$model->id_categorie_incident)),
+array('label'=>'Manage Categories', 'url'=>array('admin')),
 );
 ?>
 
 <h1>Update CategorieIncident <?php echo $model->id_categorie_incident; ?></h1>
 
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php $this->renderPartial('_formUpdate', array('model'=>$model)); ?>
