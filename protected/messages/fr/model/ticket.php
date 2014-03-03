@@ -15,5 +15,5 @@ return array(
  'LocataireTicket' => 'Locataire',
  'BatimentTicket' => 'B&acirctiment',
  'CategTicket' => 'Cat&eacute;gorie',
-'ChampVide' => 'Le champs {attribute} ne peut être vide.',
+    'ChampVide' => 'Le champs {attribute} ne peut être vide.',
 );

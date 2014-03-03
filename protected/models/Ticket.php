@@ -37,7 +37,7 @@ class Ticket extends CActiveRecord {
 // NOTE: you should only define rules for those attributes that
 // will receive user inputs.
         return array(
-            array('fk_categorie, fk_canal, fk_locataire, fk_batiment', 'required', 'message' => Yii::t('model/ticket','ChampVide')),
+            array('fk_categorie, fk_canal, fk_locataire, fk_batiment', 'required', 'message' => Translate::tradGrand('Required')),
             array('fk_statut, fk_categorie, fk_user, fk_canal, fk_entreprise, fk_locataire, fk_batiment', 'numerical', 'integerOnly' => true,
                 'message' => 'Le champs {attribute} ne peut contenir que des nombres.'),
             array('code_ticket', 'length', 'max' => 10),
@@ -65,19 +65,19 @@ class Ticket extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'id_ticket' => Yii::t('/model/ticket', 'IdTicket'),
-            'fk_statut' => Yii::t('/model/ticket', 'StatutTicket'),
-            'fk_categorie' => Yii::t('/model/ticket', 'CategorieTicket'),
-            'fk_user' => Yii::t('/model/ticket', 'UserTicket'),
-            'descriptif' => Yii::t('/model/ticket', 'DescriptifTicket'),
-            'fk_canal' => Yii::t('/model/ticket', 'CanalTicket'),
-            'date_intervention' => Yii::t('/model/ticket', 'DateInterventionTicket'),
-            'fk_entreprise' => Yii::t('/model/ticket', 'EntrepriseTicket'),
-            'code_ticket' => Yii::t('/model/ticket', 'CodeTicket'),
-            'etage' => Yii::t('/model/ticket', 'EtageTicket'),
-            'bureau' => Yii::t('/model/ticket', 'BureauTicket'),
-            'fk_locataire' => Yii::t('/model/ticket', 'LocataireTicket'),
-            'fk_batiment' => Yii::t('/model/ticket', 'BatimentTicket'),
+            'id_ticket' => Translate::tradPetit('IdTicket'),
+            'fk_statut' => Translate::tradPetit('StatutTicket'),
+            'fk_categorie' =>Translate::tradPetit('CategorieTicket'),
+            'fk_user' => Translate::tradPetit('UserTicket'),
+            'descriptif' => Translate::tradPetit( 'DescriptifTicket'),
+            'fk_canal' => Translate::tradPetit('CanalTicket'),
+            'date_intervention' => Translate::tradPetit( 'DateInterventionTicket'),
+            'fk_entreprise' => Translate::tradPetit('EntrepriseTicket'),
+            'code_ticket' => Translate::tradPetit('CodeTicket'),
+            'etage' => Translate::tradPetit('EtageTicket'),
+            'bureau' => Translate::tradPetit( 'BureauTicket'),
+            'fk_locataire' => Translate::tradPetit( 'LocataireTicket'),
+            'fk_batiment' => Translate::tradPetit('BatimentTicket'),
         );
     }
 

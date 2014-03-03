@@ -11,7 +11,7 @@ return array(
     'EntrepriseTicket' => 'Onderaannemer',
     'CodeTicket' => 'Ticket code ',
     'EtageTicket' => 'Verdieping',
-    'BureauTicket' => 'Officie',
+        'BureauTicket' => 'Officie',
     'LocataireTicket' => 'Kamergenoot',
     'BatimentTicket' => 'Gebouw',
     'CategTicket' => 'Categorie',

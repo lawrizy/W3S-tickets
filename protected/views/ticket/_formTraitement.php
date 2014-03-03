@@ -14,7 +14,7 @@
     <?php
     $form = $this->beginWidget('CActiveForm', array('id' => 'ticket-form', 'enableAjaxValidation' => false));
     ?>
-    <p class="note"><?php echo Yii::t('/ticket/_traitement','ChampsObligatoire');?></p>
+    <p class="note"><?php echo Translate::tradGrand('Required');?></p>
     <?php echo $form->errorSummary($model); ?>
     <?php
 // Affichage de la sélection des entreprises
@@ -25,7 +25,7 @@
     ?>
 
     <div class="row">
-        <label><?php echo Yii::t('/ticket/_traitement','DateIntervention'); ?> <span class="required">*</span></label>
+        <label><?php echo Translate::tradPetit('DateIntervention'); ?> <span class="required">*</span></label>
         <?php
         $this->widget('zii.widgets.jui.CJuiDatePicker', array( // Widget permettant d'afficher un datePicker
             'name' => 'Ticket[date_intervention]',
@@ -55,7 +55,7 @@
     $this->widget('zii.widgets.jui.CJuiButton', array(
         'buttonType' => 'submit', // Type de bouton
         'name' => 'traitement', // L'action à lancer (ne pas oublier les rules dans le controleur)
-        'caption' => Yii::t('/ticket/_traitement','Button'), // Le texte à afficher sur le bouton
+        'caption' =>  Translate::tradPetit('ButtonTraitement'), // Le texte à afficher sur le bouton
     ));
     ?>
 

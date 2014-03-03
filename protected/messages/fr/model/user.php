@@ -1,7 +1,7 @@
 <?php
 
 return array(
-    'IdUser' => 'Id User',
+    'IdUser' => 'Id Utilisateur',
     'NomUser' => 'Nom',
     'EmailUser' => 'Email (sera utilisé pour se connecter)',
     'MdpUser' => 'Mot de passe',

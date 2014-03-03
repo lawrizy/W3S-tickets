@@ -2,7 +2,7 @@
 
 return array(
     'Sanitaire' => 'Sanitary',
-    'Electricité' => 'Electricity',
+        'Electricité' => 'Electricity',
     'Ascenseurs' => 'Lift',
     'HVAC' => 'HVAC',
     'Panne d\'électricité' => 'Electricity breakdown',

@@ -25,7 +25,7 @@ class Locataire extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('nom, email, password', 'required', 'message' => Yii::t('/model/locataire','ChampVide')),
+            array('nom, email, password', 'required', 'message' => Translate::tradGrand('Required')),
             array('nom, email', 'length', 'max' => 64),
             array('email', 'email'),
             array('password', 'length', 'max' => 32),
@@ -50,11 +50,10 @@ class Locataire extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-        'id_locataire' => Yii::t('/model/locataire', 'IdLoc'),
-        'nom' => Yii::t('/model/locataire', 'NomLoc'),
+        'id_locataire' => Translate::tradPetit('IdLoc'),
+        'nom' => Translate::tradPetit( 'NomLoc'),
         'email' => 'Email',
-        'password' => Yii::t('/model/locataire', 'MdpLoc'),
-        
+        'password' => Translate::tradPetit('MdpLoc'),
         );
     }
 
