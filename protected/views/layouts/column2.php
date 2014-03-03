@@ -9,7 +9,7 @@
     <div id="sidebar">
         <?php
         $this->beginWidget('zii.widgets.CPortlet', array(
-            'title' => Yii::t('/layout/column2','Operation'),
+            'title' => Translate::tradPetit('Operation'),
         ));
         $this->widget('zii.widgets.CMenu', array(
             'items' => $this->menu,

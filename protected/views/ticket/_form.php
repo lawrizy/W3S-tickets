@@ -18,7 +18,7 @@
 
     <p class="note"><?php echo Translate::tradGrand('Required'); ?></p>
 
-    <?php echo $form->errorSummary($model, 'Veuillez régler les probl&egrave;mes suivants'); ?>
+    <?php echo $form->errorSummary($model, Translate::tradMoyen('ReglerProbleme')); ?>
 
     <div class="row">
         <?php

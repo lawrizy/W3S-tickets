@@ -47,28 +47,28 @@ $this->widget('zii.widgets.grid.CGridView', array(
     // 'filter' => $model,
     'columns' => array(
         array(
-            'name' => Yii::t('/model/ticket', 'CodeTicket'),
+            'name' => Translate::tradPetit('CodeTicket'),
             'value' => '$data->code_ticket'),
         array(
-            'name' => Yii::t('/model/ticket', 'LocataireTicket'),
+            'name' => Translate::tradPetit('LocataireTicket'),
             'value' => 'Locataire::model()->findByPk($data->fk_locataire)->nom'),
         array(
-            'name' => Yii::t('/model/ticket', 'StatutTicket'),
-            'value' => 'Translate::tradMoyen(StatutTicket::model()->findByPk($data->fk_statut)->label);'
+            'name' => Translate::tradPetit('StatutTicket'),
+            'value' => 'Translate::tradPetit(StatutTicket::model()->findByPk($data->fk_statut)->label);'
         ),
         array(
-            'name' => Yii::t('/model/ticket', 'CategTicket'),
+            'name' => Translate::tradPetit('CategTicket'),
             'value' => 'Translate::tradMoyen(CategorieIncident::model()->findByPk(CategorieIncident::model()->findByPk($data->fk_categorie)->fk_parent)->label);'
         ),
         array(
-            'name' => Yii::t('/model/ticket', 'CategorieTicket'),
+            'name' => Translate::tradPetit('CategorieTicket'),
             'value' => 'Translate::tradMoyen(CategorieIncident::model()->findByPk($data->fk_categorie)->label);'
         ),
         array(
-            'name' => Yii::t('/model/ticket', 'BatimentTicket'),
+            'name' => Translate::tradPetit('BatimentTicketCirc'),
             'value' => 'Batiment::model()->findByPk($data->fk_batiment)->nom'),
         array(
-            'name' => Yii::t('/model/ticket', 'UserTicket'),
+            'name' => Translate::tradPetit('UserTicketCirc'),
             'value' => 'User::model()->findByPk($data->fk_user)->nom'),
         array
             (

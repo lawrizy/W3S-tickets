@@ -57,7 +57,7 @@ if ($idBatiment == 'ALL') { // Cas 1 : sélectionner tous les bâtiments
             )
     );
 } else { // Cas 2 : Un bâtiment spécifique a été sélectionné
-    echo '<p><h3>' . Yii::t('/dashboard/ajax', 'AjaxFrequenceUnBatiment') .
+    echo '<p><h3>' .Translate::tradPetit('AjaxFrequenceUnBatiment') .
     Batiment::model()->findByAttributes(array('id_batiment' => $idBatiment))->nom
     . ') </h3></p>';
     ?>
