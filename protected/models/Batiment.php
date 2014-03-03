@@ -34,10 +34,10 @@ class Batiment extends CActiveRecord {
             array('adresse, commune, cp, nom, code', 'required', 'message' => 'La valeur de {attribute} ne peut être vide.'),
             array('cp, cpt', 'numerical', 'integerOnly' => true, 'message' => 'Veuillez n\'entrer que des nombres dans le champs suivant : {attribute}'),
             array('adresse, commune, nom', 'length', 'max' => 45),
-            array('code', 'length', 'max' => 3),
+            array('code', 'length', 'max' => 4),
 // The following rule is used by search().
 // @todo Please remove those attributes that should not be searched.
-            array('id_batiment, adresse, commune, cp, nom, cpt, code', 'safe', 'on' => 'search'),
+            array('cp, nom, code', 'safe', 'on' => 'search'),
         );
     }
 

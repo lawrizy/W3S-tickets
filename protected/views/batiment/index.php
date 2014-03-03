@@ -7,17 +7,14 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Create Batiment', 'url'=>array('create')),
-	array('label'=>'Manage Batiment', 'url'=>array('admin')),
-
+array('label'=>'Create Batiment', 'url'=>array('create')),
+array('label'=>'Manage Batiment', 'url'=>array('admin')),
 );
 ?>
 
 <h1>Batiments</h1>
 
-<?php
-$this->widget('zii.widgets.CListView', array(
-    'dataProvider' => $dataProvider,
-    'itemView' => '_view',
-));
-?>
+<?php $this->widget('zii.widgets.CListView', array(
+'dataProvider'=>$dataProvider,
+'itemView'=>'_view',
+)); ?>

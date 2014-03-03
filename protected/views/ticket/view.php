@@ -13,6 +13,9 @@ if (Yii::app()->session['Utilisateur'] === 'User') {
        // array('label' => Yii::t('/ticket/view', 'MenuModifierTicket'), 'url' => array('update', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $model->fk_statut != 3),
         array('label' => Yii::t('/ticket/view', 'MenuMettreEnTraitementTicket'), 'url' => array('traitement', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $model->fk_statut != 3),
         array('label' => Yii::t('/ticket/view', 'MenuCloseTicket'), 'url' => array('close', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $model->fk_statut == 2),
+        
+        // TODO
+        array('label' => 'delete ticket', 'url' => array('delete', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && Yii::app()->session['Logged']->fk_fonction == 2)
     );
 }
 ?>
@@ -27,7 +30,6 @@ $batiment = Batiment::model()->findByPk($model->fk_batiment);
 $this->widget('zii.widgets.CDetailView', array(
     'data' => $model,
     'attributes' => array(
-        'id_ticket',
         array(
             'name' => 'fk_statut',
             'value' => Yii::t('/model/statutTicket', StatutTicket::model()->findByPk($model->fk_statut)->label)

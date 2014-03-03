@@ -27,40 +27,20 @@ class DashboardController extends Controller
      */
     public function accessRules()
     {
-        if (Yii::app()->session['Utilisateur'] == 'Locataire')
-        { // locataire
+        if ((Yii::app()->session['Utilisateur'] == 'User') && (Yii::app()->session['Logged']->fk_fonction == 2)) {
             return array(
-                array('deny', 'users' => array('*'), //pas de dashboard
-                    'message' => 'Vous n\'avez pas accès à cette page.'), //message
-            );
-        }
-        elseif (isset(Yii::app()->session['Logged']) && Yii::app()->session['Logged']->fk_fonction == 2)
-        { //user admin
-            return array(
-                array('allow',
+                array('allow', // allow authenticated user to perform 'create' and 'update' actions
                     'actions' => array('vue', 'filterbybatiment', 'getticketbystatusforbatimentid',
                         'getticketbycategorie', 'getcategorieslabel', 'getfrequencestatutsentreprises'),
-                    'users' => array('*')
+                    'users' => array('*'), //user logger
                 ),
-                array('deny', 'users' => array('*'),
-                    'message' => 'Vous n\'avez pas accès à cette page.'), //message),
             );
-        }
-        elseif (isset(Yii::app()->session['Logged']) && Yii::app()->session['Logged']->fk_fonction == 1)
-        { //user non admin peut dashboard
+        } else {
             return array(
-                array('deny', 'users' => array('*'),
-                    'message' => 'Vous n\'avez pas accès à cette page.'),
-            );
-        }
-        else
-        {
-            return array(
-                array('deny', // allow authenticated user to perform 'create' and 'update' actions
-                    'actions' => array(),
-                    'users' => array('?'),
-                    'message' => 'Vous n\'avez pas accès à cette page.'),
-//
+                array('deny',
+                    'users' => array('*'), //user non loger peut rien faire
+                    'message' => 'Vous n\'avez pas accès à cette page.'
+                ),
             );
         }
     }

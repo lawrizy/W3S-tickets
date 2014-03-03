@@ -35,10 +35,17 @@ class TicketController extends Controller {
                     'message' => 'Vous n\'avez pas accès à cette page.'
                 ),
             );
-        } elseif (Yii::app()->session['Utilisateur'] == 'User') { // Utilisateur peut creer ,voir ,manager,traiter et fermer des ticket
+        } elseif ((Yii::app()->session['Utilisateur'] == 'User') && (Yii::app()->session['Logged']->fk_fonction == 1)) { // Utilisateur peut creer ,voir ,manager,traiter et fermer des ticket
             return array(
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
                     'actions' => array('create', 'update', 'view', 'admin', 'traitement', 'getsouscategoriesdynamiques', 'close', 'sendnotificationmail'),
+                    'users' => array('@'), //user logger
+                ),
+            );
+        } elseif ((Yii::app()->session['Utilisateur'] == 'User') && (Yii::app()->session['Logged']->fk_fonction == 2)) { // Utilisateur peut creer ,voir ,manager,traiter et fermer des ticket
+            return array(
+                array('allow', // allow authenticated user to perform 'create' and 'update' actions
+                    'actions' => array('create', 'update', 'view', 'admin', 'traitement', 'getsouscategoriesdynamiques', 'close', 'sendnotificationmail', 'delete'),
                     'users' => array('@'), //user logger
                 ),
             );
@@ -274,10 +281,9 @@ class TicketController extends Controller {
      */
     public function actionDelete($id) {
         $this->loadModel($id)->delete();
-
+        $this->redirect(admin);
 // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        if (!isset($_GET['ajax']))
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+        
     }
 
     /**
@@ -466,7 +472,7 @@ class TicketController extends Controller {
                     // On attribue la valeur ("cachée") à attribuer au champs ex.: <option value="1">...</option>
                     array('value' => $key, 'name' => 'clef'),
                     // On attribue un label au champs ex.: <option value="1">Sanitaire</option>
-                    CHtml::encode(Yii::t('/model/categorieIncident',$value)),
+                    CHtml::encode(Yii::t('/model/categorieIncident', $value)),
                     // true pour fermer le tag, false pour le laisser ouvert
                     true
             );
@@ -476,14 +482,13 @@ class TicketController extends Controller {
     public function getCategoriesLabel() { //return list categorie's label
         $datas = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL));
         $datasList = CHtml::listData($datas, 'id_categorie_incident', 'label');
-        
-        foreach($datasList as $key=>$value)
-        {
+
+        foreach ($datasList as $key => $value) {
             $datasList[$key] = CHtml::encode(Yii::t('model/categorieIncident', $datasList[$key]));
         }
-        
+
         //print_r($datasList);
-        
+
         return $datasList;
     }
 

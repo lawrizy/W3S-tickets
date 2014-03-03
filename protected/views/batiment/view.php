@@ -2,28 +2,29 @@
 /* @var $this BatimentController */
 /* @var $model Batiment */
 
-$this->breadcrumbs=array(
-	'Batiments'=>array('index'),
-	$model->id_batiment,
+$this->breadcrumbs = array(
+    'Batiments' => array('admin'),
+    $model->code,
 );
 
-$this->menu=array(
-	array('label'=>'List Batiment', 'url'=>array('index')),
-	array('label'=>'Create Batiment', 'url'=>array('create')),
-	array('label'=>'Update Batiment', 'url'=>array('update', 'id'=>$model->id_batiment)),
-	array('label'=>'Delete Batiment', 'url'=>'#', 'linkOptions'=>array('submit'=>array('delete','id'=>$model->id_batiment),'confirm'=>'Are you sure you want to delete this item?')),
-	array('label'=>'Manage Batiment', 'url'=>array('admin')),
+$this->menu = array(
+    array('label' => 'Update Batiment', 'url' => array('update', 'id' => $model->id_batiment)),
+    array('label' => 'Delete Batiment', 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id_batiment), 'confirm' => 'Are you sure you want to delete this item?')),
+    array('label' => 'Manage Batiment', 'url' => array('admin')),
 );
 ?>
 
-<h1>View Batiment #<?php echo $model->id_batiment; ?></h1>
+<h1>View Batiment: <?php echo $model->nom; ?></h1>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>array(
-		'id_batiment',
-		'adresse',
-		'commune',
-		'cp',
-	),
-)); ?>
+<?php
+$this->widget('zii.widgets.CDetailView', array(
+    'data' => $model,
+    'attributes' => array(
+        'nom',
+        'code',
+        'adresse',
+        'commune',
+        'cp',
+    ),
+));
+?>
