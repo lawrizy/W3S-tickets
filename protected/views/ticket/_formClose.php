@@ -21,7 +21,7 @@
         $this->widget('zii.widgets.jui.CJuiButton', array(
             'buttonType' => 'submit',
             'name' => 'traitement',
-            'caption' => Yii::t('/ticket/_formClose','Button'),
+            'caption' => Translate::tradPetit('ButtonClose'),
         ));
         ?>
 

@@ -17,9 +17,9 @@
     ));
     ?>
 
-    <p class="note"><?php echo Yii::t('/locataire/_form','ChampObligatoire') ;?></p>
+    <p class="note"><?php echo Translate::tradGrand('ChampObligatoire') ;?></p>
 
-    <?php echo $form->errorSummary($model, 'Veuillez régler les probl&egrave;mes suivants'); ?>
+    <?php echo $form->errorSummary($model, Translate::tradMoyen('ReglerProbleme')); ?>
 
     <div class="row">
         <?php echo $form->labelEx($model, 'nom'); ?>
@@ -40,7 +40,7 @@
     </div>
 
     <div class="row buttons">
-        <?php echo CHtml::submitButton(Yii::t('/locataire/_form','Button')); ?>
+        <?php echo CHtml::submitButton(Translate::tradPetit('ButtonCreer')); ?>
     </div>
 
     <?php $this->endWidget(); ?>

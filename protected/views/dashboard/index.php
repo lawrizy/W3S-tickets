@@ -12,7 +12,7 @@
         ?>
 
 
-        <h1 style="text-align: center;"><?php echo Yii::t('/dashboard/index', 'Titre') ?></h1>
+        <h1 style="text-align: center;"><?php echo Translate::tradMoyen('TitreDashboard'); ?></h1>
 
         <div class="graphsDropDownList">
             <?php
@@ -21,7 +21,7 @@
 
             $this->widget('bootstrap.widgets.TbLabel', array(
                 'type' => 'default', // 'success', 'warning', 'important', 'info' or 'inverse'
-                'label' => Yii::t('/dashboard/index', 'SelectionnerBat'),
+                'label' => Translate::tradMoyen('SelectionnerBat'),
             ));
 
             echo '</p>';
@@ -41,7 +41,7 @@
                     // Data
                     array
                 (
-                'ALL' => Yii::t('/dashboard/index', 'AllBatiment'),
+                'ALL' => Translate::tradMoyen('AllBatiment'),
                 CHtml::listData(Batiment::model()->findAll(), 'id_batiment', 'nom'),
                     ),
                     // htmlOptions

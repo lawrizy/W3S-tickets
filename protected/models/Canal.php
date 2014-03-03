@@ -23,7 +23,7 @@ class Canal extends CActiveRecord {
 // NOTE: you should only define rules for those attributes that
 // will receive user inputs.
         return array(
-            array('label', 'required', 'message' => 'Le champs {attribute} ne peut être vide.'),
+            array('label', 'required', 'message' => Translate::tradGrand('Required')),
             array('label', 'length', 'max' => 45),
 // The following rule is used by search().
 // @todo Please remove those attributes that should not be searched.

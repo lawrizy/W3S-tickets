@@ -3,7 +3,7 @@ $this->pageTitle = Yii::app()->name;
 ?>
 
 <h1><?php
-echo Yii::t('/index', 'Message');
+echo Translate::tradPetit('Message');
 echo CHtml::encode(Yii::app()->name);
 ?></i></h1>
 
