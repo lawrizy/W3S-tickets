@@ -42,6 +42,7 @@
                                     array('label' => Translate::tradPetit('Connexion'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
                                     array('label' => Translate::tradPetit('DeConnexion') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
                                 ),
+                   
                     ),
                 ),
             ));
