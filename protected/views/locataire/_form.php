@@ -17,7 +17,7 @@
     ));
     ?>
 
-    <p class="note"><?php echo Translate::tradGrand('ChampObligatoire') ;?></p>
+    <p class="note"><?php echo Translate::tradGrand('ChampObligatoire'); ?></p>
 
     <?php echo $form->errorSummary($model, Translate::tradMoyen('ReglerProbleme')); ?>
 

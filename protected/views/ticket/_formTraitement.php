@@ -14,29 +14,28 @@
     <?php
     $form = $this->beginWidget('CActiveForm', array('id' => 'ticket-form', 'enableAjaxValidation' => false));
     ?>
-    <p class="note"><?php echo Translate::tradGrand('Required');?></p>
+    <p class="note"><?php echo Translate::tradGrand('Required'); ?></p>
     <?php echo $form->errorSummary($model); ?>
     <?php
 // Affichage de la sélection des entreprises
-    echo '<label>'.Yii::t('/model/ticket', 'EntrepriseTicket').'<span class="required">&nbsp;*</span></label>';
+    echo '<label>' . Yii::t('/model/ticket', 'EntrepriseTicket') . '<span class="required">&nbsp;*</span></label>';
     echo $form->dropDownList($model, 'fk_entreprise', array('' => '', CHtml::listData(Entreprise::model()->findAll(), 'id_entreprise', 'nom')));
-        // Affiche la liste des entreprises que l'on peut assigner à ce ticket
+    // Affiche la liste des entreprises que l'on peut assigner à ce ticket
     echo $form->error($model, 'fk_entreprise');
     ?>
 
     <div class="row">
         <label><?php echo Translate::tradPetit('DateIntervention'); ?> <span class="required">*</span></label>
         <?php
-        $this->widget('zii.widgets.jui.CJuiDatePicker', array( // Widget permettant d'afficher un datePicker
+        $this->widget('zii.widgets.jui.CJuiDatePicker', array(// Widget permettant d'afficher un datePicker
             'name' => 'Ticket[date_intervention]',
             'id' => 'Ticket_date_intervention',
-             'language'=>  Yii::app()->session['_lang'],
+            'language' => Yii::app()->session['_lang'],
             // Le datePicker utilise du javascript, voir la function plus haut
             'options' => array(
                 'dateFormat' => 'yy/mm/dd', // Permet de définir le format d'affichage de la date
                 'showAnim' => 'show', // Affiche une animation à l'affichage du datePicker, choix entre tout ce qu'il y a en commentaire en-dessous
                 //'slide','fold','slideDown','fadeIn','blind','bounce','clip','drop'
-                
                 'changeMonth' => true, // Affiche une comboBox permettant de sélectionner un mois directement
                 'changeYear' => true, // Affiche une comboBox permettant de sélectionner une année directement
                 'minDate' => date('Y/m/d'), // Toutes les dates avant celle-ci ne seront pas sélectionnables
@@ -55,7 +54,7 @@
     $this->widget('zii.widgets.jui.CJuiButton', array(
         'buttonType' => 'submit', // Type de bouton
         'name' => 'traitement', // L'action à lancer (ne pas oublier les rules dans le controleur)
-        'caption' =>  Translate::tradPetit('ButtonTraitement'), // Le texte à afficher sur le bouton
+        'caption' => Translate::tradPetit('ButtonTraitement'), // Le texte à afficher sur le bouton
     ));
     ?>
 

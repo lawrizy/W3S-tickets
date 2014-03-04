@@ -57,7 +57,7 @@ if ($idBatiment == 'ALL') { // Cas 1 : sélectionner tous les bâtiments
             )
     );
 } else { // Cas 2 : Un bâtiment spécifique a été sélectionné
-    echo '<p><h3>' .Translate::tradPetit('AjaxFrequenceUnBatiment') .
+    echo '<p><h3>' . Translate::tradPetit('AjaxFrequenceUnBatiment') .
     Batiment::model()->findByAttributes(array('id_batiment' => $idBatiment))->nom
     . ') </h3></p>';
     ?>
@@ -103,7 +103,7 @@ if ($idBatiment == 'ALL') { // Cas 1 : sélectionner tous les bâtiments
 ?>
 <br/><br/><br/>
 
-<h3><?php echo Translate::tradMoyen( 'AjaxFrenquenceEntreprise'); ?></h3>
+<h3><?php echo Translate::tradMoyen('AjaxFrenquenceEntreprise'); ?></h3>
 <?php
 $entrepriseFreqAllData = $this->actionGetFrequenceCalledEntreprise();
 //print_r($entrepriseFreqAllData);

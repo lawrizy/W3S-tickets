@@ -29,19 +29,21 @@
                             '---',
                             array('label' => Translate::tradPetit('CreerTicket'), 'url' => array('/locataire/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
                             array('label' => Translate::tradPetit('ListeTicket'), 'url' => array('/ticket/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
+                            array('label' => Translate::tradPetit('Creer') . Yii::app()->session['NouveauTicket'] . ' ticket', 'url' => array('/ticket/create'), 'visible' => Yii::app()->session['Utilisateur'] == 'Locataire'),
+                            '---',
                             array('label' => Translate::tradPetit('DashBoard'), 'url' => array(''),
                                 'items' => array(array('label' => Translate::tradPetit('Graphique'), 'url' => array('dashboard/vue'))),
                                 'visible' => Yii::app()->session['Utilisateur'] == 'User' && ($var['fk_fonction'] == Fonction::ID_ADMIN || $var['fk_fonction'] == Fonction::ID_ROOT)),
-                            array('label' => Translate::tradPetit('Creer') . Yii::app()->session['NouveauTicket'] . ' ticket', 'url' => array('/ticket/create'), 'visible' => Yii::app()->session['Utilisateur'] == 'Locataire'),
-                            '---')),
                             array('label' => 'Admin', 'url' => array('/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $var['fk_fonction'] == Fonction::ID_ROOT),
-                            array(
-                                'class' => 'bootstrap.widgets.TbMenu',
-                                'htmlOptions' => array('class' => 'pull-right'),
-                                'items' => array(
-                                    array('label' => Translate::tradPetit('Connexion'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
-                                    array('label' => Translate::tradPetit('DeConnexion') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
-                                ),
+                        )),
+                    array(
+                        'class' => 'bootstrap.widgets.TbMenu',
+                        'htmlOptions' => array('class' => 'pull-right'),
+                        'items' => array(
+                            '---',
+                            array('label' => Translate::tradPetit('Connexion'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
+                            array('label' => Translate::tradPetit('DeConnexion') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
+                        ),
                     ),
                 ),
             ));

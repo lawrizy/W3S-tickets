@@ -45,7 +45,7 @@ $this->widget('zii.widgets.grid.CGridView', array(
     'dataProvider' => $model->searchClosed(),
     // 'filter' => $model,
     'columns' => array(
-       array(
+        array(
             'name' => Translate::tradPetit('CodeTicket'),
             'value' => '$data->code_ticket'),
         array(

@@ -10,7 +10,7 @@
         <div id="sidebar">
             <?php
             $this->beginWidget('zii.widgets.CPortlet', array(
-                'title' => 'Actions',
+                'title' => Translate::tradPetit('actions'),
             ));
             $this->widget('bootstrap.widgets.TbMenu', array(
                 'type' => 'pills',

@@ -50,10 +50,10 @@ class Locataire extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-        'id_locataire' => Translate::tradPetit('IdLoc'),
-        'nom' => Translate::tradPetit( 'NomLoc'),
-        'email' => 'Email',
-        'password' => Translate::tradPetit('MdpLoc'),
+            'id_locataire' => Translate::tradPetit('IdLoc'),
+            'nom' => Translate::tradPetit('NomLoc'),
+            'email' => 'Email',
+            'password' => Translate::tradPetit('MdpLoc'),
         );
     }
 

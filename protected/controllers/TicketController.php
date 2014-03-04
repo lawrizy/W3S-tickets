@@ -43,9 +43,9 @@ class TicketController extends Controller {
                     'users' => array('@'), //user logger
                 ),
             );
-        } elseif ((Yii::app()->session['Utilisateur'] == 'User') && 
+        } elseif ((Yii::app()->session['Utilisateur'] == 'User') &&
                 (($logged->fk_fonction == Fonction::ID_ADMIN) || ($logged->fk_fonction == Fonction::ID_ROOT))
-                ) { // Utilisateur peut creer ,voir ,manager,traiter et fermer des ticket
+        ) { // Utilisateur peut creer ,voir ,manager,traiter et fermer des ticket
             return array(
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
                     'actions' => array('create', 'update', 'view', 'admin', 'traitement', 'getsouscategoriesdynamiques', 'close', 'sendnotificationmail', 'delete'),
@@ -286,7 +286,6 @@ class TicketController extends Controller {
         $this->loadModel($id)->delete();
         $this->redirect(admin);
 // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        
     }
 
     /**

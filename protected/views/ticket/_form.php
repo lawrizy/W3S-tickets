@@ -53,7 +53,7 @@
 
     <div class="row">
         <?php
-        echo '<label>' . Translate::tradPetit( 'SelectionnerBatiment') . '<span class="required"> *</span> </label>';
+        echo '<label>' . Translate::tradPetit('SelectionnerBatiment') . '<span class="required"> *</span> </label>';
         echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAll(), 'id_batiment', 'nom')));
         ;
         ?>

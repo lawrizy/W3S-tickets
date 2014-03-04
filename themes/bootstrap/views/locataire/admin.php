@@ -5,8 +5,7 @@
 
 
 $this->menu = array(
-    array('label' => Translate::tradPetit('MenuTitre'), 'url' => array('/locataire/create')),
-
+    array('label' => Translate::tradPetit('CreerLocataire'), 'url' => array('/locataire/create')),
 );
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
@@ -22,7 +21,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1><?php echo Translate::tradPetit(    'AdminTitre') ?></h1>
+<h1><?php echo Translate::tradPetit('ListLocataire') ?></h1>
 
 
 <?php echo CHtml::link(Translate::tradPetit('RechercheAvancee'), '#', array('class' => 'search-button')); ?>
@@ -40,7 +39,6 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'id' => 'locataire-grid',
     'dataProvider' => $model->search(),
     'columns' => array(
-        'id_locataire',
         'nom',
         'email',
         array

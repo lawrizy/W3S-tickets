@@ -67,16 +67,16 @@ class Ticket extends CActiveRecord {
         return array(
             'id_ticket' => Translate::tradPetit('IdTicket'),
             'fk_statut' => Translate::tradPetit('StatutTicket'),
-            'fk_categorie' =>Translate::tradPetit('CategorieTicket'),
+            'fk_categorie' => Translate::tradPetit('CategorieTicket'),
             'fk_user' => Translate::tradPetit('UserTicket'),
-            'descriptif' => Translate::tradPetit( 'DescriptifTicket'),
+            'descriptif' => Translate::tradPetit('DescriptifTicket'),
             'fk_canal' => Translate::tradPetit('CanalTicket'),
-            'date_intervention' => Translate::tradPetit( 'DateInterventionTicket'),
+            'date_intervention' => Translate::tradPetit('DateInterventionTicket'),
             'fk_entreprise' => Translate::tradPetit('EntrepriseTicket'),
             'code_ticket' => Translate::tradPetit('CodeTicket'),
             'etage' => Translate::tradPetit('EtageTicket'),
-            'bureau' => Translate::tradPetit( 'BureauTicket'),
-            'fk_locataire' => Translate::tradPetit( 'LocataireTicket'),
+            'bureau' => Translate::tradPetit('BureauTicket'),
+            'fk_locataire' => Translate::tradPetit('LocataireTicket'),
             'fk_batiment' => Translate::tradPetit('BatimentTicket'),
         );
     }
@@ -215,4 +215,5 @@ class Ticket extends CActiveRecord {
         $cat = CategorieIncident::model()->findByPk($sousCat->fk_parent);
         return $cat->id_categorie_incident;
     }
+
 }

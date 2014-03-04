@@ -14,7 +14,7 @@ $this->menu = array(
 <?php
 $model = new Ticket();
 $model->fk_locataire;
-    $this->widget('zii.widgets.grid.CGridView', array(
+$this->widget('zii.widgets.grid.CGridView', array(
     'id' => 'ticket-grid',
     'dataProvider' => $model->searchByLocataire($model->fk_locataire),
     // 'filter' => $model,

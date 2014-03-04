@@ -2,18 +2,18 @@
 /* @var $this EntrepriseController */
 /* @var $model Entreprise */
 
-$this->breadcrumbs=array(
-	'Entreprises'=>array('admin'),
-	$model->id_entreprise=>array('view','id'=>$model->id_entreprise),
-	'Update',
+$this->breadcrumbs = array(
+    'Entreprises' => array('admin'),
+    $model->id_entreprise => array('view', 'id' => $model->id_entreprise),
+    'Update',
 );
 
-$this->menu=array(
-array('label'=>'View Entreprise', 'url'=>array('view', 'id'=>$model->id_entreprise)),
-array('label'=>'Manage Entreprise', 'url'=>array('admin')),
+$this->menu = array(
+    array('label' => 'View Entreprise', 'url' => array('view', 'id' => $model->id_entreprise)),
+    array('label' => 'Manage Entreprise', 'url' => array('admin')),
 );
 ?>
 
 <h1>Update Entreprise <?php echo $model->id_entreprise; ?></h1>
 
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php $this->renderPartial('_form', array('model' => $model)); ?>

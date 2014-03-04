@@ -42,18 +42,20 @@ $('.search-form form').submit(function(){
     ?>
 </div><!-- search-form -->
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'lieu-grid',
-	'dataProvider'=>$model->search(),
-	'filter'=>$model,
-	'columns'=>array(
-		'id_lieu',
-		'etage',
-		'appartement',
-		'fk_locataire',
-		'fk_batiment',
-		array(
-			'class'=>'CButtonColumn',
-		),
-	),
-)); ?>
+<?php
+$this->widget('zii.widgets.grid.CGridView', array(
+    'id' => 'lieu-grid',
+    'dataProvider' => $model->search(),
+    'filter' => $model,
+    'columns' => array(
+        'id_lieu',
+        'etage',
+        'appartement',
+        'fk_locataire',
+        'fk_batiment',
+        array(
+            'class' => 'CButtonColumn',
+        ),
+    ),
+));
+?>

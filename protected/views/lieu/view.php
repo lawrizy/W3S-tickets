@@ -19,14 +19,16 @@ $this->menu = array(
 <h1>View Lieu #<?php echo $model->id_lieu; ?></h1>
 
 
-<?php $this->widget('zii.widgets.CDetailView', array(
-	'data'=>$model,
-	'attributes'=>array(
-		'id_lieu',
-		'etage',
-		'appartement',
-		'fk_locataire',
-		'fk_batiment',
-	),
-)); ?>
+<?php
+$this->widget('zii.widgets.CDetailView', array(
+    'data' => $model,
+    'attributes' => array(
+        'id_lieu',
+        'etage',
+        'appartement',
+        'fk_locataire',
+        'fk_batiment',
+    ),
+));
+?>
 

@@ -16,7 +16,7 @@
         <!-- Custom styles for this template -->
         <link href="../../css/signin.css" rel="stylesheet"/>
        <!-- <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/main.css" />
-        <link rel="stylesheet" type="text/css" href="<?php //echo Yii::app()->request->baseUrl; ?>/css/form.css" />-->
+        <link rel="stylesheet" type="text/css" href="<?php //echo Yii::app()->request->baseUrl;  ?>/css/form.css" />-->
 
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
     </head>
@@ -56,7 +56,7 @@
 
             <div class="clear"></div>
 
-            
+
 
         </div><!-- page -->
 

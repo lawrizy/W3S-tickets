@@ -23,7 +23,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1><?php echo Translate::tradPetit( 'AdminOpenedTitre');
+<h1><?php echo Translate::tradPetit('AdminOpenedTitre');
 ?></h1>
 <!--
 <p>
@@ -31,7 +31,7 @@ $('.search-form form').submit(function(){
     or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
 </p>-->
 
-<?php echo CHtml::link(Translate::tradPetit( 'RechercheAvancee'), '#', array('class' => 'search-button')); ?>
+<?php echo CHtml::link(Translate::tradPetit('RechercheAvancee'), '#', array('class' => 'search-button')); ?>
 <div class="search-form" style="display:none">
     <?php
     $this->renderPartial('_search', array(

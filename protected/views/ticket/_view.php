@@ -29,5 +29,5 @@
     <?php echo CHtml::encode($data->descriptif); ?>
     <br />
 
-  
+
 </div>

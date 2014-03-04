@@ -24,7 +24,7 @@ return array(
         'application.components.*',
         'application.controllers.Translate',
         'ext.yii-mail.YiiMailMessage',
-        //'application.extensions.yii-mail.YiiMailMessage',
+    //'application.extensions.yii-mail.YiiMailMessage',
     ),
     //'theme' => 'classic',
     'theme' => 'bootstrap',
@@ -46,15 +46,15 @@ return array(
             'class' => 'bootstrap.components.Bootstrap',
         ),
         'mail' => array(
-            'class'=>'ext.yii-mail.YiiMail',
+            'class' => 'ext.yii-mail.YiiMail',
             'transportType' => 'smtp',
-            'transportOptions'=>array(
-                'host'=>'ssl0.ovh.net',
-                'encryption'=>'ssl', // use ssl
+            'transportOptions' => array(
+                'host' => 'ssl0.ovh.net',
+                'encryption' => 'ssl', // use ssl
                 //TODO changer l'adresse mail utilisée pour envoyer les mails
-                'username'=>'emmanuel@web3sys.com',
-                'password'=>'oscuro87',
-                'port'=>465, // ssl port for gmail
+                'username' => 'emmanuel@web3sys.com',
+                'password' => 'oscuro87',
+                'port' => 465, // ssl port for gmail
             ),
             'viewPath' => 'application.views.mail',
             'logging' => true,

@@ -110,14 +110,10 @@ class SiteController extends Controller {
         header('Location: ' . Yii::app()->request->baseUrl . '/index.php');
     }
 
-
     public function actionGetLocataire() {
         $this->render('getLocataire');
     }
 
-    
-    
-    
     // ---------------------------------------- //
     // ---------- Choix de la langue ---------- //
     // ---------------------------------------- //
@@ -138,8 +134,8 @@ class SiteController extends Controller {
         Yii::app()->session['_lang'] = 'nl';
         header("Location: $ctr");
     }
-    // ---------------------------------------- //
-    // ---------------------------------------- //
-    // ---------------------------------------- //
 
+    // ---------------------------------------- //
+    // ---------------------------------------- //
+    // ---------------------------------------- //
 }

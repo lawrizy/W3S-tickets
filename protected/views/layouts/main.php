@@ -51,7 +51,7 @@ Yii::app()->language = Yii::app()->session['_lang'];
                 </div>
                 <div id="aaaa"><table>
                         <tr>
-                            <td width="50%"><a href=<?php echo Yii::app()->request->baseUrl.'/index.php'; ?>><img  src="http://web3sys.com/tickets/images/HServices.png"></img></a></td>
+                            <td width="50%"><a href=<?php echo Yii::app()->request->baseUrl . '/index.php'; ?>><img  src="http://web3sys.com/tickets/images/HServices.png"></img></a></td>
                             <?php
 //                                if (Yii::app()->getController()->getAction()->id == 'traitement' || Yii::app()->getController()->getAction()->id == 'update' || Yii::app()->getController()->getAction()->id == 'close'|| Yii::app()->getController()->getAction()->id == 'create')
 //                                    echo "../../../images/HServices.png";
@@ -91,13 +91,13 @@ Yii::app()->language = Yii::app()->session['_lang'];
                     'items' => array(
                         array('label' => Translate::tradPetit('APropos'), 'url' => array('/site/page', 'view' => 'about'), 'template' => '| {menu}'),
                         array('label' => Translate::tradPetit('Contact'), 'url' => array('/site/contact'), 'template' => '| {menu}'),
-                        array('label' => Translate::tradPetit( 'CreerTicket'), 'url' => array('/locataire/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User', 'template' => '| {menu}'),
-                        array('label' => Translate::tradPetit( 'ListeTicket'), 'url' => array('/ticket/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User','template' => '| {menu}'),
-                        array('label' => Translate::tradPetit( 'DashBoard'), 'url' => array('dashboard/vue'), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $var['fk_fonction'] == 2,'template' => '| {menu}'),
-                        array('label' => Translate::tradPetit( 'Creer') . Yii::app()->session['NouveauTicket'] . ' ticket', 'url' => array('/ticket/create'), 'visible' => Yii::app()->session['Utilisateur'] == 'Locataire','template' => '| {menu}'),
-                        array('label' => 'Admin', 'url' => array('/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $var['fk_fonction'] == 2,'template' => '| {menu}'),
-                        array('label' => Translate::tradPetit( 'Connexion'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest,'template' => '| {menu}'),
-                        array('label' => Translate::tradPetit('DeConnexion') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest,'template' => '| {menu}'),
+                        array('label' => Translate::tradPetit('CreerTicket'), 'url' => array('/locataire/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User', 'template' => '| {menu}'),
+                        array('label' => Translate::tradPetit('ListeTicket'), 'url' => array('/ticket/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User', 'template' => '| {menu}'),
+                        array('label' => Translate::tradPetit('DashBoard'), 'url' => array('dashboard/vue'), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $var['fk_fonction'] == 2, 'template' => '| {menu}'),
+                        array('label' => Translate::tradPetit('Creer') . Yii::app()->session['NouveauTicket'] . ' ticket', 'url' => array('/ticket/create'), 'visible' => Yii::app()->session['Utilisateur'] == 'Locataire', 'template' => '| {menu}'),
+                        array('label' => 'Admin', 'url' => array('/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $var['fk_fonction'] == 2, 'template' => '| {menu}'),
+                        array('label' => Translate::tradPetit('Connexion'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest, 'template' => '| {menu}'),
+                        array('label' => Translate::tradPetit('DeConnexion') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest, 'template' => '| {menu}'),
                         array('label' => '', 'template' => '| {menu}')
                     ),
                 ));

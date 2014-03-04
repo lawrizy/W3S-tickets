@@ -56,7 +56,7 @@ class EntrepriseController extends Controller {
             'model' => $this->loadModel($id),
         ));
     }
-    
+
     public function actionSecteur($id) {
         $this->render('secteur', array(
             'model' => $this->loadModel($id),
