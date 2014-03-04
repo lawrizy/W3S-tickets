@@ -19,28 +19,31 @@ class BatimentController extends Controller {
     }
 
     /**
-     * Specifies the access control rules.
-     * This method is used by the 'accessControl' filter.
-     * @return array access control rules
+     * La fonction permettant d'accorder des droits aux différents utilisateurs.
+     * Quand la méthode est appellée, on vérifie le type de l'utilisateur,
+     * et en fonction de cela, les droits accordés peuvent varient.
      */
     public function accessRules() {
-        return array(
-            array('allow', // allow all users to perform 'index' and 'view' actions
-                'actions' => array('index', 'view'),
-                'users' => array('*'),
-            ),
-            array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'admin', 'delete'),
-                'users' => array('@'),
-            ),
-//			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-//				'actions'=>array('admin','delete'),
-//				'users'=>array('admin'),
-//			),
-            array('deny', // deny all users
-                'users' => array('*'),
-            ),
-        );
+        if ((Yii::app()->session['Utilisateur'] == 'User') && (Yii::app()->session['Logged']->fk_fonction == 2)) {
+            // Si 'User' et fonction à 2, alors c'est un admin
+            return array( // L'admin à tous les droits
+                array('allow', // 'allow' veut dire que l'utilisateur a droit à ce qui suit.
+                    'actions' => array('*'),
+                    'users' => array('*'),
+                    // Droits accordés à tout le monde, mais comme il faut être admin pour arriver là alors il n'y a que les admins qui ont ces droits-là
+                ),
+            );
+        } else {
+            // Si ['Locataire'] ou ['User' et fonction à 1], alors l'utilisateur n'a aucun droit
+            return array(
+                array('deny', // 'deny' veut dire que l'on renie les droits à l'utilisateur
+                    'users' => array('*'),
+                    // Aucun droit à tous ceux qui arrivent ici
+                    'message' => 'Vous n\'avez pas accès à cette page.'
+                    // Message qu'affichera la page d'erreur
+                ),
+            );
+        }
     }
 
     /**
@@ -60,8 +63,8 @@ class BatimentController extends Controller {
     public function actionCreate() {
         $model = new Batiment;
 
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
+// Uncomment the following line if AJAX validation is needed
+// $this->performAjaxValidation($model);
 
         if (isset($_POST['Batiment'])) {
             $model->attributes = $_POST['Batiment'];
@@ -82,8 +85,8 @@ class BatimentController extends Controller {
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
 
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
+// Uncomment the following line if AJAX validation is needed
+// $this->performAjaxValidation($model);
 
         if (isset($_POST['Batiment'])) {
             $model->attributes = $_POST['Batiment'];
@@ -104,7 +107,7 @@ class BatimentController extends Controller {
     public function actionDelete($id) {
         $this->loadModel($id)->delete();
 
-        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }

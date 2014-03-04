@@ -22,6 +22,7 @@ return array(
     'import' => array(
         'application.models.*',
         'application.components.*',
+        'application.controllers.Translate',
         'ext.yii-mail.YiiMailMessage',
         //'application.extensions.yii-mail.YiiMailMessage',
     ),

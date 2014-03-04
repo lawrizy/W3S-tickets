@@ -16,14 +16,14 @@
     ));
     ?>
 
-    <p class="note"><?php echo Yii::t('ticket/_form', 'ChampObligatoire'); ?></p>
+    <p class="note"><?php echo Translate::tradGrand('Required'); ?></p>
 
-    <?php echo $form->errorSummary($model, 'Veuillez régler les probl&egrave;mes suivants'); ?>
+    <?php echo $form->errorSummary($model, Translate::tradMoyen('ReglerProbleme')); ?>
 
     <div class="row">
         <?php
         // Form pour la sélection de la catégorie
-        echo '<label>' . Yii::t('/ticket/_form', 'SelectionnerCategorie') . '<span class="required"> *</span> </label>';
+        echo '<label>' . Translate::tradPetit('SelectionnerCategorie') . '<span class="required"> *</span> </label>';
         echo CHtml::dropDownList
                 (
                 'Categorie', // Le nom de cette dropDownList
@@ -31,7 +31,7 @@
                 array // Cette array remplit la dropDownList avec les catégories mères disponibles dans la DB.
             (
             '' => '',
-            CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL)), 'id_categorie_incident', 'label')
+            $this->getCategoriesLabel(),
                 ), array // Cette array définit le chargement dynamique des valeurs dans la dropDownList des sous-catégories. (Voir dropDownList suivante appelée DD_sousCat)
             (
             'ajax' => array
@@ -44,7 +44,6 @@
                 )
         );
 
-        // Form pour la sélection de la sous-catégorie.
         echo $form->labelEx($model, 'fk_categorie');
         // Cette dropDownList est initialisée vide car elle sera remplie après la sélection d'une catégorie ci-dessus.
         echo CHtml::dropDownList('DD_sousCat', '', array());
@@ -54,7 +53,7 @@
 
     <div class="row">
         <?php
-        echo '<label>' . Yii::t('/ticket/_form', 'SelectionnerBatiment') . '<span class="required"> *</span> </label>';
+        echo '<label>' . Translate::tradPetit( 'SelectionnerBatiment') . '<span class="required"> *</span> </label>';
         echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAll(), 'id_batiment', 'nom')));
         ;
         ?>
@@ -80,7 +79,7 @@
     </div>
 
     <div class="row buttons">
-        <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+        <?php echo CHtml::submitButton(Translate::tradPetit('ButtonCreer')); ?>
     </div>
 
 

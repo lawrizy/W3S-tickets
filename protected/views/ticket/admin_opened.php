@@ -4,9 +4,9 @@
 
 
 $this->menu = array(
-    array('label' => Yii::t('/ticket/adminOpened', 'MenuTicketTout'), 'url' => array('/ticket/admin/?var=admin')),
-    array('label' => Yii::t('/ticket/adminOpened', 'MenuTicketEnCours'), 'url' => array('ticket/admin?var=admin_InProgress')),
-    array('label' => Yii::t('/ticket/adminOpened', 'MenuTicketFerme'), 'url' => array('ticket/admin?var=admin_closed')),
+    array('label' => Translate::tradPetit('MenuTicketTout'), 'url' => array('/ticket/admin/?var=admin')),
+    array('label' => Translate::tradPetit('MenuTicketEnCours'), 'url' => array('ticket/admin?var=admin_InProgress')),
+    array('label' => Translate::tradPetit('MenuTicketFerme'), 'url' => array('ticket/admin?var=admin_closed')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -23,7 +23,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1><?php echo Yii::t('/ticket/adminOpened', 'AdminOpenedTitre');
+<h1><?php echo Translate::tradPetit( 'AdminOpenedTitre');
 ?></h1>
 <!--
 <p>
@@ -31,7 +31,7 @@ $('.search-form form').submit(function(){
     or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
 </p>-->
 
-<?php echo CHtml::link( Yii::t('/ticket/adminOpened', 'RechercheAvancee'), '#', array('class' => 'search-button')); ?>
+<?php echo CHtml::link(Translate::tradPetit( 'RechercheAvancee'), '#', array('class' => 'search-button')); ?>
 <div class="search-form" style="display:none">
     <?php
     $this->renderPartial('_search', array(
@@ -47,28 +47,28 @@ $this->widget('zii.widgets.grid.CGridView', array(
     // 'filter' => $model,
     'columns' => array(
         array(
-            'name' => Yii::t('/model/ticket', 'CodeTicket'),
+            'name' => Translate::tradPetit('CodeTicket'),
             'value' => '$data->code_ticket'),
         array(
-            'name' => Yii::t('/model/ticket', 'LocataireTicket'),
+            'name' => Translate::tradPetit('LocataireTicket'),
             'value' => 'Locataire::model()->findByPk($data->fk_locataire)->nom'),
         array(
-            'name' => Yii::t('/model/ticket', 'StatutTicket'),
-            'value' => 'Yii::t(\'/model/statutTicket\',StatutTicket::model()->findByPk($data->fk_statut)->label);'
+            'name' => Translate::tradPetit('StatutTicket'),
+            'value' => 'Translate::tradPetit(StatutTicket::model()->findByPk($data->fk_statut)->label);'
         ),
         array(
-            'name' => Yii::t('/model/ticket', 'CategTicket'),
-            'value' => 'Yii::t(\'/model/categorieIncident\',CategorieIncident::model()->findByPk(CategorieIncident::model()->findByPk($data->fk_categorie)->fk_parent)->label);'
+            'name' => Translate::tradPetit('CategTicket'),
+            'value' => 'Translate::tradMoyen(CategorieIncident::model()->findByPk(CategorieIncident::model()->findByPk($data->fk_categorie)->fk_parent)->label);'
         ),
         array(
-            'name' => Yii::t('/model/ticket', 'CategorieTicket'),
-            'value' => 'Yii::t(\'/model/categorieIncident\',CategorieIncident::model()->findByPk($data->fk_categorie)->label);'
+            'name' => Translate::tradPetit('CategorieTicket'),
+            'value' => 'Translate::tradMoyen(CategorieIncident::model()->findByPk($data->fk_categorie)->label);'
         ),
         array(
-            'name' => Yii::t('/model/ticket', 'BatimentTicket'),
+            'name' => Translate::tradPetit('BatimentTicketCirc'),
             'value' => 'Batiment::model()->findByPk($data->fk_batiment)->nom'),
         array(
-            'name' => Yii::t('/model/ticket', 'UserTicket'),
+            'name' => Translate::tradPetit('UserTicketCirc'),
             'value' => 'User::model()->findByPk($data->fk_user)->nom'),
         array
             (

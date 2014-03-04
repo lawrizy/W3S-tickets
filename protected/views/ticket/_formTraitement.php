@@ -14,22 +14,23 @@
     <?php
     $form = $this->beginWidget('CActiveForm', array('id' => 'ticket-form', 'enableAjaxValidation' => false));
     ?>
-    <p class="note">Les champs marqués de <span class="required">*</span> sont requis.</p>
+    <p class="note"><?php echo Translate::tradGrand('Required');?></p>
     <?php echo $form->errorSummary($model); ?>
     <?php
 // Affichage de la sélection des entreprises
-    echo '<label>Entreprise <span class="required">*</span></label>';
+    echo '<label>'.Yii::t('/model/ticket', 'EntrepriseTicket').'<span class="required">&nbsp;*</span></label>';
     echo $form->dropDownList($model, 'fk_entreprise', array('' => '', CHtml::listData(Entreprise::model()->findAll(), 'id_entreprise', 'nom')));
         // Affiche la liste des entreprises que l'on peut assigner à ce ticket
     echo $form->error($model, 'fk_entreprise');
     ?>
 
     <div class="row">
-        <label>Date d'intervention <span class="required">*</span></label>
+        <label><?php echo Translate::tradPetit('DateIntervention'); ?> <span class="required">*</span></label>
         <?php
         $this->widget('zii.widgets.jui.CJuiDatePicker', array( // Widget permettant d'afficher un datePicker
             'name' => 'Ticket[date_intervention]',
             'id' => 'Ticket_date_intervention',
+             'language'=>  Yii::app()->session['_lang'],
             // Le datePicker utilise du javascript, voir la function plus haut
             'options' => array(
                 'dateFormat' => 'yy/mm/dd', // Permet de définir le format d'affichage de la date
@@ -54,7 +55,7 @@
     $this->widget('zii.widgets.jui.CJuiButton', array(
         'buttonType' => 'submit', // Type de bouton
         'name' => 'traitement', // L'action à lancer (ne pas oublier les rules dans le controleur)
-        'caption' => 'Passer en Traitement', // Le texte à afficher sur le bouton
+        'caption' =>  Translate::tradPetit('ButtonTraitement'), // Le texte à afficher sur le bouton
     ));
     ?>
 

@@ -6,7 +6,7 @@
 
 if ($idBatiment == 'ALL') { // Cas 1 : sélectionner tous les bâtiments
     ?>
-    <p><h3><?php echo Yii::t('/dashboard/ajax', 'AjaxTitre'); ?></h3></p>
+    <p><h3><?php echo Translate::tradMoyen('AjaxTitre'); ?></h3></p>
     <?php ?>
     <div><?php
         $this->widget(
@@ -26,7 +26,7 @@ if ($idBatiment == 'ALL') { // Cas 1 : sélectionner tous les bâtiments
                 )
         );
         ?></div><?php
-    echo '<p><h3>' . Yii::t('dashboard/ajax', 'AjaxStatutTicket') . '</h3></p>';
+    echo '<p><h3>' . Translate::tradMoyen('AjaxStatutTicket') . '</h3></p>';
 
     $this->widget(
             'chartjs.widgets.ChPie', array(
@@ -39,17 +39,17 @@ if ($idBatiment == 'ALL') { // Cas 1 : sélectionner tous les bâtiments
             array(
                 "value" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 1)),
                 "color" => "rgba(220, 0,0,1)",
-                "label" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 1)) . Yii::t('dashboard/ajax', 'AjaxStatutNew')
+                "label" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 1)) . Translate::tradMoyen('AjaxStatutNew')
             ),
             array(
                 "value" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 2)),
                 "color" => "rgba(242,106,22,1)",
-                "label" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 2)) . Yii::t('dashboard/ajax', 'AjaxStatutInProgress')
+                "label" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 2)) . Translate::tradMoyen('AjaxStatutInProgress')
             ),
             array(
                 "value" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 3)),
                 "color" => "rgba(66,200,22,1)",
-                "label" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 3)) . Yii::t('dashboard/ajax', 'AjaxStatutClosed')
+                "label" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 3)) . Translate::tradMoyen('AjaxStatutClosed')
             ),
         ),
         'options' => array
@@ -57,7 +57,7 @@ if ($idBatiment == 'ALL') { // Cas 1 : sélectionner tous les bâtiments
             )
     );
 } else { // Cas 2 : Un bâtiment spécifique a été sélectionné
-    echo '<p><h3>'.Yii::t('/dashboard/ajax','AjaxFrequenceUnBatiment').
+    echo '<p><h3>' .Translate::tradPetit('AjaxFrequenceUnBatiment') .
     Batiment::model()->findByAttributes(array('id_batiment' => $idBatiment))->nom
     . ') </h3></p>';
     ?>
@@ -79,7 +79,7 @@ if ($idBatiment == 'ALL') { // Cas 1 : sélectionner tous les bâtiments
         'options' => array()
             )
     );
-    echo '<p><h3>'.Yii::t('/dashboard/ajax','AjaxFrequenceStatutTicket')
+    echo '<p><h3>' . Translate::tradMoyen('AjaxFrequenceStatutTicket')
     . Batiment::model()->findByAttributes(array('id_batiment' => $idBatiment))->nom
     . ')</h3></p>';
 
@@ -103,7 +103,7 @@ if ($idBatiment == 'ALL') { // Cas 1 : sélectionner tous les bâtiments
 ?>
 <br/><br/><br/>
 
-<h3><?php echo Yii::t('dashboard/ajax', 'AjaxFrenquenceEntreprise'); ?></h3>
+<h3><?php echo Translate::tradMoyen( 'AjaxFrenquenceEntreprise'); ?></h3>
 <?php
 $entrepriseFreqAllData = $this->actionGetFrequenceCalledEntreprise();
 //print_r($entrepriseFreqAllData);

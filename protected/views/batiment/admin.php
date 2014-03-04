@@ -2,27 +2,25 @@
 /* @var $this BatimentController */
 /* @var $model Batiment */
 
-$this->breadcrumbs=array(
-	'Batiments'=>array('index'),
-	'Manage',
+$this->breadcrumbs = array(
+    'Batiments' => array('index'),
+    'Manage',
 );
 
-$this->menu=array(
-	array('label'=>'List Batiment', 'url'=>array('index')),
-	array('label'=>'Create Batiment', 'url'=>array('create')),
-
+$this->menu = array(
+    array('label' => 'Create Batiment', 'url' => array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
-	$('.search-form').toggle();
-	return false;
+$('.search-form').toggle();
+return false;
 });
 $('.search-form form').submit(function(){
-	$('#batiment-grid').yiiGridView('update', {
-		data: $(this).serialize()
-	});
-	return false;
+$('#batiment-grid').yiiGridView('update', {
+data: $(this).serialize()
+});
+return false;
 });
 ");
 ?>
@@ -43,17 +41,19 @@ $('.search-form form').submit(function(){
     ?>
 </div><!-- search-form -->
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'batiment-grid',
-	'dataProvider'=>$model->search(),
-	'filter'=>$model,
-	'columns'=>array(
-		'id_batiment',
-		'adresse',
-		'commune',
-		'cp',
-		array(
-			'class'=>'CButtonColumn',
-		),
-	),
-)); ?>
+<?php
+$this->widget('zii.widgets.grid.CGridView', array(
+    'id' => 'batiment-grid',
+    'dataProvider' => $model->search(),
+    'columns' => array(
+        'nom',
+        'code',
+        'adresse',
+        'cp',
+        'commune',
+        array(
+            'class' => 'CButtonColumn',
+        ),
+    ),
+));
+?>

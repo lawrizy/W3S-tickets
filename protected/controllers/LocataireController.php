@@ -23,25 +23,22 @@ class LocataireController extends Controller {
      * This method is used by the 'accessControl' filter.
      * @return array access control rules
      */
-    public function accessRules() { //r
-        return array(
-            array('allow', // allow all users to perform 'index' and 'view' actions
-                'actions' => array('view'),
-                'users' => array('*'),
-            ),
-            array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                'actions' => array('create', 'update', 'admin', 'delete'),
-                'users' => array('@'),
-            ),
-//			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-//				'actions'=>array('admin','delete'),
-//				'users'=>array('admin'),
-//			),
-            array('deny', // deny all users
-                'users' => array('*'),
-                'message' => 'Vous n\'avez pas accès à cette page.',
-            ),
-        );
+    public function accessRules() {
+        if ((Yii::app()->session['Utilisateur'] == 'User')) {
+            return array(
+                array('allow', // allow authenticated user to perform 'create' and 'update' actions
+                    'actions' => array('create', 'update', 'view', 'admin'),
+                    'users' => array('*'), //user logger
+                ),
+            );
+        } else {
+            return array(
+                array('deny',
+                    'users' => array('*'), //user non loger peut rien faire
+                    'message' => 'Vous n\'avez pas accès à cette page.'
+                ),
+            );
+        }
     }
 
     /**

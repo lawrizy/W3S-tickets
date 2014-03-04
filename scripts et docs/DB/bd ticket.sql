@@ -24,6 +24,7 @@ CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_categorie_incident` (
   `label` VARCHAR(64) NOT NULL,
   `fk_parent` INT(10) NULL,
   `fk_priorite` INT(10) NOT NULL,
+  `visible` TINYINT(1) NULL DEFAULT 1,
   PRIMARY KEY (`id_categorie_incident`),
   INDEX `fk_w3sys_categorie_incident_w3sys_categorie_incident1_idx` (`fk_parent` ASC),
   INDEX `fk_w3sys_categorie_incident_w3sys_priorite1_idx` (`fk_priorite` ASC))
@@ -54,6 +55,16 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `db_ticketing`.`w3sys_langue`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_langue` (
+  `id` INT(10) NOT NULL AUTO_INCREMENT,
+  `label` VARCHAR(45) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `db_ticketing`.`w3sys_user`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_user` (
@@ -62,12 +73,20 @@ CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_user` (
   `email` VARCHAR(64) NOT NULL,
   `password` VARCHAR(32) NOT NULL,
   `fk_fonction` INT(10) NOT NULL,
+  `fk_langue` INT(10) NOT NULL,
+  `visible` TINYINT(1) NULL DEFAULT 1,
   PRIMARY KEY (`id_user`),
   INDEX `fk_w3sys_user_w3sys_fonction1_idx` (`fk_fonction` ASC),
   UNIQUE INDEX `email_UNIQUE` (`email` ASC),
+  INDEX `fk_w3sys_user_w3sys_langue1_idx` (`fk_langue` ASC),
   CONSTRAINT `fk_w3sys_user_w3sys_fonction1`
     FOREIGN KEY (`fk_fonction`)
     REFERENCES `db_ticketing`.`w3sys_fonction` (`id_fonction`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_w3sys_user_w3sys_langue1`
+    FOREIGN KEY (`fk_langue`)
+    REFERENCES `db_ticketing`.`w3sys_langue` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -95,6 +114,7 @@ CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_entreprise` (
   `commune` VARCHAR(45) NOT NULL,
   `cp` INT(5) NOT NULL,
   `tel` VARCHAR(45) NOT NULL,
+  `visible` TINYINT(1) NULL DEFAULT 1,
   PRIMARY KEY (`id_entreprise`),
   UNIQUE INDEX `tva_UNIQUE` (`tva` ASC))
 ENGINE = InnoDB;
@@ -108,8 +128,11 @@ CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_locataire` (
   `nom` VARCHAR(64) NOT NULL,
   `email` VARCHAR(64) NOT NULL,
   `password` VARCHAR(32) NOT NULL,
+  `fk_langue` INT(10) NOT NULL,
+  `visible` TINYINT(1) NULL DEFAULT 1,
   PRIMARY KEY (`id_locataire`),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC))
+  UNIQUE INDEX `email_UNIQUE` (`email` ASC),
+  INDEX `fk_w3sys_locataire_w3sys_langue1_idx` (`fk_langue` ASC))
 ENGINE = InnoDB;
 
 
@@ -123,7 +146,8 @@ CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_batiment` (
   `cp` INT(5) NOT NULL,
   `nom` VARCHAR(45) NOT NULL,
   `cpt` INT(5) NULL DEFAULT 1,
-  `code` VARCHAR(3) NOT NULL,
+  `code` VARCHAR(4) NOT NULL,
+  `visible` TINYINT(1) NULL DEFAULT 1,
   PRIMARY KEY (`id_batiment`),
   UNIQUE INDEX `nom_UNIQUE` (`nom` ASC),
   UNIQUE INDEX `code_UNIQUE` (`code` ASC))
@@ -197,6 +221,7 @@ CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_lieu` (
   `id_lieu` INT(10) NOT NULL AUTO_INCREMENT,
   `fk_locataire` INT(10) NOT NULL,
   `fk_batiment` INT(10) NOT NULL,
+  `visible` TINYINT(1) NULL DEFAULT 1,
   PRIMARY KEY (`id_lieu`),
   INDEX `fk_w3sys_lieu_w3sys_locataire1_idx` (`fk_locataire` ASC),
   INDEX `fk_w3sys_lieu_w3sys_batiment1_idx` (`fk_batiment` ASC))
@@ -211,6 +236,7 @@ CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_secteur` (
   `fk_batiment` INT(10) NOT NULL,
   `id_secteur` INT(10) NOT NULL AUTO_INCREMENT,
   `fk_categorie` INT(10) NOT NULL,
+  `visible` TINYINT(1) NULL DEFAULT 1,
   INDEX `fk_w3sys_secteur_w3sys_entreprise1_idx` (`fk_entreprise` ASC),
   INDEX `fk_w3sys_secteur_w3sys_batiment1_idx` (`fk_batiment` ASC),
   PRIMARY KEY (`id_secteur`),
@@ -230,6 +256,45 @@ CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_secteur` (
     REFERENCES `db_ticketing`.`w3sys_categorie_incident` (`id_categorie_incident`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `db_ticketing`.`w3sys_trad_petit`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_trad_petit` (
+  `code` VARCHAR(32) NOT NULL,
+  `fr` VARCHAR(32) NULL,
+  `en` VARCHAR(32) NULL,
+  `nl` VARCHAR(32) NULL,
+  PRIMARY KEY (`code`),
+  UNIQUE INDEX `code_UNIQUE` (`code` ASC))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `db_ticketing`.`w3sys_trad_grand`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_trad_grand` (
+  `code` VARCHAR(32) NOT NULL,
+  `fr` VARCHAR(128) NULL,
+  `en` VARCHAR(128) NULL,
+  `nl` VARCHAR(128) NULL,
+  PRIMARY KEY (`code`),
+  UNIQUE INDEX `code_UNIQUE` (`code` ASC))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `db_ticketing`.`w3sys_trad_moyen`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_trad_moyen` (
+  `code` VARCHAR(32) NOT NULL,
+  `fr` VARCHAR(64) NULL,
+  `en` VARCHAR(64) NULL,
+  `nl` VARCHAR(64) NULL,
+  PRIMARY KEY (`code`),
+  UNIQUE INDEX `code_UNIQUE` (`code` ASC))
 ENGINE = InnoDB;
 
 

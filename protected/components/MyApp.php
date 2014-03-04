@@ -13,7 +13,7 @@
  */
 class MyApp {
 
-    public static function beginRequest($lang) {
+    public static function beginRequest() {
         Yii::app()->language = Yii::app()->session['_lang'];
     }
 

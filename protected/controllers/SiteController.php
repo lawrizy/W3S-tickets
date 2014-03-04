@@ -29,6 +29,13 @@ class SiteController extends Controller {
     public function actionIndex() {
         // renders the view file 'protected/views/site/index.php'
         // using the default layout 'protected/views/layouts/main.php'
+        if (!empty(Yii::app()->session['_lang'])) {
+
+            Yii::app()->language = Yii::app()->session['_lang'];
+        } else {
+            Yii::app()->session['_lang'] = 'en';
+            Yii::app()->language = Yii::app()->session['_lang'];
+        }
         $this->render('index');
     }
 
@@ -98,20 +105,22 @@ class SiteController extends Controller {
      * Logs out the current user and redirect to homepage.
      */
     public function actionLogout() {
-        $langApp = Yii::app()->session['_lang'];
         Yii::app()->user->logout();
-        Yii::app()->session['_lang'] = $langApp;
-        $this->render('index');
+        Yii::app()->language = Yii::app()->session['_lang'];
+        header('Location: ' . Yii::app()->request->baseUrl . '/index.php');
     }
 
-    public function actionAction() {
-        $this->render('action');
-    }
 
     public function actionGetLocataire() {
         $this->render('getLocataire');
     }
 
+    
+    
+    
+    // ---------------------------------------- //
+    // ---------- Choix de la langue ---------- //
+    // ---------------------------------------- //
     public function actionChooseLanguageFr() {
         $ctr = $_GET['ctr'];
         Yii::app()->session['_lang'] = 'fr';
@@ -123,9 +132,14 @@ class SiteController extends Controller {
         Yii::app()->session['_lang'] = 'en';
         header("Location: $ctr");
     }
+
     public function actionChooseLanguageNl() {
         $ctr = $_GET['ctr'];
         Yii::app()->session['_lang'] = 'nl';
         header("Location: $ctr");
     }
+    // ---------------------------------------- //
+    // ---------------------------------------- //
+    // ---------------------------------------- //
+
 }
