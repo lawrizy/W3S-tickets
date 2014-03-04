@@ -42,6 +42,7 @@ $('.search-form form').submit(function(){
 
 <?php
 $this->widget('bootstrap.widgets.TbGridView', array(
+    'type' => 'striped bordered condensed',
     'id' => 'ticket-grid',
     'dataProvider' => $model->search(),
     // 'filter' => $model,

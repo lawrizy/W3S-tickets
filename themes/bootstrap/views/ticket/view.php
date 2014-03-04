@@ -27,7 +27,8 @@ Yii::app()->session['EmailSend'] = '';
 ?>
 <?php
 $batiment = Batiment::model()->findByPk($model->fk_batiment);
-$this->widget('zii.widgets.CDetailView', array(
+$this->widget('bootstrap.widgets.TbDetailView', array(
+    'type' => 'striped condensed bordered',
     'data' => $model,
     'attributes' => array(
         array(
@@ -62,10 +63,10 @@ $this->widget('zii.widgets.CDetailView', array(
 echo '<br /><br />';
 echo '<h1><center><u>' . Yii::t('/ticket/view', 'ViewHistoriqueTitre') . '</u></center></h1>';
 $histo = new HistoriqueTicket();
-$this->widget('zii.widgets.grid.CGridView', array(
+$this->widget('bootstrap.widgets.TbGridView', array(
+    'type' => 'striped bordered condensed',
     'id' => 'ticket-grid',
     'dataProvider' => $histo->searchByTicket($model->id_ticket),
-    // 'filter' => $model,
     'columns' => array(
         array(
             'name' => Translate::tradPetit('ViewHistoriqueDate'),

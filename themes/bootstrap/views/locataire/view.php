@@ -16,7 +16,8 @@ $this->menu = array(
 <h1><?php echo Yii::t('locataire/view', 'Titre') . $model->id_locataire; ?></h1>
 
 <?php
-$this->widget('zii.widgets.CDetailView', array(
+$this->widget('bootstrap.widgets.TbDetailView', array(
+    'type' => 'striped condensed bordered',
     'data' => $model,
     'attributes' => array(
         'nom',

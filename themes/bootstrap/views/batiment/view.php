@@ -17,7 +17,8 @@ $this->menu = array(
 <h1>View Batiment: <?php echo $model->nom; ?></h1>
 
 <?php
-$this->widget('zii.widgets.CDetailView', array(
+$this->widget('bootstrap.widgets.TbDetailView', array(
+    'type' => 'striped condensed bordered',
     'data' => $model,
     'attributes' => array(
         'nom',

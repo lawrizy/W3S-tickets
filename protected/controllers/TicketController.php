@@ -35,14 +35,14 @@ class TicketController extends Controller {
                     'message' => 'Vous n\'avez pas accès à cette page.'
                 ),
             );
-        } elseif ((Yii::app()->session['Utilisateur'] == 'User') && (Yii::app()->session['Logged']->fk_fonction == 1)) { // Utilisateur peut creer ,voir ,manager,traiter et fermer des ticket
+        } elseif ((Yii::app()->session['Utilisateur'] == 'User') && (Yii::app()->session['Logged']->fk_fonction == Fonction::ID_USER)) { // Utilisateur peut creer ,voir ,manager,traiter et fermer des ticket
             return array(
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
                     'actions' => array('create', 'update', 'view', 'admin', 'traitement', 'getsouscategoriesdynamiques', 'close', 'sendnotificationmail'),
                     'users' => array('@'), //user logger
                 ),
             );
-        } elseif ((Yii::app()->session['Utilisateur'] == 'User') && (Yii::app()->session['Logged']->fk_fonction == 2)) { // Utilisateur peut creer ,voir ,manager,traiter et fermer des ticket
+        } elseif ((Yii::app()->session['Utilisateur'] == 'User') && (Yii::app()->session['Logged']->fk_fonction == Fonction::ID_ADMIN)) { // Utilisateur peut creer ,voir ,manager,traiter et fermer des ticket
             return array(
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
                     'actions' => array('create', 'update', 'view', 'admin', 'traitement', 'getsouscategoriesdynamiques', 'close', 'sendnotificationmail', 'delete'),

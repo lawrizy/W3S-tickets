@@ -14,7 +14,8 @@ class AdminController extends Controller {
                 array('allow', // 'allow' veut dire que l'utilisateur a droit à ce qui suit.
                     'actions' => array('*'), // L'admin à tous les droits
                     'users' => array('*'),
-                // Tous les droits accordés à tout le monde, mais comme il faut être admin pour arriver là alors il n'y a que les admins qui ont ces droits-là
+                // Tous les droits accordés à tout le monde, mais comme il faut être admin 
+                // pour arriver là alors il n'y a que les admins qui ont ces droits-là
                 ),
             );
         } else {
@@ -31,7 +32,7 @@ class AdminController extends Controller {
     }
 
     /**
-     * Lists all models.
+     * Méthode permettant d'afficher la page d'administration
      */
     public function actionIndex() {
         $this->render('index');

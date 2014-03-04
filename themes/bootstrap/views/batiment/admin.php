@@ -43,6 +43,7 @@ return false;
 
 <?php
 $this->widget('bootstrap.widgets.TbGridView', array(
+    'type' => 'striped bordered condensed',
     'id' => 'batiment-grid',
     'dataProvider' => $model->search(),
     'columns' => array(

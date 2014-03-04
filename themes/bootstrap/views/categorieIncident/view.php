@@ -19,7 +19,8 @@ $parent = CategorieIncident::model()->findByPk($model->fk_parent);
 <h1>View Categorie: <?php echo $model->label . ($parent != null ? ' [' . $parent->label . ']' : ''); ?></h1>
 
 <?php
-$this->widget('zii.widgets.CDetailView', array(
+$this->widget('bootstrap.widgets.TbGridView', array(
+    'type' => 'striped bordered condensed',
     'data' => $model,
     'attributes' => array(
         'label',
