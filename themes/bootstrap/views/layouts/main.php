@@ -64,8 +64,8 @@ Yii::app()->session['NouveauTicket'] = '';
     <div id="footer">
         <hr>
         <div id="copyright">
-        Copyright &copy; <?php echo date('Y') . ' ' . Yii::t('index', 'Par'); ?>  <a href="http://web3sys.com">Web3Sys</a>.<br/>
-        <?php echo Yii::t('index', 'DroitsReserve'); ?><br/>
+            Copyright &copy; <?php echo date('Y') . ' ' . Translate::tradPetit( 'Par'); ?>  <a href="http://web3sys.com">Web3Sys</a>.<br/>
+        <?php echo Translate::tradPetit( 'DroitsReserve'); ?><br/>
         <?php echo Yii::powered(); ?>
         </div>
         <div id="aaaa">
