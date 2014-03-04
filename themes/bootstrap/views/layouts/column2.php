@@ -8,18 +8,18 @@
     </div>
     <div class="span3">
         <div id="sidebar">
-        <?php
+            <?php
             $this->beginWidget('zii.widgets.CPortlet', array(
-                'title'=>'Actions',
+                'title' => 'Actions',
             ));
             $this->widget('bootstrap.widgets.TbMenu', array(
                 'type' => 'pills',
                 'stacked' => true,
-                'items'=>$this->menu,
-                'htmlOptions'=>array('class'=>'actions'),
+                'items' => $this->menu,
+                'htmlOptions' => array('class' => 'actions'),
             ));
             $this->endWidget();
-        ?>
+            ?>
         </div><!-- sidebar -->
     </div>
 </div>

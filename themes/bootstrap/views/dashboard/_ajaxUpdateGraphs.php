@@ -57,11 +57,10 @@ if ($idBatiment == 'ALL') { // Cas 1 : sélectionner tous les bâtiments
             )
     );
 } else { // Cas 2 : Un bâtiment spécifique a été sélectionné
-    echo '<p><h3>' .Translate::tradMoyen('AjaxFrequenceStatutTicket') .
+    echo '<p><h3>' . Translate::tradMoyen('AjaxFrequenceStatutTicket') .
     Batiment::model()->findByAttributes(array('id_batiment' => $idBatiment))->nom
     . ') </h3></p>';
     ?>
-
     <?php
     $this->widget(
             'chartjs.widgets.ChBars', array(
@@ -103,7 +102,7 @@ if ($idBatiment == 'ALL') { // Cas 1 : sélectionner tous les bâtiments
 ?>
 <br/><br/><br/>
 
-<h3><?php echo Translate::tradMoyen( 'AjaxFrenquenceEntreprise'); ?></h3>
+<h3><?php echo Translate::tradMoyen('AjaxFrenquenceEntreprise'); ?></h3>
 <?php
 $entrepriseFreqAllData = $this->actionGetFrequenceCalledEntreprise();
 //print_r($entrepriseFreqAllData);
