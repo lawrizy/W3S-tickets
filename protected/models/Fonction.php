@@ -12,15 +12,6 @@
  */
 class Fonction extends CActiveRecord {
     
-    /*
-     * Les fonctions d'un utilisateur étant fixes, on stocke directement la valeur
-     * de leur id ici pour pouvoir tester quelle est la fonction d'un utilisateur
-     */
-    const ID_USER = 1;
-    const ID_ADMIN = 2;
-    const ID_ROOT = 3;
-    
-
     /**
      * @return string the associated database table name
      */

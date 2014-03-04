@@ -1,7 +1,7 @@
 <?php
 
 class SiteController extends Controller {
-
+    
     private $id;
 
     /**

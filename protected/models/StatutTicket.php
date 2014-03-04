@@ -12,18 +12,6 @@
  */
 class StatutTicket extends CActiveRecord {
     
-    
-    
-    /*
-     * Les statuts des tickets étant fixes, on stocke directement la valeur
-     * de leur id ici pour pouvoir les tester
-     */
-    const ID_OPENED = 1;
-    const ID_TREATMENT = 2;
-    const ID_CLOSED = 3;
-    
-    
-
     /**
      * @return string the associated database table name
      */

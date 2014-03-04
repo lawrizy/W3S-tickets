@@ -12,15 +12,6 @@
  */
 class Langue extends CActiveRecord {
     
-    
-    /*
-     * Les langues étant fixes, on stocke directement la valeur de leur id ici pour pouvoir les tester
-     */
-    const ID_FR = 1;
-    const ID_EN = 2;
-    const ID_NL = 3;
-    
-
     /**
      * @return string the associated database table name
      */
