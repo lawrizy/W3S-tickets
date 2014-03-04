@@ -3,13 +3,12 @@
 /* @var $model Entreprise */
 
 $this->breadcrumbs=array(
-	'Entreprises'=>array('index'),
+	'Entreprises'=>array('admin'),
 	'Create',
 );
 
 $this->menu=array(
-	array('label'=>'List Entreprise', 'url'=>array('index')),
-	array('label'=>'Manage Entreprise', 'url'=>array('admin')),
+array('label'=>'Manage Entreprise', 'url'=>array('admin')),
 );
 ?>
 

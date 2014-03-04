@@ -5,7 +5,7 @@
 
 
 $this->menu = array(
-    array('label' => 'Créer un nouveau locataire', 'url' => array('/locataire/create')),
+    array('label' => Yii::t('/locataire/admin','MenuTitre'), 'url' => array('/locataire/create')),
 
 );
 Yii::app()->clientScript->registerScript('search', "
@@ -22,10 +22,10 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Choisir un locataire</h1>
+<h1><?php echo Yii::t('/locataire/admin','AdminTitre') ?></h1>
 
 
-<?php echo CHtml::link('Recherche avancée', '#', array('class' => 'search-button')); ?>
+<?php echo CHtml::link(Yii::t('/locataire/admin','RechercheAvancee'), '#', array('class' => 'search-button')); ?>
 <div class="search-form" style="display:none">
     <?php
     $this->renderPartial('_search', array(

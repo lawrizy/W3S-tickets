@@ -42,15 +42,14 @@ $('.search-form form').submit(function(){
     ?>
 </div><!-- search-form -->
 
-<?php $this->widget('bootstrap.widgets.TbGridView', array(
+
+<?php 
+$this->widget('bootstrap.widgets.TbGridView', array(
 	'id'=>'user-grid',
 	'dataProvider'=>$model->search(),
-	'filter'=>$model,
 	'columns'=>array(
-		'id_user',
 		'nom',
 		'email',
-		'password',
 		'fk_fonction',
 		array(
 			'class'=>'CButtonColumn',

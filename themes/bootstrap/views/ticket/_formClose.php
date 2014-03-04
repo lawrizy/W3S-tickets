@@ -6,41 +6,28 @@
 
 <div class="form">
     <?php
-    $form = $this->beginWidget(
-        'bootstrap.widgets.TbActiveForm',
-        array(
-            'id' => 'ticket-form',
-            'htmlOptions' => array(),
-        )
-    );
+    $form = $this->beginWidget('CActiveForm', array('id' => 'ticket-form', 'enableAjaxValidation' => false));
     ?>
 
     <?php echo $form->errorSummary($model); ?>
 
-    <?php
-    $form->widget(
-        'bootstrap.widgets.TbLabel',
-        array(
-            'type' => 'info',
-            'label' => 'Descriptif',
-        )
-    );
 
-    ?>
-    <br/><br/>
-    <textarea maxlength="800" rows="5" cols="50" style="resize:none" name="Ticket[descriptif]"
-              id="Ticket_descriptif"></textarea>
+   <?php echo $form->labelEx($model,'descriptif'); ?>
+    <textarea maxlength="800" rows="5" cols="50" style="resize:none" name="Ticket[descriptif]" id="Ticket_descriptif"></textarea>
 
-    <br/>
-    <?php
-    $this->widget('zii.widgets.jui.CJuiButton', array(
-        'buttonType' => 'submit',
-        'name' => 'traitement',
-        'caption' => 'Cloturer le ticket',
-    ));
-    ?>
-    <br/>
-    <br/>
+
+    <div class="row buttons">
+        <?php
+        $this->widget('zii.widgets.jui.CJuiButton', array(
+            'buttonType' => 'submit',
+            'name' => 'traitement',
+            'caption' => Translate::tradPetit('ButtonClose'),
+        ));
+        ?>
+
+    </div>
+    <br />
+    <br />
 
 
     <?php $this->endWidget(); ?>

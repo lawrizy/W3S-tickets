@@ -2,28 +2,24 @@
 /* @var $this EntrepriseController */
 /* @var $model Entreprise */
 
-
-$this->breadcrumbs=array(
-	'Entreprises'=>array('index'),
-	'Manage',
+$this->breadcrumbs = array(
+    'Manage',
 );
 
-$this->menu=array(
-	array('label'=>'List Entreprise', 'url'=>array('index')),
-	array('label'=>'Create Entreprise', 'url'=>array('create')),
-
+$this->menu = array(
+    array('label' => 'Create Entreprise', 'url' => array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
-	$('.search-form').toggle();
-	return false;
+$('.search-form').toggle();
+return false;
 });
 $('.search-form form').submit(function(){
-	$('#entreprise-grid').yiiGridView('update', {
-		data: $(this).serialize()
-	});
-	return false;
+$('#entreprise-grid').yiiGridView('update', {
+data: $(this).serialize()
+});
+return false;
 });
 ");
 ?>
@@ -44,20 +40,20 @@ $('.search-form form').submit(function(){
     ?>
 </div><!-- search-form -->
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'entreprise-grid',
-	'dataProvider'=>$model->search(),
-	'filter'=>$model,
-	'columns'=>array(
-		'id_entreprise',
-		'nom',
-		'adresse',
-		'tva',
-		'commune',
-		'cp',
-		'tel',
-		array(
-			'class'=>'CButtonColumn',
-		),
-	),
-)); ?>
+<?php
+$this->widget('bootstrap.widgets.TbGridView', array(
+    'id' => 'entreprise-grid',
+    'dataProvider' => $model->search(),
+    'columns' => array(
+        'nom',
+        'adresse',
+        'tva',
+        'tel',
+        'commune',
+        'cp',
+        array(
+            'class' => 'CButtonColumn',
+        ),
+    ),
+));
+?>

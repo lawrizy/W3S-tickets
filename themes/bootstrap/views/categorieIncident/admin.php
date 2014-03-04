@@ -1,14 +1,13 @@
 <?php
-/* @var $this BatimentController */
-/* @var $model Batiment */
+/* @var $this CategorieIncidentController */
+/* @var $model CategorieIncident */
 
 $this->breadcrumbs = array(
-    'Batiments' => array('index'),
     'Manage',
 );
 
 $this->menu = array(
-    array('label' => 'Create Batiment', 'url' => array('create')),
+    array('label' => 'Create new Categorie', 'url' => array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -17,7 +16,7 @@ $('.search-form').toggle();
 return false;
 });
 $('.search-form form').submit(function(){
-$('#batiment-grid').yiiGridView('update', {
+$('#categorie-incident-grid').yiiGridView('update', {
 data: $(this).serialize()
 });
 return false;
@@ -25,7 +24,7 @@ return false;
 ");
 ?>
 
-<h1>Manage Batiments</h1>
+<h1>Manage Categorie Incidents</h1>
 
 <p>
     You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
@@ -43,17 +42,20 @@ return false;
 
 <?php
 $this->widget('bootstrap.widgets.TbGridView', array(
-    'id' => 'batiment-grid',
+    'id' => 'categorie-incident-grid',
     'dataProvider' => $model->search(),
     'columns' => array(
-        'nom',
-        'code',
-        'adresse',
-        'cp',
-        'commune',
+        'label',
+        array(
+            'name' => 'Fk Parent',
+            'value' => '$data->fk_parent != null ? CategorieIncident::model()->findByPk($data->fk_parent)->label : \'NO PARENT\''),
+        array(
+            'name' => 'Fk Priorite',
+            'value' => 'Priorite::model()->findByPk($data->fk_priorite)->label'),
         array(
             'class' => 'CButtonColumn',
         ),
     ),
 ));
+
 ?>

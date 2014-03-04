@@ -5,7 +5,7 @@
 
 <div class="view">
 
-	<b><?php echo CHtml::encode($data->getAttributeLabel('id_entreprise')); ?>:</b>
+    	<b><?php echo CHtml::encode($data->getAttributeLabel('id_entreprise')); ?>:</b>
 	<?php echo CHtml::link(CHtml::encode($data->id_entreprise), array('view', 'id'=>$data->id_entreprise)); ?>
 	<br />
 
@@ -33,5 +33,11 @@
 	<?php echo CHtml::encode($data->tel); ?>
 	<br />
 
+	<?php /*
+	<b><?php echo CHtml::encode($data->getAttributeLabel('visible')); ?>:</b>
+	<?php echo CHtml::encode($data->visible); ?>
+	<br />
+
+	*/ ?>
 
 </div>

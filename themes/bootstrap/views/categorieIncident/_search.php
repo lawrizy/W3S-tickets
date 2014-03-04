@@ -1,6 +1,6 @@
 <?php
-/* @var $this BatimentController */
-/* @var $model Batiment */
+/* @var $this CategorieIncidentController */
+/* @var $model CategorieIncident */
 /* @var $form CActiveForm */
 ?>
 
@@ -14,21 +14,19 @@
     ?>
 
     <div class="row">
-<?php echo $form->label($model, 'nom'); ?>
-<?php echo $form->textField($model, 'nom', array('size' => 45, 'maxlength' => 45)); ?>
+<?php echo $form->label($model, 'label'); ?>
+<?php echo $form->textField($model, 'label', array('size' => 60, 'maxlength' => 64)); ?>
     </div>
 
     <div class="row">
-<?php echo $form->label($model, 'code'); ?>
-<?php echo $form->textField($model, 'code', array('size' => 4, 'maxlength' => 4)); ?>
+<?php echo $form->label($model, 'fk_parent'); ?>
+<?php echo $form->textField($model, 'fk_parent'); ?>
     </div>
 
     <div class="row">
-<?php echo $form->label($model, 'cp'); ?>
-<?php echo $form->textField($model, 'cp'); ?>
+<?php echo $form->label($model, 'fk_priorite'); ?>
+<?php echo $form->textField($model, 'fk_priorite'); ?>
     </div>
-
-    
 
     <div class="row buttons">
     <?php echo CHtml::submitButton('Search'); ?>

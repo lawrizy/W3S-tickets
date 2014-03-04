@@ -9,10 +9,8 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'List Batiment', 'url'=>array('index')),
-	array('label'=>'Create Batiment', 'url'=>array('create')),
-	array('label'=>'View Batiment', 'url'=>array('view', 'id'=>$model->id_batiment)),
-	array('label'=>'Manage Batiment', 'url'=>array('admin')),
+array('label'=>'View Batiment', 'url'=>array('view', 'id'=>$model->id_batiment)),
+array('label'=>'Manage Batiment', 'url'=>array('admin')),
 );
 ?>
 
