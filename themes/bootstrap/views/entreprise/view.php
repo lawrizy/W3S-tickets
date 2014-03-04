@@ -19,7 +19,7 @@ $this->menu = array(
 
 <?php
 $this->widget('bootstrap.widgets.TbDetailView', array(
-    'type' => 'striped condensed bordered',
+    'type' => 'striped bordered',
     'data' => $model,
     'attributes' => array(
         'nom',

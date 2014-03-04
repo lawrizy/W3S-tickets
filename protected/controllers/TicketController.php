@@ -19,11 +19,12 @@ class TicketController extends Controller {
     }
 
     /**
-     * Specifies the access control rules.
-     * This method is used by the 'accessControl' filter.
-     * @return array access control rules
+     * La fonction permettant d'accorder des droits aux différents utilisateurs.
+     * Quand la méthode est appellée, on vérifie le type de l'utilisateur,
+     * et en fonction de cela, les droits accordés peuvent varient.
      */
     public function accessRules() { // // droit des utilisateur sur les urls
+        $logged = Yii::app()->session['Logged'];
         if (Yii::app()->session['Utilisateur'] == 'Locataire') {
             return array(
                 array('allow', // le locataire peut juste creer un ticket et voir
@@ -35,14 +36,16 @@ class TicketController extends Controller {
                     'message' => 'Vous n\'avez pas accès à cette page.'
                 ),
             );
-        } elseif ((Yii::app()->session['Utilisateur'] == 'User') && (Yii::app()->session['Logged']->fk_fonction == Fonction::ID_USER)) { // Utilisateur peut creer ,voir ,manager,traiter et fermer des ticket
+        } elseif ((Yii::app()->session['Utilisateur'] == 'User') && ($logged->fk_fonction == Fonction::ID_USER)) { // Utilisateur peut creer ,voir ,manager,traiter et fermer des ticket
             return array(
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
                     'actions' => array('create', 'update', 'view', 'admin', 'traitement', 'getsouscategoriesdynamiques', 'close', 'sendnotificationmail'),
                     'users' => array('@'), //user logger
                 ),
             );
-        } elseif ((Yii::app()->session['Utilisateur'] == 'User') && (Yii::app()->session['Logged']->fk_fonction == Fonction::ID_ADMIN)) { // Utilisateur peut creer ,voir ,manager,traiter et fermer des ticket
+        } elseif ((Yii::app()->session['Utilisateur'] == 'User') && 
+                (($logged->fk_fonction == Fonction::ID_ADMIN) || ($logged->fk_fonction == Fonction::ID_ROOT))
+                ) { // Utilisateur peut creer ,voir ,manager,traiter et fermer des ticket
             return array(
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
                     'actions' => array('create', 'update', 'view', 'admin', 'traitement', 'getsouscategoriesdynamiques', 'close', 'sendnotificationmail', 'delete'),

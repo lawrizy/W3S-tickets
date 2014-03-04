@@ -18,6 +18,7 @@ class Fonction extends CActiveRecord {
      */
     const ID_USER = 1;
     const ID_ADMIN = 2;
+    const ID_ROOT = 3;
     
 
     /**

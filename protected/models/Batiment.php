@@ -11,6 +11,7 @@
  * @property string $nom
  * @property integer $cpt
  * @property string $code
+ * @property integer $visible
  *
  * The followings are the available model relations:
  * @property Secteur[] $secteurs
@@ -31,13 +32,13 @@ class Batiment extends CActiveRecord {
 // NOTE: you should only define rules for those attributes that
 // will receive user inputs.
         return array(
-            array('adresse, commune, cp, nom, code', 'required', 'message' => 'La valeur de {attribute} ne peut être vide.'),
-            array('cp, cpt', 'numerical', 'integerOnly' => true, 'message' => 'Veuillez n\'entrer que des nombres dans le champs suivant : {attribute}'),
+            array('adresse, commune, cp, nom, code', 'required'),
+            array('cp, cpt, visible', 'numerical', 'integerOnly' => true),
             array('adresse, commune, nom', 'length', 'max' => 45),
             array('code', 'length', 'max' => 4),
 // The following rule is used by search().
 // @todo Please remove those attributes that should not be searched.
-            array('cp, nom, code', 'safe', 'on' => 'search'),
+            array('id_batiment, adresse, commune, cp, nom, cpt, code, visible', 'safe', 'on' => 'search'),
         );
     }
 
@@ -64,6 +65,7 @@ class Batiment extends CActiveRecord {
             'nom' => 'Nom',
             'cpt' => 'Cpt',
             'code' => 'Code',
+            'visible' => 'Visible',
         );
     }
 
@@ -91,6 +93,7 @@ class Batiment extends CActiveRecord {
         $criteria->compare('nom', $this->nom, true);
         $criteria->compare('cpt', $this->cpt);
         $criteria->compare('code', $this->code, true);
+        $criteria->compare('visible', 1);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

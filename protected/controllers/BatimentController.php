@@ -106,8 +106,9 @@ class BatimentController extends Controller {
      * @param integer $id the ID of the model to be deleted
      */
     public function actionDelete($id) {
-        $this->loadModel($id)->delete();
-
+        $model = $this->loadModel($id);
+        $model['visible'] = 0;
+        $model->save(FALSE);
 // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));

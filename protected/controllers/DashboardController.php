@@ -20,14 +20,17 @@ class DashboardController extends Controller
      * et en fonction de cela, les droits accordés peuvent varient.
      */
     public function accessRules() {
-        if ((Yii::app()->session['Utilisateur'] == 'User') && (Yii::app()->session['Logged']->fk_fonction == Fonction::ID_ADMIN)) {
-            // Si ['User'] et [fonction = id_admin], alors c'est un admin
+        $logged = Yii::app()->session['Logged'];
+        if ((Yii::app()->session['Utilisateur'] == 'User') && 
+                (($logged->fk_fonction == Fonction::ID_ADMIN) || ($logged->fk_fonction == Fonction::ID_ROOT))
+                ) {
+            // Si ['User'] et [fonction = id_admin ou id_root]
             return array(
                 array('allow', // 'allow' veut dire que l'utilisateur a droit à ce qui suit.
                     'actions' => array('*'), // L'admin à tous les droits
                     'users' => array('*'),
-                // Tous les droits accordés à tout le monde, mais comme il faut être admin 
-                // pour arriver là alors il n'y a que les admins qui ont ces droits-là
+                // Tous les droits accordés à tout le monde, mais comme il faut être admin ou root
+                // pour arriver là alors il n'y a qu'eux qui ont ces droits-là
                 ),
             );
         } else {
