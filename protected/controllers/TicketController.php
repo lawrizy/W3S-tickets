@@ -284,7 +284,10 @@ class TicketController extends Controller {
      * @param integer $id the ID of the model to be deleted
      */
     public function actionDelete($id) {
-        $this->loadModel($id)->delete();
+        //$this->loadModel($id)->delete();
+        $model = $this->loadModel($id);
+        $model->setAttribute("visible", 0);
+        $model->save(true);
         $this->redirect(admin);
 // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
     }

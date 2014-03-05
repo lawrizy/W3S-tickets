@@ -107,6 +107,9 @@ class Ticket extends CActiveRecord {
         $criteria->compare('fk_canal', $this->fk_canal);
         $criteria->compare('fk_entreprise', $this->fk_entreprise);
         $criteria->compare('date_intervention', $this->date_intervention, true);
+        // Pour l'instant, ne recherche que les Ticket dont la visibilité est à 1
+        $criteria->compare('visible', 1);
+        //$criteria->compare('visible', $this->visible);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -126,6 +129,9 @@ class Ticket extends CActiveRecord {
         $criteria->compare('fk_canal', $this->fk_canal);
         $criteria->compare('fk_entreprise', $this->fk_entreprise);
         $criteria->compare('date_intervention', $this->date_intervention, true);
+        // Pour l'instant, ne recherche que les Ticket dont la visibilité est à 1
+        $criteria->compare('visible', 1);
+        //$criteria->compare('visible', $this->visible);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -145,6 +151,9 @@ class Ticket extends CActiveRecord {
         $criteria->compare('fk_canal', $this->fk_canal);
         $criteria->compare('fk_entreprise', $this->fk_entreprise);
         $criteria->compare('date_intervention', $this->date_intervention, true);
+        // Pour l'instant, ne recherche que les Ticket dont la visibilité est à 1
+        $criteria->compare('visible', 1);
+        //$criteria->compare('visible', $this->visible);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -164,6 +173,9 @@ class Ticket extends CActiveRecord {
         $criteria->compare('fk_canal', $this->fk_canal);
         $criteria->compare('fk_entreprise', $this->fk_entreprise);
         $criteria->compare('date_intervention', $this->date_intervention, true);
+        // Pour l'instant, ne recherche que les Ticket dont la visibilité est à 1
+        $criteria->compare('visible', 1);
+        //$criteria->compare('visible', $this->visible);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -184,6 +196,9 @@ class Ticket extends CActiveRecord {
         $criteria->compare('fk_entreprise', $this->fk_entreprise);
         $criteria->compare('date_intervention', $this->date_intervention, true);
         $criteria->compare('fk_locataire', $this->fk_locataire = $id);
+        // Pour l'instant, ne recherche que les Ticket dont la visibilité est à 1
+        $criteria->compare('visible', 1);
+        //$criteria->compare('visible', $this->visible);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -201,18 +216,18 @@ class Ticket extends CActiveRecord {
     }
 
     public function getStatusTicket() {
-        $var = StatutTicket::model()->findByPk($this->fk_statut);
+        $var = StatutTicket::model()->findByAttributes(array('fk_statut' => $this->fk_statut, 'visible' => 1));
         return $var->label;
     }
 
     public function getCategorieIncident() {
-        $var = CategorieIncident::model()->findByPk($this->fk_categorie);
+        $var = CategorieIncident::model()->findByAttributes(array('fk_categorie' => $this->fk_categorie, 'visible' => 1));
         return $var->label;
     }
 
     public function getCategorieFromSousCategorie() {
         $sousCat = CategorieIncident::model()->findByPk($this->fk_categorie);
-        $cat = CategorieIncident::model()->findByPk($sousCat->fk_parent);
+        $cat = CategorieIncident::model()->findByPk(array('fk_parent' => $sousCat->fk_parent, 'visible' => 1));
         return $cat->id_categorie_incident;
     }
 
