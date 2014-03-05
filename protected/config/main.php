@@ -43,9 +43,8 @@ return array(
     // application components
     'components' => array(
         'session' => array(
-            'timeout' => 1,
-            'cookieMode'=>'only',
-            
+            'class' => 'CDbHttpSession',
+            'timeout' => 5,
         ),
         'bootstrap' => array(
             'class' => 'bootstrap.components.Bootstrap',
@@ -67,7 +66,7 @@ return array(
         ),
         'user' => array(
             // enable cookie-based authentication
-            'allowAutoLogin' => true,
+            'allowAutoLogin' => false,
         ),
         // uncomment the following to enable URLs in path-format
         'urlManager' => array(
