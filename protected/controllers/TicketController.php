@@ -286,7 +286,7 @@ class TicketController extends Controller {
     public function actionDelete($id) {
         //$this->loadModel($id)->delete();
         $model = $this->loadModel($id);
-        $model->setAttribute("visible", 0);
+        $model->setAttribute("visible", Constantes::INVISIBLE);
         $model->save(true);
         $this->redirect(admin);
 // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
@@ -422,7 +422,7 @@ class TicketController extends Controller {
         $model = $this->loadModel($idTicket);
         //TODO commenter
         $lieu = Lieu::model()->findByPk($model->fk_lieu);
-        $secteurs = Secteur::model()->findAllByAttributes(array('fk_batiment' => $lieu->fk_batiment, 'fk_categorie' => $model->fk_categorie, 'visible' => 1));
+        $secteurs = Secteur::model()->findAllByAttributes(array('fk_batiment' => $lieu->fk_batiment, 'fk_categorie' => $model->fk_categorie, 'visible' => Constantes::VISIBLE));
         $entreprises = array();
         foreach ($secteurs as $secteur)
         {
@@ -441,7 +441,7 @@ class TicketController extends Controller {
      * @return array|mixed|null
      */
     public function getSecteurByFk($entreprise, $categorie, $batiment) {
-        $var = Secteur::model()->findByAttributes(array('fk_batiment' => $batiment, 'fk_categorie' => $categorie, 'fk_entreprise' => $entreprise, 'visible' => 1));
+        $var = Secteur::model()->findByAttributes(array('fk_batiment' => $batiment, 'fk_categorie' => $categorie, 'fk_entreprise' => $entreprise, 'visible' => Constantes::VISIBLE));
         return $var->id_secteur;
     }
 
@@ -450,7 +450,7 @@ class TicketController extends Controller {
      * @return array|CActiveRecord|mixed|null La liste de tous les bâtiments de la DB
      */
     public function getBatiment() {
-        $batiments = Batiment::model()->findAllByAttributes(array('visible' => 1));
+        $batiments = Batiment::model()->findAllByAttributes(array('visible' => Constantes::VISIBLE));
         foreach ($batiments as $batiment) {
             $batiment['name'] = $batiment->adresse . ', ' . $batiment->cp . ' ' . $batiment->commune . ' - nom: ' . $batiment->nom;
         }
@@ -464,7 +464,7 @@ class TicketController extends Controller {
     public function actionGetSousCategoriesDynamiques() {
 // Yii::trace("Entrée dans la méthode de recherche des sous-catégories dynamiques..."); // Passe
 // Exécution d'une query qui récupère toutes les sous-catégories possibles pour la catégorie principale choisie.
-        $data = CategorieIncident::model()->findAll('fk_parent=:toFind, visible=:visible', array(':toFind' => $_POST['paramID'], ':visible' => 1));
+        $data = CategorieIncident::model()->findAll('fk_parent=:toFind, visible=:visible', array(':toFind' => $_POST['paramID'], ':visible' => Constantes::VISIBLE));
 // On formatte les données reçues dans une DataList
         $dataList = CHtml::listData($data, 'id_categorie_incident', 'label');
 
@@ -487,7 +487,7 @@ class TicketController extends Controller {
     }
 
     public function getCategoriesLabel() { //return list categorie's label
-        $datas = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL, 'visible' => 1));
+        $datas = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL, 'visible' => Constantes::VISIBLE));
         $datasList = CHtml::listData($datas, 'id_categorie_incident', 'label');
 
         foreach ($datasList as $key => $value) {
