@@ -17,7 +17,15 @@ class AdminController extends Controller {
      * Quand la méthode est appellée, on vérifie le type de l'utilisateur,
      * et en fonction de cela, les droits accordés peuvent varient.
      */
+    public function filters() {
+        return array(
+            'accessControl', 
+            'postOnly + delete',
+        );
+    }
+
     public function accessRules() {
+
         $logged = Yii::app()->session['Logged'];
         if ((Yii::app()->session['Utilisateur'] == 'User') && ($logged->fk_fonction == Constantes::FONCTION_ROOT)) {
             // Si ['User'] et [fonction = id_root]
@@ -28,6 +36,9 @@ class AdminController extends Controller {
                 // Tous les droits accordés à tout le monde, mais comme il faut être root
                 // pour arriver là alors il n'y a que le root qui a ces droits-là
                 ),
+//                array('deny',
+//                    'users' => array('?'),
+//                )
             );
         } else {
             // Si ['Locataire'] ou [['User'] et [fonction = id_user ou id_admin]], alors l'utilisateur n'a aucun droit
@@ -47,9 +58,6 @@ class AdminController extends Controller {
 //            'message' => 'Vous n\'avez pas accès à cette page.');
     }
 
-    /**
-     * Méthode permettant d'afficher la page d'administration
-     */
     public function actionIndex() {
         $this->render('index');
     }

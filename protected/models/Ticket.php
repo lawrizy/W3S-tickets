@@ -223,18 +223,18 @@ class Ticket extends CActiveRecord {
     }
 
     public function getStatusTicket() {
-        $var = StatutTicket::model()->findByPk($this->fk_statut);
+        $var = StatutTicket::model()->findByAttributes(array('fk_statut' => $this->fk_statut, 'visible' => 1));
         return $var->label;
     }
 
     public function getCategorieIncident() {
-        $var = CategorieIncident::model()->findByPk($this->fk_categorie);
+        $var = CategorieIncident::model()->findByAttributes(array('fk_categorie' => $this->fk_categorie, 'visible' => 1));
         return $var->label;
     }
 
     public function getCategorieFromSousCategorie() {
         $sousCat = CategorieIncident::model()->findByPk($this->fk_categorie);
-        $cat = CategorieIncident::model()->findByPk($sousCat->fk_parent);
+        $cat = CategorieIncident::model()->findByPk(array('fk_parent' => $sousCat->fk_parent, 'visible' => 1));
         return $cat->id_categorie_incident;
     }
 }
