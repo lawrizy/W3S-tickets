@@ -17,6 +17,7 @@
  * @property string $bureau
  * @property integer $fk_locataire
  * @property integer $fk_batiment
+ * @property integer $visible
  *
  * The followings are the available model relations:
  * @property HistoriqueTicket[] $historiqueTickets
@@ -37,15 +38,15 @@ class Ticket extends CActiveRecord {
 // NOTE: you should only define rules for those attributes that
 // will receive user inputs.
         return array(
-            array('fk_categorie, fk_canal, fk_locataire, fk_batiment', 'required', 'message' => Translate::trad('Required')),
-            array('fk_statut, fk_categorie, fk_user, fk_canal, fk_entreprise, fk_locataire, fk_batiment', 'numerical', 'integerOnly' => true,
+            array('fk_categorie, fk_canal, code_ticket, fk_locataire, fk_batiment', 'required', 'message' => Translate::trad('Required')),
+            array('fk_statut, fk_categorie, fk_user, fk_canal, fk_entreprise, fk_locataire, fk_batiment, visible', 'numerical', 'integerOnly' => true,
                 'message' => 'Le champs {attribute} ne peut contenir que des nombres.'),
             array('code_ticket', 'length', 'max' => 10),
             array('etage, bureau', 'length', 'max' => 45),
             array('descriptif, date_intervention', 'safe'),
 // The following rule is used by search().
 // @todo Please remove those attributes that should not be searched.
-            array('id_ticket, fk_statut, fk_categorie, fk_user, descriptif, fk_canal, date_intervention, fk_entreprise, code_ticket, etage, bureau, fk_locataire, fk_batiment', 'safe', 'on' => 'search'),
+            array('id_ticket, fk_statut, fk_categorie, fk_user, descriptif, fk_canal, date_intervention, fk_entreprise, code_ticket, etage, bureau, fk_locataire, fk_batiment, visible', 'safe', 'on' => 'search'),
         );
     }
 
@@ -65,19 +66,20 @@ class Ticket extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'id_ticket' => Translate::trad('IdTicket'),
-            'fk_statut' => Translate::trad('StatutTicket'),
-            'fk_categorie' => Translate::trad('CategorieTicket'),
-            'fk_user' => Translate::trad('UserTicket'),
-            'descriptif' => Translate::trad('DescriptifTicket'),
-            'fk_canal' => Translate::trad('CanalTicket'),
-            'date_intervention' => Translate::trad('DateInterventionTicket'),
-            'fk_entreprise' => Translate::trad('EntrepriseTicket'),
-            'code_ticket' => Translate::trad('CodeTicket'),
-            'etage' => Translate::trad('EtageTicket'),
-            'bureau' => Translate::trad('BureauTicket'),
-            'fk_locataire' => Translate::trad('LocataireTicket'),
-            'fk_batiment' => Translate::trad('BatimentTicket'),
+            'id_ticket' => 'Id Ticket',
+            'fk_statut' => 'Fk Statut',
+            'fk_categorie' => 'Fk Categorie',
+            'fk_user' => 'Fk User',
+            'descriptif' => 'Descriptif',
+            'fk_canal' => 'Fk Canal',
+            'date_intervention' => 'Date Intervention',
+            'fk_entreprise' => 'Fk Entreprise',
+            'code_ticket' => 'Code Ticket',
+            'etage' => 'Etage',
+            'bureau' => 'Bureau',
+            'fk_locataire' => 'Fk Locataire',
+            'fk_batiment' => 'Fk Batiment',
+            'visible' => 'Visible',
         );
     }
 
@@ -95,110 +97,115 @@ class Ticket extends CActiveRecord {
      */
     public function search() {
 // @todo Please modify the following code to remove attributes that should not be searched.
+
         $criteria = new CDbCriteria;
 
         $criteria->compare('id_ticket', $this->id_ticket);
-        $criteria->compare('code_ticket', $this->code_ticket);
         $criteria->compare('fk_statut', $this->fk_statut);
         $criteria->compare('fk_categorie', $this->fk_categorie);
-        $criteria->compare('fk_batiment', $this->fk_batiment);
         $criteria->compare('fk_user', $this->fk_user);
         $criteria->compare('descriptif', $this->descriptif, true);
         $criteria->compare('fk_canal', $this->fk_canal);
-        $criteria->compare('fk_entreprise', $this->fk_entreprise);
         $criteria->compare('date_intervention', $this->date_intervention, true);
-        // Pour l'instant, ne recherche que les Ticket dont la visibilité est à 1
-        $criteria->compare('visible', 1);
-        //$criteria->compare('visible', $this->visible);
+        $criteria->compare('fk_entreprise', $this->fk_entreprise);
+        $criteria->compare('code_ticket', $this->code_ticket, true);
+        $criteria->compare('etage', $this->etage, true);
+        $criteria->compare('bureau', $this->bureau, true);
+        $criteria->compare('fk_locataire', $this->fk_locataire);
+        $criteria->compare('fk_batiment', $this->fk_batiment);
+        $criteria->compare('visible', Constantes::VISIBLE);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
     }
-
+    
     public function searchOpened() {
         $criteria = new CDbCriteria;
 
         $criteria->compare('id_ticket', $this->id_ticket);
-        $criteria->compare('code_ticket', $this->code_ticket);
-        $criteria->compare('fk_statut', $this->fk_statut = 1);
+        $criteria->compare('fk_statut', Constantes::STATUT_OPENED);
         $criteria->compare('fk_categorie', $this->fk_categorie);
-        $criteria->compare('fk_batiment', $this->fk_batiment);
         $criteria->compare('fk_user', $this->fk_user);
         $criteria->compare('descriptif', $this->descriptif, true);
         $criteria->compare('fk_canal', $this->fk_canal);
-        $criteria->compare('fk_entreprise', $this->fk_entreprise);
         $criteria->compare('date_intervention', $this->date_intervention, true);
-        // Pour l'instant, ne recherche que les Ticket dont la visibilité est à 1
-        $criteria->compare('visible', 1);
-        //$criteria->compare('visible', $this->visible);
+        $criteria->compare('fk_entreprise', $this->fk_entreprise);
+        $criteria->compare('code_ticket', $this->code_ticket, true);
+        $criteria->compare('etage', $this->etage, true);
+        $criteria->compare('bureau', $this->bureau, true);
+        $criteria->compare('fk_locataire', $this->fk_locataire);
+        $criteria->compare('fk_batiment', $this->fk_batiment);
+        $criteria->compare('visible', Constantes::VISIBLE);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
     }
-
+    
     public function searchInProgress() {
         $criteria = new CDbCriteria;
 
         $criteria->compare('id_ticket', $this->id_ticket);
-        $criteria->compare('code_ticket', $this->code_ticket);
-        $criteria->compare('fk_statut', $this->fk_statut = 2);
+        $criteria->compare('fk_statut', Constantes::STATUT_TREATMENT);
         $criteria->compare('fk_categorie', $this->fk_categorie);
-        $criteria->compare('fk_batiment', $this->fk_batiment);
         $criteria->compare('fk_user', $this->fk_user);
         $criteria->compare('descriptif', $this->descriptif, true);
         $criteria->compare('fk_canal', $this->fk_canal);
-        $criteria->compare('fk_entreprise', $this->fk_entreprise);
         $criteria->compare('date_intervention', $this->date_intervention, true);
-        // Pour l'instant, ne recherche que les Ticket dont la visibilité est à 1
-        $criteria->compare('visible', 1);
-        //$criteria->compare('visible', $this->visible);
+        $criteria->compare('fk_entreprise', $this->fk_entreprise);
+        $criteria->compare('code_ticket', $this->code_ticket, true);
+        $criteria->compare('etage', $this->etage, true);
+        $criteria->compare('bureau', $this->bureau, true);
+        $criteria->compare('fk_locataire', $this->fk_locataire);
+        $criteria->compare('fk_batiment', $this->fk_batiment);
+        $criteria->compare('visible', Constantes::VISIBLE);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
     }
-
+    
     public function searchClosed() {
         $criteria = new CDbCriteria;
 
         $criteria->compare('id_ticket', $this->id_ticket);
-        $criteria->compare('code_ticket', $this->code_ticket);
-        $criteria->compare('fk_statut', $this->fk_statut = 3);
+        $criteria->compare('fk_statut', Constantes::STATUT_CLOSED);
         $criteria->compare('fk_categorie', $this->fk_categorie);
-        $criteria->compare('fk_batiment', $this->fk_batiment);
         $criteria->compare('fk_user', $this->fk_user);
         $criteria->compare('descriptif', $this->descriptif, true);
         $criteria->compare('fk_canal', $this->fk_canal);
-        $criteria->compare('fk_entreprise', $this->fk_entreprise);
         $criteria->compare('date_intervention', $this->date_intervention, true);
-        // Pour l'instant, ne recherche que les Ticket dont la visibilité est à 1
-        $criteria->compare('visible', 1);
-        //$criteria->compare('visible', $this->visible);
+        $criteria->compare('fk_entreprise', $this->fk_entreprise);
+        $criteria->compare('code_ticket', $this->code_ticket, true);
+        $criteria->compare('etage', $this->etage, true);
+        $criteria->compare('bureau', $this->bureau, true);
+        $criteria->compare('fk_locataire', $this->fk_locataire);
+        $criteria->compare('fk_batiment', $this->fk_batiment);
+        $criteria->compare('visible', Constantes::VISIBLE);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
     }
-
+    
     public function searchByLocataire($id) {
         $criteria = new CDbCriteria;
 
         $criteria->compare('id_ticket', $this->id_ticket);
-        $criteria->compare('code_ticket', $this->code_ticket);
         $criteria->compare('fk_statut', $this->fk_statut);
         $criteria->compare('fk_categorie', $this->fk_categorie);
-        $criteria->compare('fk_batiment', $this->fk_batiment);
         $criteria->compare('fk_user', $this->fk_user);
         $criteria->compare('descriptif', $this->descriptif, true);
         $criteria->compare('fk_canal', $this->fk_canal);
-        $criteria->compare('fk_entreprise', $this->fk_entreprise);
         $criteria->compare('date_intervention', $this->date_intervention, true);
-        $criteria->compare('fk_locataire', $this->fk_locataire = $id);
-        // Pour l'instant, ne recherche que les Ticket dont la visibilité est à 1
-        $criteria->compare('visible', 1);
-        //$criteria->compare('visible', $this->visible);
+        $criteria->compare('fk_entreprise', $this->fk_entreprise);
+        $criteria->compare('code_ticket', $this->code_ticket, true);
+        $criteria->compare('etage', $this->etage, true);
+        $criteria->compare('bureau', $this->bureau, true);
+        $criteria->compare('fk_locataire', $id);
+        $criteria->compare('fk_batiment', $this->fk_batiment);
+        $criteria->compare('visible', $this->visible);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -230,5 +237,4 @@ class Ticket extends CActiveRecord {
         $cat = CategorieIncident::model()->findByPk(array('fk_parent' => $sousCat->fk_parent, 'visible' => 1));
         return $cat->id_categorie_incident;
     }
-
 }

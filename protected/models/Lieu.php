@@ -7,6 +7,7 @@
  * @property integer $id_lieu
  * @property integer $fk_locataire
  * @property integer $fk_batiment
+ * @property integer $visible
  */
 class Lieu extends CActiveRecord {
 
@@ -50,6 +51,7 @@ class Lieu extends CActiveRecord {
             'id_lieu' => 'Id Lieu',
             'fk_locataire' => 'Fk Locataire',
             'fk_batiment' => 'Fk Batiment',
+            'visible' => 'Visible',
         );
     }
 
@@ -73,6 +75,7 @@ class Lieu extends CActiveRecord {
         $criteria->compare('id_lieu', $this->id_lieu);
         $criteria->compare('fk_locataire', $this->fk_locataire);
         $criteria->compare('fk_batiment', $this->fk_batiment);
+        $criteria->compare('visible', Constantes::VISIBLE);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

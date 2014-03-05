@@ -36,7 +36,7 @@ class TicketController extends Controller {
                     'message' => 'Vous n\'avez pas accès à cette page.'
                 ),
             );
-        } elseif ((Yii::app()->session['Utilisateur'] == 'User') && ($logged->fk_fonction == Constantes::ID_USER)) { // Utilisateur peut creer ,voir ,manager,traiter et fermer des ticket
+        } elseif ((Yii::app()->session['Utilisateur'] == 'User') && ($logged->fk_fonction == Constantes::FONCTION_USER)) { // Utilisateur peut creer ,voir ,manager,traiter et fermer des ticket
             return array(
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
                     'actions' => array('create', 'update', 'view', 'admin', 'traitement', 'getsouscategoriesdynamiques', 'close', 'sendnotificationmail'),
@@ -45,7 +45,7 @@ class TicketController extends Controller {
             );
         } elseif ((Yii::app()->session['Utilisateur'] == 'User') &&
 
-                (($logged->fk_fonction == Constantes::ID_ADMIN) || ($logged->fk_fonction == Constantes::ID_ROOT))
+                (($logged->fk_fonction == Constantes::FONCTION_ADMIN) || ($logged->fk_fonction == Constantes::FONCTION_ROOT))
         ) { // Utilisateur peut creer ,voir ,manager,traiter et fermer des ticket
             return array(
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -78,7 +78,7 @@ class TicketController extends Controller {
             $var = $_POST['Ticket'];
             $model = $this->loadModel($id);
             $model->descriptif = $model->descriptif . ' ---------- Cloture ---------- ' . $var['descriptif'];
-            $model->fk_statut = Constantes::ID_CLOSED;
+            $model->fk_statut = Constantes::STATUT_CLOSED;
             try {
                 $model->save(false);
                 $loc = Locataire::model()->findByPk($model['fk_locataire']);
@@ -87,7 +87,7 @@ class TicketController extends Controller {
                 $histo->date_update = date("Y-m-d H:i:s", time());
                 $histo->fk_ticket = $model->id_ticket;
 // Lors de la cloture, statut forcément à Closed
-                $histo->fk_statut_ticket = Constantes::ID_CLOSED;
+                $histo->fk_statut_ticket = Constantes::STATUT_CLOSED;
                 $logged = Yii::app()->session['Logged'];
                 $histo->fk_user = $logged['id_user'];
                 $histo->save(FALSE);
@@ -113,7 +113,7 @@ class TicketController extends Controller {
             }
             $oldmodel['date_intervention'] = $model['date_intervention'];
             $oldmodel['fk_entreprise'] = $model['fk_entreprise'];
-            $oldmodel['fk_statut'] = Constantes::ID_TREATMENT;
+            $oldmodel['fk_statut'] = Constantes::STATUT_TREATMENT;
             try {
                 $oldmodel->save(FALSE);
                 $loc = Locataire::model()->findByPk($oldmodel['fk_locataire']);
@@ -125,7 +125,7 @@ class TicketController extends Controller {
                 $histo->date_update = date("Y-m-d H:i:s", time());
                 $histo->fk_ticket = $oldmodel->id_ticket;
 // Lors du traitement, statut forcément à InProgress
-                $histo->fk_statut_ticket = Constantes::ID_TREATMENT;
+                $histo->fk_statut_ticket = Constantes::STATUT_TREATMENT;
                 $logged = Yii::app()->session['Logged'];
                 $histo->fk_user = $logged['id_user'];
                 $histo->save(FALSE);
@@ -162,14 +162,14 @@ class TicketController extends Controller {
 // Si locataire, on attribue le ticket a un user par défaut (le 1 dans ce cas-ci)
                 $ticket['fk_user'] = 1;
 // Si locataire, on met le canal à web automatiquement
-                $ticket['fk_canal'] = Constantes::ID_WEB;
+                $ticket['fk_canal'] = Constantes::CANAL_WEB;
 // Et si locataire, on reprend son propre id pour la création du ticket
                 $ticket['fk_locataire'] = $logged->id_locataire;
             } else {
 // Si user, c'est lui-même qui s'occupera de ce ticket-ci
                 $ticket['fk_user'] = $logged['id_user'];
 // Si user, c'est que le locataire a appelé pour créer le ticket, donc canal à 1
-                $ticket['fk_canal'] = Constantes::ID_PHONE;
+                $ticket['fk_canal'] = Constantes::CANAL_PHONE;
 // Et si user, on reprend l'id passé en paramètre précedemment
                 $ticket['fk_locataire'] = $_GET['id'];
             }
@@ -197,7 +197,7 @@ class TicketController extends Controller {
                 $histo->date_update = date("Y-m-d H:i:s", time());
                 $histo->fk_ticket = $model->id_ticket;
 // Lors de la création, statut forcément à opened
-                $histo->fk_statut_ticket = Constantes::ID_OPENED;
+                $histo->fk_statut_ticket = Constantes::STATUT_OPENED;
                 $histo->fk_user = $model['fk_user'];
                 $histo->save(FALSE);
                 $this->actionSendNotificationMail($model);
@@ -329,7 +329,7 @@ class TicketController extends Controller {
         $message->addTo($locataire->email);
 
         switch ($modelTicket->fk_statut) {
-            case Constantes::ID_OPENED: // Cas création d'un ticket
+            case Constantes::STATUT_OPENED: // Cas création d'un ticket
                 $message->subject = "Un nouveau ticket a été créé";
                 $message->setBody(
                         "<div style='text-align: center;'><h2>Votre ticket n&ordm; " . $modelTicket->code_ticket . " a &eacute;t&eacute; cr&eacute;&eacute;.</h2></div>"
@@ -349,7 +349,7 @@ class TicketController extends Controller {
                 );
                 break;
 
-            case Constantes::ID_TREATMENT: // Cas en traitement
+            case Constantes::STATUT_TREATMENT: // Cas en traitement
                 $message->subject = "Le statut de votre ticket a changé.";
                 $message->setBody(
                         "<div style='text-align: center;'><h2>Le statut de votre ticket n° " . $modelTicket->code_ticket . " a chang&eacute;.</h2></div>"
@@ -367,7 +367,7 @@ class TicketController extends Controller {
                 );
                 break;
 
-            case Constantes::ID_CLOSED: // Cas clôture
+            case Constantes::STATUT_CLOSED: // Cas clôture
                 $message->subject = "Votre ticket n° " . $modelTicket->code_ticket . " à été clôturé";
                 $message->setBody(
                         "<div style='border-style: solid; border-width: 2px; margin-left: 10em; margin-right: 10em; padding: 2em; border-radius: 3em;'>"

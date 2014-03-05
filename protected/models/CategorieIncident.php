@@ -8,6 +8,7 @@
  * @property string $label
  * @property integer $fk_parent
  * @property integer $fk_priorite
+ * @property integer $visible
  *
  * The followings are the available model relations:
  * @property Secteur[] $secteurs
@@ -57,6 +58,7 @@ class CategorieIncident extends CActiveRecord {
             'label' => 'Label',
             'fk_parent' => 'Fk Parent',
             'fk_priorite' => 'Fk Priorite',
+            'visible' => 'Visible',
         );
     }
 
@@ -81,6 +83,7 @@ class CategorieIncident extends CActiveRecord {
         $criteria->compare('label', $this->label, true);
         $criteria->compare('fk_parent', $this->fk_parent);
         $criteria->compare('fk_priorite', $this->fk_priorite);
+        $criteria->compare('visible', Constantes::VISIBLE);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

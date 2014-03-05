@@ -27,6 +27,13 @@ class SiteController extends Controller {
      * when an action is not explicitly requested by users.
      */
     public function actionIndex() {
+        if (!empty(Yii::app()->session['_lang'])) {
+
+            Yii::app()->language = Yii::app()->session['_lang'];
+        } else {
+            Yii::app()->session['_lang'] = 'en';
+            Yii::app()->language = Yii::app()->session['_lang'];
+        }
         // renders the view file 'protected/views/site/index.php'
         // using the default layout 'protected/views/layouts/main.php'
         if (!empty(Yii::app()->session['_lang'])) {
@@ -43,6 +50,13 @@ class SiteController extends Controller {
      * This is the action to handle external exceptions.
      */
     public function actionError() {
+        if (!empty(Yii::app()->session['_lang'])) {
+
+            Yii::app()->language = Yii::app()->session['_lang'];
+        } else {
+            Yii::app()->session['_lang'] = 'en';
+            Yii::app()->language = Yii::app()->session['_lang'];
+        }
         if ($error = Yii::app()->errorHandler->error) {
             if (Yii::app()->request->isAjaxRequest)
                 echo $error['message'];
@@ -55,6 +69,13 @@ class SiteController extends Controller {
      * Displays the contact page
      */
     public function actionContact() {
+        if (!empty(Yii::app()->session['_lang'])) {
+
+            Yii::app()->language = Yii::app()->session['_lang'];
+        } else {
+            Yii::app()->session['_lang'] = 'en';
+            Yii::app()->language = Yii::app()->session['_lang'];
+        }
         $model = new ContactForm;
         if (isset($_POST['ContactForm'])) {
             $model->attributes = $_POST['ContactForm'];
