@@ -24,29 +24,29 @@ $this->pageTitle = Yii::app()->name . ' - Admin';
 
 <br />
 <p>
-    <b><?php echo Translate::trad('LocataireTicket').' :'; ?></b>
+    <b><?php echo Translate::trad('LocataireTicket') . ' :'; ?></b>
 <ul>
-    <li><a href="locataire/admin"><?php echo Translate::trad('ListLocataire'); ?></a> (pour voir, modifier ou supprimer un Locataire)</li>
-    <li><a href="locataire/create">Créer un nouveau Locataire</a></li>
+    <li><a href="locataire/admin"><?php echo Translate::trad('ListLocataire'); ?></a> <?php echo Translate::trad('ExplicationLocataire'); ?></li>
+    <li><a href="locataire/create"><?php echo Translate::trad('CreerLocataire'); ?></a></li>
 </ul>
 
 </p>
 
 <br />
 <p>
-    <b>Utilisateur:</b>
+    <b><?php echo Translate::trad('Utilisateur'); ?>&nbsp;:</b>
 <ul>
-    <li><a href="user/admin">Liste des Utilisateurs</a> (pour voir, modifier ou supprimer un Utilisateur)</li>
-    <li><a href="user/create">Créer un nouvel Utilisateur</a></li>
+    <li><a href="user/admin"><?php echo Translate::trad('ListUtilisateur'); ?></a>&nbsp;<?php echo Translate::trad('ExplicationLocataire'); ?> </li>
+    <li><a href="user/create"><?php echo Translate::trad('CreerUtilisateur'); ?></a></li>
 </ul>
 
 </p>
 
 <br />
 <p>
-    <b>Sous-traîtant:</b>
+    <b><?php echo Translate::trad('SousTraitant'); ?>&nbsp;:</b>
 <ul>
-    <li><a href="entreprise/admin">Liste des Sous-Traitants</a> (pour voir, modifier ou supprimer un Sous-Traitant)</li>
+    <li><a href="entreprise/admin"><?php echo Translate::trad('ListeSousTraitant'); ?></a> (pour voir, modifier ou supprimer un Sous-Traitant)</li>
     <li><a href="entreprise/create">Rajouter un Sous-Traitant</a></li>
 </ul>
 </p>

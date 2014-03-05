@@ -42,6 +42,11 @@ return array(
     ),
     // application components
     'components' => array(
+        'session' => array(
+            'timeout' => 1,
+            'cookieMode'=>'only',
+            
+        ),
         'bootstrap' => array(
             'class' => 'bootstrap.components.Bootstrap',
         ),
