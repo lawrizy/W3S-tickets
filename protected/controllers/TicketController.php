@@ -32,7 +32,7 @@ class TicketController extends Controller {
                     'users' => array('@'), // user authentifier
                 ),
                 array('deny', // refuse autre users
-                    'users' => array('*'), //tous utilisateur
+                    'users' => array('?'), //tous utilisateur
                     'message' => 'Vous n\'avez pas accès à cette page.'
                 ),
             );
@@ -41,6 +41,10 @@ class TicketController extends Controller {
                 array('allow', // allow authenticated user to perform 'create' and 'update' actions
                     'actions' => array('create', 'update', 'view', 'admin', 'traitement', 'getsouscategoriesdynamiques', 'close', 'sendnotificationmail'),
                     'users' => array('@'), //user logger
+                ),
+                array('deny', // refuse autre users
+                    'users' => array('?'), //tous utilisateur
+                    'message' => 'Vous n\'avez pas accès à cette page.'
                 ),
             );
         } elseif ((Yii::app()->session['Utilisateur'] == 'User') &&

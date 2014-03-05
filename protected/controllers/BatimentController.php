@@ -105,11 +105,14 @@ class BatimentController extends Controller {
      * If deletion is successful, the browser will be redirected to the 'admin' page.
      * @param integer $id the ID of the model to be deleted
      */
-    public function actionDelete($id) {
+    public function actionDelete($id) { // Soft-delete, on passe un champ visible à 0 plutôt que de supprimer l'enregistrement
+        
         $model = $this->loadModel($id);
         $model['visible'] = Constantes::INVISIBLE;
+        
         $model->save(FALSE);
-// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+        
+        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }
