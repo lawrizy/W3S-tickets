@@ -136,7 +136,7 @@ class LocataireController extends Controller {
     public function actionDelete($id) {
         //$this->loadModel($id)->delete();
         $model = $this->loadModel($id);
-        $model->setAttribute("visible", 0);
+        $model->setAttribute("visible", Constantes::INVISIBLE);
         $model->save(true);
 
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
