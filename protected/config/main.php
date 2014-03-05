@@ -44,7 +44,8 @@ return array(
     'components' => array(
         'session' => array(
             'class' => 'CDbHttpSession',
-            'timeout' => 6000,
+            'connectionID' => 'db', // Ca fix le problème avec CHTTPSession
+            'timeout' => 10000,
         ),
         'bootstrap' => array(
             'class' => 'bootstrap.components.Bootstrap',
