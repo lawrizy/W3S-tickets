@@ -44,7 +44,7 @@ return array(
     'components' => array(
         'session' => array(
             'class' => 'CDbHttpSession',
-            'timeout' => 5,
+            'timeout' => 6000,
         ),
         'bootstrap' => array(
             'class' => 'bootstrap.components.Bootstrap',

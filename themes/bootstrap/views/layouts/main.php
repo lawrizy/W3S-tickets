@@ -33,8 +33,8 @@
                             '---',
                             array('label' => Translate::trad('DashBoard'), 'url' => array(''),
                                 'items' => array(array('label' => Translate::trad('Graphique'), 'url' => array('dashboard/vue'))),
-                                'visible' => Yii::app()->session['Utilisateur'] == 'User' && ($var['fk_fonction'] == Constantes::ID_ADMIN|| $var['fk_fonction'] == Constantes::ID_ROOT)),
-                            array('label' => 'Admin', 'url' => array('/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $var['fk_fonction'] == Constantes::ID_ROOT),
+                                'visible' => Yii::app()->session['Utilisateur'] == 'User' && ($var['fk_fonction'] == Constantes::FONCTION_ADMIN|| $var['fk_fonction'] == Constantes::FONCTION_ROOT)),
+                            array('label' => 'Admin', 'url' => array('/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $var['fk_fonction'] == Constantes::FONCTION_ROOT),
                         )),
                     array(
                         'class' => 'bootstrap.widgets.TbMenu',

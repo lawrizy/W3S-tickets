@@ -92,7 +92,7 @@ class Entreprise extends CActiveRecord {
         $criteria->compare('commune', $this->commune, true);
         $criteria->compare('cp', $this->cp);
         $criteria->compare('tel', $this->tel, true);
-        $criteria->compare('visible', $this->visible);
+        $criteria->compare('visible', Constantes::VISIBLE);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

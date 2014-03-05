@@ -5,14 +5,13 @@
  *
  * The followings are the available columns in table 'w3sys_secteur':
  * @property integer $fk_entreprise
- * @property integer $fk_batiment
  * @property integer $id_secteur
  * @property integer $fk_categorie
+ * @property integer $visible
  *
  * The followings are the available model relations:
- * @property Batiment $fkBatiment
- * @property CategorieIncident $fkCategorie
  * @property Entreprise $fkEntreprise
+ * @property CategorieIncident $fkCategorie
  */
 class Secteur extends CActiveRecord {
 
@@ -30,11 +29,11 @@ class Secteur extends CActiveRecord {
 // NOTE: you should only define rules for those attributes that
 // will receive user inputs.
         return array(
-            array('fk_entreprise, fk_batiment, fk_categorie', 'required', 'message' => 'Le champs {attribute} ne peut être vide.'),
-            array('fk_entreprise, fk_batiment, fk_categorie', 'numerical', 'integerOnly' => true, 'message' => 'Le champs {attribute} ne peut contenir que des nombres.'),
+            array('fk_entreprise, fk_categorie', 'required', 'message' => 'Le champs {attribute} ne peut être vide.'),
+            array('fk_entreprise, fk_categorie, visible', 'numerical', 'integerOnly' => true, 'message' => 'Le champs {attribute} ne peut contenir que des nombres.'),
 // The following rule is used by search().
 // @todo Please remove those attributes that should not be searched.
-            array('fk_entreprise, fk_batiment, id_secteur, fk_categorie', 'safe', 'on' => 'search'),
+            array('fk_entreprise, id_secteur, fk_categorie, visible', 'safe', 'on' => 'search'),
         );
     }
 
@@ -45,9 +44,8 @@ class Secteur extends CActiveRecord {
 // NOTE: you may need to adjust the relation name and the related
 // class name for the relations automatically generated below.
         return array(
-            'fkBatiment' => array(self::BELONGS_TO, 'Batiment', 'fk_batiment'),
-            'fkCategorie' => array(self::BELONGS_TO, 'CategorieIncident', 'fk_categorie'),
             'fkEntreprise' => array(self::BELONGS_TO, 'Entreprise', 'fk_entreprise'),
+            'fkCategorie' => array(self::BELONGS_TO, 'CategorieIncident', 'fk_categorie'),
         );
     }
 
@@ -57,9 +55,9 @@ class Secteur extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'fk_entreprise' => 'Fk Entreprise',
-            'fk_batiment' => 'Fk Batiment',
             'id_secteur' => 'Id Secteur',
             'fk_categorie' => 'Fk Categorie',
+            'visible' => 'Visible',
         );
     }
 
@@ -81,9 +79,9 @@ class Secteur extends CActiveRecord {
         $criteria = new CDbCriteria;
 
         $criteria->compare('fk_entreprise', $this->fk_entreprise);
-        $criteria->compare('fk_batiment', $this->fk_batiment);
         $criteria->compare('id_secteur', $this->id_secteur);
         $criteria->compare('fk_categorie', $this->fk_categorie);
+        $criteria->compare('visible', Constantes::VISIBLE);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

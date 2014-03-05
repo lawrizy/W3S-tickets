@@ -8,7 +8,19 @@ class AdminController extends Controller {
      * et en fonction de cela, les droits accordés peuvent varient.
      */
     public function accessRules() {
-        if ((Yii::app()->session['Utilisateur'] == 'User') && (Yii::app()->session['Logged']->fk_fonction == Constantes::ID_ROOT)) {
+        $logged = Yii::app()->session['Logged'];
+        if ((Yii::app()->session['Utilisateur'] == 'User') &&
+                (($logged->fk_fonction == Constantes::FONCTION_USER) || ($logged->fk_fonction == Constantes::FONCTION_ADMIN))) {
+            // Si ['User'] et [fonction = id_admin ou id_user]
+            return array(
+                array('allow', // 'allow' veut dire que l'utilisateur a droit à ce qui suit.
+                    'actions' => array('create', 'admin', 'view'), // Ces utilisateurs ont ces droits
+                    'users' => array('*'),
+                // Tous les droits accordés à tout le monde, mais comme il faut être admin ou user
+                // pour arriver là alors il n'y a qu'eux qui ont ces droits-là
+                ),
+            );
+        } elseif ((Yii::app()->session['Utilisateur'] == 'User') && ($logged->fk_fonction == Constantes::FONCTION_ROOT)) {
             // Si ['User'] et [fonction = id_root]
             return array(
                 array('allow', // 'allow' veut dire que l'utilisateur a droit à ce qui suit.

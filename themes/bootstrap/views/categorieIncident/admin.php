@@ -48,7 +48,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         'label',
         array(
             'name' => 'Fk Parent',
-            'value' => '$data->fk_parent != null ? CategorieIncident::model()->findByPk($data->fk_parent)->label : \'NO PARENT\''),
+            'value' => '$data->fk_parent != null ? CategorieIncident::model()->findByPk($data->fk_parent)->label : \'-----\''),
         array(
             'name' => 'Fk Priorite',
             'value' => 'Priorite::model()->findByPk($data->fk_priorite)->label'),

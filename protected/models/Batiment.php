@@ -93,7 +93,7 @@ class Batiment extends CActiveRecord {
         $criteria->compare('nom', $this->nom, true);
         $criteria->compare('cpt', $this->cpt);
         $criteria->compare('code', $this->code, true);
-        $criteria->compare('visible', 1);
+        $criteria->compare('visible', Constantes::VISIBLE);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

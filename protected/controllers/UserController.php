@@ -24,7 +24,7 @@ class UserController extends Controller {
      * et en fonction de cela, les droits accordés peuvent varient.
      */
     public function accessRules() {
-        if ((Yii::app()->session['Utilisateur'] == 'User') && (Yii::app()->session['Logged']->fk_fonction == Constantes::ID_ROOT)) {
+        if ((Yii::app()->session['Utilisateur'] == 'User') && (Yii::app()->session['Logged']->fk_fonction == Constantes::FONCTION_ROOT)) {
             // Si ['User'] et [fonction = id_admin], alors c'est un admin
             return array(
                 array('allow', // 'allow' veut dire que l'utilisateur a droit à ce qui suit.
