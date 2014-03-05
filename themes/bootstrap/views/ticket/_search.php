@@ -31,7 +31,7 @@
 
     <div class="row">
         <?php echo $form->label($model, 'fk_batiment'); ?>
-        <?php echo $form->dropDownList($model, 'fk_batiment', array(CHtml::listData(Batiment::model()->findAll(), 'id_batiment', 'nom'))); ?>
+        <?php echo $form->dropDownList($model, 'fk_batiment', array(Translate::trad("AllBatiment"), CHtml::listData(Batiment::model()->findAll(), 'id_batiment', 'nom'))); ?>
     </div>
     <?php if (Yii::app()->session['Logged']->fk_fonction == 2) { ?>
         <div class="row">
@@ -41,7 +41,7 @@
     <?php } ?>
     <div class="row">
         <?php echo $form->label($model, 'fk_canal'); ?>
-        <?php echo $form->dropDownList($model, 'fk_canal', array(CHtml::listData(Canal::model()->findAll(), 'id_canal', 'label'))); ?>
+        <?php echo $form->dropDownList($model, 'fk_canal', array(Translate::trad("AllCanal"), CHtml::listData(Canal::model()->findAll(), 'id_canal', 'label'))); ?>
     </div>
 
     <div class="row buttons">
