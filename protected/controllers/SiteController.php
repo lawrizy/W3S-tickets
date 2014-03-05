@@ -4,6 +4,16 @@ class SiteController extends Controller {
 
     private $id;
 
+    public static function assignLangue() {
+        if (!empty(Yii::app()->session['_lang'])) {
+
+            Yii::app()->language = Yii::app()->session['_lang'];
+        } else {
+            Yii::app()->session['_lang'] = 'en';
+            Yii::app()->language = Yii::app()->session['_lang'];
+        }
+    }
+
     /**
      * Declares class-based actions.
      */
@@ -27,22 +37,7 @@ class SiteController extends Controller {
      * when an action is not explicitly requested by users.
      */
     public function actionIndex() {
-        if (!empty(Yii::app()->session['_lang'])) {
-
-            Yii::app()->language = Yii::app()->session['_lang'];
-        } else {
-            Yii::app()->session['_lang'] = 'en';
-            Yii::app()->language = Yii::app()->session['_lang'];
-        }
-        // renders the view file 'protected/views/site/index.php'
-        // using the default layout 'protected/views/layouts/main.php'
-        if (!empty(Yii::app()->session['_lang'])) {
-
-            Yii::app()->language = Yii::app()->session['_lang'];
-        } else {
-            Yii::app()->session['_lang'] = 'en';
-            Yii::app()->language = Yii::app()->session['_lang'];
-        }
+        $this->assignLangue();
         $this->render('index');
     }
 
@@ -69,13 +64,8 @@ class SiteController extends Controller {
      * Displays the contact page
      */
     public function actionContact() {
-        if (!empty(Yii::app()->session['_lang'])) {
+        $this->assignLangue();
 
-            Yii::app()->language = Yii::app()->session['_lang'];
-        } else {
-            Yii::app()->session['_lang'] = 'en';
-            Yii::app()->language = Yii::app()->session['_lang'];
-        }
         $model = new ContactForm;
         if (isset($_POST['ContactForm'])) {
             $model->attributes = $_POST['ContactForm'];
@@ -99,13 +89,8 @@ class SiteController extends Controller {
      * Displays the login page
      */
     public function actionLogin() {
-        if (!empty(Yii::app()->session['_lang'])) {
+        $this->assignLangue();
 
-            Yii::app()->language = Yii::app()->session['_lang'];
-        } else {
-            Yii::app()->session['_lang'] = 'en';
-            Yii::app()->language = Yii::app()->session['_lang'];
-        }
         $model = new LoginForm;
 
         // if it is ajax validation request
