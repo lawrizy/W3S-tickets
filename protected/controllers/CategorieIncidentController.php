@@ -106,12 +106,65 @@ class CategorieIncidentController extends Controller {
      * @param integer $id the ID of the model to be deleted
      */
     public function actionDelete($id) {
-        $model = $this->loadModel($id);
-        $model['visible'] = Constantes::INVISIBLE;
-        $model->save();
-// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        if (!isset($_GET['ajax']))
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+        try {
+            $model = $this->loadModel($id); // On récupère l'enregistrement de cette catégorie
+            $model['visible'] = Constantes::INVISIBLE; // et on met l'enregistrement à l'état invisible
+            $model->save(FALSE); // et enfin on enregistre cet état invisible dans la DB
+            // ---------------------
+
+            /*
+             * Ensuite, si on supprime une catégorie, il faut aussi supprimer tous les tickets qui sont liées à cette catégorie.
+             * Et si la catégorie en question est un parent, il faut faire pareil pour tous ses enfants
+             * (c'est-à-dire, 'delete' tous ses enfants et les tickets qui sont liés à ces enfants)
+             */
+            if ($model['fk_parent'] == NULL) { // Si fk_parent est null, c'est une catégorie parent
+                // Et donc si c'est un parent, on doit d'abord trouver toutes les sous-catégories qui sont ses enfants
+                $sousCats = CategorieIncident::model()->findAllByAttributes(
+                        array('fk_parent' => $id, 'visible' => Constantes::VISIBLE));
+                foreach ($sousCats as $sousCat) { // parcourir toutes les sous-catégories et les passer à l'état invisible
+                    $sousCat['visible'] = Constantes::INVISIBLE;
+                    $sousCat->save(FALSE);
+
+                    // Retrouver tous les tickets qui sont liés à cette sous-catégorie
+                    $tickets = Ticket::model()->findAllByAttributes(
+                            array('fk_categorie' => $sousCat['id_categorie_incident'], 'visible' => Constantes::VISIBLE));
+                    foreach ($tickets as $ticket) { // Et aussi les passer à l'état invisible
+                        $ticket['visible'] = Constantes::INVISIBLE;
+                        $ticket->save(FALSE);
+                    }
+
+                    // Il faut aussi retrouver tous les secteurs liés à ces sous-catégories
+                    $secteurs = Secteur::model()->findAllByAttributes(
+                            array('fk_categorie' => $sousCat['id_categorie_incident'], 'visible' => Constantes::VISIBLE));
+                    foreach ($secteurs as $secteur) { // Et aussi les passer à l'état invisible
+                        $secteur['visible'] = Constantes::INVISIBLE;
+                        $secteur->save(FALSE);
+                    }
+                }
+            } else { // Si fk_parent n'est pas null, c'est donc un enfant
+                // Et si c'est un enfant, il faut juste 'delete' tous les tickets qui sont liés à lui
+                $tickets = Ticket::model()->findAllByAttributes(array('fk_categorie' => $id)); // On recherche tous les tickets qui sont liés à cette catégorie
+                foreach ($tickets as $ticket) { // et on les passe tous à l'état invisible
+                    $ticket['visible'] = Constantes::INVISIBLE;
+                    $ticket->save(FALSE);
+                }
+
+                // Il faut aussi retrouver tous les secteurs liés à cette sous-catégorie
+                $secteurs = Secteur::model()->findAllByAttributes(
+                        array('fk_categorie' => $sousCat['id_categorie_incident'], 'visible' => Constantes::VISIBLE));
+                foreach ($secteurs as $secteur) { // Et aussi les passer à l'état invisible
+                    $secteur['visible'] = Constantes::INVISIBLE;
+                    $secteur->save(FALSE);
+                }
+            }
+            // ---------------------
+            // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+            if (!isset($_GET['ajax']))
+                $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+        } catch (CDbException $e) {
+
+            $this->render('error', 'Erreur avec la base de données, veuillez contacter votre administrateur');
+        }
     }
 
     /**

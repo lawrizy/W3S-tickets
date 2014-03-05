@@ -49,4 +49,8 @@ class Constantes {
      */
     const TIMEOUT_SESSION=5; 
     
+    /*
+     * 
+     */
+    const ENTREPRISE_DEFAUT = 1;
 }

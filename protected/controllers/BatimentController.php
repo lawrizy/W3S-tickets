@@ -106,15 +106,40 @@ class BatimentController extends Controller {
      * @param integer $id the ID of the model to be deleted
      */
     public function actionDelete($id) { // Soft-delete, on passe un champ visible à 0 plutôt que de supprimer l'enregistrement
-        
-        $model = $this->loadModel($id);
-        $model['visible'] = Constantes::INVISIBLE;
-        
-        $model->save(FALSE);
-        
-        // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-        if (!isset($_GET['ajax']))
-            $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+        try {
+            $model = $this->loadModel($id); // On récupère l'enregistrement de ce bâtiment
+            $model['visible'] = Constantes::INVISIBLE; // et on met l'enregistrement à l'état invisible
+            $model->save(FALSE); // et enfin on enregistre cet état invisible dans la DB
+
+            $tickets = Ticket::model()->findAllByAttributes(array('fk_batiment' => $id)); // On recherche tous les tickets qui sont liés à ce bâtiment
+            foreach ($tickets as $ticket) { // et on les passe tous à l'état invisible
+                $ticket['visible'] = Constantes::INVISIBLE;
+                $ticket->save(FALSE);
+            }
+
+            $lieux = Lieu::model()->findAllByAttributes(array('fk_batiment' => $id)); // On recherche tous les lieux qui sont liés à ce bâtiment
+            foreach ($lieux as $lieu) { // et on les passe tous à l'état invisible
+                $lieu['visible'] = Constantes::INVISIBLE;
+                $lieu->save(FALSE);
+
+                // Par contre, si le lieu d'un locataire est supprimé, et que ce locataire n'a plus d'autres lieux, on 'delete' aussi ce locataire
+                $locataires = Lieu::model()->findAllByAttributes(array('fk_locataire' => $lieu['fk_locataire'], 'visible' => Constantes::VISIBLE));
+                // On recherche donc les autres lieux pour ce locataires (lieux encore visible bien sûr)
+                if ($locataires == NULL) { // S'il n'y a pas d'autres lieux pour ce locataire, on le 'delete'
+                    $locataire = Locataire::model()->findByPk($lieu['fk_locataire']);
+                    $locataire['visible'] = Constantes::INVISIBLE;
+                    $locataire->save(FALSE);
+                }
+            }
+
+            // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+            if (!isset($_GET['ajax']))
+                $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+            
+        } catch (CDbException $e) {
+            
+            $this->render('error', 'Erreur avec la base de données, veuillez contacter votre administrateur');
+        }
     }
 
     /**
