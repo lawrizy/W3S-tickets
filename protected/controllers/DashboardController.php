@@ -146,7 +146,7 @@ class DashboardController extends Controller {
         $datas = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL));
         $listLabel = array();
         foreach ($datas as $data) {
-            array_push($listLabel, Translate::tradMoyen($data['label']));
+            array_push($listLabel, Translate::trad($data['label']));
         }
         return $listLabel;
     }

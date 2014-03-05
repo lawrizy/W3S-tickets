@@ -5,7 +5,7 @@
 
 
 $this->menu = array(
-    array('label' => Translate::tradPetit('CreerLocataire'), 'url' => array('/locataire/create')),
+    array('label' => Translate::trad('CreerLocataire'), 'url' => array('/locataire/create')),
 );
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
@@ -21,10 +21,10 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1><?php echo Translate::tradPetit('ListLocataire') ?></h1>
+<h1><?php echo Translate::trad('ListLocataire') ?></h1>
 
 
-<?php echo CHtml::link(Translate::tradPetit('RechercheAvancee'), '#', array('class' => 'search-button')); ?>
+<?php echo CHtml::link(Translate::trad('RechercheAvancee'), '#', array('class' => 'search-button')); ?>
 <div class="search-form" style="display:none">
     <?php
     $this->renderPartial('_search', array(

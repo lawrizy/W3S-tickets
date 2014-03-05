@@ -37,7 +37,7 @@ class Ticket extends CActiveRecord {
 // NOTE: you should only define rules for those attributes that
 // will receive user inputs.
         return array(
-            array('fk_categorie, fk_canal, fk_locataire, fk_batiment', 'required', 'message' => Translate::tradGrand('Required')),
+            array('fk_categorie, fk_canal, fk_locataire, fk_batiment', 'required', 'message' => Translate::trad('Required')),
             array('fk_statut, fk_categorie, fk_user, fk_canal, fk_entreprise, fk_locataire, fk_batiment', 'numerical', 'integerOnly' => true,
                 'message' => 'Le champs {attribute} ne peut contenir que des nombres.'),
             array('code_ticket', 'length', 'max' => 10),
@@ -65,19 +65,19 @@ class Ticket extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'id_ticket' => Translate::tradPetit('IdTicket'),
-            'fk_statut' => Translate::tradPetit('StatutTicket'),
-            'fk_categorie' => Translate::tradPetit('CategorieTicket'),
-            'fk_user' => Translate::tradPetit('UserTicket'),
-            'descriptif' => Translate::tradPetit('DescriptifTicket'),
-            'fk_canal' => Translate::tradPetit('CanalTicket'),
-            'date_intervention' => Translate::tradPetit('DateInterventionTicket'),
-            'fk_entreprise' => Translate::tradPetit('EntrepriseTicket'),
-            'code_ticket' => Translate::tradPetit('CodeTicket'),
-            'etage' => Translate::tradPetit('EtageTicket'),
-            'bureau' => Translate::tradPetit('BureauTicket'),
-            'fk_locataire' => Translate::tradPetit('LocataireTicket'),
-            'fk_batiment' => Translate::tradPetit('BatimentTicket'),
+            'id_ticket' => Translate::trad('IdTicket'),
+            'fk_statut' => Translate::trad('StatutTicket'),
+            'fk_categorie' => Translate::trad('CategorieTicket'),
+            'fk_user' => Translate::trad('UserTicket'),
+            'descriptif' => Translate::trad('DescriptifTicket'),
+            'fk_canal' => Translate::trad('CanalTicket'),
+            'date_intervention' => Translate::trad('DateInterventionTicket'),
+            'fk_entreprise' => Translate::trad('EntrepriseTicket'),
+            'code_ticket' => Translate::trad('CodeTicket'),
+            'etage' => Translate::trad('EtageTicket'),
+            'bureau' => Translate::trad('BureauTicket'),
+            'fk_locataire' => Translate::trad('LocataireTicket'),
+            'fk_batiment' => Translate::trad('BatimentTicket'),
         );
     }
 

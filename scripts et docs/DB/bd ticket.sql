@@ -171,6 +171,7 @@ CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_ticket` (
   `bureau` VARCHAR(45) NULL,
   `fk_locataire` INT(10) NOT NULL,
   `fk_batiment` INT(10) NOT NULL,
+  `visible` TINYINT(1) NULL,
   PRIMARY KEY (`id_ticket`),
   INDEX `fk_w3sys_ticket_w3sys_statut_ticket1_idx` (`fk_statut` ASC),
   INDEX `fk_w3sys_ticket_w3sys_categorie_incident1_idx` (`fk_categorie` ASC),
@@ -233,22 +234,15 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_secteur` (
   `fk_entreprise` INT(10) NOT NULL,
-  `fk_batiment` INT(10) NOT NULL,
   `id_secteur` INT(10) NOT NULL AUTO_INCREMENT,
   `fk_categorie` INT(10) NOT NULL,
   `visible` TINYINT(1) NULL DEFAULT 1,
   INDEX `fk_w3sys_secteur_w3sys_entreprise1_idx` (`fk_entreprise` ASC),
-  INDEX `fk_w3sys_secteur_w3sys_batiment1_idx` (`fk_batiment` ASC),
   PRIMARY KEY (`id_secteur`),
   INDEX `fk_w3sys_secteur_w3sys_categorie_incident1_idx` (`fk_categorie` ASC),
   CONSTRAINT `fk_w3sys_secteur_w3sys_entreprise1`
     FOREIGN KEY (`fk_entreprise`)
     REFERENCES `db_ticketing`.`w3sys_entreprise` (`id_entreprise`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_w3sys_secteur_w3sys_batiment1`
-    FOREIGN KEY (`fk_batiment`)
-    REFERENCES `db_ticketing`.`w3sys_batiment` (`id_batiment`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_w3sys_secteur_w3sys_categorie_incident1`
@@ -260,23 +254,10 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `db_ticketing`.`w3sys_trad_petit`
+-- Table `db_ticketing`.`w3sys_trad`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_trad_petit` (
-  `code` VARCHAR(32) NOT NULL,
-  `fr` VARCHAR(32) NULL,
-  `en` VARCHAR(32) NULL,
-  `nl` VARCHAR(32) NULL,
-  PRIMARY KEY (`code`),
-  UNIQUE INDEX `code_UNIQUE` (`code` ASC))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `db_ticketing`.`w3sys_trad_grand`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_trad_grand` (
-  `code` VARCHAR(32) NOT NULL,
+CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_trad` (
+  `code` VARCHAR(64) NOT NULL,
   `fr` VARCHAR(128) NULL,
   `en` VARCHAR(128) NULL,
   `nl` VARCHAR(128) NULL,
@@ -285,35 +266,6 @@ CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_trad_grand` (
 ENGINE = InnoDB;
 
 
--- -----------------------------------------------------
--- Table `db_ticketing`.`w3sys_trad_moyen`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_trad_moyen` (
-  `code` VARCHAR(32) NOT NULL,
-  `fr` VARCHAR(64) NULL,
-  `en` VARCHAR(64) NULL,
-  `nl` VARCHAR(64) NULL,
-  PRIMARY KEY (`code`),
-  UNIQUE INDEX `code_UNIQUE` (`code` ASC))
-ENGINE = InnoDB;
-
-
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-USE `db_ticketing`;
-
-DELIMITER $$
-USE `db_ticketing`$$
-CREATE TRIGGER `w3sys_ticket_generate_code_ticket` BEFORE INSERT ON `w3sys_ticket` FOR EACH ROW
-begin
-
-	INSERT INTO w3sys_ticket
-	SET action= 'update';
-END ; 		
-UPDATE w3sys_ticket
-set code_ticket='test';
-DELIMITER ;$$
-
-
-DELIMITER ;

@@ -2,31 +2,31 @@
 $this->pageTitle = Yii::app()->name . ' - Admin';
 ?>
 
-<h1><?php echo Translate::tradPetit('GestionApplication'); ?></h1>
+<h1><?php echo Translate::trad('GestionApplication'); ?></h1>
 <br /><br />
 
 <p>
-    <b><?php echo Translate::tradPetit('ViewTitre'); ?></b>
+    <b><?php echo Translate::trad('ViewTitre'); ?></b>
 <ul>
-    <li><a href="ticket/admin"><?php echo Translate::tradPetit('ListeTicket'); ?></a> <?php echo Translate::tradGrand('ExplicationTicket'); ?> </li>
-    <li><a href="locataire/admin"><?php echo Translate::tradPetit('CreerTicket'); ?></a></li>
+    <li><a href="ticket/admin"><?php echo Translate::trad('ListeTicket'); ?></a> <?php echo Translate::trad('ExplicationTicket'); ?> </li>
+    <li><a href="locataire/admin"><?php echo Translate::trad('CreerTicket'); ?></a></li>
 </ul>
 </p>
 
 <br />
 <p>
-    <b><?php echo Translate::tradPetit('BatimentTicket') . ' :'; ?></b>
+    <b><?php echo Translate::trad('BatimentTicket') . ' :'; ?></b>
 <ul>
-    <li><a href="batiment/admin"><?php echo Translate::tradPetit('ListBatiment'); ?></a> <?php echo Translate::tradGrand('ExplicationBatiment'); ?></li>
-    <li><a href="batiment/create"><?php echo Translate::tradPetit('CreateBatiment'); ?></a></li>
+    <li><a href="batiment/admin"><?php echo Translate::trad('ListBatiment'); ?></a> <?php echo Translate::trad('ExplicationBatiment'); ?></li>
+    <li><a href="batiment/create"><?php echo Translate::trad('CreateBatiment'); ?></a></li>
 </ul>
 </p>
 
 <br />
 <p>
-    <b><?php echo Translate::tradPetit('LocataireTicket').' :'; ?></b>
+    <b><?php echo Translate::trad('LocataireTicket').' :'; ?></b>
 <ul>
-    <li><a href="locataire/admin"><?php echo Translate::tradPetit('ListLocataire'); ?></a> (pour voir, modifier ou supprimer un Locataire)</li>
+    <li><a href="locataire/admin"><?php echo Translate::trad('ListLocataire'); ?></a> (pour voir, modifier ou supprimer un Locataire)</li>
     <li><a href="locataire/create">Créer un nouveau Locataire</a></li>
 </ul>
 

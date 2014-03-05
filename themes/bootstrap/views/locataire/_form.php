@@ -17,9 +17,9 @@
     ));
     ?>
 
-    <p class="note"><?php echo Translate::tradGrand('ChampObligatoire') ;?></p>
+    <p class="note"><?php echo Translate::trad('ChampObligatoire') ;?></p>
 
-    <?php echo $form->errorSummary($model, Translate::tradMoyen('ReglerProbleme')); ?>
+    <?php echo $form->errorSummary($model, Translate::trad('ReglerProbleme')); ?>
 
     <div class="row">
         <?php echo $form->labelEx($model, 'nom'); ?>
@@ -40,7 +40,7 @@
     </div>
 
     <div class="row buttons">
-        <?php echo CHtml::submitButton(Translate::tradPetit('ButtonCreer')); ?>
+        <?php echo CHtml::submitButton(Translate::trad('ButtonCreer')); ?>
     </div>
 
     <?php $this->endWidget(); ?>

@@ -7,6 +7,6 @@
 
 ?>
 
-<h1><?php echo Translate::tradPetit('TitreCreateLocataire') ; ?></h1>
+<h1><?php echo Translate::trad('TitreCreateLocataire') ; ?></h1>
 
 <?php $this->renderPartial('_form', array('model' => $model)); ?>

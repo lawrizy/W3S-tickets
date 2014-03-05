@@ -48,7 +48,7 @@ class UserIdentity extends CUserIdentity {
             Yii::app()->session['Language'] = 'EN';
             return self::ERROR_UNKNOWN_IDENTITY; //return utilisateur inconnu
         } catch (CDbException $ex) {
-            Yii::app()->session['erreurDB'] = 'La base de donnnée est indisponible pour le moment'; // message d'erreur lors de db i
+            Yii::app()->session['erreurDB'] = 'La base de donnnée est indisponible pour le moment'; // message d'erreur lors de db indisponible
         }
     }
 
@@ -57,9 +57,9 @@ class UserIdentity extends CUserIdentity {
     }
 
     public function getLanguage($record) {
-        if ($record->fk_langue == 1) {
+        if ($record->fk_langue == Constantes::ID_FR) {
             Yii::app()->session['Language'] = 'FR';
-        } elseif ($record->fk_langue == 2) {
+        } elseif ($record->fk_langue == Constantes::ID_EN) {
             Yii::app()->session['Language'] = 'EN';
         } else {
             Yii::app()->session['Language'] = 'NL';

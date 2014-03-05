@@ -89,15 +89,15 @@ Yii::app()->language = Yii::app()->session['_lang'];
                 $var = Yii::app()->session['Logged'];
                 $this->widget('zii.widgets.CMenu', array(
                     'items' => array(
-                        array('label' => Translate::tradPetit('APropos'), 'url' => array('/site/page', 'view' => 'about'), 'template' => '| {menu}'),
-                        array('label' => Translate::tradPetit('Contact'), 'url' => array('/site/contact'), 'template' => '| {menu}'),
-                        array('label' => Translate::tradPetit('CreerTicket'), 'url' => array('/locataire/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User', 'template' => '| {menu}'),
-                        array('label' => Translate::tradPetit('ListeTicket'), 'url' => array('/ticket/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User', 'template' => '| {menu}'),
-                        array('label' => Translate::tradPetit('DashBoard'), 'url' => array('dashboard/vue'), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $var['fk_fonction'] == 2, 'template' => '| {menu}'),
-                        array('label' => Translate::tradPetit('Creer') . Yii::app()->session['NouveauTicket'] . ' ticket', 'url' => array('/ticket/create'), 'visible' => Yii::app()->session['Utilisateur'] == 'Locataire', 'template' => '| {menu}'),
+                        array('label' => Translate::trad('APropos'), 'url' => array('/site/page', 'view' => 'about'), 'template' => '| {menu}'),
+                        array('label' => Translate::trad('Contact'), 'url' => array('/site/contact'), 'template' => '| {menu}'),
+                        array('label' => Translate::trad('CreerTicket'), 'url' => array('/locataire/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User', 'template' => '| {menu}'),
+                        array('label' => Translate::trad('ListeTicket'), 'url' => array('/ticket/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User', 'template' => '| {menu}'),
+                        array('label' => Translate::trad('DashBoard'), 'url' => array('dashboard/vue'), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $var['fk_fonction'] == 2, 'template' => '| {menu}'),
+                        array('label' => Translate::trad('Creer') . Yii::app()->session['NouveauTicket'] . ' ticket', 'url' => array('/ticket/create'), 'visible' => Yii::app()->session['Utilisateur'] == 'Locataire', 'template' => '| {menu}'),
                         array('label' => 'Admin', 'url' => array('/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $var['fk_fonction'] == 2, 'template' => '| {menu}'),
-                        array('label' => Translate::tradPetit('Connexion'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest, 'template' => '| {menu}'),
-                        array('label' => Translate::tradPetit('DeConnexion') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest, 'template' => '| {menu}'),
+                        array('label' => Translate::trad('Connexion'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest, 'template' => '| {menu}'),
+                        array('label' => Translate::trad('DeConnexion') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest, 'template' => '| {menu}'),
                         array('label' => '', 'template' => '| {menu}')
                     ),
                 ));
@@ -117,8 +117,8 @@ Yii::app()->language = Yii::app()->session['_lang'];
             <div class="clear"></div>
 
             <div id="footer">
-                Copyright &copy; <?php echo date('Y') . ' ' . Translate::tradPetit('Par'); ?>  <a href="http://web3sys.com">Web3Sys</a>.<br/>
-                <?php echo Translate::tradPetit('DroitsReserve'); ?><br/>
+                Copyright &copy; <?php echo date('Y') . ' ' . Translate::trad('Par'); ?>  <a href="http://web3sys.com">Web3Sys</a>.<br/>
+                <?php echo Translate::trad('DroitsReserve'); ?><br/>
             </div><!-- footer -->
 
         </div><!-- page -->

@@ -20,7 +20,7 @@ class LoginForm extends CFormModel {
     public function rules() {
         return array(
             // username and password are required
-            array('username, password', 'required', 'message' => Translate::tradPetit('ChampVide')),
+            array('username, password', 'required', 'message' => Translate::trad('ChampVide')),
             array('username', 'email'),
             // rememberMe needs to be a boolean
             array('rememberMe', 'boolean'),
@@ -34,9 +34,9 @@ class LoginForm extends CFormModel {
      */
     public function attributeLabels() {
         return array(
-            'password' => Translate::tradGrand('MdpForm'),
-            'username' => Translate::tradGrand('EmailForm'),
-            'rememberMe' => Translate::tradGrand('SeSouvenir'),
+            'password' => Translate::trad('MdpForm'),
+            'username' => Translate::trad('EmailForm'),
+            'rememberMe' => Translate::trad('SeSouvenir'),
         );
     }
 

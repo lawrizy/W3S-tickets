@@ -33,7 +33,7 @@ class User extends CActiveRecord {
 // NOTE: you should only define rules for those attributes that
 // will receive user inputs.
         return array(
-            array('nom, email, password, fk_fonction, fk_langue', 'required', 'message' => Translate::tradGrand('Required')),
+            array('nom, email, password, fk_fonction, fk_langue', 'required', 'message' => Translate::trad('Required')),
             array('fk_fonction, fk_langue, visible', 'numerical', 'integerOnly' => true),
             array('nom, email', 'length', 'max' => 64),
             array('password', 'length', 'max' => 32),
@@ -61,12 +61,12 @@ class User extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'id_user' => Translate::tradPetit('IdUser'),
-            'nom' => Translate::tradPetit('NomUser'),
-            'email' => Translate::tradPetit('EmailUser'),
-            'password' => Translate::tradPetit('MdpUser'),
-            'fk_fonction' => Translate::tradPetit('FonctionUser'),
-            'fk_langue' => Translate::tradPetit('LanguageUser'),
+            'id_user' => Translate::trad('IdUser'),
+            'nom' => Translate::trad('NomUser'),
+            'email' => Translate::trad('EmailUser'),
+            'password' => Translate::trad('MdpUser'),
+            'fk_fonction' => Translate::trad('FonctionUser'),
+            'fk_langue' => Translate::trad('LanguageUser'),
         );
     }
 

@@ -24,15 +24,15 @@
                     array(
                         'class' => 'bootstrap.widgets.TbMenu',
                         'items' => array(
-                            array('label' => Translate::tradPetit('APropos'), 'url' => array('/site/page', 'view' => 'about')),
-                            array('label' => Translate::tradPetit('Contact'), 'url' => array('/site/contact')),
+                            array('label' => Translate::trad('APropos'), 'url' => array('/site/page', 'view' => 'about')),
+                            array('label' => Translate::trad('Contact'), 'url' => array('/site/contact')),
                             '---',
-                            array('label' => Translate::tradPetit('CreerTicket'), 'url' => array('/locataire/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
-                            array('label' => Translate::tradPetit('ListeTicket'), 'url' => array('/ticket/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
-                            array('label' => Translate::tradPetit('Creer') . Yii::app()->session['NouveauTicket'] . ' ticket', 'url' => array('/ticket/create'), 'visible' => Yii::app()->session['Utilisateur'] == 'Locataire'),
+                            array('label' => Translate::trad('CreerTicket'), 'url' => array('/locataire/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
+                            array('label' => Translate::trad('ListeTicket'), 'url' => array('/ticket/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
+                            array('label' => Translate::trad('Creer') . Yii::app()->session['NouveauTicket'] . ' ticket', 'url' => array('/ticket/create'), 'visible' => Yii::app()->session['Utilisateur'] == 'Locataire'),
                             '---',
-                            array('label' => Translate::tradPetit('DashBoard'), 'url' => array(''),
-                                'items' => array(array('label' => Translate::tradPetit('Graphique'), 'url' => array('dashboard/vue'))),
+                            array('label' => Translate::trad('DashBoard'), 'url' => array(''),
+                                'items' => array(array('label' => Translate::trad('Graphique'), 'url' => array('dashboard/vue'))),
                                 'visible' => Yii::app()->session['Utilisateur'] == 'User' && ($var['fk_fonction'] == Constantes::ID_ADMIN|| $var['fk_fonction'] == Constantes::ID_ROOT)),
                             array('label' => 'Admin', 'url' => array('/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $var['fk_fonction'] == Constantes::ID_ROOT),
                         )),
@@ -41,8 +41,8 @@
                         'htmlOptions' => array('class' => 'pull-right'),
                         'items' => array(
                             '---',
-                            array('label' => Translate::tradPetit('Connexion'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
-                            array('label' => Translate::tradPetit('DeConnexion') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
+                            array('label' => Translate::trad('Connexion'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
+                            array('label' => Translate::trad('DeConnexion') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
                         ),
                     ),
                 ),
@@ -109,8 +109,8 @@
                             }
                             ?>
                             <div id="copyright">
-                                Copyright &copy; <?php echo date('Y') . ' ' . Translate::tradPetit('Par'); ?>  <a href="http://web3sys.com">Web3Sys</a>.<br/>
-                                <?php echo Translate::tradPetit('DroitsReserve'); ?><br/>
+                                Copyright &copy; <?php echo date('Y') . ' ' . Translate::trad('Par'); ?>  <a href="http://web3sys.com">Web3Sys</a>.<br/>
+                                <?php echo Translate::trad('DroitsReserve'); ?><br/>
                                 <?php echo Yii::powered(); ?>
                             </div>
                     </div>

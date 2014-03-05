@@ -25,7 +25,7 @@ class Locataire extends CActiveRecord {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
-            array('nom, email, password', 'required', 'message' => Translate::tradGrand('Required')),
+            array('nom, email, password', 'required', 'message' => Translate::trad('Required')),
             array('nom, email', 'length', 'max' => 64),
             array('email', 'email'),
             array('password', 'length', 'max' => 32),
@@ -50,10 +50,10 @@ class Locataire extends CActiveRecord {
      */
     public function attributeLabels() {
         return array(
-            'id_locataire' => Translate::tradPetit('IdLoc'),
-            'nom' => Translate::tradPetit('NomLoc'),
+            'id_locataire' => Translate::trad('IdLoc'),
+            'nom' => Translate::trad('NomLoc'),
             'email' => 'Email',
-            'password' => Translate::tradPetit('MdpLoc'),
+            'password' => Translate::trad('MdpLoc'),
         );
     }
 

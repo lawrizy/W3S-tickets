@@ -15,18 +15,8 @@ class Translate {
     // Les trois fonctions fonctionnent de la même manière, recherche dans la DB de l'enregistrement
     // et on renvoie la traduction selon la langue courante de l'application
 
-    public static function tradPetit($txt) {    // Traduit les phrases de maximum 32 caractères
-        $result = TradPetit::model()->findByPk($txt);
-        return $result[Yii::app()->session['_lang']];
-    }
-
-    public static function tradMoyen($txt) {    // Traduit les phrases de maximum 64 caractères
-        $result = TradMoyen::model()->findByPk($txt);
-        return $result[Yii::app()->session['_lang']];
-    }
-
-    public static function tradGrand($txt) {    // Traduit les phrases de maximum 128 caractères 
-        $result = TradGrand::model()->findByPk($txt);
+    public static function trad($txt) {    // Traduit les phrases de maximum 128 caractères 
+        $result = Trad::model()->findByPk($txt);
         return $result[Yii::app()->session['_lang']];
     }
 

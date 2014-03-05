@@ -475,7 +475,7 @@ class TicketController extends Controller {
                     // On attribue la valeur ("cachée") à attribuer au champs ex.: <option value="1">...</option>
                     array('value' => $key, 'name' => 'clef'),
                     // On attribue un label au champs ex.: <option value="1">Sanitaire</option>
-                    CHtml::encode(Translate::tradMoyen($value)),
+                    CHtml::encode(Translate::trad($value)),
                     // true pour fermer le tag, false pour le laisser ouvert
                     true
             );
@@ -487,7 +487,7 @@ class TicketController extends Controller {
         $datasList = CHtml::listData($datas, 'id_categorie_incident', 'label');
 
         foreach ($datasList as $key => $value) {
-            $datasList[$key] = CHtml::encode(Translate::tradMoyen($datasList[$key]));
+            $datasList[$key] = CHtml::encode(Translate::trad($datasList[$key]));
         }
 
         //print_r($datasList);

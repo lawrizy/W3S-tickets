@@ -16,14 +16,14 @@
     ));
     ?>
 
-    <p class="note"><?php echo Translate::tradGrand('Required'); ?></p>
+    <p class="note"><?php echo Translate::trad('Required'); ?></p>
 
-    <?php echo $form->errorSummary($model, Translate::tradMoyen('ReglerProbleme')); ?>
+    <?php echo $form->errorSummary($model, Translate::trad('ReglerProbleme')); ?>
 
     <div class="row">
         <?php
         // Form pour la sélection de la catégorie
-        echo '<label>' . Translate::tradPetit('SelectionnerCategorie') . '<span class="required"> *</span> </label>';
+        echo '<label>' . Translate::trad('SelectionnerCategorie') . '<span class="required"> *</span> </label>';
         echo CHtml::dropDownList
                 (
                 'Categorie', // Le nom de cette dropDownList
@@ -53,7 +53,7 @@
 
     <div class="row">
         <?php
-        echo '<label>' . Translate::tradPetit( 'SelectionnerBatiment') . '<span class="required"> *</span> </label>';
+        echo '<label>' . Translate::trad( 'SelectionnerBatiment') . '<span class="required"> *</span> </label>';
         echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAllByAttributes(array('visible' => 1)), 'id_batiment', 'nom')));
         ;
         ?>
@@ -79,7 +79,7 @@
     </div>
 
     <div class="row buttons">
-        <?php echo CHtml::submitButton(Translate::tradPetit('ButtonCreer')); ?>
+        <?php echo CHtml::submitButton(Translate::trad('ButtonCreer')); ?>
     </div>
 
 

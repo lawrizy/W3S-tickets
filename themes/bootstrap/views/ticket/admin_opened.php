@@ -4,9 +4,9 @@
 
 
 $this->menu = array(
-    array('label' => Translate::tradPetit('MenuTicketTout'), 'url' => array('/ticket/admin/?var=admin')),
-    array('label' => Translate::tradPetit('MenuTicketEnCours'), 'url' => array('ticket/admin?var=admin_InProgress')),
-    array('label' => Translate::tradPetit('MenuTicketFerme'), 'url' => array('ticket/admin?var=admin_closed')),
+    array('label' => Translate::trad('MenuTicketTout'), 'url' => array('/ticket/admin/?var=admin')),
+    array('label' => Translate::trad('MenuTicketEnCours'), 'url' => array('ticket/admin?var=admin_InProgress')),
+    array('label' => Translate::trad('MenuTicketFerme'), 'url' => array('ticket/admin?var=admin_closed')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -23,7 +23,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1><?php echo Translate::tradPetit( 'AdminOpenedTitre');
+<h1><?php echo Translate::trad( 'AdminOpenedTitre');
 ?></h1>
 <!--
 <p>
@@ -31,7 +31,7 @@ $('.search-form form').submit(function(){
     or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
 </p>-->
 
-<?php echo CHtml::link(Translate::tradPetit( 'RechercheAvancee'), '#', array('class' => 'search-button')); ?>
+<?php echo CHtml::link(Translate::trad( 'RechercheAvancee'), '#', array('class' => 'search-button')); ?>
 <div class="search-form" style="display:none">
     <?php
     $this->renderPartial('_search', array(
@@ -48,28 +48,28 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     // 'filter' => $model,
     'columns' => array(
         array(
-            'name' => Translate::tradPetit('CodeTicket'),
+            'name' => Translate::trad('CodeTicket'),
             'value' => '$data->code_ticket'),
         array(
-            'name' => Translate::tradPetit('LocataireTicket'),
+            'name' => Translate::trad('LocataireTicket'),
             'value' => 'Locataire::model()->findByPk($data->fk_locataire)->nom'),
         array(
-            'name' => Translate::tradPetit('StatutTicket'),
+            'name' => Translate::trad('StatutTicket'),
             'value' => 'Translate::tradPetit(StatutTicket::model()->findByPk($data->fk_statut)->label);'
         ),
         array(
-            'name' => Translate::tradPetit('CategTicket'),
+            'name' => Translate::trad('CategTicket'),
             'value' => 'Translate::tradMoyen(CategorieIncident::model()->findByPk(CategorieIncident::model()->findByPk($data->fk_categorie)->fk_parent)->label);'
         ),
         array(
-            'name' => Translate::tradPetit('CategorieTicket'),
+            'name' => Translate::trad('CategorieTicket'),
             'value' => 'Translate::tradMoyen(CategorieIncident::model()->findByPk($data->fk_categorie)->label);'
         ),
         array(
-            'name' => Translate::tradPetit('BatimentTicketCirc'),
+            'name' => Translate::trad('BatimentTicketCirc'),
             'value' => 'Batiment::model()->findByPk($data->fk_batiment)->nom'),
         array(
-            'name' => Translate::tradPetit('UserTicketCirc'),
+            'name' => Translate::trad('UserTicketCirc'),
             'value' => 'User::model()->findByPk($data->fk_user)->nom'),
         array
             (

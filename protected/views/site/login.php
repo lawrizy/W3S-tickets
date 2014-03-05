@@ -9,9 +9,9 @@ $this->breadcrumbs = array(
 );
 ?>
 
-<h1><?php echo Translate::tradGrand('ConnexionTitre'); ?></h1>
+<h1><?php echo Translate::trad('ConnexionTitre'); ?></h1>
 
-<p><?php echo Translate::tradGrand('Indication'); ?></p>
+<p><?php echo Translate::trad('Indication'); ?></p>
 
 <div class="form">
     <?php
@@ -24,16 +24,16 @@ $this->breadcrumbs = array(
     ));
     ?>
 
-    <p class="note"><?php echo Translate::tradGrand('Required'); ?></p>
+    <p class="note"><?php echo Translate::trad('Required'); ?></p>
 
     <div class="row">
-        <?php echo '<label >' . Translate::tradGrand('EmailForm') . ' <span class="required">*<br></span>'; ?>
+        <?php echo '<label >' . Translate::trad('EmailForm') . ' <span class="required">*<br></span>'; ?>
         <?php echo $form->textField($model, 'username'); ?>
         <?php echo $form->error($model, 'username'); ?>
     </div>
 
     <div class="row">
-        <?php echo '<label >' . Translate::tradGrand('MdpForm') . ' <span class="required">*<br></span>'; ?>
+        <?php echo '<label >' . Translate::trad('MdpForm') . ' <span class="required">*<br></span>'; ?>
         <?php echo $form->passwordField($model, 'password'); ?>
         <?php echo $form->error($model, 'password'); ?>
     </div>
@@ -46,13 +46,13 @@ $this->breadcrumbs = array(
 
     <div class="row buttons">
         <?php echo $form->error($model, 'DBConnectionFail'); ?>
-        <?php echo CHtml::submitButton(Translate::tradGrand('ConnexionButton')); ?>
+        <?php echo CHtml::submitButton(Translate::trad('ConnexionButton')); ?>
     </div>
     <p> <?php
         echo Yii::app()->session['erreurDB'];
         ?></p>
     <div class="link-column">
-        <?php echo '<a href="#">' ?> <?php echo Translate::tradGrand('MdpOublie') . '</a>'; ?>
+        <?php echo '<a href="#">' ?> <?php echo Translate::trad('MdpOublie') . '</a>'; ?>
     </div>
 
     <?php $this->endWidget(); ?>

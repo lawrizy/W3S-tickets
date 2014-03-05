@@ -5,7 +5,7 @@ $this->pageTitle=Yii::app()->name;
 ?>
 
 <?php $this->beginWidget('bootstrap.widgets.TbHeroUnit',array(
-    'heading' => Translate::tradPetit( 'Message').Yii::app()->name,
+    'heading' => Translate::trad( 'Message').Yii::app()->name,
 )); ?>
 
 <!--<p>Congratulations! You have successfully created your Yii application.</p> -->

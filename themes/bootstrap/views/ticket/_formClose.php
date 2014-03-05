@@ -21,7 +21,7 @@
         $this->widget('zii.widgets.jui.CJuiButton', array(
             'buttonType' => 'submit',
             'name' => 'traitement',
-            'caption' => Translate::tradPetit('ButtonClose'),
+            'caption' => Translate::trad('ButtonClose'),
         ));
         ?>
 

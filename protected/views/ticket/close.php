@@ -12,6 +12,6 @@ if (Yii::app()->session['Utilisateur'] === 'User') {
 }
 ?>
 
-<h1><?php echo Translate::tradPetit('CloseTitre'); ?> <?php echo $model->code_ticket; ?></h1>
+<h1><?php echo Translate::trad('CloseTitre'); ?> <?php echo $model->code_ticket; ?></h1>
 
 <?php $this->renderPartial('_formClose', array('model' => $model)); ?>
