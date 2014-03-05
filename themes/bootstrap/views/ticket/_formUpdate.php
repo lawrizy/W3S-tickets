@@ -57,7 +57,7 @@
     <div class="row">
         <?php
         echo $form->labelEx($model, 'fk_batiment');
-        echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAll(), 'id_batiment', 'nom')));
+        echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAllByAttributes(array('visible' => 1)), 'id_batiment', 'nom')));
         ;
         ?>
     </div>

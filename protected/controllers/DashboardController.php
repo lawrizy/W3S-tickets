@@ -20,7 +20,7 @@ class DashboardController extends Controller {
     public function accessRules() {
         $logged = Yii::app()->session['Logged'];
         if ((Yii::app()->session['Utilisateur'] == 'User') &&
-                (($logged->fk_fonction == Fonction::ID_ADMIN) || ($logged->fk_fonction == Fonction::ID_ROOT))
+                (($logged->fk_fonction == Constantes::ID_ADMIN) || ($logged->fk_fonction == Constantes::ID_ROOT))
         ) {
             // Si ['User'] et [fonction = id_admin ou id_root]
             return array(
@@ -48,7 +48,9 @@ class DashboardController extends Controller {
      * Lists all models.
      */
     public function actionVue() {
-        $data = array();
+
+        $data = array('idBatiment' => 'ALL');
+
         $data['idBatiment'] = 'ALL';
         $this->render('index', $data);
     }
@@ -120,10 +122,12 @@ class DashboardController extends Controller {
      */
     public function actionGetTicketByStatusForBatimentID($idBatiment) {
         $nbStatutTicket = array();
-        for ($idStatut = 1; $idStatut <= 3; ++$idStatut) {
+
+        for ($idStatut = Constantes::ID_LOW; $idStatut <= Constantes::ID_HIGH; ++$idStatut) {
             $nbTicket = Ticket::model()->countByAttributes(array('fk_batiment' => $idBatiment, 'fk_statut' => $idStatut));
-            $label = $idStatut != 1 ? $idStatut == 2 ? ' en cours' : ' clôturé(s)'  : ' nouveau(x)';
-            $color = $idStatut != 1 ? $idStatut == 2 ? "rgba(242,106,22,1)" : "rgba(66,200,22,1)"  : "rgba(220, 0,0,1)";
+
+            $label = $idStatut != Constantes::ID_LOW ? $idStatut == Constantes::ID_HIGH ? ' en cours' : ' clôturé(s)'  : ' nouveau(x)';
+            $color = $idStatut != Constantes::ID_LOW ? $idStatut == Constantes::ID_HIGH ? "rgba(242,106,22,1)" : "rgba(66,200,22,1)"  : "rgba(220, 0,0,1)";
             $value = array(
                 "value" => (int) $nbTicket,
                 "color" => $color,

@@ -8,14 +8,7 @@
  * @property string $label
  */
 class Priorite extends CActiveRecord {
-    /*
-     * Les priorités des catégories étant fixes, on stocke directement la valeur
-     * de leur id ici pour pouvoir tester les priorités
-     */
 
-    const ID_LOW = 1;
-    const ID_MEDIUM = 2;
-    const ID_HIGH = 3;
 
     /**
      * @return string the associated database table name

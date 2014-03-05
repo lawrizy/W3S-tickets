@@ -24,7 +24,7 @@ class CategorieIncidentController extends Controller {
      * et en fonction de cela, les droits accordés peuvent varient.
      */
     public function accessRules() {
-        if ((Yii::app()->session['Utilisateur'] == 'User') && (Yii::app()->session['Logged']->fk_fonction == Fonction::ID_ROOT)) {
+        if ((Yii::app()->session['Utilisateur'] == 'User') && (Yii::app()->session['Logged']->fk_fonction == Constantes::ID_ROOT)) {
             // Si ['User'] et [fonction = id_root]
             return array(
                 array('allow', // 'allow' veut dire que l'utilisateur a droit à ce qui suit.
@@ -106,8 +106,9 @@ class CategorieIncidentController extends Controller {
      * @param integer $id the ID of the model to be deleted
      */
     public function actionDelete($id) {
-        $this->loadModel($id)->delete();
-
+        $model = $this->loadModel($id);
+        $model['visible'] = Constantes::INVISIBLE;
+        $model->save();
 // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));

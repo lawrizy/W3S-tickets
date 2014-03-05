@@ -8,12 +8,6 @@
  * @property string $label
  */
 class Canal extends CActiveRecord {
-    /*
-     * Les canaux étant fixes, on stocke directement la valeur de leur id ici pour pouvoir les tester
-     */
-
-    const ID_PHONE = 1;
-    const ID_WEB = 2;
 
     /**
      * @return string the associated database table name
