@@ -7,23 +7,16 @@ class AdminController extends Controller {
      */
     public function filters() {
         return array(
-            'accessControl', // perform access control for CRUD operations
-            'postOnly + delete', // we only allow deletion via POST request
+            'accessControl', 
+            'postOnly + delete',
         );
     }
-
+    
     /**
      * La fonction permettant d'accorder des droits aux différents utilisateurs.
      * Quand la méthode est appellée, on vérifie le type de l'utilisateur,
      * et en fonction de cela, les droits accordés peuvent varient.
      */
-    public function filters() {
-        return array(
-            'accessControl', 
-            'postOnly + delete',
-        );
-    }
-
     public function accessRules() {
 
         $logged = Yii::app()->session['Logged'];

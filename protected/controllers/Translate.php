@@ -16,7 +16,7 @@ class Translate {
     // et on renvoie la traduction selon la langue courante de l'application
 
     public static function trad($txt) {    // Traduit les phrases de maximum 128 caractères 
-        $result = Trad::model()->findByPk($txt);
+        $result = Trad::model()->findByAttributes(array('code' => $txt));
         return $result[Yii::app()->session['_lang']];
     }
 

@@ -257,11 +257,13 @@ ENGINE = InnoDB;
 -- Table `db_ticketing`.`w3sys_trad`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_trad` (
-  `code` VARCHAR(64) NOT NULL,
+  `id` INT(10) NOT NULL AUTO_INCREMENT,
   `fr` VARCHAR(128) NULL,
   `en` VARCHAR(128) NULL,
   `nl` VARCHAR(128) NULL,
-  PRIMARY KEY (`code`),
+  `code` VARCHAR(64) NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   UNIQUE INDEX `code_UNIQUE` (`code` ASC))
 ENGINE = InnoDB;
 
