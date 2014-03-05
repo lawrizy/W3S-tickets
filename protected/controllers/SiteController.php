@@ -1,7 +1,7 @@
 <?php
 
 class SiteController extends Controller {
-    
+
     private $id;
 
     /**
@@ -78,6 +78,13 @@ class SiteController extends Controller {
      * Displays the login page
      */
     public function actionLogin() {
+        if (!empty(Yii::app()->session['_lang'])) {
+
+            Yii::app()->language = Yii::app()->session['_lang'];
+        } else {
+            Yii::app()->session['_lang'] = 'en';
+            Yii::app()->language = Yii::app()->session['_lang'];
+        }
         $model = new LoginForm;
 
         // if it is ajax validation request
