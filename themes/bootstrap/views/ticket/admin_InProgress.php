@@ -55,15 +55,15 @@ $this->widget('bootstrap.widgets.TbGridView', array(
             'value' => 'Locataire::model()->findByPk($data->fk_locataire)->nom'),
         array(
             'name' => Translate::trad('StatutTicket'),
-            'value' => 'Translate::tradPetit(StatutTicket::model()->findByPk($data->fk_statut)->label);'
+            'value' => 'Translate::trad(StatutTicket::model()->findByPk($data->fk_statut)->label);'
         ),
         array(
             'name' => Translate::trad('CategTicket'),
-            'value' => 'Translate::tradMoyen(CategorieIncident::model()->findByPk(CategorieIncident::model()->findByPk($data->fk_categorie)->fk_parent)->label);'
+            'value' => 'Translate::trad(CategorieIncident::model()->findByPk(CategorieIncident::model()->findByPk($data->fk_categorie)->fk_parent)->label);'
         ),
         array(
             'name' => Translate::trad('CategorieTicket'),
-            'value' => 'Translate::tradMoyen(CategorieIncident::model()->findByPk($data->fk_categorie)->label);'
+            'value' => 'Translate::trad(CategorieIncident::model()->findByPk($data->fk_categorie)->label);'
         ),
         array(
             'name' => Translate::trad('BatimentTicketCirc'),

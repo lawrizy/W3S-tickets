@@ -73,7 +73,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
             'value' => '$data->date_update'),
         array(
             'name' => Translate::trad( 'ViewHistoriqueType'),
-            'value' => 'Translate::tradPetit( StatutTicket::model()->findByPk($data->fk_statut_ticket)->label);'),
+            'value' => 'Translate::trad( StatutTicket::model()->findByPk($data->fk_statut_ticket)->label);'),
     ),
 ));
 ?>

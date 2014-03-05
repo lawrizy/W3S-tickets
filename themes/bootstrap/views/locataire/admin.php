@@ -45,7 +45,6 @@ $this->widget('bootstrap.widgets.TbGridView', array(
             (
             'class' => 'CButtonColumn',
             'template' => '{view}',
-            'visible' => Yii::app()->session['Utilisateur'] == 'User'
         ),
     ),
 ));
