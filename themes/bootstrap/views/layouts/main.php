@@ -33,7 +33,7 @@
                             '---',
                             array('label' => Translate::trad('DashBoard'), 'url' => array(''),
                                 'items' => array(array('label' => Translate::trad('Graphique'), 'url' => array('dashboard/vue'))),
-                                'visible' => Yii::app()->session['Utilisateur'] == 'User' && ($var['fk_fonction'] == Constantes::FONCTION_ADMIN|| $var['fk_fonction'] == Constantes::FONCTION_ROOT)),
+                                'visible' => Yii::app()->session['Utilisateur'] == 'User' && ($var['fk_fonction'] == Constantes::FONCTION_ADMIN || $var['fk_fonction'] == Constantes::FONCTION_ROOT)),
                             array('label' => 'Admin', 'url' => array('/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $var['fk_fonction'] == Constantes::FONCTION_ROOT),
                         )),
                     array(
@@ -47,8 +47,10 @@
                     ),
                 ),
             ));
+
             Yii::app()->session['NouveauTicket'] = '';
             ?>
+
         </div>
 
         <!-- END HEADER -->
@@ -66,7 +68,18 @@
             <?php endif ?>
 
             <?php echo $content; ?>
-
+            <?php
+            Yii::app()->user->setFlash('success', '<strong>Well done!</strong> You successfully read this important alert message.');
+            ?>
+            <div id="alert_session">
+                <?php
+                $this->widget('bootstrap.widgets.TbAlert', array(
+                    'block' => true, // display a larger alert block?
+                    'fade' => true, // use transitions?
+                    'closeText' => '&times;', // close link text - if set to false, no close link is displayed
+                ));
+                ?>
+            </div>
             <div class="clear"></div>
 
             <br/><br/><br/>
@@ -120,5 +133,12 @@
         </div>
         <!-- page -->
 
+
     </body>
 </html>
+<script>
+    $("#alert_session").bind('closed',function ()
+    {
+        alert("test");
+    })
+</script>

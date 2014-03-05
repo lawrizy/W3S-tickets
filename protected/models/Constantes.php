@@ -44,5 +44,9 @@ class Constantes {
     const PRIORITE_LOW = 1;
     const PRIORITE_MEDIUM = 2;
     const PRIORITE_HIGH = 3;
+    /*
+     * La durée de la session etant fixe on la stocke directement ici
+     */
+    const TIMEOUT_SESSION=5; 
     
 }

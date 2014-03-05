@@ -4,13 +4,13 @@ class SiteController extends Controller {
 
     private $id;
 
-    public static function assignLangue() {
-        if (!empty(Yii::app()->session['_lang'])) {
+    public static function assignLangue() {  // fonction statique qui permet soit de recuperer la langue soit de remettre la langue de l'application par défaut = en
+        if (!empty(Yii::app()->session['_lang'])) { // si il y a une langue 
 
-            Yii::app()->language = Yii::app()->session['_lang'];
-        } else {
-            Yii::app()->session['_lang'] = 'en';
-            Yii::app()->language = Yii::app()->session['_lang'];
+            Yii::app()->language = Yii::app()->session['_lang'];  // la langue de l'application est definie par l'utilisateur
+        } else {   // sinon 
+            Yii::app()->session['_lang'] = 'en'; // la langue est l'anglais par défaut 
+            Yii::app()->language = Yii::app()->session['_lang']; // la langue de l'application est assignée
         }
     }
 

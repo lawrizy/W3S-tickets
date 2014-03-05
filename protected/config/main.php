@@ -1,5 +1,5 @@
 <?php
-
+$timeout=  5;
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
 // This is the main Web application configuration. Any writable
@@ -17,6 +17,7 @@ return array(
         'log',
         'chartjs',
         'yiimail',
+        
     ),
     // autoloading model and component classes
     'import' => array(
@@ -45,7 +46,7 @@ return array(
         'session' => array(
             'class' => 'CDbHttpSession',
             'connectionID' => 'db', // Ca fix le problème avec CHTTPSession
-            'timeout' => 10000,
+            'timeout' => $timeout,
         ),
         'bootstrap' => array(
             'class' => 'bootstrap.components.Bootstrap',
