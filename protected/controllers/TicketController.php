@@ -417,11 +417,12 @@ class TicketController extends Controller {
      */
     public function getEntreprise($idTicket) {
         $model = $this->loadModel($idTicket);
+        //TODO commenter
         $lieu = Lieu::model()->findByPk($model->fk_lieu);
-        $secteurs = Secteur::model()->findAllByAttributes(array('fk_batiment' => $lieu->fk_batiment, 'fk_categorie' => $model->fk_categorie));
-//$secteurs = Secteur::model()->findAllByAttributes(array('fk_batiment' => $lieu->fk_batiment, 'fk_categorie' => $model->fk_categorie));
+        $secteurs = Secteur::model()->findAllByAttributes(array('fk_batiment' => $lieu->fk_batiment, 'fk_categorie' => $model->fk_categorie, 'visible' => 1));
         $entreprises = array();
-        foreach ($secteurs as $secteur) {
+        foreach ($secteurs as $secteur)
+        {
             $entreprise = Entreprise::model()->findByPk($secteur->fk_entreprise);
             array_push($entreprises, $entreprise);
         }
@@ -437,7 +438,7 @@ class TicketController extends Controller {
      * @return array|mixed|null
      */
     public function getSecteurByFk($entreprise, $categorie, $batiment) {
-        $var = Secteur::model()->findByAttributes(array('fk_batiment' => $batiment, 'fk_categorie' => $categorie, 'fk_entreprise' => $entreprise));
+        $var = Secteur::model()->findByAttributes(array('fk_batiment' => $batiment, 'fk_categorie' => $categorie, 'fk_entreprise' => $entreprise, 'visible' => 1));
         return $var->id_secteur;
     }
 
@@ -446,7 +447,7 @@ class TicketController extends Controller {
      * @return array|CActiveRecord|mixed|null La liste de tous les bâtiments de la DB
      */
     public function getBatiment() {
-        $batiments = Batiment::model()->findAll();
+        $batiments = Batiment::model()->findAllByAttributes(array('visible' => 1));
         foreach ($batiments as $batiment) {
             $batiment['name'] = $batiment->adresse . ', ' . $batiment->cp . ' ' . $batiment->commune . ' - nom: ' . $batiment->nom;
         }
@@ -460,7 +461,7 @@ class TicketController extends Controller {
     public function actionGetSousCategoriesDynamiques() {
 // Yii::trace("Entrée dans la méthode de recherche des sous-catégories dynamiques..."); // Passe
 // Exécution d'une query qui récupère toutes les sous-catégories possibles pour la catégorie principale choisie.
-        $data = CategorieIncident::model()->findAll('fk_parent=:toFind', array(':toFind' => $_POST['paramID']));
+        $data = CategorieIncident::model()->findAll('fk_parent=:toFind, visible=:visible', array(':toFind' => $_POST['paramID'], ':visible' => 1));
 // On formatte les données reçues dans une DataList
         $dataList = CHtml::listData($data, 'id_categorie_incident', 'label');
 
@@ -483,7 +484,7 @@ class TicketController extends Controller {
     }
 
     public function getCategoriesLabel() { //return list categorie's label
-        $datas = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL));
+        $datas = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL, 'visible' => 1));
         $datasList = CHtml::listData($datas, 'id_categorie_incident', 'label');
 
         foreach ($datasList as $key => $value) {
