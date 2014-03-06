@@ -46,7 +46,7 @@ class UserIdentity extends CUserIdentity {
                 return !$this->errorCode; // return le code d'erreur
             }
             Yii::app()->session['Language'] = 'en';
-            return self::ERROR_UNKNOWN_IDENTITY; //return utilisateur inconnu
+            return !self::ERROR_UNKNOWN_IDENTITY; //return utilisateur inconnu
         } catch (CDbException $ex) {
             Yii::app()->session['erreurDB'] = 'La base de donnnée est indisponible pour le moment'; // message d'erreur lors de db indisponible
         }
