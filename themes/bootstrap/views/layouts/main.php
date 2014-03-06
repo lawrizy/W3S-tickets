@@ -58,7 +58,14 @@
 
         <!-- CONTAINER -->
         <div class="container" id="page">
-
+            <div class="row">
+                <?php $this->widget('bootstrap.widgets.TbAlert', array(
+                    'id' => 'alert_session',
+                    'block' => true, // display a larger alert block?
+                    'fade' => true, // use transitions?
+                    'closeText' => '&times;', // close link text - if set to false, no close link is displayed
+                )); ?>
+            </div>
             <?php if (isset($this->breadcrumbs)): ?>
                 <?php
                 $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
@@ -71,15 +78,6 @@
             <?php
             Yii::app()->user->setFlash('success', '<strong>Well done!</strong> You successfully read this important alert message.');
             ?>
-            <div id="alert_session">
-                <?php
-                $this->widget('bootstrap.widgets.TbAlert', array(
-                    'block' => true, // display a larger alert block?
-                    'fade' => true, // use transitions?
-                    'closeText' => '&times;', // close link text - if set to false, no close link is displayed
-                ));
-                ?>
-            </div>
             <div class="clear"></div>
 
             <br/><br/><br/>
