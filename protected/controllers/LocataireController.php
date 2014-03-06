@@ -47,6 +47,8 @@ class LocataireController extends Controller {
             );
         }
         
+        //TODO le code ci-dessous ne peut jamais être atteint!
+        
         if ((Yii::app()->session['Utilisateur'] == 'Locataire') && 
                 ((Yii::app()->session['Logged']->fk_fonction == Constantes::FONCTION_ROOT) || (Yii::app()->session['Logged']->fk_fonction == Constantes::FONCTION_ADMIN))) {
             // Si ['User'] et [fonction = id_admin], alors c'est un admin
@@ -135,9 +137,25 @@ class LocataireController extends Controller {
      */
     public function actionDelete($id) {
         //$this->loadModel($id)->delete();
+        
         $model = $this->loadModel($id);
+        // Au lieu de hard delete le locataire, on passe son champs "visible" à 0 (invisible)
         $model->setAttribute("visible", Constantes::INVISIBLE);
+        // On sauvegarde ensuite les changements faits
         $model->save(true);
+        
+        // TODO tester cette fonction
+        // Trouver la liste des tickets liés au locataire. On récupère une liste de CActiveRecords
+        $idDuLocataireSoftDelete = $model['id_locataire'];
+        $listeTicketsLocataire = Ticket::model()->findAllByAttributes(array('fk_locataire' => $idDuLocataireSoftDelete));
+        // Boucle foreach sur chaque enregistrement ($key => $value)
+        foreach($listeTicketsLocataire as $key => $activeRecordTicket)
+        {
+            // Passer le champs visible de chaque enregistrement trouvé à invisible
+            $activeRecordTicket->setAttribute('visible', Constantes::INVISIBLE);
+            // Faire un save() du changement effectué
+            $activeRecordTicket->save();
+        }
 
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))
