@@ -59,12 +59,14 @@
         <!-- CONTAINER -->
         <div class="container" id="page">
             <div class="row">
-                <?php $this->widget('bootstrap.widgets.TbAlert', array(
+                <?php
+                $this->widget('bootstrap.widgets.TbAlert', array(
                     'id' => 'alert_session',
                     'block' => true, // display a larger alert block?
                     'fade' => true, // use transitions?
                     'closeText' => '&times;', // close link text - if set to false, no close link is displayed
-                )); ?>
+                ));
+                ?>
             </div>
             <?php if (isset($this->breadcrumbs)): ?>
                 <?php
@@ -76,7 +78,7 @@
 
             <?php echo $content; ?>
             <?php
-            Yii::app()->user->setFlash('success', '<strong>Well done!</strong> You successfully read this important alert message.');
+         //   Yii::app()->user->setFlash('success', '<strong>Well done!</strong> You successfully read this important alert message.');
             ?>
             <div class="clear"></div>
 
@@ -127,16 +129,43 @@
                     </div>
             </div>
             <!-- footer -->
-
+            <div id="varLionel">
+                azoirjazeorijazeroijj
+            </div>
         </div>
         <!-- page -->
 
 
     </body>
 </html>
+
 <script>
-    $("#alert_session").bind('closed',function ()
+    $("#alert_session").bind('closed', function()
     {
-        alert("test");
-    })
-</script>
+        {
+            alert('<?php echo Yii::app()->session->timeout; ?>');
+            // window.start = parseFloat(start);
+            var end = 0 // change this to stop the counter at a higher value
+            var refresh = 1000; // Refresh rate in milli seconds
+        }
+    }
+    )
+
+
+
+    var clock = document.getElementById("alert_session");
+    var message = '<?php Yii::app()->user->setFlash('success', '<strong>Well done!</strong>');?>';
+    var currentVal = 5;
+    var endVal = 0;
+    var interval = 1000;
+
+    var thread = setInterval(function() {
+        currentVal -= interval / 1000;
+        if (currentVal == endVal)
+        {
+            alert("fini");
+            clearInterval(thread);
+            clock.innerHTML = message;
+        }
+    }, interval);
+</script>  

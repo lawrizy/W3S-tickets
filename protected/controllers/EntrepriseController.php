@@ -111,8 +111,23 @@ class EntrepriseController extends Controller {
      * If deletion is successful, the browser will be redirected to the 'admin' page.
      * @param integer $id the ID of the model to be deleted
      */
-    public function actionDelete($id) {
-        $this->loadModel($id)->delete();
+    public function actionDelete($id) { // Soft-delete, on passe un champ visible à 0 plutôt que de supprimer l'enregistrement
+        $model = $this->loadModel($id); // On récupère l'enregistrement de cet entreprise
+        $model['visible'] = Constantes::INVISIBLE; // et on met l'enregistrement à l'état invisible
+        $model->save(FALSE); // et enfin on enregistre cet état invisible dans la DB
+
+        $tickets = Ticket::model()->findAllByAttributes(array('fk_entreprise' => $id, 'visible' => Constantes::VISIBLE));
+            // On recherche tous les tickets qui sont liés à cet entreprise
+        foreach ($tickets as $ticket) { // et on les passe tous à l'état invisible
+            $ticket['visible'] = Constantes::INVISIBLE;
+            // $ticket->save(FALSE);
+            $ticket->update(array('visible'));
+        }
+        
+        
+//        $categories = CategorieIncident::model()->findByPk($id);
+
+
 
 // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))
