@@ -3,21 +3,16 @@
 class Translate {
 
     // Translate est la classe permettant de rechercher une traduction dans la base de données.
-    // Nous avons séparé les traductions dans la DB en 3 tables (petit, moyen et grand).
-    // Nous l'avons séparé en 3 tables pour éviter d'alourdir la DB pour rien.
-    // Il y a une bonne partie des traductions qui sont très petites (exemple avec les menus en haut de page),
-    // d'autres de tailles moyennes (des phrases comme "Veuillez selectionner ceci pour cela")
-    // et enfin de très gros textes (comme la page de bienvenue).
-    // Pour rappel, même en mettant une chaîne de 1 caractère dans un varchar(10),
-    // MySQL resèrve quand même 10 caractères pour ce champ. Comme il y a de très gros textes,
-    // tout mettre en une table aurait été beaucoup trop lourd (stocker une chaîne de 10 caractères
-    // dans un varchar(128) par exemple aurait alourdi inutilement la DB
-    // Les trois fonctions fonctionnent de la même manière, recherche dans la DB de l'enregistrement
-    // et on renvoie la traduction selon la langue courante de l'application
+    // Toutes les traductions sont dans une même table de la base de données, la table trad.
+    // Son modèle 'Trad' est présent dans le dossier modèle et permet de rechercher un élément dans la DB
+    // Le fonctionnement de la méthode est très simple, recherche dans la DB de l'enregistrement
+    // et on renvoie la traduction selon la langue courante de l'application (la méthode renvoie donc un string)
 
-    public static function trad($txt) {    // Traduit les phrases de maximum 128 caractères 
-        $result = Trad::model()->findByAttributes(array('code' => $txt));   // 
+    public static function trad($txt) {    // Traduit les phrases de maximum 128 caractères
+        $result = Trad::model()->findByAttributes(array('code' => $txt));
+            // On recherche les traductions correspondant à un certain code
         return $result[Yii::app()->session['_lang']];
+            // Une fois qu'on a récupéré les traductions, on renvoie celle qui correspond à la langue courante de l'application
     }
 
 }
