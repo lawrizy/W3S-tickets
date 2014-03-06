@@ -53,7 +53,8 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         'commune',
         'cp',
         array(
-            'class' => 'CButtonColumn',
+            'class' => 'bootstrap.widgets.TbButtonColumn',
+            'template' => ' {view} {update} {delete}'
         ),
     ),
 ));

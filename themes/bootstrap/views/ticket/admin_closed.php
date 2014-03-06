@@ -72,8 +72,8 @@ $this->widget('bootstrap.widgets.TbGridView', array(
             'value' => 'User::model()->findByPk($data->fk_user)->nom'),
         array
             (
-            'class' => 'CButtonColumn',
-            'template' => ' {view}'
+            'class' => 'bootstrap.widgets.TbButtonColumn',
+            'template' => '{view}'
         ),
     ),
 ));

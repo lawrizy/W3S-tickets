@@ -53,7 +53,8 @@ $this->widget('bootstrap.widgets.TbGridView', array(
             'name' => 'Fk Priorite',
             'value' => 'Priorite::model()->findByPk($data->fk_priorite)->label'),
         array(
-            'class' => 'CButtonColumn',
+            'class' => 'bootstrap.widgets.TbButtonColumn',
+            'template' => ' {view} {update} {delete}'
         ),
     ),
 ));

@@ -43,16 +43,18 @@ $('.search-form form').submit(function(){
 </div><!-- search-form -->
 
 
-<?php 
+<?php
 $this->widget('bootstrap.widgets.TbGridView', array(
-	'id'=>'user-grid',
-	'dataProvider'=>$model->search(),
-	'columns'=>array(
-		'nom',
-		'email',
-		'fk_fonction',
-		array(
-			'class'=>'CButtonColumn',
-		),
-	),
-)); ?>
+    'id' => 'user-grid',
+    'dataProvider' => $model->search(),
+    'columns' => array(
+        'nom',
+        'email',
+        'fk_fonction',
+        array(
+            'class' => 'bootstrap.widgets.TbButtonColumn',
+            'template' => ' {view} {update} {delete}'
+        ),
+    ),
+));
+?>

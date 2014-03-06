@@ -42,20 +42,22 @@ $('.search-form form').submit(function(){
     ?>
 </div><!-- search-form -->
 
-<?php 
+<?php
 $this->widget('bootstrap.widgets.TbGridView', array(
     'type' => 'striped bordered condensed',
-	'id'=>'lieu-grid',
-	'dataProvider'=>$model->search(),
-	'filter'=>$model,
-	'columns'=>array(
-		'id_lieu',
-		'etage',
-		'appartement',
-		'fk_locataire',
-		'fk_batiment',
-		array(
-			'class'=>'CButtonColumn',
-		),
-	),
-)); ?>
+    'id' => 'lieu-grid',
+    'dataProvider' => $model->search(),
+    'filter' => $model,
+    'columns' => array(
+        'id_lieu',
+        'etage',
+        'appartement',
+        'fk_locataire',
+        'fk_batiment',
+        array(
+            'class' => 'bootstrap.widgets.TbButtonColumn',
+            'template' => ' {view} {update} {delete}'
+        ),
+    ),
+));
+?>
