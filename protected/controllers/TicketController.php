@@ -468,7 +468,7 @@ class TicketController extends Controller {
     public function actionGetSousCategoriesDynamiques() {
 // Yii::trace("Entrée dans la méthode de recherche des sous-catégories dynamiques..."); // Passe
 // Exécution d'une query qui récupère toutes les sous-catégories possibles pour la catégorie principale choisie.
-        $data = CategorieIncident::model()->findAll('fk_parent=:toFind, visible=:visible', array(':toFind' => $_POST['paramID'], ':visible' => Constantes::VISIBLE));
+        $data = CategorieIncident::model()->findAll('fk_parent=:toFind', array(':toFind' => $_POST['paramID']));
 // On formatte les données reçues dans une DataList
         $dataList = CHtml::listData($data, 'id_categorie_incident', 'label');
 
