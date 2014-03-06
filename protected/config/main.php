@@ -1,5 +1,4 @@
 <?php
-$timeout=  5;
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
 // This is the main Web application configuration. Any writable
@@ -7,7 +6,8 @@ $timeout=  5;
 
 Yii::setPathOfAlias('chartjs', dirname(__FILE__) . '/../extensions/yii-chartjs');
 Yii::setPathOfAlias('bootstrap', dirname(__FILE__) . '/../extensions/bootstrap');
-
+Yii::setPathOfAlias('Constatantes', dirname(__FILE__).'/../models/Constatnets.php');
+require_once (dirname(__FILE__)."/../models/Constantes.php");
 return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
     'name' => 'Ticket System',
@@ -46,7 +46,7 @@ return array(
         'session' => array(
             'class' => 'CDbHttpSession',
             'connectionID' => 'db', // Ca fix le problème avec CHTTPSession
-            'timeout' => $timeout,
+            'timeout' => Constantes::TIMEOUT_SESSION,
         ),
         'bootstrap' => array(
             'class' => 'bootstrap.components.Bootstrap',

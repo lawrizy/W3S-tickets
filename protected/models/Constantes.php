@@ -47,7 +47,7 @@ class Constantes {
     /*
      * La durée de la session etant fixe on la stocke directement ici
      */
-    const TIMEOUT_SESSION=5; 
+    const TIMEOUT_SESSION=600; 
     
     /*
      * 
