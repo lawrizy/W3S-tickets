@@ -58,16 +58,16 @@
 
         <!-- CONTAINER -->
         <div class="container" id="page">
-            <div class="row">
+<!--            <div class="row">
                 <?php
-                $this->widget('bootstrap.widgets.TbAlert', array(
-                    'id' => 'alert_session',
-                    'block' => true, // display a larger alert block?
-                    'fade' => true, // use transitions?
-                    'closeText' => '&times;', // close link text - if set to false, no close link is displayed
-                ));
+    //                $this->widget('bootstrap.widgets.TbAlert', array(
+                //                    'id' => 'alert_session',
+                //                    'block' => true, // display a larger alert block?
+                //                    'fade' => true, // use transitions?
+                //                    'closeText' => '&times;', // close link text - if set to false, no close link is displayed
+                //                ));
                 ?>
-            </div>
+            </div>-->
             <?php if (isset($this->breadcrumbs)): ?>
                 <?php
                 $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
@@ -78,7 +78,11 @@
 
             <?php echo $content; ?>
             <?php
-         //   Yii::app()->user->setFlash('success', '<strong>Well done!</strong> You successfully read this important alert message.');
+//            Yii::app()->clientScript->registerScript(
+//                    'myHideEffect', 'alert("test);'
+//                    , CClientScript::POS_BEGIN
+//            );
+            //   Yii::app()->user->setFlash('success', '<strong>Well done!</strong> You successfully read this important alert message.');
             ?>
             <div class="clear"></div>
 
@@ -129,9 +133,6 @@
                     </div>
             </div>
             <!-- footer -->
-            <div id="varLionel">
-                azoirjazeorijazeroijj
-            </div>
         </div>
         <!-- page -->
 
@@ -154,7 +155,7 @@
 
 
     var clock = document.getElementById("alert_session");
-    var message = '<?php Yii::app()->user->setFlash('success', '<strong>Well done!</strong>');?>';
+    var message = '<?php echo Yii::app()->user->setFlash('success', '<strong>Well done!</strong>'); ?>';
     var currentVal = 5;
     var endVal = 0;
     var interval = 1000;
@@ -163,9 +164,10 @@
         currentVal -= interval / 1000;
         if (currentVal == endVal)
         {
-            alert("fini");
+            // clock.innerHTML = message;
+            // alert("fini");
             clearInterval(thread);
-            clock.innerHTML = message;
+
         }
     }, interval);
 </script>  
