@@ -2,50 +2,57 @@
 /* @var $this LocataireController */
 /* @var $model Locataire */
 
-
-
-$this->menu = array(
-    array('label' => Translate::trad('CreerLocataire'), 'url' => array('/locataire/create')),
+$this->breadcrumbs=array(
+	'Locataires'=>array('index'),
+	'Manage',
 );
+
+$this->menu=array(
+array('label'=>'List Locataire', 'url'=>array('index')),
+array('label'=>'Create Locataire', 'url'=>array('create')),
+);
+
 Yii::app()->clientScript->registerScript('search', "
 $('.search-button').click(function(){
-	$('.search-form').toggle();
-	return false;
+$('.search-form').toggle();
+return false;
 });
 $('.search-form form').submit(function(){
-	$('#locataire-grid').yiiGridView('update', {
-		data: $(this).serialize()
-	});
-	return false;
+$('#locataire-grid').yiiGridView('update', {
+data: $(this).serialize()
+});
+return false;
 });
 ");
 ?>
 
-<h1><?php echo Translate::trad('ListLocataire') ?></h1>
+<h1>Manage Locataires</h1>
 
+<p>
+    You may optionally enter a comparison operator (<b>&lt;</b>, <b>&lt;=</b>, <b>&gt;</b>, <b>&gt;=</b>, <b>&lt;&gt;</b>
+    or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
+</p>
 
-<?php echo CHtml::link(Translate::trad('RechercheAvancee'), '#', array('class' => 'search-button')); ?>
+<?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
 <div class="search-form" style="display:none">
-    <?php
-    $this->renderPartial('_search', array(
-        'model' => $model,
-    ));
-    ?>
+    <?php $this->renderPartial('_search',array(
+	'model'=>$model,
+)); ?>
 </div><!-- search-form -->
 
-<?php
-$this->widget('bootstrap.widgets.TbGridView', array(
-    'type' => 'striped bordered condensed',
-    'id' => 'locataire-grid',
-    'dataProvider' => $model->search(),
-    'columns' => array(
-        'nom',
-        'email',
-        array
-            (
-            'class' => 'CButtonColumn',
-            'template' => '{view}',
-        ),
-    ),
-));
-?>
+<?php $this->widget('zii.widgets.grid.CGridView', array(
+'id'=>'locataire-grid',
+'dataProvider'=>$model->search(),
+'filter'=>$model,
+'columns'=>array(
+		'id_locataire',
+		'nom',
+		'email',
+		'password',
+		'fk_langue',
+		'visible',
+array(
+'class'=>'CButtonColumn',
+),
+),
+)); ?>

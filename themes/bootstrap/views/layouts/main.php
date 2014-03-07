@@ -162,7 +162,7 @@
         if (currentVal == endVal)
         {
             // clock.innerHTML = message;
-            // alert("fini");
+            alert("fini");
             clearInterval(thread);
 
         }
