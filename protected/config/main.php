@@ -105,17 +105,6 @@ return array(
                     'logFile' => 'application.log',
                     'categories' => 'cron',
                 ),
-//            'routes' => array(
-//                'class' => 'CFileLogRoute',
-//                'levels' => 'trace, info',
-//                'logFile' => 'application.log',
-//                'categories' => 'cron',
-            // uncomment the following to show log messages on web pages
-            /*
-              array(
-              'class'=>'CWebLogRoute',
-              ),
-             */
             ),
         ),
         // Ajout du composant chart JS pour afficher des graphiques, etc..
