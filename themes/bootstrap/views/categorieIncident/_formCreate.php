@@ -15,7 +15,7 @@
 
         <?php
         $form = $this->beginWidget('CActiveForm', array(
-            'id' => 'categorie-incident-form',
+            'id' => 'categorie-incident-form1',
             // Please note: When you enable ajax validation, make sure the corresponding
             // controller action is handling ajax validation correctly.
             // There is a call to performAjaxValidation() commented in generated controller code.
@@ -31,7 +31,7 @@
 
         <?php
         echo $form->labelEx($model, 'label');
-        echo '<input name="categorieIncident[label1Categorie]"> ';
+        echo $form->textField($model, 'label', array('size' => 60, 'maxlength' => 64));
         echo $form->error($model, 'label');
         ?>
 
@@ -58,7 +58,7 @@
     <div class="SousCateg">
         <p class = "note">Field with <span class = "required">*</span> are required.</p>
         <?php
-        $form = $this->beginWidget('CActiveForm', array(
+        $form1 = $this->beginWidget('CActiveForm', array(
             'id' => 'categorie-incident-form',
             // Please note: When you enable ajax validation, make sure the corresponding
             // controller action is handling ajax validation correctly.
@@ -67,25 +67,25 @@
             'enableAjaxValidation' => false,
         ));
         ?>
-        <?php echo $form->errorSummary($model);
+        <?php echo $form1->errorSummary($model);
         ?>
 
         <?php
-        echo $form->labelEx($model, 'label');
-        echo $form->textField($model, 'label', array('size' => 60, 'maxlength' => 64));
-        echo $form->error($model, 'label');
+        echo $form1->labelEx($model, 'label');
+        echo $form1->textField($model, 'label', array('size' => 60, 'maxlength' => 64));
+        echo $form1->error($model, 'label');
         ?>
 
         <?php
-        echo $form->labelEx($model, 'fk_parent');
-        echo $form->dropDownList($model, 'fk_parent', array('' => '', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL)), 'id_categorie_incident', 'label')));
-        echo $form->error($model, 'fk_parent');
+        echo $form1->labelEx($model, 'fk_parent');
+        echo $form1->dropDownList($model, 'fk_parent', array('' => '', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL)), 'id_categorie_incident', 'label')));
+        echo $form1->error($model, 'fk_parent');
         ?>
 
         <?php
-        echo $form->labelEx($model, 'fk_priorite');
-        echo $form->dropDownList($model, 'fk_priorite', array('' => '', CHtml::listdata(Priorite::model()->findAll(), 'id_priorite', 'label')));
-        echo $form->error($model, 'fk_priorite');
+        echo $form1->labelEx($model, 'fk_priorite');
+        echo $form1->dropDownList($model, 'fk_priorite', array('' => '', CHtml::listdata(Priorite::model()->findAll(), 'id_priorite', 'label')));
+        echo $form1->error($model, 'fk_priorite');
         ?>
 
         <div class="buttons">
