@@ -117,8 +117,15 @@ class SiteController extends Controller {
      * Logs out the current user and redirect to homepage.
      */
     public function actionLogout() {
-        Yii::app()->session['Logged']->is_logged = 0;
-        Yii::app()->session['Logged']->save();
+        if (Yii::app()->session['Utilisateur'] == 'User') {
+            $model = User::model()->findByPk(Yii::app()->session['Logged']->id_user);
+            $model->is_logged = 0;
+        } elseif (Yii::app()->session['Utilisateur'] == 'Locataire') {
+            $model = Locataire::model()->findByPk(Yii::app()->session['Logged']->id_locataire);
+            $model->is_logged = 0;
+        }
+        $model->save();
+
         Yii::app()->user->logout();
         Yii::app()->language = Yii::app()->session['_lang'];
         header('Location: ' . Yii::app()->request->baseUrl . '/index.php');
