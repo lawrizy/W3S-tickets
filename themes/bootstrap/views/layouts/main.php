@@ -153,16 +153,17 @@
     )
     var clock = document.getElementById("alert_session");
     var message = '<?php echo Yii::app()->user->setFlash('success', '<strong>Well done!</strong>'); ?>';
-    var currentVal = 5;
+    var currentVal = <?php var_export( Constantes::TIMEOUT_SESSION );?>;
     var endVal = 0;
     var interval = 1000;
-
     var thread = setInterval(function() {
         currentVal -= interval / 1000;
-        if (currentVal == endVal)
+        if (currentVal == endVal && <?php var_export(!Yii::app()->user->isGuest); ?>)
         {
+
             // clock.innerHTML = message;
-            alert("fini");
+            alert("Session expirée: Vous allez être déconnecté.");
+            window.location.replace('<?php echo Yii::app()->baseUrl . '/index.php/site/logout'; ?>');
             clearInterval(thread);
 
         }
