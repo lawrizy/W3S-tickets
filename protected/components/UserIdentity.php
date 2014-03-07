@@ -27,6 +27,7 @@ class UserIdentity extends CUserIdentity {
                 } else {
                     if (!$record->is_logged) {
                         $record['is_logged'] = 1;
+                        $record->save();
                         $this->_id = $record->id_locataire;    //recupération  de l'id du locataire
                         $this->errorCode = self::ERROR_NONE;   // aucune erreur
                         Yii::app()->session['Utilisateur'] = 'Locataire'; // création d'une variable de session pour stocker le type d'user
@@ -47,6 +48,7 @@ class UserIdentity extends CUserIdentity {
                 else {
                     if (!$record->is_logged) {
                         $record['is_logged'] = 1;
+                        $record->save();
                         $this->_id = $record->id_user; //recupération  de l'id du user
                         $this->errorCode = self::ERROR_NONE; // aucune erreur
                         Yii::app()->session['Utilisateur'] = 'User'; // création d'une variable de session pour stocker le type d'user
