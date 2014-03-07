@@ -58,16 +58,16 @@
 
         <!-- CONTAINER -->
         <div class="container" id="page">
-<!--            <div class="row">
-                <?php
-    //                $this->widget('bootstrap.widgets.TbAlert', array(
-                //                    'id' => 'alert_session',
-                //                    'block' => true, // display a larger alert block?
-                //                    'fade' => true, // use transitions?
-                //                    'closeText' => '&times;', // close link text - if set to false, no close link is displayed
-                //                ));
-                ?>
-            </div>-->
+            <!--            <div class="row">
+            <?php
+            //                $this->widget('bootstrap.widgets.TbAlert', array(
+            //                    'id' => 'alert_session',
+            //                    'block' => true, // display a larger alert block?
+            //                    'fade' => true, // use transitions?
+            //                    'closeText' => '&times;', // close link text - if set to false, no close link is displayed
+            //                ));
+            ?>
+                        </div>-->
             <?php if (isset($this->breadcrumbs)): ?>
                 <?php
                 $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
@@ -151,9 +151,6 @@
         }
     }
     )
-
-
-
     var clock = document.getElementById("alert_session");
     var message = '<?php echo Yii::app()->user->setFlash('success', '<strong>Well done!</strong>'); ?>';
     var currentVal = 5;
@@ -165,7 +162,7 @@
         if (currentVal == endVal)
         {
             // clock.innerHTML = message;
-            // alert("fini");
+            alert("fini");
             clearInterval(thread);
 
         }
