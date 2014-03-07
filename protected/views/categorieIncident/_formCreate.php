@@ -21,31 +21,29 @@
 
     <?php echo $form->errorSummary($model); ?>
 
-    <div class="row">
-        <?php
-        echo $form->labelEx($model, 'label');
-        echo $form->textField($model, 'label', array('size' => 60, 'maxlength' => 64));
-        echo $form->error($model, 'label');
-        ?>
-    </div>
 
-    <div class="row">
-        <?php
-        echo $form->labelEx($model, 'fk_parent');
-        echo $form->textField($model, 'fk_parent');
-        echo $form->error($model, 'fk_parent');
-        ?>
-    </div>
+    <?php
+    echo $form->labelEx($model, 'label');
+    echo $form->textField($model, 'label', array('size' => 60, 'maxlength' => 64));
+    echo $form->error($model, 'label');
+    ?>
 
-    <div class="row">
-        <?php
-        echo $form->labelEx($model, 'fk_priorite');
-        echo $form->textField($model, 'fk_priorite');
-        echo $form->error($model, 'fk_priorite');
-        ?>
-    </div>
 
-    <div class="row buttons">
+
+    <?php
+    echo $form->labelEx($model, 'fk_parent');
+    echo $form->textField($model, 'fk_parent');
+    echo $form->error($model, 'fk_parent');
+    ?>
+
+
+    <?php
+    echo $form->labelEx($model, 'fk_priorite');
+    echo $form->textField($model, 'fk_priorite');
+    echo $form->error($model, 'fk_priorite');
+    ?>
+
+    <div class="buttons">
         <?php echo CHtml::submitButton('Create'); ?>
     </div>
 

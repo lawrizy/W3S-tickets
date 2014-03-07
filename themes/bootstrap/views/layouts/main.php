@@ -4,7 +4,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
         <meta name="language" content="en"/>
-
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+</script>
         <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/styles.css"/>
 
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
@@ -20,6 +21,7 @@
             <?php
             $var = Yii::app()->session['Logged'];
             $this->widget('bootstrap.widgets.TbNavbar', array(
+                'type'=>'inverse',
                 'items' => array(
                     array(
                         'class' => 'bootstrap.widgets.TbMenu',
