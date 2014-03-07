@@ -1,3 +1,4 @@
+<?php
 
 class LocataireController extends Controller {
 
@@ -23,12 +24,11 @@ class LocataireController extends Controller {
      * et en fonction de cela, les droits accordés peuvent varient.
      */
     public function accessRules() {
-        if ((Yii::app()->session['Utilisateur'] == 'User') && 
-                ((Yii::app()->session['Logged']->fk_fonction == Constantes::FONCTION_ROOT) || (Yii::app()->session['Logged']->fk_fonction == Constantes::FONCTION_ADMIN))) {
+        if ((Yii::app()->session['Utilisateur'] == 'User')) {
             // Si ['User'] et [fonction = id_admin], alors c'est un admin
             return array(
                 array('allow', // 'allow' veut dire que l'utilisateur a droit à ce qui suit.
-                    'actions' => array('*'), // L'admin à tous les droits
+                    'actions' => array('admin'), // L'admin à tous les droits
                     'users' => array('*'),
                 // Tous les droits accordés à tout le monde, mais comme il faut être admin 
                 // pour arriver là alors il n'y a que les admins qui ont ces droits-là
@@ -45,10 +45,10 @@ class LocataireController extends Controller {
                 ),
             );
         }
-        
+
         //TODO le code ci-dessous ne peut jamais être atteint!
-        
-        if ((Yii::app()->session['Utilisateur'] == 'Locataire') && 
+
+        if ((Yii::app()->session['Utilisateur'] == 'Locataire') &&
                 ((Yii::app()->session['Logged']->fk_fonction == Constantes::FONCTION_ROOT) || (Yii::app()->session['Logged']->fk_fonction == Constantes::FONCTION_ADMIN))) {
             // Si ['User'] et [fonction = id_admin], alors c'est un admin
             return array(
@@ -136,20 +136,19 @@ class LocataireController extends Controller {
      */
     public function actionDelete($id) {
         //$this->loadModel($id)->delete();
-        
+
         $model = $this->loadModel($id);
         // Au lieu de hard delete le locataire, on passe son champs "visible" à 0 (invisible)
         $model->setAttribute("visible", Constantes::INVISIBLE);
         // On sauvegarde ensuite les changements faits
         $model->save(true);
-        
+
         // TODO tester cette fonction
         // Trouver la liste des tickets liés au locataire. On récupère une liste de CActiveRecords
         $idDuLocataireSoftDelete = $model['id_locataire'];
         $listeTicketsLocataire = Ticket::model()->findAllByAttributes(array('fk_locataire' => $idDuLocataireSoftDelete));
         // Boucle foreach sur chaque enregistrement ($key => $value)
-        foreach($listeTicketsLocataire as $key => $activeRecordTicket)
-        {
+        foreach ($listeTicketsLocataire as $key => $activeRecordTicket) {
             // Passer le champs visible de chaque enregistrement trouvé à invisible
             $activeRecordTicket->setAttribute('visible', Constantes::INVISIBLE);
             // Faire un save() du changement effectué
@@ -211,3 +210,5 @@ class LocataireController extends Controller {
     }
 
 }
+
+?>

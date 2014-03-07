@@ -18,13 +18,13 @@ class SiteController extends Controller {
      */
     public function actions() {
         return array(
-            // captcha action renders the CAPTCHA image displayed on the contact page
+// captcha action renders the CAPTCHA image displayed on the contact page
             'captcha' => array(
                 'class' => 'CCaptchaAction',
                 'backColor' => 0xFFFFFF,
             ),
             // page action renders "static" pages stored under 'protected/views/site/pages'
-            // They can be accessed via: index.php?r=site/page&view=FileName
+// They can be accessed via: index.php?r=site/page&view=FileName
             'page' => array(
                 'class' => 'CViewAction',
             ),
@@ -89,19 +89,24 @@ class SiteController extends Controller {
      */
     public function actionLogin() {
         $this->assignLangue();
-
+        if (isset($_GET['expiration'])) {
+            if ($_GET['expiration'] === 'logout') {
+                echo Yii::app()->user->setFlash('info', '<strong>Session expirée: Vous avez été déconnecté </strong>');
+                unset($_GET['expiration']);
+            }
+        }
         $model = new LoginForm;
 
-        // if it is ajax validation request
+// if it is ajax validation request
         if (isset($_POST['ajax']) && $_POST['ajax'] === 'login-form') {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
 
-        // collect user input data
+// collect user input data
         if (isset($_POST['LoginForm'])) {
             $model->attributes = $_POST['LoginForm'];
-            // validate user input and redirect to the previous page if valid
+// validate user input and redirect to the previous page if valid
             if ($model->validate() && $model->login())
                 if (Yii::app()->session['Utilisateur'] == 'Locataire')
                     $this->redirect(array('./ticket/create'));
@@ -109,7 +114,7 @@ class SiteController extends Controller {
                     $this->redirect(array('./ticket/admin?var=admin'));
                 }
         }
-        // display the login form
+// display the login form
         $this->render('login', array('model' => $model));
     }
 
@@ -125,19 +130,18 @@ class SiteController extends Controller {
             $model->is_logged = 0;
         }
         $model->save();
-
         Yii::app()->user->logout();
         Yii::app()->language = Yii::app()->session['_lang'];
-        header('Location: ' . Yii::app()->request->baseUrl . '/index.php');
+        header('Location: ' . Yii::app()->request->baseUrl . '/index.php/site/login?expiration=' . Yii::app()->controller->getAction()->getId());
     }
 
     public function actionGetLocataire() {
         $this->render('getLocataire');
     }
 
-    // ---------------------------------------- //
-    // ---------- Choix de la langue ---------- //
-    // ---------------------------------------- //
+// ---------------------------------------- //
+// ---------- Choix de la langue ---------- //
+// ---------------------------------------- //
     public function actionChooseLanguageFr() {
         $ctr = $_GET['ctr'];
         Yii::app()->session['_lang'] = 'fr';
@@ -156,7 +160,7 @@ class SiteController extends Controller {
         header("Location: $ctr");
     }
 
-    // ---------------------------------------- //
-    // ---------------------------------------- //
-    // ---------------------------------------- //
+// ---------------------------------------- //
+// ---------------------------------------- //
+// ---------------------------------------- //
 }

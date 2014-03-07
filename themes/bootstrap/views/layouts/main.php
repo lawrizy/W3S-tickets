@@ -134,14 +134,13 @@
 </html>
 
 <script>
-    var currentVal = <?php var_export(Constantes::TIMEOUT_SESSION); ?>;
+    var currentVal = <?php var_export(Constantes::TIMEOUT_SESSION - 60); ?>;
     var endVal = 0;
     var interval = 1000;
     var thread = setInterval(function() {
         currentVal -= interval / 1000;
         if (currentVal == endVal && <?php var_export(!Yii::app()->user->isGuest); ?>)
         {
-            alert("Session expirée: Vous allez être déconnecté.");
             window.location.replace('<?php echo Yii::app()->baseUrl . '/index.php/site/logout'; ?>');
             clearInterval(thread);
         }

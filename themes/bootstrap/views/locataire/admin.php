@@ -2,14 +2,14 @@
 /* @var $this LocataireController */
 /* @var $model Locataire */
 
-$this->breadcrumbs=array(
-	'Locataires'=>array('index'),
-	'Manage',
+$this->breadcrumbs = array(
+    'Locataires' => array('index'),
+    'Manage',
 );
 
-$this->menu=array(
-array('label'=>'List Locataire', 'url'=>array('index')),
-array('label'=>'Create Locataire', 'url'=>array('create')),
+$this->menu = array(
+    array('label' => 'List Locataire', 'url' => array('index')),
+    array('label' => 'Create Locataire', 'url' => array('create')),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -33,26 +33,30 @@ return false;
     or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
 </p>
 
-<?php echo CHtml::link('Advanced Search','#',array('class'=>'search-button')); ?>
+<?php echo CHtml::link('Advanced Search', '#', array('class' => 'search-button')); ?>
 <div class="search-form" style="display:none">
-    <?php $this->renderPartial('_search',array(
-	'model'=>$model,
-)); ?>
+    <?php
+    $this->renderPartial('_search', array(
+        'model' => $model,
+    ));
+    ?>
 </div><!-- search-form -->
 
-<?php $this->widget('zii.widgets.grid.CGridView', array(
-'id'=>'locataire-grid',
-'dataProvider'=>$model->search(),
-'filter'=>$model,
-'columns'=>array(
-		'id_locataire',
-		'nom',
-		'email',
-		'password',
-		'fk_langue',
-		'visible',
-array(
-'class'=>'CButtonColumn',
-),
-),
-)); ?>
+<?php
+$this->widget('zii.widgets.grid.CGridView', array(
+    'id' => 'locataire-grid',
+    'dataProvider' => $model->search(),
+    'filter' => $model,
+    'columns' => array(
+        'id_locataire',
+        'nom',
+        'email',
+        'password',
+        'fk_langue',
+        'visible',
+        array(
+            'class' => 'CButtonColumn',
+        ),
+    ),
+));
+?>
