@@ -1,108 +1,106 @@
 <?php
 
 /**
-* This is the model class for table "w3sys_locataire".
-*
-* The followings are the available columns in table 'w3sys_locataire':
-    * @property integer $id_locataire
-    * @property string $nom
-    * @property string $email
-    * @property string $password
-    * @property integer $fk_langue
-    * @property integer $visible
-*/
-class Locataire extends CActiveRecord
-{
-/**
-* @return string the associated database table name
-*/
-public function tableName()
-{
-return 'w3sys_locataire';
-}
+ * This is the model class for table "w3sys_locataire".
+ *
+ * The followings are the available columns in table 'w3sys_locataire':
+ * @property integer $id_locataire
+ * @property string $nom
+ * @property string $email
+ * @property string $password
+ * @property integer $fk_langue
+ * @property integer $visible
+ * @property integer $is_logged
+ */
+class Locataire extends CActiveRecord {
 
-/**
-* @return array validation rules for model attributes.
-*/
-public function rules()
-{
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName() {
+        return 'w3sys_locataire';
+    }
+
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules() {
 // NOTE: you should only define rules for those attributes that
 // will receive user inputs.
-return array(
-    array('nom, email, password, fk_langue', 'required'),
-    array('fk_langue, visible', 'numerical', 'integerOnly'=>true),
-    array('nom, email', 'length', 'max'=>64),
-    array('password', 'length', 'max'=>32),
+        return array(
+            array('nom, email, password, fk_langue', 'required'),
+            array('fk_langue, visible, is_logged', 'numerical', 'integerOnly' => true),
+            array('nom, email', 'length', 'max' => 64),
+            array('password', 'length', 'max' => 32),
 // The following rule is used by search().
 // @todo Please remove those attributes that should not be searched.
-array('id_locataire, nom, email, password, fk_langue, visible', 'safe', 'on'=>'search'),
-);
-}
+            array('id_locataire, nom, email, password, fk_langue, visible, is_logged', 'safe', 'on' => 'search'),
+        );
+    }
 
-/**
-* @return array relational rules.
-*/
-public function relations()
-{
+    /**
+     * @return array relational rules.
+     */
+    public function relations() {
 // NOTE: you may need to adjust the relation name and the related
 // class name for the relations automatically generated below.
-return array(
-);
-}
+        return array(
+        );
+    }
 
-/**
-* @return array customized attribute labels (name=>label)
-*/
-public function attributeLabels()
-{
-return array(
-    'id_locataire' => 'Id Locataire',
-    'nom' => 'Nom',
-    'email' => 'Email',
-    'password' => 'Password',
-    'fk_langue' => 'Fk Langue',
-    'visible' => 'Visible',
-);
-}
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels() {
+        return array(
+            'id_locataire' => 'Id Locataire',
+            'nom' => 'Nom',
+            'email' => 'Email',
+            'password' => 'Password',
+            'fk_langue' => 'Fk Langue',
+            'visible' => 'Visible',
+            'is_logged' => 'Is Logged',
+        );
+    }
 
-/**
-* Retrieves a list of models based on the current search/filter conditions.
-*
-* Typical usecase:
-* - Initialize the model fields with values from filter form.
-* - Execute this method to get CActiveDataProvider instance which will filter
-* models according to data in model fields.
-* - Pass data provider to CGridView, CListView or any similar widget.
-*
-* @return CActiveDataProvider the data provider that can return the models
-* based on the search/filter conditions.
-*/
-public function search()
-{
+    /**
+     * Retrieves a list of models based on the current search/filter conditions.
+     *
+     * Typical usecase:
+     * - Initialize the model fields with values from filter form.
+     * - Execute this method to get CActiveDataProvider instance which will filter
+     * models according to data in model fields.
+     * - Pass data provider to CGridView, CListView or any similar widget.
+     *
+     * @return CActiveDataProvider the data provider that can return the models
+     * based on the search/filter conditions.
+     */
+    public function search() {
 // @todo Please modify the following code to remove attributes that should not be searched.
 
-$criteria=new CDbCriteria;
+        $criteria = new CDbCriteria;
 
-		$criteria->compare('id_locataire',$this->id_locataire);
-		$criteria->compare('nom',$this->nom,true);
-		$criteria->compare('email',$this->email,true);
-		$criteria->compare('password',$this->password,true);
-		$criteria->compare('fk_langue',$this->fk_langue);
-		$criteria->compare('visible',$this->visible);
+        $criteria->compare('id_locataire', $this->id_locataire);
+        $criteria->compare('nom', $this->nom, true);
+        $criteria->compare('email', $this->email, true);
+        $criteria->compare('password', $this->password, true);
+        $criteria->compare('fk_langue', $this->fk_langue);
+        $criteria->compare('visible', $this->visible);
+        $criteria->compare('is_logged', $this->is_logged);
 
-return new CActiveDataProvider($this, array(
-'criteria'=>$criteria,
-));
-}
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
+    }
 
-/**
-* Returns the static model of the specified AR class.
-* Please note that you should have this exact method in all your CActiveRecord descendants!
-* @param string $className active record class name.
-* @return Locataire the static model class
-*/
-public static function model($className=__CLASS__)
-{
-return parent::model($className);
-}
+    /**
+     * Returns the static model of the specified AR class.
+     * Please note that you should have this exact method in all your CActiveRecord descendants!
+     * @param string $className active record class name.
+     * @return Locataire the static model class
+     */
+    public static function model($className = __CLASS__) {
+        return parent::model($className);
+    }
+
 }

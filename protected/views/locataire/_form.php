@@ -49,6 +49,12 @@
             <?php echo $form->error($model,'visible'); ?>
         </div>
 
+                <div class="row">
+            <?php echo $form->labelEx($model,'is_logged'); ?>
+            <?php echo $form->textField($model,'is_logged'); ?>
+            <?php echo $form->error($model,'is_logged'); ?>
+        </div>
+
             <div class="row buttons">
         <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
     </div>

@@ -51,6 +51,9 @@ return false;
 		'password',
 		'fk_langue',
 		'visible',
+		/*
+		'is_logged',
+		*/
 array(
 'class'=>'CButtonColumn',
 ),

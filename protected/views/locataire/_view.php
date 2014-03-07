@@ -29,5 +29,9 @@
 	<?php echo CHtml::encode($data->visible); ?>
 	<br />
 
+	<b><?php echo CHtml::encode($data->getAttributeLabel('is_logged')); ?>:</b>
+	<?php echo CHtml::encode($data->is_logged); ?>
+	<br />
+
 
 </div>

@@ -36,6 +36,11 @@
             <?php echo $form->textField($model,'visible'); ?>
         </div>
 
+                    <div class="row">
+            <?php echo $form->label($model,'is_logged'); ?>
+            <?php echo $form->textField($model,'is_logged'); ?>
+        </div>
+
         <div class="row buttons">
         <?php echo CHtml::submitButton('Search'); ?>
     </div>

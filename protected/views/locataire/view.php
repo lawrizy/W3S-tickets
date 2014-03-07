@@ -27,5 +27,6 @@ array('label'=>'Manage Locataire', 'url'=>array('admin')),
 		'password',
 		'fk_langue',
 		'visible',
+		'is_logged',
 ),
 )); ?>

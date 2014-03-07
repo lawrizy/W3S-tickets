@@ -1,4 +1,3 @@
-<?php
 
 class LocataireController extends Controller {
 

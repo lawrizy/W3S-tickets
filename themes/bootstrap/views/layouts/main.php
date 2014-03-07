@@ -59,15 +59,16 @@
         <!-- CONTAINER -->
         <div class="container" id="page">
             <!--            <div class="row">
-            <?php
-            //                $this->widget('bootstrap.widgets.TbAlert', array(
-            //                    'id' => 'alert_session',
-            //                    'block' => true, // display a larger alert block?
-            //                    'fade' => true, // use transitions?
-            //                    'closeText' => '&times;', // close link text - if set to false, no close link is displayed
-            //                ));
-            ?>
+        
                         </div>-->
+            <?php
+            $this->widget('bootstrap.widgets.TbAlert', array(
+                'id' => 'alert_session',
+                'block' => true, // display a larger alert block?
+                'fade' => true, // use transitions?
+                'closeText' => '&times;', // close link text - if set to false, no close link is displayed
+            ));
+            ?>
             <?php if (isset($this->breadcrumbs)): ?>
                 <?php
                 $this->widget('bootstrap.widgets.TbBreadcrumbs', array(
@@ -77,13 +78,6 @@
             <?php endif ?>
 
             <?php echo $content; ?>
-            <?php
-//            Yii::app()->clientScript->registerScript(
-//                    'myHideEffect', 'alert("test);'
-//                    , CClientScript::POS_BEGIN
-//            );
-            //   Yii::app()->user->setFlash('success', '<strong>Well done!</strong> You successfully read this important alert message.');
-            ?>
             <div class="clear"></div>
 
             <br/><br/><br/>
@@ -141,31 +135,16 @@
 </html>
 
 <script>
-    $("#alert_session").bind('closed', function()
-    {
-        {
-            alert('<?php echo Yii::app()->session->timeout; ?>');
-            // window.start = parseFloat(start);
-            var end = 0 // change this to stop the counter at a higher value
-            var refresh = 1000; // Refresh rate in milli seconds
-        }
-    }
-    )
-    var clock = document.getElementById("alert_session");
-    var message = '<?php echo Yii::app()->user->setFlash('success', '<strong>Well done!</strong>'); ?>';
-    var currentVal = <?php var_export( Constantes::TIMEOUT_SESSION );?>;
+    var currentVal = <?php var_export(Constantes::TIMEOUT_SESSION); ?>;
     var endVal = 0;
     var interval = 1000;
     var thread = setInterval(function() {
         currentVal -= interval / 1000;
         if (currentVal == endVal && <?php var_export(!Yii::app()->user->isGuest); ?>)
         {
-
-            // clock.innerHTML = message;
             alert("Session expirée: Vous allez être déconnecté.");
             window.location.replace('<?php echo Yii::app()->baseUrl . '/index.php/site/logout'; ?>');
             clearInterval(thread);
-
         }
     }, interval);
 </script>  
