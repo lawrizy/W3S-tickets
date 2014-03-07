@@ -2,6 +2,7 @@
 /**
  * @var $this DashboardController
  */
+
 // Graphique en bâtonnets -> fréquence des catégories d'incidents (Pour tous les bâtiments ou pour un bâtiment spécifique)
 
 if ($idBatiment == 'ALL') { // Cas 1 : sélectionner tous les bâtiments
@@ -34,7 +35,6 @@ if ($idBatiment == 'ALL') { // Cas 1 : sélectionner tous les bâtiments
         'height' => 175,
         'htmlOptions' => array(),
         'drawLabels' => true,
-        //'animation' => false,
         'datasets' => array(
             array(
                 "value" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 1)),
@@ -105,7 +105,6 @@ if ($idBatiment == 'ALL') { // Cas 1 : sélectionner tous les bâtiments
 <h3><?php echo Translate::trad('AjaxFrenquenceEntreprise'); ?></h3>
 <?php
 $entrepriseFreqAllData = $this->actionGetFrequenceCalledEntreprise();
-//print_r($entrepriseFreqAllData);
 $color_step = 100;
 $r = 0;
 $g = 0;
@@ -136,8 +135,17 @@ foreach ($entrepriseFreqAllData as $key => $value) {
     ++$entryCount;
 
     // Construire le dataset
-    $name = array_keys($value)[0];
-    $count = array_values($value)[0];
+    /*
+     * Problème réglé, solution du problème ici : http://stackoverflow.com/questions/16358973/parse-error-syntax-error-unexpected-with-php-5-3
+     * Le problème résidait bien dans le fait qu'en PHP 5.3 il est impossible de prendre une valeur directement depuis la valeur de retour d'une fonction.
+     * exemple (PHP 5.3):
+     * $name = $array_keys($value)[0]; // IMPOSSIBLE en 5.3! On ne peut pas prendre une valeur d'un tableau retourné par une fonction directement.
+     * Solution -> Il faut passer par une variable temporaire avant de pouvoir utiliser les "brackets".
+     */
+    $nameTemp = array_keys($value);
+    $name = (string)$nameTemp[0];
+    $countTemp = array_values($value);
+    $count = (string)$countTemp[0];
     $set = array(
         "color" => "rgba(" . $r . "," . $g . "," . $b . ", 1)",
         "label" => $name . ": " . $count,
@@ -158,4 +166,5 @@ $this->widget(
         )
 );
 // ******************** END ************************
+
 ?>
