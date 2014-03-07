@@ -120,10 +120,20 @@ class EntrepriseController extends Controller {
             // On recherche tous les tickets qui sont liés à cet entreprise
         foreach ($tickets as $ticket) { // et on les passe tous à l'état invisible
             $ticket['visible'] = Constantes::INVISIBLE;
-            // $ticket->save(FALSE);
-            $ticket->update(array('visible'));
+            $ticket->save(FALSE);
         }
         
+        $secteurs = Secteur::model()->findByAttributes(array('fk_entreprise' => $id, 'visible' => Constantes::VISIBLE));
+            // On recherche aussi tous les secteurs liés à cet entreprise
+        foreach ($secteurs as $secteur) { // et on les passe tous à l'état invisible
+            $secteur['visible'] = Constantes::INVISIBLE;
+            $secteur->save(FALSE);
+            $newSecteur = new Secteur();
+                // Il faut aussi que la catégorie ne reste pas vide, pour cela on crée un nouveau secteur avec une entreprise par défaut
+            $newSecteur->fk_categorie = $secteur['fk_categorie']; // on garde 
+            $newSecteur->fk_entreprise = Constantes::ENTREPRISE_DEFAUT;
+            $newSecteur->save(FALSE);
+        }
         
 //        $categories = CategorieIncident::model()->findByPk($id);
 
