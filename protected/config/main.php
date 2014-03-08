@@ -27,7 +27,6 @@ return array(
         'application.components.*',
         'application.controllers.Translate',
         'ext.yii-mail.YiiMailMessage',
-    //'application.extensions.yii-mail.YiiMailMessage',
     ),
     //'theme' => 'classic',
     'theme' => 'bootstrap',
@@ -45,6 +44,13 @@ return array(
     ),
     // application components
     'components' => array(
+        /*
+         * Cette directive permet d'utiliser les liens symboliques en tant qu'assets plutôt que d'envoyer des dossiers
+         * entiers en tant qu'assets. (léger gain de perfs à tester)
+         */ 
+        'assetManager' => array(
+            'linkAssets' => true,
+        ),
         'session' => array(
             'class' => 'CDbHttpSession',
             'connectionID' => 'db', // Ca fix le problème avec CHTTPSession
