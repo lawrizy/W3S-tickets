@@ -31,19 +31,19 @@
 
         <?php
         echo $form->labelEx($model, 'label');
-        echo $form->textField($model, 'label', array('size' => 60, 'maxlength' => 64));
+        echo CHtml::textField('label', $model['label'], array('size' => 60, 'maxlength' => 64));
         echo $form->error($model, 'label');
         ?>
 
         <?php
         echo '<label>Entreprise:  <span class=required>*</span></label>';
-        echo CHtml::dropDownList('Entreprise', 'nom', array('' => '', CHtml::listData(Entreprise::model()->findAllByAttributes(array('visible' => Constantes::VISIBLE)), 'id_entreprise', 'nom')));
+        echo CHtml::dropDownList('fk_entreprise', 'nom', array('' => '', CHtml::listData(Entreprise::model()->findAllByAttributes(array('visible' => Constantes::VISIBLE)), 'id_entreprise', 'nom')));
         echo $form->error($model, 'fk_parent');
         ?>
 
         <?php
         echo $form->labelEx($model, 'fk_priorite');
-        echo $form->dropDownList($model, 'fk_priorite', array('' => '', CHtml::listdata(Priorite::model()->findAll(), 'id_priorite', 'label')));
+        echo CHtml::dropDownList('fk_priorite', 'nom', array('' => '', CHtml::listdata(Priorite::model()->findAll(), 'id_priorite', 'label')));
         echo $form->error($model, 'fk_priorite');
         ?>
 

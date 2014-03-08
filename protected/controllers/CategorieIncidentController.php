@@ -62,29 +62,38 @@ class CategorieIncidentController extends Controller {
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
     public function actionCreate() {
-        Yii::trace('teststs','cron');
-        $modelCategorie = new CategorieIncident;
-        if (isset($_POST['categorieIncident'])) {
-            $Categorie = $_POST['categorieIncident'];
-            $varSecteur = new Secteur();
-            $varSecteur->fk_entreprise = $_POST['Entreprise'];
-            $modelCategorie->attributes = $Categorie;
-            $modelCategorie->save(false);
+        Yii::trace('teststs', 'cron');
+        $model = new CategorieIncident;
+        if (isset($_POST['fk_entreprise'])) { 
+            // On vérifie si cette variable a bien été renvoyée. Si oui, c'est une catégorie parent, si non, une sous-catégorie
+            $model['label'] = $_POST['label'];
+            $model['fk_priorite'] = $_POST['fk_priorite'];
+            $model->save();
+            
+            $sousCat = new CategorieIncident();
+            $sousCat['fk_parent'] = $model['id_categorie_incident'];
+            $sousCat['label'] = 'Autre';
+            $sousCat['fk_priorite'] = Constantes::PRIORITE_LOW;
+            
+            $secteur = new Secteur();
+            $secteur->fk_entreprise = $_POST['fk_entreprise'];
+            $secteur['fk_categorie'] = $model['id_categorie_incident'];
+            $secteur->save();
+            
             $this->render('view', array(
-                'model' => $modelCategorie,
+                'model' => $model,
+            ));
+        } else {
+            $this->render('create', array(
+                'model' => $model,
             ));
         }
-// Uncomment the following line if AJAX validation is needed
-// $this->performAjaxValidation($model);
+
 //        if (isset($_POST['CategorieIncident'])) {
 //            $model->attributes = $_POST['CategorieIncident'];
 //            if ($model->save())
 //                $this->redirect(array('view', 'id' => $model->id_categorie_incident));
 //        }
-
-        $this->render('create', array(
-            'model' => $modelCategorie,
-        ));
     }
 
     /**

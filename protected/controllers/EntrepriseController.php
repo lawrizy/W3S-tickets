@@ -58,7 +58,7 @@ class EntrepriseController extends Controller {
     }
 
     public function actionSecteur($id) {
-        
+
         if (isset($_POST['idCat'])) {
             $secteur = new Secteur();
             $secteur['fk_categorie'] = $_POST['idCat'];
@@ -67,11 +67,11 @@ class EntrepriseController extends Controller {
             $this->render('view', array(
                 'model' => $this->loadModel($id),
             ));
+        } else {
+            $this->render('secteur', array(
+                'model' => $this->loadModel($id),
+            ));
         }
-
-        $this->render('secteur', array(
-            'model' => $this->loadModel($id),
-        ));
     }
 
     /**
