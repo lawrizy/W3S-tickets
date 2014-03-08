@@ -466,19 +466,16 @@ class TicketController extends Controller {
      * Elle crée elle même les tags <option value="...">...</option> qui formeront le form (qui se trouve dans la vue).
      */
     public function actionGetSousCategoriesDynamiques() {
-// Yii::trace("Entrée dans la méthode de recherche des sous-catégories dynamiques..."); // Passe
-// Exécution d'une query qui récupère toutes les sous-catégories possibles pour la catégorie principale choisie.
+        // Exécution d'une query qui récupère toutes les sous-catégories possibles pour la catégorie principale choisie.
         $data = CategorieIncident::model()->findAll('fk_parent=:toFind', array(':toFind' => $_POST['paramID']));
-// On formatte les données reçues dans une DataList
+        // On formatte les données reçues dans une DataList
         $dataList = CHtml::listData($data, 'id_categorie_incident', 'label');
 
-// Pour chaque clé=>valeur contenues dans la DataList, on crée un tag <options...> avec les valeurs récupérées.
+        // Pour chaque clé=>valeur contenues dans la DataList, on crée un tag <options...> avec les valeurs récupérées.
         foreach ($dataList as $key => $value) {
-// Yii::trace("clé: " . $key . " | valeur: " . $value, "cron"); // Passe
-
             echo CHtml::tag
                     (
-// Le type de tag, ex.: <option..>, <input..>, ...
+                    // Le type de tag, ex.: <option..>, <input..>, ...
                     'option',
                     // On attribue la valeur ("cachée") à attribuer au champs ex.: <option value="1">...</option>
                     array('value' => $key, 'name' => 'clef'),

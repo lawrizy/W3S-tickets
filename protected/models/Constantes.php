@@ -51,7 +51,12 @@ class Constantes {
     const TIMEOUT_SESSION=660; //10 minutes
      
     /*
-     * 
+     * L'entreprise par défaut à attribuer si aucune entreprise n'est lié à une certaine catégorie
      */
     const ENTREPRISE_DEFAUT = 1;
+    
+    /*
+     * L'utilisateur par défaut à assigner lors de la création de ticket
+     */
+    const USER_DEFAUT = 1;
 }

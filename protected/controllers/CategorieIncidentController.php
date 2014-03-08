@@ -66,9 +66,11 @@ class CategorieIncidentController extends Controller {
         $model = new CategorieIncident;
         if (isset($_POST['fk_entreprise'])) { 
             // On vérifie si cette variable a bien été renvoyée. Si oui, c'est une catégorie parent, si non, une sous-catégorie
-            $model['label'] = $_POST['label'];
-            $model['fk_priorite'] = $_POST['fk_priorite'];
-            $model->save();
+            $model['label'] = isset($_POST['label']) ? $_POST['label'] : null;
+            $model['fk_priorite'] = isset($_POST['fk_priorite']) ? $_POST['fk_priorite'] : null;
+            if ($model->validate()) {
+                $model->save();
+            }
             
             $sousCat = new CategorieIncident();
             $sousCat['fk_parent'] = $model['id_categorie_incident'];
