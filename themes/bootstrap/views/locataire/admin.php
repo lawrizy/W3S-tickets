@@ -43,7 +43,7 @@ return false;
 </div><!-- search-form -->
 
 <?php
-$this->widget('zii.widgets.grid.CGridView', array(
+$this->widget('bootstrap.widgets.TbGridView', array(
     'id' => 'locataire-grid',
     'dataProvider' => $model->search(),
     'filter' => $model,

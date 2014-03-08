@@ -27,20 +27,22 @@
         echo CHtml::dropDownList
                 (
                 'Categorie', // Le nom de cette dropDownList
+                
                 'fk_categorie', // La colonne à sélectionner
-                array // Cette array remplit la dropDownList avec les catégories mères disponibles dans la DB.
-            (
-            '' => '',
-            $this->getCategoriesLabel(),
-                ), array // Cette array définit le chargement dynamique des valeurs dans la dropDownList des sous-catégories. (Voir dropDownList suivante appelée DD_sousCat)
-            (
-            'ajax' => array
+                
+                // On charge toutes les catégories "parentes" disponibles dans la DB, pour les afficher dans cette DDL-ci.
+                array('' => '', $this->getCategoriesLabel()),
+        
+                // Cette array définit le chargement dynamique des valeurs dans la dropDownList des sous-catégories. (Voir dropDownList suivante appelée DD_sousCat)
+                array
                 (
-                'type' => 'POST',
-                'url' => CController::createUrl('getsouscategoriesdynamiques'),
-                'data' => array('paramID' => 'js:this.value'),
-                'update' => '#DD_sousCat',
-            )
+                    'ajax' => array
+                    (
+                    'type' => 'POST',
+                    'url' => CController::createUrl('getsouscategoriesdynamiques'),
+                    'data' => array('paramID' => 'js:this.value'),
+                    'update' => '#DD_sousCat',
+                    )
                 )
         );
 

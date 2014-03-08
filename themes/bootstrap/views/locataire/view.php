@@ -18,7 +18,7 @@ array('label'=>'Manage Locataire', 'url'=>array('admin')),
 
 <h1>View Locataire #<?php echo $model->id_locataire; ?></h1>
 
-<?php $this->widget('zii.widgets.CDetailView', array(
+<?php $this->widget('bootstrap.widgets.TbDetailView', array(
 'data'=>$model,
 'attributes'=>array(
 		'id_locataire',

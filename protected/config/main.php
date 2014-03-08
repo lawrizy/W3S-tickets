@@ -6,8 +6,10 @@
 
 Yii::setPathOfAlias('chartjs', dirname(__FILE__) . '/../extensions/yii-chartjs');
 Yii::setPathOfAlias('bootstrap', dirname(__FILE__) . '/../extensions/bootstrap');
-Yii::setPathOfAlias('Constatantes', dirname(__FILE__).'/../models/Constatnets.php');
+Yii::setPathOfAlias('Constantes', dirname(__FILE__).'/../models/Constantes.php');
+
 require_once (dirname(__FILE__)."/../models/Constantes.php");
+
 return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
     'name' => 'Ticket System',
