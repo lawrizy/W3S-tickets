@@ -15,7 +15,8 @@
     $form = $this->beginWidget('CActiveForm', array('id' => 'ticket-form', 'enableAjaxValidation' => false));
     ?>
     <p class="note"><?php echo Translate::trad('Required'); ?></p>
-    <?php echo $form->errorSummary($model); ?>
+
+
     <?php
     // Affichage de l'entreprise qui s'occupera de ce ticket (selon la catégorie)
     $categorie = CategorieIncident::model()->findByPk($model->fk_categorie);

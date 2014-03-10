@@ -35,7 +35,7 @@
     Yii::app()->session['id_entreprise'] = NULL;
     
     if (Yii::app()->session['errorEntrepriseField']) { // Si cette variable est à true
-        echo '<label style="color: red;">' . 'Le champs Entreprise ne peut être vide.' . '</label>';
+        echo '<label style="color: red;">' . 'Le champ Entreprise ne peut &ecirc;tre vide.' . '</label>';
             // Alors on affiche un message d'erreur. Cette variable est initialisée par
             // le controleur s'il y a un souci avec le champ entreprise
         Yii::app()->session['errorEntrepriseField'] = false;

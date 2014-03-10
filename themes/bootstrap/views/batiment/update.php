@@ -3,7 +3,7 @@
 /* @var $model Batiment */
 
 $this->breadcrumbs=array(
-	'Batiments'=>array('index'),
+	'Batiments'=>array('admin'),
 	$model->id_batiment=>array('view','id'=>$model->id_batiment),
 	'Update',
 );

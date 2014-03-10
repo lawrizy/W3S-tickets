@@ -18,7 +18,6 @@
 
     <p class="note"><?php echo Translate::trad('Required'); ?></p>
 
-    <?php echo $form->errorSummary($model, Translate::trad('ReglerProbleme')); ?>
 
     <?php
     // Form pour la sélection de la catégorie

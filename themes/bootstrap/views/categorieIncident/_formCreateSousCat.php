@@ -28,11 +28,11 @@
         ?>
         <hr>
         <?php
-        echo '<label for="CategorieIncident_fk_parent">Catégorie Parent&nbsp;<span class="required">*</span></label>';
+        echo '<label for="CategorieIncident_fk_parent">Cat&eacute;gorie Parent&nbsp;<span class="required">*</span></label>';
         echo $form->dropDownList($model, 'fk_parent', array('' => '', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL, 'visible' => Constantes::VISIBLE)), 'id_categorie_incident', 'label')));
         
         if (Yii::app()->session['errorParentField']) { // Si cette variable est à true
-            echo '<label style="color: red;">' . 'Le champs Parent ne peut être vide.' . '</label>';
+            echo '<label style="color: red;">' . 'Le champs Parent ne peut &ecirc;tre vide.' . '</label>';
                 // Alors on affiche un message d'erreur. Cette variable est initialisée par
                 // le controleur s'il y a un souci avec le champ parent
             Yii::app()->session['errorParentField'] = false;

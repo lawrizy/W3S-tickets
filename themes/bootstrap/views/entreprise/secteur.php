@@ -4,13 +4,15 @@
 
 $this->breadcrumbs = array(
     'Entreprises' => array('admin'),
+    'Détails '.$model->nom => array('view', 'id' => $model->id_entreprise),
     $model->nom,
 );
 
 $this->menu = array(
-    array('label' => 'Manage Entreprise', 'url' => array('admin')),
+    array('label' => 'Liste Entreprise', 'url' => array('admin')),
+    array('label' => 'Détails Entreprise', 'url' => array('vue', 'id' => $model->id_entreprise))
 );
-$this->beginWidget('CActiveForm', array('id' => 'ticket-form', 'enableAjaxValidation' => false));
+$this->beginWidget('TbActiveForm', array('id' => 'ticket-form', 'enableAjaxValidation' => false));
 ?>
 
 

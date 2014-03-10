@@ -182,7 +182,7 @@ class CategorieIncidentController extends Controller {
 
         // On arrive ici seulement s'il n'y a pas de $_POST[CategorieIncident],
         // donc lors du premier passage sur la page
-        $this->render('updateCat', array(// Et enfin on redirige
+        $this->render('updateSousCat', array(// Et enfin on redirige
             'model' => $model,
         ));
     }
