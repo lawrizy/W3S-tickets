@@ -155,39 +155,39 @@ class TicketController extends Controller {
     public function actionCreate() {
         $model = new Ticket;
 
-// Vérifie si a bien reçu un objet 'Ticket'
-// ==> si non, c'est que c'est la première arrivée sur la page create,
-// ==> si oui, c'est que c'est la page create elle-même qui renvoie ici pour la création d'un ticket
+        // Vérifie si a bien reçu un objet 'Ticket'
+        // ==> si non, c'est que c'est la première arrivée sur la page create,
+        // ==> si oui, c'est que c'est la page create elle-même qui renvoie ici pour la création d'un ticket
         if (isset($_POST['Ticket'])) {
             $ticket = $_POST['Ticket'];
             $logged = Yii::app()->session['Logged'];
-// Vérifie quel utilisateur est enregistré (si User ou Locataire)
+            // Vérifie quel utilisateur est enregistré (si User ou Locataire)
             if (Yii::app()->session['Utilisateur'] == 'Locataire') {
-// Si locataire, on attribue le ticket a un user par défaut (le 1 dans ce cas-ci)
-                $ticket['fk_user'] = 1;
-// Si locataire, on met le canal à web automatiquement
+                // Si locataire, on attribue le ticket a un user par défaut (le 1 dans ce cas-ci)
+                $ticket['fk_user'] = Constantes::USER_DEFAUT;
+                // Si locataire, on met le canal à web automatiquement
                 $ticket['fk_canal'] = Constantes::CANAL_WEB;
-// Et si locataire, on reprend son propre id pour la création du ticket
+                // Et si locataire, on reprend son propre id pour la création du ticket
                 $ticket['fk_locataire'] = $logged->id_locataire;
             } else {
-// Si user, c'est lui-même qui s'occupera de ce ticket-ci
+                // Si user, c'est lui-même qui s'occupera de ce ticket-ci
                 $ticket['fk_user'] = $logged['id_user'];
-// Si user, c'est que le locataire a appelé pour créer le ticket, donc canal à 1
+                // Si user, c'est que le locataire a appelé pour créer le ticket, donc canal à 1
                 $ticket['fk_canal'] = Constantes::CANAL_PHONE;
-// Et si user, on reprend l'id passé en paramètre précedemment
+                // Et si user, on reprend l'id passé en paramètre précedemment
                 $ticket['fk_locataire'] = $_GET['id'];
             }
 
-// On met à jour la sous-catégorie (qui est liée elle-même à une catégorie mère unique).
+            // On met à jour la sous-catégorie (qui est liée elle-même à une catégorie mère unique).
             if (isset($_POST['DD_sousCat']))
                 $ticket['fk_categorie'] = $_POST['DD_sousCat'];
             else
-                $ticket['fk_categorie'] = 'null';
+                $ticket['fk_categorie'] = NULL;
 
-// Génère le code_ticket (unique à chaque ticket) selon le batiment
+            // Génère le code_ticket (unique à chaque ticket) selon le batiment
             $ticket['code_ticket'] = $ticket['fk_batiment'] != null ? $this->createCodeTicket($ticket['fk_batiment']) : null;
-// Notre modèle prend la valeur reçue de la page et on test un save
-// (dans la méthode save, on fait d'abord une validation des attributs)
+            // Notre modèle prend la valeur reçue de la page et on test un save
+            // (dans la méthode save, on fait d'abord une validation des attributs)
             $model->attributes = $ticket;
             try {
                 Yii::trace('Dans try avant save', 'cron');
@@ -195,17 +195,17 @@ class TicketController extends Controller {
                 Yii::trace('Dans try apres save', 'cron');
                 $loc = Locataire::model()->findByPk($model['fk_locataire']);
                 Yii::app()->session['EmailSend'] = 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email'];
-// Si la sauvegarde du ticket s'est bien passé,
-// on enregistre un évènement opened pour la création du ticket
+                // Si la sauvegarde du ticket s'est bien passé,
+                // on enregistre un évènement opened pour la création du ticket
                 $histo = new HistoriqueTicket();
                 $histo->date_update = date("Y-m-d H:i:s", time());
                 $histo->fk_ticket = $model->id_ticket;
-// Lors de la création, statut forcément à opened
+                // Lors de la création, statut forcément à opened
                 $histo->fk_statut_ticket = Constantes::STATUT_OPENED;
                 $histo->fk_user = $model['fk_user'];
                 $histo->save(FALSE);
                 $this->actionSendNotificationMail($model);
-// Si tout s'est bien passé, on redirige vers la page view
+                // Si tout s'est bien passé, on redirige vers la page view
                 Yii::app()->session['NouveauTicket'] = 'nouveau';
                 $this->redirect(array('view', 'id' => $model->id_ticket));
             } catch (CDbException $e) {
@@ -220,13 +220,13 @@ class TicketController extends Controller {
     }
 
     private function createCodeTicket($fk_batiment) {
-// Table batiment contient un code (4 caractères différents pour chaque bâtiment) et un compteur (qui s'incrémente de 1 à chaque ajout de ticket)
+        // Table batiment contient un code (4 caractères différents pour chaque bâtiment) et un compteur (qui s'incrémente de 1 à chaque ajout de ticket)
         $batiment = Batiment::model()->findByPk($fk_batiment);
-// On incrémente le compteur de 1
+        // On incrémente le compteur de 1
         $batiment->cpt += 1;
-// On save pour enregistrer l'incrémentation sinon recommence toujours du même nombre
+        // On save pour enregistrer l'incrémentation sinon recommence toujours du même nombre
         $batiment->save(false);
-// On return le string du code_ticket
+        // On return le string du code_ticket
         return $batiment->code . $batiment->cpt;
     }
 

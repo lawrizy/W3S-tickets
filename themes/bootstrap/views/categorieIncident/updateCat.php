@@ -3,7 +3,7 @@
 /* @var $model CategorieIncident */
 
 $this->breadcrumbs=array(
-	'Categorie Incidents'=>array('index'),
+	'Categorie Incidents'=>array('admin'),
 	$model->id_categorie_incident=>array('view','id'=>$model->id_categorie_incident),
 	'Update',
 );
@@ -14,6 +14,6 @@ array('label'=>'Manage Categories', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Update CategorieIncident <?php echo $model->id_categorie_incident; ?></h1>
+<h1>Update Categorie</h1>
 
-<?php $this->renderPartial('_formUpdate', array('model'=>$model)); ?>
+<?php $this->renderPartial('_formUpdateCat', array('model'=>$model)); ?>

@@ -4,8 +4,8 @@
 /* @var $model CategorieIncident */
 
 $this->breadcrumbs = array(
-    'Categorie Incidents' => array('index'),
-    'Create',
+    'Categorie Incidents' => array('admin'),
+    'Create a SubCategory',
 );
 
 $this->menu = array(
@@ -14,4 +14,4 @@ $this->menu = array(
 ?>
 
 
-<?php $this->renderPartial('_formCreate', array('model' => $model)); ?>
+<?php $this->renderPartial('_formCreateSousCat', array('model' => $model)); ?>
