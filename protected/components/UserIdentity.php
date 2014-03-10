@@ -38,15 +38,15 @@ class UserIdentity extends CUserIdentity {
                         Yii::app()->session['Logged'] = $record; // enregistrement du record dans la session
                         $this->getLanguage($record);
                     } else {
-                        Yii::app()->user->setFlash('error', '<strong>Vous êtes déjà connecté !</strong>');// message en cas de connexion simultanée
+                        Yii::app()->user->setFlash('error', '<strong>Vous êtes déjà connecté !</strong>'); // message en cas de connexion simultanée
                     }
                 }
-//----------------------------------------------------------------------------------------
+
+                return !$this->errorCode; // return le code d'erreur
+
 //----------------------------------------------------------------------------------------
 //---------------------------------------User---------------------------------------------
 //----------------------------------------------------------------------------------------
-
-                return !$this->errorCode; // return le code d'erreur
             } elseif (($record = User::model()->findByAttributes(array('email' => $this->username))) !== NULL) {  //recuperation d'un record User
                 if ($record->password !== md5($this->password)) {
                     Yii::app()->user->setFlash('error', '<strong>Le mot de passe ou le nom d\'utilisateur est incorrect.!</strong>');

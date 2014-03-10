@@ -30,10 +30,14 @@
         <?php
         echo '<label for="CategorieIncident_fk_parent">Catégorie Parent&nbsp;<span class="required">*</span></label>';
         echo $form->dropDownList($model, 'fk_parent', array('' => '', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL, 'visible' => Constantes::VISIBLE)), 'id_categorie_incident', 'label')));
-        if (Yii::app()->session['errorParentField']) 
-            echo '<label style="color: red;">'. 'Le champs Parent ne peut être vide.' .'</label>';
-        Yii::app()->session['errorParentField'] = false;
         
+        if (Yii::app()->session['errorParentField']) { // Si cette variable est à true
+            echo '<label style="color: red;">' . 'Le champs Parent ne peut être vide.' . '</label>';
+                // Alors on affiche un message d'erreur. Cette variable est initialisée par
+                // le controleur s'il y a un souci avec le champ parent
+            Yii::app()->session['errorParentField'] = false;
+                // On remet la variable à false pour éviter de ré-afficher le message
+        }
         ?>
         <hr>
         <?php
@@ -43,10 +47,10 @@
         ?>
 
         <div class="buttons">
-            <?php echo CHtml::submitButton('CreateSousCat'); ?>
+<?php echo CHtml::submitButton('CreateSousCat'); ?>
         </div>
 
-        <?php $this->endWidget(); ?>
+<?php $this->endWidget(); ?>
     </div>
 
 </div><!-- form -->

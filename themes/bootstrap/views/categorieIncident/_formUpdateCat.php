@@ -33,10 +33,6 @@
     Yii::app()->session['id_entreprise'] = NULL;
     ?>
     <hr>
-    <?php
-    echo $form->labelEx($model, 'fk_priorite');
-    echo $form->dropDownList($model, 'fk_priorite', array(CHtml::listData(Priorite::model()->findAll(), 'id_priorite', 'label')));
-    ?>
 
     <div class="buttons">
         <?php echo CHtml::submitButton('Mettre à jour'); ?>
