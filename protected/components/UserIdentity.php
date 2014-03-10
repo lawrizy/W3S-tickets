@@ -37,13 +37,13 @@ class UserIdentity extends CUserIdentity {
                         $record->password = ''; // vidage du mot de passe 
                         Yii::app()->session['Logged'] = $record; // enregistrement du record dans la session
                         $this->getLanguage($record);
+                        Yii::app()->user->setFlash('success', '<strong>Bienvenue: ' . $record->nom . '!</strong>'); // message en cas de connexion simultanée
                     } else {
                         Yii::app()->user->setFlash('error', '<strong>Vous êtes déjà connecté !</strong>'); // message en cas de connexion simultanée
                     }
                 }
 
                 return !$this->errorCode; // return le code d'erreur
-
 //----------------------------------------------------------------------------------------
 //---------------------------------------User---------------------------------------------
 //----------------------------------------------------------------------------------------
@@ -62,6 +62,7 @@ class UserIdentity extends CUserIdentity {
                         $record->password = ''; // vidage du mot de passe 
                         Yii::app()->session['Logged'] = $record; // enregistrement du record dans la session 
                         $this->getLanguage($record);
+                        Yii::app()->user->setFlash('success', '<strong>Bienvenue !</strong>'); // message en cas de connexion simultanée
                     } else {
                         Yii::app()->user->setFlash('error', '<strong>Vous êtes déjà connecté !</strong>'); // message en cas de connexion simultanée
                     }
