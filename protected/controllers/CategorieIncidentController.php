@@ -61,41 +61,71 @@ class CategorieIncidentController extends Controller {
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
-    public function actionCreate() {
-        Yii::trace('teststs', 'cron');
+    public function actionCreateCat() {
+        Yii::trace('actionCreateCat', 'cron');
         $model = new CategorieIncident;
-        if (isset($_POST['fk_entreprise'])) { 
-            // On vérifie si cette variable a bien été renvoyée. Si oui, c'est une catégorie parent, si non, une sous-catégorie
-            $model['label'] = isset($_POST['label']) ? $_POST['label'] : null;
-            $model['fk_priorite'] = isset($_POST['fk_priorite']) ? $_POST['fk_priorite'] : null;
-            if ($model->validate()) {
+        if (isset($_POST['CategorieIncident'])) {
+            $model->attributes = $_POST['CategorieIncident'];
+            if ($model->validate() && $_POST['fk_entreprise'] != null) {
                 $model->save();
+                Yii::trace('avant redirect', 'cron');
+
+                $sousCat = new CategorieIncident();
+                $sousCat['fk_parent'] = $model['id_categorie_incident'];
+                $sousCat['label'] = 'Autre';
+                $sousCat['fk_priorite'] = Constantes::PRIORITE_LOW;
+                $sousCat->save();
+
+                $secteur = new Secteur();
+                $secteur->fk_entreprise = $_POST['fk_entreprise'];
+                $secteur['fk_categorie'] = $model['id_categorie_incident'];
+                $secteur->save();
+
+                $this->redirect(array('view', 'id' => $model->id_categorie_incident));
+            } else {
+                if ($_POST['fk_entreprise'] == null) {
+                    Yii::app()->session['errorEntrepriseField'] = true;
+                } else {
+                    Yii::app()->session['id_entreprise'] = $_POST['fk_entreprise'];
+                }
+                $this->render('createCat', array(
+                    'model' => $model,
+                ));
             }
-            
-            $sousCat = new CategorieIncident();
-            $sousCat['fk_parent'] = $model['id_categorie_incident'];
-            $sousCat['label'] = 'Autre';
-            $sousCat['fk_priorite'] = Constantes::PRIORITE_LOW;
-            
-            $secteur = new Secteur();
-            $secteur->fk_entreprise = $_POST['fk_entreprise'];
-            $secteur['fk_categorie'] = $model['id_categorie_incident'];
-            $secteur->save();
-            
-            $this->render('view', array(
-                'model' => $model,
-            ));
         } else {
-            $this->render('create', array(
+            $this->render('createCat', array(
                 'model' => $model,
             ));
         }
+    }
 
-//        if (isset($_POST['CategorieIncident'])) {
-//            $model->attributes = $_POST['CategorieIncident'];
-//            if ($model->save())
-//                $this->redirect(array('view', 'id' => $model->id_categorie_incident));
-//        }
+    /**
+     * Creates a new model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     */
+    public function actionCreateSousCat() {
+        Yii::trace('actionCreateSousCat', 'cron');
+        $model = new CategorieIncident;
+        if (isset($_POST['CategorieIncident'])) {
+            $model->attributes = $_POST['CategorieIncident'];
+            if ($model->validate() && $model['fk_parent'] != null) {
+                $model->save();
+                Yii::trace('avant redirect', 'cron');
+
+                $this->redirect(array('view', 'id' => $model->id_categorie_incident));
+            } else {
+                if ($model['fk_parent'] == null)
+                    Yii::app()->session['errorParentField'] = true;
+
+                $this->render('createSousCat', array(
+                    'model' => $model,
+                ));
+            }
+        } else {
+            $this->render('createSousCat', array(
+                'model' => $model,
+            ));
+        }
     }
 
     /**
@@ -103,11 +133,8 @@ class CategorieIncidentController extends Controller {
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
      */
-    public function actionUpdate($id) {
+    public function actionUpdateSousCat($id) {
         $model = $this->loadModel($id);
-
-// Uncomment the following line if AJAX validation is needed
-// $this->performAjaxValidation($model);
 
         if (isset($_POST['CategorieIncident'])) {
             $model->attributes = $_POST['CategorieIncident'];
@@ -115,9 +142,42 @@ class CategorieIncidentController extends Controller {
                 $this->redirect(array('view', 'id' => $model->id_categorie_incident));
         }
 
-        $this->render('update', array(
-            'model' => $model,
-        ));
+        if ($model['fk_parent'] == null) {
+            $this->render('updateCat', array(
+                'model' => $model,
+            ));
+        } else {
+            $this->render('updateSousCat', array(
+                'model' => $model,
+            ));
+        }
+    }
+
+    /**
+     * Updates a particular model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id the ID of the model to be updated
+     */
+    public function actionUpdateCat($id) {
+        $model = $this->loadModel($id);
+
+        if (isset($_POST['CategorieIncident'])) {
+            $model->attributes = $_POST['CategorieIncident'];
+            if ($model->save())
+                $this->redirect(array('view', 'id' => $model->id_categorie_incident));
+        }
+
+        if ($model['fk_parent'] == null) {
+            $secteur = Secteur::model()->findByAttributes(array('visible' => Constantes::VISIBLE, 'fk_categorie' => $model['id_categorie_incident']));
+            Yii::app()->session['id_entreprise'];
+            $this->render('updateCat', array(
+                'model' => $model,
+            ));
+        } else {
+            $this->render('updateSousCat', array(
+                'model' => $model,
+            ));
+        }
     }
 
     /**

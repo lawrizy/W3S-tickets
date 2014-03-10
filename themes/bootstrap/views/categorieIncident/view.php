@@ -8,7 +8,8 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Update Categorie', 'url' => array('update', 'id' => $model->id_categorie_incident)),
+    array('label' => 'Update Categorie', 'url' => array('updateSousCat', 'id' => $model->id_categorie_incident), 'visible' => $model->fk_parent != null),
+    array('label' => 'Update Categorie', 'url' => array('updateCat', 'id' => $model->id_categorie_incident), 'visible' => $model->fk_parent == null),
     array('label' => 'Delete Categorie', 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id_categorie_incident), 'confirm' => 'Are you sure you want to delete this item?')),
     array('label' => 'Manage Categories', 'url' => array('admin')),
 );
