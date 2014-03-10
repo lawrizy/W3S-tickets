@@ -18,6 +18,9 @@ class UserIdentity extends CUserIdentity {
     private $_id;
 
     public function authenticate() {
+//----------------------------------------------------------------------------------------
+//-------------------------------------Locataire------------------------------------------
+//----------------------------------------------------------------------------------------
 
         try {
             if (($record = Locataire::model()->findByAttributes(array('email' => $this->username))) !== null) { //recupération d'un record en fonction de l'email
@@ -26,8 +29,8 @@ class UserIdentity extends CUserIdentity {
                     $this->errorCode = self::ERROR_PASSWORD_INVALID; // code error est password error
                 } else {
                     if (!$record->is_logged) {
-                        $record['is_logged'] = 1;
-                        $record->save();
+                        $record['is_logged'] = 1;      //on indique que la personne est loggé plus authentification possible sans un logout
+                        $record->save(); // mise a jour dans la db de is_logged = 1
                         $this->_id = $record->id_locataire;    //recupération  de l'id du locataire
                         $this->errorCode = self::ERROR_NONE;   // aucune erreur
                         Yii::app()->session['Utilisateur'] = 'Locataire'; // création d'une variable de session pour stocker le type d'user
@@ -35,9 +38,13 @@ class UserIdentity extends CUserIdentity {
                         Yii::app()->session['Logged'] = $record; // enregistrement du record dans la session
                         $this->getLanguage($record);
                     } else {
-                        Yii::app()->user->setFlash('error', '<strong>Vous êtes déjà connecté !</strong>');
+                        Yii::app()->user->setFlash('error', '<strong>Vous êtes déjà connecté !</strong>');// message en cas de connexion simultanée
                     }
                 }
+//----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
+//---------------------------------------User---------------------------------------------
+//----------------------------------------------------------------------------------------
 
                 return !$this->errorCode; // return le code d'erreur
             } elseif (($record = User::model()->findByAttributes(array('email' => $this->username))) !== NULL) {  //recuperation d'un record User
@@ -47,8 +54,8 @@ class UserIdentity extends CUserIdentity {
                 }// si le mot de passe est différent du mot de passe de la db en md5
                 else {
                     if (!$record->is_logged) {
-                        $record['is_logged'] = 1;
-                        $record->save();
+                        $record['is_logged'] = 1; //on indique que la personne est loggé plus authentification possible sans un logout
+                        $record->save(); //mise a jour dans la db de is_logged = 1
                         $this->_id = $record->id_user; //recupération  de l'id du user
                         $this->errorCode = self::ERROR_NONE; // aucune erreur
                         Yii::app()->session['Utilisateur'] = 'User'; // création d'une variable de session pour stocker le type d'user
@@ -56,23 +63,34 @@ class UserIdentity extends CUserIdentity {
                         Yii::app()->session['Logged'] = $record; // enregistrement du record dans la session 
                         $this->getLanguage($record);
                     } else {
-                        Yii::app()->user->setFlash('error', '<strong>Vous êtes déjà connecté !</strong>');
+                        Yii::app()->user->setFlash('error', '<strong>Vous êtes déjà connecté !</strong>'); // message en cas de connexion simultanée
                     }
                 }
                 return !$this->errorCode; // return le code d'erreur
             }
-            Yii::app()->session['Language'] = 'en';
+            Yii::app()->session['Language'] = 'en'; //langue par défaut 
             return !self::ERROR_UNKNOWN_IDENTITY; //return utilisateur inconnu
         } catch (CDbException $ex) {
             Yii::app()->user->setFlash('error', '<strong>La base de donnnée est indisponible pour le moment</strong>'); // message d'erreur lors de db indisponible
         }
     }
 
+//----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
+
     public function getId() {
         return $this->_id; // recupere l'id
     }
 
+//----------------------------------------------------------------------------------------
+//--------------------------------------Langue--------------------------------------------
+//----------------------------------------------------------------------------------------
+
     public function getLanguage($record) {
+//----------------------------------------------------------------------------------------
+//------------Recupere la langue pour l'application une fois la personne authentifié------
+//----------------------------------------------------------------------------------------
+
         if ($record->fk_langue == Constantes::LANGUE_FR) {
             Yii::app()->session['_lang'] = 'fr';
         } elseif ($record->fk_langue == Constantes::LANGUE_EN) {
@@ -82,4 +100,6 @@ class UserIdentity extends CUserIdentity {
         }
     }
 
+//----------------------------------------------------------------------------------------
+//----------------------------------------------------------------------------------------
 }
