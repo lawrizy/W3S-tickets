@@ -39,7 +39,6 @@ $('.search-form form').submit(function(){
     ));
     ?>
 </div><!-- search-form -->
-
 <?php
 $this->widget('bootstrap.widgets.TbGridView', array(
     'type' => 'striped bordered condensed',
@@ -47,7 +46,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'dataProvider' => $model->search(),
     // 'filter' => $model,
     'columns' => array(
-       array(
+        array(
             'name' => Translate::trad('CodeTicket'),
             'value' => '$data->code_ticket'),
         array(
@@ -79,3 +78,4 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     ),
 ));
 ?>
+

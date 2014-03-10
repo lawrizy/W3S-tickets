@@ -33,7 +33,7 @@
                             array('label' => Translate::trad('ListeTicket'), 'url' => array('/ticket/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
                             array('label' => Translate::trad('Creer') . Yii::app()->session['NouveauTicket'] . ' ticket', 'url' => array('/ticket/create'), 'visible' => Yii::app()->session['Utilisateur'] == 'Locataire'),
                             '---',
-                            array('label' => 'Gestion du compte', 'url' => array(''),
+                            array('label' => 'Gestion du compte', 'url' => array('#'),
                                 'items' => array(array('label' => 'Changer votre mot de passe', 'url' => array('#'))),
                                 'visible' => !Yii::app()->user->isGuest),
                             '---',

@@ -48,7 +48,6 @@ class TicketController extends Controller {
                 ),
             );
         } elseif ((Yii::app()->session['Utilisateur'] == 'User') &&
-
                 (($logged->fk_fonction == Constantes::FONCTION_ADMIN) || ($logged->fk_fonction == Constantes::FONCTION_ROOT))
         ) { // Utilisateur peut creer ,voir ,manager,traiter et fermer des ticket
             return array(
@@ -300,11 +299,10 @@ class TicketController extends Controller {
      * Lists all models.
      */
     public function actionIndex() {
-        Yii::trace('je parle', 'cron');
-        $dataProvider = new CActiveDataProvider('Ticket');
-        $this->render('index', array(
-            'dataProvider' => $dataProvider,
-        ));
+//        $dataProvider = new CActiveDataProvider('Ticket');
+//        $this->render('index', array(
+//            'dataProvider' => $dataProvider,
+//        ));
     }
 
     /**
@@ -428,8 +426,7 @@ class TicketController extends Controller {
         $lieu = Lieu::model()->findByPk($model->fk_lieu);
         $secteurs = Secteur::model()->findAllByAttributes(array('fk_batiment' => $lieu->fk_batiment, 'fk_categorie' => $model->fk_categorie, 'visible' => Constantes::VISIBLE));
         $entreprises = array();
-        foreach ($secteurs as $secteur)
-        {
+        foreach ($secteurs as $secteur) {
             $entreprise = Entreprise::model()->findByPk($secteur->fk_entreprise);
             array_push($entreprises, $entreprise);
         }

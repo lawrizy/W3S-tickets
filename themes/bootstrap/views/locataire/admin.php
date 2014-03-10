@@ -3,7 +3,7 @@
 /* @var $model Locataire */
 
 $this->breadcrumbs = array(
-    'Locataires' => array('index'),
+    'Locataires' => array('admin'),
     'Manage',
 );
 
@@ -44,12 +44,15 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'id' => 'locataire-grid',
     'dataProvider' => $model->search(),
     'columns' => array(
-        'id_locataire',
-        'nom',
-        'email',
-        'password',
-        'fk_langue',
-        'visible',
+       array('name' => 'Nom',
+            'value' => '$data->nom;'
+        ),
+        array('name' => 'Email',
+            'value' => '$data->email;'
+        ),
+        array('name' => 'Langue',
+            'value' => 'Langue::model()->findByPk($data->fk_langue)->label;'
+        ),
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',
         ),
