@@ -209,6 +209,25 @@ class LocataireController extends Controller {
         }
     }
 
+    public function actionDeleteLieu() {
+        $model = Locataire::model()->findByPk($_GET['id']);
+        if (isset($_POST['Batiment'])) {
+            Yii::trace($_POST['Batiment'], 'cron');
+            $modelLieu = Lieu::model()->findByAttributes(array('fk_locataire' => $_GET['id'], 'fk_batiment' => $_POST['Batiment']));
+            $modelLieu['visible'] = Constantes::INVISIBLE;
+            if ($modelLieu->save()) {
+                Yii::app()->user->setFlash('success', '<strong> Le propriétaire ' . $model->nom . ' n\'habite plus dans le bâtiment: ' . Batiment::model()->findByPk($_POST['Batiment'])->nom . '</strong>');
+                $this->render('deleteLieu', array('model' => $model));
+            } else {
+                Yii::app()->user->setFlash('error', '<strong>Erreur lors de la suppresion</strong>');
+                $message = 'bad';
+                $this->render('deleteLieu', array('model' => $model));
+            }
+        } else {
+            $this->render('deleteLieu', array('model' => $model));
+        }
+    }
+
 }
 
 ?>
