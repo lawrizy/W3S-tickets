@@ -18,8 +18,6 @@
 
     <p class="note">Les champs marqués de <span class="required">*</span> sont requis.</p>
 
-    <?php echo $form->errorSummary($model); ?>
-
     <div class="row">
         <?php
         // Form pour la sélection de la catégorie

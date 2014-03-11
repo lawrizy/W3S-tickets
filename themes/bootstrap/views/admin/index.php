@@ -56,6 +56,7 @@ $this->pageTitle = Yii::app()->name . ' - Admin';
     <b>Catégorie:</b>
 <ul>
     <li><a href="categorieIncident/admin">Liste des Catégories</a>&nbsp;(pour voir, modifier ou supprimer une catégorie)</li>
-    <li><a href="categorieIncident/create">Rajouter une Catégorie</a></li>
+    <li><a href="categorieIncident/createCat">Rajouter une Catégorie</a></li>
+    <li><a href="categorieIncident/createSousCat">Rajouter une Sous-Catégorie</a></li>
 </ul>
 </p>

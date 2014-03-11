@@ -18,73 +18,67 @@
 
     <p class="note"><?php echo Translate::trad('Required'); ?></p>
 
-    <?php echo $form->errorSummary($model, Translate::trad('ReglerProbleme')); ?>
 
-    <div class="row">
-        <?php
-        // Form pour la sélection de la catégorie
-        echo '<label>' . Translate::trad('SelectionnerCategorie') . '<span class="required"> *</span> </label>';
-        echo CHtml::dropDownList
-                (
-                'Categorie', // Le nom de cette dropDownList
-                
-                'fk_categorie', // La colonne à sélectionner
-                
-                // On charge toutes les catégories "parentes" disponibles dans la DB, pour les afficher dans cette DDL-ci.
-                array('' => '', $this->getCategoriesLabel()),
-        
-                // Cette array définit le chargement dynamique des valeurs dans la dropDownList des sous-catégories. (Voir dropDownList suivante appelée DD_sousCat)
-                array
-                (
-                    'ajax' => array
-                    (
-                    'type' => 'POST',
-                    'url' => CController::createUrl('getsouscategoriesdynamiques'),
-                    'data' => array('paramID' => 'js:this.value'),
-                    'update' => '#DD_sousCat',
-                    )
-                )
-        );
+    <?php
+    // Form pour la sélection de la catégorie
+    echo '<label>' . Translate::trad('SelectionnerCategorie') . '<span class="required"> *</span> </label>';
+    echo CHtml::dropDownList
+            (
+            'Categorie', // Le nom de cette dropDownList
+            'fk_categorie', // La colonne à sélectionner
+            array // Cette array remplit la dropDownList avec les catégories mères disponibles dans la DB.
+        (
+        '' => '',
+        $this->getCategoriesLabel(),
+            ), array // Cette array définit le chargement dynamique des valeurs dans la dropDownList des sous-catégories. (Voir dropDownList suivante appelée DD_sousCat)
+        (
+        'ajax' => array
+            (
+            'type' => 'POST',
+            'url' => CController::createUrl('getsouscategoriesdynamiques'),
+            'data' => array('paramID' => 'js:this.value'),
+            'update' => '#DD_sousCat',
+        )
+            )
+    );
 
-        echo $form->labelEx($model, 'fk_categorie');
-        // Cette dropDownList est initialisée vide car elle sera remplie après la sélection d'une catégorie ci-dessus.
-        echo CHtml::dropDownList('DD_sousCat', '', array());
-        ?>
-    </div>
+    echo $form->labelEx($model, 'fk_categorie');
+    // Cette dropDownList est initialisée vide car elle sera remplie après la sélection d'une catégorie ci-dessus.
+    echo CHtml::dropDownList('DD_sousCat', '', array());
+    ?>
 
 
-    <div class="row">
-        <?php
-        echo '<label>' . Translate::trad('SelectionnerBatiment') . '<span class="required"> *</span> </label>';
-        echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAllByAttributes(array('visible' => 1)), 'id_batiment', 'nom')));
-        ;
-        ?>
-    </div>
-    <div class="row">
-        <?php
-        echo $form->labelEx($model, 'etage');
-        echo $form->textField($model, 'etage', array('size' => 1, 'maxlength' => 10, 'style' => 'resize:none', 'value' => $model->etage));
-        ?>
-    </div>
-    <div class="row">
-        <?php
-        echo $form->labelEx($model, 'bureau');
-        echo $form->textField($model, 'bureau', array('size' => 15, 'maxlength' => 10, 'value' => $model->bureau));
-        ?>
-    </div>
-    <div class="row">
-        <?php
-        echo $form->labelEx($model, 'descriptif');
-        echo $form->textArea($model, 'descriptif', array('maxlength' => 800, 'rows' => 5, 'cols' => 50, 'style' => 'resize:none'));
-        echo $form->error($model, 'descriptif');
-        ?>
-    </div>
+    <?php
+    echo '<label>' . Translate::trad('SelectionnerBatiment') . '<span class="required"> *</span> </label>';
+    echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAllByAttributes(array('visible' => 1)), 'id_batiment', 'nom')));
+    ;
+    ?>
+    <?php
+    echo $form->labelEx($model, 'etage');
+    echo $form->textField($model, 'etage', array('size' => 1, 'maxlength' => 10, 'style' => 'resize:none', 'value' => $model->etage));
+    ?>
+    <?php
+    echo $form->labelEx($model, 'bureau');
+    echo $form->textField($model, 'bureau', array('size' => 15, 'maxlength' => 10, 'value' => $model->bureau));
+    ?>
+    <?php
+    echo $form->labelEx($model, 'descriptif');
+    echo $form->textArea($model, 'descriptif', array('maxlength' => 800, 'rows' => 5, 'cols' => 50, 'style' => 'resize:none'));
+    echo $form->error($model, 'descriptif');
+    ?>
+    <div class="button">
+    <?php
+//    $this->widget('bootstrap.widgets.TbButton', array(
+//        'label' => Translate::trad('ButtonCreer'),
+//        'type'=>'primary',
+//        'buttonType' => 'submit', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+//        'size' => 'null', // null, 'large', 'small' or 'mini'
+//    ));
+    ?>
+    <?php echo CHtml::submitButton(Translate::trad('ButtonCreer'));  ?>
 
-    <div class="row buttons">
-        <?php echo CHtml::submitButton(Translate::trad('ButtonCreer')); ?>
-    </div>
 
 
     <?php $this->endWidget(); ?>
-
+    </div>
 </div><!-- form -->

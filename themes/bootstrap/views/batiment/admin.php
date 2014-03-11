@@ -3,7 +3,6 @@
 /* @var $model Batiment */
 
 $this->breadcrumbs = array(
-    'Batiments' => array('index'),
     'Manage',
 );
 

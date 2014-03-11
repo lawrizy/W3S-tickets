@@ -9,9 +9,9 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'List User', 'url' => array('index')),
-    array('label' => 'Create User', 'url' => array('create')),
-    array('label' => 'View User', 'url' => array('view', 'id' => $model->id_user)),
+    array('label' => 'Liste des utilisateurs', 'url' => array('index')),
+    array('label' => 'Créer un utilisateur', 'url' => array('create')),
+    array('label' => 'Détails des utilisateur ', 'url' => array('view', 'id' => $model->id_user)),
     array('label' => 'Manage User', 'url' => array('admin')),
 );
 ?>

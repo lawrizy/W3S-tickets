@@ -3,7 +3,7 @@
 /* @var $model CategorieIncident */
 
 $this->breadcrumbs = array(
-    'Manage',
+    'Liste',
 );
 
 $this->menu = array(

@@ -7,7 +7,7 @@
 <div class="form">
 
     <?php
-    $form = $this->beginWidget('CActiveForm', array(
+    $form = $this->beginWidget('TbActiveForm', array(
         'id' => 'entreprise-form',
         // Please note: When you enable ajax validation, make sure the corresponding
         // controller action is handling ajax validation correctly.
@@ -18,8 +18,6 @@
     ?>
 
     <p class="note">Les champs marqués de <span class="required">*</span> sont requis.</p>
-
-    <?php echo $form->errorSummary($model); ?>
 
     
         <?php echo $form->labelEx($model, 'nom'); ?>
