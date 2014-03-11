@@ -60,3 +60,10 @@ $this->pageTitle = Yii::app()->name . ' - Admin';
     <li><a href="categorieIncident/createSousCat">Rajouter une Sous-Catégorie</a></li>
 </ul>
 </p>
+
+<p>
+    <b>I18N:</b>
+    <ul>
+        <li><a href="trad/addTraduction">Ajouter une nouvelle traduction</a></li>
+    </ul>
+</p>
