@@ -5,13 +5,14 @@
 
 // Graphique en bâtonnets -> fréquence des catégories d'incidents (Pour tous les bâtiments ou pour un bâtiment spécifique)
 
-if ($idBatiment == 'ALL') { // Cas 1 : sélectionner tous les bâtiments
+if ($idBatiment == 'ALL')
+{ // Cas 1 : sélectionner tous les bâtiments
     ?>
     <p><h3><?php echo Translate::trad('AjaxTitre'); ?></h3></p>
     <?php ?>
     <div><?php
-        $this->widget(
-                'chartjs.widgets.ChBars', array(
+    $this->widget(
+        'chartjs.widgets.ChBars', array(
             'width' => 500,
             'height' => 200,
             'htmlOptions' => array(),
@@ -24,76 +25,78 @@ if ($idBatiment == 'ALL') { // Cas 1 : sélectionner tous les bâtiments
                 )
             ),
             'options' => array()
-                )
-        );
-        ?></div><?php
+        )
+    );
+    ?></div><?php
     echo '<p><h3>' . Translate::trad('AjaxStatutTicket') . '</h3></p>';
 
     $this->widget(
-            'chartjs.widgets.ChPie', array(
-        'width' => 175,
-        'height' => 175,
-        'htmlOptions' => array(),
-        'drawLabels' => true,
-        'datasets' => array(
-            array(
-                "value" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 1)),
-                "color" => "rgba(220, 0,0,1)",
-                "label" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 1)) . Translate::trad('AjaxStatutNew')
+        'chartjs.widgets.ChPie', array(
+            'width' => 175,
+            'height' => 175,
+            'htmlOptions' => array(),
+            'drawLabels' => true,
+            'datasets' => array(
+                array(
+                    "value" => (int)Ticket::model()->countByAttributes(array('fk_statut' => 1)),
+                    "color" => "rgba(220, 0,0,1)",
+                    "label" => (int)Ticket::model()->countByAttributes(array('fk_statut' => 1)) . Translate::trad('AjaxStatutNew')
+                ),
+                array(
+                    "value" => (int)Ticket::model()->countByAttributes(array('fk_statut' => 2)),
+                    "color" => "rgba(242,106,22,1)",
+                    "label" => (int)Ticket::model()->countByAttributes(array('fk_statut' => 2)) . Translate::trad('AjaxStatutInProgress')
+                ),
+                array(
+                    "value" => (int)Ticket::model()->countByAttributes(array('fk_statut' => 3)),
+                    "color" => "rgba(66,200,22,1)",
+                    "label" => (int)Ticket::model()->countByAttributes(array('fk_statut' => 3)) . Translate::trad('AjaxStatutClosed')
+                ),
             ),
-            array(
-                "value" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 2)),
-                "color" => "rgba(242,106,22,1)",
-                "label" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 2)) . Translate::trad('AjaxStatutInProgress')
-            ),
-            array(
-                "value" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 3)),
-                "color" => "rgba(66,200,22,1)",
-                "label" => (int) Ticket::model()->countByAttributes(array('fk_statut' => 3)) . Translate::trad('AjaxStatutClosed')
-            ),
-        ),
-        'options' => array
-        ()
-            )
+            'options' => array
+            ()
+        )
     );
-} else { // Cas 2 : Un bâtiment spécifique a été sélectionné
+}
+else
+{ // Cas 2 : Un bâtiment spécifique a été sélectionné
     echo '<p><h3>' . Translate::trad('AjaxFrequenceStatutTicket') .
-    Batiment::model()->findByAttributes(array('id_batiment' => $idBatiment))->nom
-    . ') </h3></p>';
+        Batiment::model()->findByAttributes(array('id_batiment' => $idBatiment))->nom
+        . ') </h3></p>';
     ?>
     <?php
     $this->widget(
-            'chartjs.widgets.ChBars', array(
-        'width' => 500,
-        'height' => 200,
-        'htmlOptions' => array(),
-        'labels' => $this->actionGetCategoriesLabel(),
-        'datasets' => array(
-            array(
-                "fillColor" => "rgba(34,167,212,1)",
-                "strokeColor" => "#AAAAAA",
-                "data" => $this->actionGetTicketByCategorieForBatimentID($idBatiment),
-            )
-        ),
-        'options' => array()
-            )
+        'chartjs.widgets.ChBars', array(
+            'width' => 500,
+            'height' => 200,
+            'htmlOptions' => array(),
+            'labels' => $this->actionGetCategoriesLabel(),
+            'datasets' => array(
+                array(
+                    "fillColor" => "rgba(34,167,212,1)",
+                    "strokeColor" => "#AAAAAA",
+                    "data" => $this->actionGetTicketByCategorieForBatimentID($idBatiment),
+                )
+            ),
+            'options' => array()
+        )
     );
     echo '<p><h3>' . Translate::trad('AjaxFrequenceStatutTicket')
-    . Batiment::model()->findByAttributes(array('id_batiment' => $idBatiment))->nom
-    . ')</h3></p>';
+        . Batiment::model()->findByAttributes(array('id_batiment' => $idBatiment))->nom
+        . ')</h3></p>';
 
 
     $this->widget(
-            'chartjs.widgets.ChPie', array(
-        'width' => 175,
-        'height' => 175,
-        'htmlOptions' => array(),
-        'drawLabels' => true,
+        'chartjs.widgets.ChPie', array(
+            'width' => 175,
+            'height' => 175,
+            'htmlOptions' => array(),
+            'drawLabels' => true,
 //'animation' => false,
-        'datasets' => $this->actionGetTicketByStatusForBatimentID($idBatiment),
-        'options' => array
-        ()
-            )
+            'datasets' => $this->actionGetTicketByStatusForBatimentID($idBatiment),
+            'options' => array
+            ()
+        )
     );
 }
 
@@ -112,9 +115,11 @@ $b = 0;
 $entryCount = 1;
 $entrepriseFreqDataSet = array();
 
-foreach ($entrepriseFreqAllData as $key => $value) {
+foreach ($entrepriseFreqAllData as $key => $value)
+{
     // Change couleur
-    switch ($entryCount * rand(1, 1000) % 3) {
+    switch ($entryCount * rand(1, 1000) % 3)
+    {
         case 0:
             $r += $color_step;
             if ($r > 255)
@@ -131,7 +136,6 @@ foreach ($entrepriseFreqAllData as $key => $value) {
                 $b -= 255;
             break;
     }
-    $entryCount;
     ++$entryCount;
 
     // Construire le dataset
@@ -144,26 +148,28 @@ foreach ($entrepriseFreqAllData as $key => $value) {
      */
     $nameTemp = array_keys($value);
     $name = (string)$nameTemp[0];
+    if ($name === "Entreprise_defaut") // On ne prend pas en compte l'entreprise par défaut
+        continue;
     $countTemp = array_values($value);
     $count = (string)$countTemp[0];
     $set = array(
         "color" => "rgba(" . $r . "," . $g . "," . $b . ", 1)",
         "label" => $name . ": " . $count,
-        "value" => (int) $count,
+        "value" => (int)$count,
     );
 
     array_push($entrepriseFreqDataSet, $set);
 }
 
 $this->widget(
-        'chartjs.widgets.ChPie', array(
-    'width' => 175,
-    'height' => 175,
-    'htmlOptions' => array(),
-    'drawLabels' => true,
-    'datasets' => $entrepriseFreqDataSet,
-    'options' => array()
-        )
+    'chartjs.widgets.ChPie', array(
+        'width' => 175,
+        'height' => 175,
+        'htmlOptions' => array(),
+        'drawLabels' => true,
+        'datasets' => $entrepriseFreqDataSet,
+        'options' => array()
+    )
 );
 // ******************** END ************************
 
