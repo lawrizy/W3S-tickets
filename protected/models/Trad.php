@@ -25,7 +25,7 @@ class Trad extends CActiveRecord {
 // NOTE: you should only define rules for those attributes that
 // will receive user inputs.
         return array(
-            array('code', 'required'),
+            array('code, fr, en, nl', 'required'), // Tous les champs sont requis lors de la création d'une traduction
             array('code', 'length', 'max' => 64),
             array('fr, en, nl', 'length', 'max' => 128),
 // The following rule is used by search().

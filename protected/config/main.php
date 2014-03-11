@@ -6,20 +6,20 @@
 
 Yii::setPathOfAlias('chartjs', dirname(__FILE__) . '/../extensions/yii-chartjs');
 Yii::setPathOfAlias('bootstrap', dirname(__FILE__) . '/../extensions/bootstrap');
-Yii::setPathOfAlias('Constantes', dirname(__FILE__).'/../models/Constantes.php');
+Yii::setPathOfAlias('Constantes', dirname(__FILE__) . '/../models/Constantes.php');
 
-require_once (dirname(__FILE__)."/../models/Constantes.php");
+require_once(dirname(__FILE__) . "/../models/Constantes.php");
 
 return array(
     'basePath' => dirname(__FILE__) . DIRECTORY_SEPARATOR . '..',
     'name' => 'Ticket System',
     // preloading 'log' component
     'preload' => array
-        (
+    (
         'log',
         'chartjs',
         'yiimail',
-        
+
     ),
     // autoloading model and component classes
     'import' => array(
@@ -47,7 +47,7 @@ return array(
         /*
          * Cette directive permet d'utiliser les liens symboliques en tant qu'assets plutôt que d'envoyer des dossiers
          * entiers en tant qu'assets. (léger gain de perfs à tester)
-         */ 
+         */
         'assetManager' => array(
             'linkAssets' => true,
         ),
@@ -113,11 +113,16 @@ return array(
                     'logFile' => 'application.log',
                     'categories' => 'cron',
                 ),
+                /*
+                array(
+                    'class'=>'CWebLogRoute',
+                ),
+                */
             ),
         ),
         // Ajout du composant chart JS pour afficher des graphiques, etc..
         'chartjs' => array
-            (
+        (
             'class' => 'chartjs.components.ChartJs',
         )
     ),
