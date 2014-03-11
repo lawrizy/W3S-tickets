@@ -36,7 +36,7 @@
     // Champs Code
     echo $form->labelEx($model, 'code');
     echo $form->textField($model, 'code', array('size' => 64, 'maxlength' => 64));
-    echo $form->error($model, 'code', array('style' => 'color: red;'));
+    echo $form->error($model, 'code');
 
     // Champs FR
     echo $form->labelEx($model, 'fr');

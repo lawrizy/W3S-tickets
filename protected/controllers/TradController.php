@@ -7,6 +7,9 @@ class TradController extends Controller
         $this->render('index');
     }
 
+    /**
+     * Cette action est appelée lors de la création d'une traduction via l'interface admin.
+     */
     public function actionAddTraduction()
     {
         $model = new Trad;
@@ -22,15 +25,15 @@ class TradController extends Controller
             {
                 // Yii::trace("La Trad passe le validate", "cron"); // OK passe
                 // Sauvegarde de la nouvelle traduction
-                if($model->save(true))
+                try
                 {
-                    Yii::app()->user->setFlash("success", "L'insertion de la nouvelle traduction s'est bien passée.");
-                }
-                else
+                    $model->save(true);
+                    Yii::app()->user->setFlash("success", "L'insertion de la nouvelle traduction s'est bien passée.<br/>
+                                Vous pouvez désormais l'utiliser en écrivant Translate::trad(\"" . $model->code . "\");");
+                } catch (CDbException $cdbe)
                 {
                     Yii::app()->user->setFlash("error", "Le code que vous voulez assigner est déjà utilisé.");
                 }
-                
                 if (!isset($_GET['ajax']))
                     $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('addTraduction'));
             }
@@ -43,19 +46,19 @@ class TradController extends Controller
                     $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('addTraduction'));
             }
         }
-        else
-        {
-            Yii::app()->user->setFlash("error", "Une erreur interne s'est déclenchée, réessayez plus tard svp.");
-            if (!isset($_GET['ajax']))
-                $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('addTraduction'));
-        }
 
         $this->render('addTraduction', array(
             'model' => $model,
         ));
     }
+    
+    public function actionModifyTraduction()
+    {
+        
+    }
 
-    public function loadModel($code) {
+    public function loadModel($code)
+    {
         $model = Batiment::model()->findByAttributes(array('code' => $code));
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');

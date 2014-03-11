@@ -28,6 +28,7 @@ class Trad extends CActiveRecord {
             array('code, fr, en, nl', 'required'), // Tous les champs sont requis lors de la création d'une traduction
             array('code', 'length', 'max' => 64),
             array('fr, en, nl', 'length', 'max' => 128),
+            
 // The following rule is used by search().
 // @todo Please remove those attributes that should not be searched.
             array('code, fr, en, nl', 'safe', 'on' => 'search'),
