@@ -21,6 +21,7 @@
             <?php
             $var = Yii::app()->session['Logged'];
             $this->widget('bootstrap.widgets.TbNavbar', array(
+                'collapse' => TRUE,
                 'type' => 'inverse',
                 'items' => array(
                     array(
