@@ -3,19 +3,17 @@
 /* @var $model Locataire */
 
 $this->breadcrumbs=array(
-	'Locataires'=>array('index'),
+	'Locataires'=>array('admin'),
 	$model->id_locataire=>array('view','id'=>$model->id_locataire),
 	'Update',
 );
 
 $this->menu=array(
-array('label'=>'List Locataire', 'url'=>array('index')),
-array('label'=>'Create Locataire', 'url'=>array('create')),
-array('label'=>'View Locataire', 'url'=>array('view', 'id'=>$model->id_locataire)),
-array('label'=>'Manage Locataire', 'url'=>array('admin')),
+array('label'=>'Détails Locataire', 'url'=>array('view', 'id'=>$model->id_locataire)),
+array('label'=>'Liste Locataire', 'url'=>array('admin')),
 );
 ?>
 
 <h1>Update Locataire <?php echo $model->id_locataire; ?></h1>
 
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php $this->renderPartial('_formUpdate', array('model'=>$model)); ?>

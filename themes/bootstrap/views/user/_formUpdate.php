@@ -30,15 +30,11 @@
         <?php echo $form->textField($model, 'email', array('size' => 60, 'maxlength' => 64)); ?>
         <?php echo $form->error($model, 'email'); ?>
 
-        <?php echo $form->labelEx($model, 'password'); ?>
-        <?php echo $form->passwordField($model, 'password', array('size' => 32, 'maxlength' => 32)); ?>
-        <?php echo $form->error($model, 'password'); ?>
-
         <?php echo $form->labelEx($model, 'fk_fonction'); ?>
         <?php echo $form->textField($model, 'fk_fonction'); ?>
         <?php echo $form->error($model, 'fk_fonction'); ?>
         <br>
-        <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+        <?php echo CHtml::submitButton('Save'); ?>
 
         <?php $this->endWidget(); ?>
     </div>

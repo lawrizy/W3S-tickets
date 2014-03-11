@@ -8,7 +8,7 @@
 <div class="form">
 
     <?php
-    $form = $this->beginWidget('TbActiveForm', array(
+    $form = $this->beginWidget('CActiveForm', array(
         'id' => 'locataire-form',
         // Please note: When you enable ajax validation, make sure the corresponding
         // controller action is handling ajax validation correctly.
@@ -23,22 +23,22 @@
 
     <?php echo $form->labelEx($model, 'nom'); ?>
     <?php echo $form->textField($model, 'nom', array('size' => 60, 'maxlength' => 64)); ?>
-    <?php echo $form->error($model, 'nom'); ?>
+    <?php echo $form->error($model, 'nom', array('style' => 'color: red;')); ?>
 
     <?php echo $form->labelEx($model, 'email'); ?>
     <?php echo $form->textField($model, 'email', array('size' => 60, 'maxlength' => 64)); ?>
-    <?php echo $form->error($model, 'email'); ?>
+    <?php echo $form->error($model, 'email', array('style' => 'color: red;')); ?>
 
     <?php echo $form->labelEx($model, 'password'); ?>
     <?php echo $form->passwordField($model, 'password', array('size' => 32, 'maxlength' => 32)); ?>
-    <?php echo $form->error($model, 'password'); ?>
+    <?php echo $form->error($model, 'password', array('style' => 'color: red;')); ?>
 
     <?php echo $form->labelEx($model, 'fk_langue'); ?>
     <?php echo $form->dropDownList($model, 'fk_langue', array('' => '', CHtml::listData(Langue::model()->findAll(), 'id', 'label')), array('class' => 'toolbar')); ?>
-    <?php echo $form->error($model, 'fk_langue'); ?>
+    <?php echo $form->error($model, 'fk_langue', array('style' => 'color: red;')); ?>
 
-    <div class="btn controls">
-        <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
+    <div class="controls">
+        <?php echo CHtml::submitButton('Create'); ?>
     </div>
     <?php $this->endWidget(); ?>
 </div><!-- form -->

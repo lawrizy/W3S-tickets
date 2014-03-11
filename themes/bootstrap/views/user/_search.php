@@ -15,11 +15,6 @@
     ?>
 
     <div class="row">
-        <?php echo $form->label($model, 'id_user'); ?>
-        <?php echo $form->textField($model, 'id_user'); ?>
-    </div>
-
-    <div class="row">
         <?php echo $form->label($model, 'nom'); ?>
         <?php echo $form->textField($model, 'nom', array('size' => 60, 'maxlength' => 64)); ?>
     </div>

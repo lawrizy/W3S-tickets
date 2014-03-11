@@ -48,16 +48,6 @@ class CategorieIncidentController extends Controller {
     }
 
     /**
-     * Displays a particular model.
-     * @param integer $id the ID of the model to be displayed
-     */
-    public function actionView($id) {
-        $this->render('view', array(
-            'model' => $this->loadModel($id),
-        ));
-    }
-
-    /**
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
@@ -76,9 +66,8 @@ class CategorieIncidentController extends Controller {
                 // Si la validation du modèle (vérifie que tout est bien présent comme il faut)
                 // et que l'entreprise reçu n'est pas null, alors on peut enregistrer
                 if ($model->save(FALSE)) {  // Le FALSE indique qu'on ne désire pas 
-                                            // faire la validation avant le save. Validation
-                                            // faite au dessus, pas besoin de la refaire
-
+                    // faire la validation avant le save. Validation
+                    // faite au dessus, pas besoin de la refaire
                     // Si le save s'est bien passé, on crée une sous-catégorie 'Autre'
                     // pour cette catégorie parent et aussi un secteur pour le lier à l'entreprise
                     $sousCat = new CategorieIncident();
@@ -136,16 +125,14 @@ class CategorieIncidentController extends Controller {
             $model->attributes = $_POST['CategorieIncident'];
             if ($model->validate() && $model['fk_parent'] != null) {
                 $model->save(FALSE);    // Le FALSE indique qu'on ne désire pas faire la validation avant
-                                        // le save. Validation faite au dessus, pas besoin de la refaire
-                
+                // le save. Validation faite au dessus, pas besoin de la refaire
                 // Si le save s'est bien passé, on redirige
                 $this->redirect(array('view', 'id' => $model->id_categorie_incident));
             } else { // Si validation pas ok ou parent null
                 if ($model['fk_parent'] == null) // On vérifie si c'est le parent qui pose problème
                     Yii::app()->session['errorParentField'] = true;
-                        // Si c'est bien le parent, on met une variable de session pour l'indiquer
-                        // Ensuite dans la vue, on affichera un message si cette variable est à true
-
+                // Si c'est bien le parent, on met une variable de session pour l'indiquer
+                // Ensuite dans la vue, on affichera un message si cette variable est à true
                 // Et enfin on redirige
                 $this->render('createSousCat', array(
                     'model' => $model,
@@ -301,12 +288,12 @@ class CategorieIncidentController extends Controller {
     }
 
     /**
-     * Lists all models.
+     * Displays a particular model.
+     * @param integer $id the ID of the model to be displayed
      */
-    public function actionIndex() {
-        $dataProvider = new CActiveDataProvider('CategorieIncident');
-        $this->render('index', array(
-            'dataProvider' => $dataProvider,
+    public function actionView($id) {
+        $this->render('view', array(
+            'model' => $this->loadModel($id),
         ));
     }
 

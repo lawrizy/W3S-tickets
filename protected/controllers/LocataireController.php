@@ -98,11 +98,10 @@ class LocataireController extends Controller {
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
 
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
         if (isset($_POST['Locataire'])) {
-            $model->attributes = $_POST['Locataire'];
+            $locataire = $_POST['Locataire'];
+            $locataire['password'] = $model->password;
+            $model->attributes = $locataire;
             if ($model->save())
                 $this->redirect(array('view', 'id' => $model->id_locataire));
         }

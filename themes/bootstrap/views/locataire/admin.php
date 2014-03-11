@@ -3,12 +3,10 @@
 /* @var $model Locataire */
 
 $this->breadcrumbs = array(
-    'Locataires' => array('admin'),
     'Manage',
 );
 
 $this->menu = array(
-    array('label' => 'List Locataire', 'url' => array('index')),
     array('label' => 'Create Locataire', 'url' => array('create')),
 );
 

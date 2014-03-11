@@ -3,12 +3,10 @@
 /* @var $model User */
 
 $this->breadcrumbs = array(
-    'Users' => array('admin'),
     'Manage',
 );
 
 $this->menu = array(
-    array('label' => 'List User', 'url' => array('index')),
     array('label' => 'Create User', 'url' => array('create')),
 );
 
@@ -41,8 +39,10 @@ $('.search-form form').submit(function(){
 
 
 <?php
+$model->visible = Constantes::VISIBLE;
 $this->widget('bootstrap.widgets.TbGridView', array(
     'id' => 'user-grid',
+    'type' => 'striped condensed bordered',
     'dataProvider' => $model->search(),
     'columns' => array(
         array('name' => 'Nom',
@@ -52,7 +52,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
             'value' => '$data->email',
         ),
         array('name' => 'Fonction',
-            'value' => 'Fonction::model()->findByPk($data->fk_fonction)->label',
+            'value' => '$data->fkFonction->label',
         ),
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',
