@@ -28,8 +28,8 @@ class UserController extends Controller {
             // Si ['User'] et [fonction = id_admin], alors c'est un admin
             return array(
                 array('allow', // 'allow' veut dire que l'utilisateur a droit à ce qui suit.
-                    'actions' => array('*'), // L'admin à tous les droits
-                    'users' => array('*'),
+                    'actions' => array('view','create','delete','update','changepassword'), // L'admin à tous les droits
+                    'users' => array('@'),
                 // Tous les droits accordés à tout le monde, mais comme il faut être admin 
                 // pour arriver là alors il n'y a que les admins qui ont ces droits-là
                 ),
@@ -171,6 +171,16 @@ class UserController extends Controller {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
+    }
+
+    public function actionChangePassword() {
+        $varUser = User::model()->findAllByPk($_GET['id']);
+    //    $this->render('changePassword', array('model' => $varUser));
+        if (isset($_POST['AncienMdp'])) {
+            Yii::trace('je rentre', 'cron');
+        }
+
+        $this->render('changePassword', array('model' => $varUser));
     }
 
 }
