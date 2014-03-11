@@ -18,7 +18,7 @@ $this->menu = array(
         <title></title>
     </head>
     <body>
-        <h1 class="h1">Supprimer une adresse pour <?php echo $model->nom; ?></h1>
+        <h1 class="h1">Ajouter une adresse pour <?php echo $model->nom; ?></h1>
         <br>
         <?php
         $this->widget('bootstrap.widgets.TbAlert', array(
@@ -28,17 +28,27 @@ $this->menu = array(
             'closeText' => '&times;', // close link text - if set to false, no close link is displayed
         ));
         ?>
-        <div class="table-bordered">
+        <?php
+        $lieux = Lieu::model()->findAllByAttributes(array('visible' => Constantes::VISIBLE, 'fk_locataire' => $model['id_locataire']));
+        $batiments = Batiment::model()->findAllByAttributes(array('visible' => Constantes::VISIBLE));
+
+        foreach ($lieux as $lieu) {
+            foreach ($batiments as $key => $batiment) {
+                if ($lieu['fk_batiment'] == $batiment['id_batiment'])
+                    unset($batiments[$key]);
+            }
+        }
+        ?>
+        <div class = "table-bordered">
             <br>
             <?php
             echo CHtml::form();
             echo CHtml::label('Sélectionner le batiment', 'Nom du batiment');
-            echo CHtml::dropDownList('Batiment', 'id_batiment', array(CHtml::listData(Batiment::model()->findAllBySql("SELECT b.nom,b.id_batiment FROM db_ticketing.w3sys_lieu l inner join w3sys_batiment b on  l.fk_batiment = b.id_batiment
-                    WHERE l.fk_locataire =" . $model->id_locataire . " and l.visible=" . Constantes::VISIBLE), 'id_batiment', 'nom')));
+            echo CHtml::dropDownList('Batiment', 'id_batiment', array(CHtml::listData($batiments, 'id_batiment', 'nom')));
             ?>
             <br>
             <?php
-            echo CHtml::submitButton('Supprimer');
+            echo CHtml::submitButton('Ajouter');
             echo CHtml::endForm();
             ?>
         </div>
