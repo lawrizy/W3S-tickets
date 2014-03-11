@@ -18,6 +18,11 @@ $this->menu = array(
 <h1>Détails Entreprise: <?php echo $model->nom; ?></h1>
 
 <?php
+$string = " ";
+$varSecteur = Secteur::model()->findAllByAttributes(array('fk_entreprise' => $model->id_entreprise));
+foreach ($varSecteur as $secteur) {
+    $string .=CategorieIncident::model()->findByAttributes(array('id_categorie_incident' => $secteur->fk_categorie))->label . ' ';
+}
 $this->widget('bootstrap.widgets.TbDetailView', array(
     'type' => 'striped bordered',
     'data' => $model,
@@ -28,6 +33,9 @@ $this->widget('bootstrap.widgets.TbDetailView', array(
         'adresse',
         'commune',
         'cp',
+        array('name' => 'Cat&eacute;gorie(s): ',
+            'value' => $string,
+        )
     ),
 ));
 ?>
