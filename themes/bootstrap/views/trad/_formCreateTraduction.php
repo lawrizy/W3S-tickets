@@ -60,7 +60,7 @@
         $this->widget('bootstrap.widgets.TbButton', array(
             'buttonType'=>'submit',
             'type' => 'primary',
-            'label'=>  'Envoyer la nouvelle traduction',
+            'label' => 'Envoyer la nouvelle traduction',
         ));
         // FORMULAIRE END
         ?>

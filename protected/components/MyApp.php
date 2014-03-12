@@ -14,7 +14,13 @@
 class MyApp {
 
     public static function beginRequest() {
-        Yii::app()->language = Yii::app()->session['_lang'];
+        try
+        {
+            Yii::app()->language = Yii::app()->session['_lang'];
+        } catch(CDbException $cdbe)
+        {
+            Yii::app()->user->setFlash('error', 'Connection to dabatase failed, we\'re working on it!');
+        }
     }
 
 }
