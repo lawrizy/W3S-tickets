@@ -3,19 +3,19 @@
 /* @var $model Ticket */
 
 
-//$this->breadcrumbs = array(
-//    'Tickets' => array('index'),
-//    $model->id_ticket,
-//);
+$this->breadcrumbs = array(
+    'Tickets' => array('admin'),
+    $model->code_ticket,
+);
 
 if (Yii::app()->session['Utilisateur'] === 'User') {
     $this->menu = array(
-       // array('label' => Yii::t('/ticket/view', 'MenuModifierTicket'), 'url' => array('update', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $model->fk_statut != 3),
-        array('label' => Translate::trad('MenuMettreEnTraitementTicket'), 'url' => array('traitement', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $model->fk_statut != 3),
-        array('label' => Translate::trad('MenuCloseTicket'), 'url' => array('close', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $model->fk_statut == 2),
+       // array('label' => Yii::t('/ticket/view', 'MenuModifierTicket'), 'url' => array('update', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $model->fk_statut != Constantes::STATUT_CLOSED),
+        array('label' => Translate::trad('MenuMettreEnTraitementTicket'), 'url' => array('traitement', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $model->fk_statut != Constantes::STATUT_CLOSED),
+        array('label' => Translate::trad('MenuCloseTicket'), 'url' => array('close', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $model->fk_statut == Constantes::STATUT_TREATMENT),
         
         // TODO
-        array('label' => Translate::trad('MenuTicketDelete'), 'url' => array('delete', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && Yii::app()->session['Logged']->fk_fonction == 2)
+        array('label' => Translate::trad('MenuTicketDelete'), 'url' => array('delete', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && Yii::app()->session['Logged']->fk_fonction == Constantes::FONCTION_ADMIN)
     );
 }
 ?>

@@ -3,13 +3,8 @@
 /* @var $model Ticket */
 /* @var $form CActiveForm */
 ?>
-<script>
-    $(function() { // fonction JQuery permettant d'afficher le datePicker
-        $("#anim").change(function() {
-            $("#Ticket[date_intervention]").datepicker("option", "showAnim", "show");
-        });
-    });
-</script>
+
+
 <div class="form">
     <?php
     $form = $this->beginWidget('CActiveForm', array('id' => 'ticket-form', 'enableAjaxValidation' => false));
@@ -61,15 +56,16 @@
     ?>
     
     
+    
+    <div class="buttons">
     <?php
-    echo '<div class="buttons">';
     $this->widget('zii.widgets.jui.CJuiButton', array(
         'buttonType' => 'submit', // Type de bouton
         'name' => 'traitement', // L'action à lancer (ne pas oublier les rules dans le controleur)
         'caption' => Translate::trad('ButtonTraitement'), // Le texte à afficher sur le bouton
     ));
-    echo '</div>';
     ?>
+    </div>
     
 </div>
 <br />
