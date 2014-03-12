@@ -5,11 +5,11 @@
 
 $this->breadcrumbs = array(
     'admin' => '../admin',
-    'Ajouter une nouvelle traduction',
+    'Modifier une traduction existante',
 );
 
 $this->menu = array(
-    
+
 );
 
 ?>
@@ -18,5 +18,5 @@ $this->menu = array(
 </div>
 <?php
 
-$this->renderPartial('_formCreateTraduction', array('model' => $model));
+$this->renderPartial('_formModifyTraduction', array('model' => $model));
 ?>

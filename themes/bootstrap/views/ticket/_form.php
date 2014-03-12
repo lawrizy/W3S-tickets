@@ -23,24 +23,24 @@
     // Form pour la sélection de la catégorie
     echo '<label>' . Translate::trad('SelectionnerCategorie') . '<span class="required"> *</span> </label>';
     echo CHtml::dropDownList
-            (
+        (
             'Categorie', // Le nom de cette dropDownList
             'fk_categorie', // La colonne à sélectionner
             array // Cette array remplit la dropDownList avec les catégories mères disponibles dans la DB.
-        (
-        '' => '',
-        $this->getCategoriesLabel(),
-            ), array // Cette array définit le chargement dynamique des valeurs dans la dropDownList des sous-catégories. (Voir dropDownList suivante appelée DD_sousCat)
-        (
-        'ajax' => array
             (
-            'type' => 'POST',
-            'url' => CController::createUrl('getsouscategoriesdynamiques'),
-            'data' => array('paramID' => 'js:this.value'),
-            'update' => '#DD_sousCat',
-        )
+                '' => '',
+                $this->getCategoriesLabel(),
+            ), array // Cette array définit le chargement dynamique des valeurs dans la dropDownList des sous-catégories. (Voir dropDownList suivante appelée DD_sousCat)
+            (
+                'ajax' => array
+                (
+                    'type' => 'POST',
+                    'url' => CController::createUrl('getsouscategoriesdynamiques'),
+                    'data' => array('paramID' => 'js:this.value'),
+                    'update' => '#DD_sousCat',
+                )
             )
-    );
+        );
 
     echo $form->labelEx($model, 'fk_categorie');
     // Cette dropDownList est initialisée vide car elle sera remplie après la sélection d'une catégorie ci-dessus.
@@ -50,8 +50,7 @@
 
     <?php
     echo '<label>' . Translate::trad('SelectionnerBatiment') . '<span class="required"> *</span></label>';
-    echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAllByAttributes(array('visible' => Constantes::VISIBLE)), 'id_batiment', 'nom')));
-    ;
+    echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAllByAttributes(array('visible' => Constantes::VISIBLE)), 'id_batiment', 'nom')));;
     ?>
     <?php
     echo $form->labelEx($model, 'etage');
@@ -67,18 +66,18 @@
     echo $form->error($model, 'descriptif');
     ?>
     <div class="button">
-    <?php
-//    $this->widget('bootstrap.widgets.TbButton', array(
-//        'label' => Translate::trad('ButtonCreer'),
-//        'type'=>'primary',
-//        'buttonType' => 'submit', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-//        'size' => 'null', // null, 'large', 'small' or 'mini'
-//    ));
-    ?>
-    <?php echo CHtml::submitButton(Translate::trad('ButtonCreer'));  ?>
+        <?php
+        //    $this->widget('bootstrap.widgets.TbButton', array(
+        //        'label' => Translate::trad('ButtonCreer'),
+        //        'type'=>'primary',
+        //        'buttonType' => 'submit', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+        //        'size' => 'null', // null, 'large', 'small' or 'mini'
+        //    ));
+        ?>
+        <?php echo CHtml::submitButton(Translate::trad('ButtonCreer')); ?>
 
 
 
-    <?php $this->endWidget(); ?>
+        <?php $this->endWidget(); ?>
     </div>
 </div><!-- form -->
