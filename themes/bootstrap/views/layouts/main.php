@@ -22,9 +22,9 @@
             $varCheminAcces = "";
             $var = Yii::app()->session['Logged'];
             if (Yii::app()->session['Utilisateur'] == 'Locataire') {
-                $varCheminAcces = "/locataire/changePassword?id=" . $var['id_locataire'];
+                $varCheminAcces = "locataire/changepassword?id=" . $var['id_locataire'];
             } else {
-                $varCheminAcces = "/user/changePassword?id=" . $var['id_user'];
+                $varCheminAcces = "user/changepassword?id=". $var['id_user'];
             }
             $this->widget('bootstrap.widgets.TbNavbar', array(
                 'collapse' => TRUE,
