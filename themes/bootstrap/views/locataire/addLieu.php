@@ -48,7 +48,7 @@ $this->menu = array(
             <br>
             <?php
             echo CHtml::form();
-            echo CHtml::label('Sélectionner le batiment', 'Nom du batiment');
+            echo CHtml::label('Sélectionner le batiment ', 'Nom du batiment');
             echo CHtml::dropDownList('Batiment', 'id_batiment', array(CHtml::listData($batiments, 'id_batiment', 'nom')));
             ?>
             <br>

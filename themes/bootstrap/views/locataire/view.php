@@ -1,4 +1,4 @@
-<?php
+    <?php
 /* @var $this LocataireController */
 /* @var $model Locataire */
 

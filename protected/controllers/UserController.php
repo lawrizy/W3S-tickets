@@ -28,7 +28,7 @@ class UserController extends Controller {
             // Si ['User'] et [fonction = id_admin], alors c'est un admin
             return array(
                 array('allow', // 'allow' veut dire que l'utilisateur a droit à ce qui suit.
-                    'actions' => array('view','create','delete','update','changepassword'), // L'admin à tous les droits
+                    'actions' => array('view', 'create', 'delete', 'update', 'changepassword'), // L'admin à tous les droits
                     'users' => array('@'),
                 // Tous les droits accordés à tout le monde, mais comme il faut être admin 
                 // pour arriver là alors il n'y a que les admins qui ont ces droits-là
@@ -89,7 +89,7 @@ class UserController extends Controller {
      */
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
-        
+
         if (isset($_POST['User'])) {
             $user = $_POST['User'];
             $user['password'] = $model->password;
@@ -169,13 +169,22 @@ class UserController extends Controller {
     }
 
     public function actionChangePassword() {
-        $varUser = User::model()->findAllByPk($_GET['id']);
-    //    $this->render('changePassword', array('model' => $varUser));
+        $model = User::model()->findByPk($_GET['id']);
+        //    $this->render('changePassword', array('model' => $varUser));
         if (isset($_POST['AncienMdp'])) {
-            Yii::trace('je rentre', 'cron');
+            if (md5($_POST['AncienMdp']) === $model->password) {
+                if ($_POST['NouveauMdp'] != NULL && $_POST['NouveauMdp'] === $_POST['NouveauMdp1']) {
+                    $model->password = md5($_POST['NouveauMdp1']);
+                    if ($model->save())
+                        Yii::app()->user->setFlash('success', '<strong>Votre nouveau mot de passe a bien été enregistré!' . '</strong>');
+                } else {
+                    Yii::app()->user->setFlash('error', '<strong>Erreur les nouveaux mots de passe sont différents !' . '</strong>');
+                }
+            } else {
+                Yii::app()->user->setFlash('error', '<strong>Erreur votre ancien mot de passe est erroné !' . '</strong>');
+            }
         }
-
-        $this->render('changePassword', array('model' => $varUser));
+        $this->render('changePassword');
     }
 
 }
