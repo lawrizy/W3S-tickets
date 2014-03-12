@@ -4,7 +4,7 @@
 
 $this->breadcrumbs=array(
 	'Batiments'=>array('admin'),
-	$model->id_batiment=>array('view','id'=>$model->id_batiment),
+	$model->nom=>array('view','id'=>$model->id_batiment),
 	'Update',
 );
 

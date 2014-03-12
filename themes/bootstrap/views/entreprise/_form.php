@@ -18,33 +18,27 @@
     ?>
 
     <p class="note">Les champs marqués de <span class="required">*</span> sont requis.</p>
-
     
         <?php echo $form->labelEx($model, 'nom'); ?>
         <?php echo $form->textField($model, 'nom', array('size' => 45, 'maxlength' => 45)); ?>
         <?php echo $form->error($model, 'nom'); ?>
-        
-    
+
         <?php echo $form->labelEx($model, 'adresse'); ?>
         <?php echo $form->textField($model, 'adresse', array('size' => 45, 'maxlength' => 45)); ?>
         <?php echo $form->error($model, 'adresse'); ?>
 
-    
         <?php echo $form->labelEx($model, 'tva'); ?>
         <?php echo $form->textField($model, 'tva', array('size' => 45, 'maxlength' => 45)); ?>
         <?php echo $form->error($model, 'tva'); ?>
 
-    
         <?php echo $form->labelEx($model, 'commune'); ?>
         <?php echo $form->textField($model, 'commune', array('size' => 45, 'maxlength' => 45)); ?>
         <?php echo $form->error($model, 'commune'); ?>
 
-    
         <?php echo $form->labelEx($model, 'cp'); ?>
         <?php echo $form->textField($model, 'cp'); ?>
         <?php echo $form->error($model, 'cp'); ?>
 
-    
         <?php echo $form->labelEx($model, 'tel'); ?>
         <?php echo $form->textField($model, 'tel', array('size' => 45, 'maxlength' => 45)); ?>
         <?php echo $form->error($model, 'tel'); ?>

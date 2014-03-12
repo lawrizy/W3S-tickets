@@ -4,7 +4,7 @@
 
 $this->breadcrumbs=array(
 	'Entreprises'=>array('admin'),
-	$model->id_entreprise=>array('view','id'=>$model->id_entreprise),
+	$model->nom=>array('view','id'=>$model->id_entreprise),
 	'Update',
 );
 
@@ -14,6 +14,6 @@ array('label'=>'Manage Entreprise', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Update Entreprise <?php echo $model->id_entreprise; ?></h1>
+<h1>Update Entreprise <?php echo $model->nom; ?></h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

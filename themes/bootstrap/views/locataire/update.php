@@ -4,7 +4,7 @@
 
 $this->breadcrumbs=array(
 	'Locataires'=>array('admin'),
-	$model->id_locataire=>array('view','id'=>$model->id_locataire),
+	$model->nom=>array('view','id'=>$model->id_locataire),
 	'Update',
 );
 
@@ -14,6 +14,6 @@ array('label'=>'Liste Locataire', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Update Locataire <?php echo $model->id_locataire; ?></h1>
+<h1>Update Locataire <?php echo $model->nom; ?></h1>
 
 <?php $this->renderPartial('_formUpdate', array('model'=>$model)); ?>

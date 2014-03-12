@@ -18,6 +18,7 @@
  * @property integer $fk_locataire
  * @property integer $fk_batiment
  * @property integer $visible
+ * @property integer $fk_priorite
  *
  * The followings are the available model relations:
  * @property HistoriqueTicket[] $historiqueTickets
@@ -38,15 +39,15 @@ class Ticket extends CActiveRecord {
 // NOTE: you should only define rules for those attributes that
 // will receive user inputs.
         return array(
-            array('fk_categorie, fk_canal, code_ticket, fk_locataire, fk_batiment', 'required', 'message' => Translate::trad('Required')),
-            array('fk_statut, fk_categorie, fk_user, fk_canal, fk_entreprise, fk_locataire, fk_batiment, visible', 'numerical', 'integerOnly' => true,
+            array('fk_categorie, fk_canal, code_ticket, fk_locataire, fk_batiment, fk_priorite', 'required', 'message' => Translate::trad('Required')),
+            array('fk_statut, fk_categorie, fk_user, fk_canal, fk_entreprise, fk_locataire, fk_batiment, visible, fk_priorite', 'numerical', 'integerOnly' => true,
                 'message' => 'Le champs {attribute} ne peut contenir que des nombres.'),
             array('code_ticket', 'length', 'max' => 10),
             array('etage, bureau', 'length', 'max' => 45),
             array('descriptif, date_intervention', 'safe'),
 // The following rule is used by search().
 // @todo Please remove those attributes that should not be searched.
-            array('id_ticket, fk_statut, fk_categorie, fk_user, descriptif, fk_canal, date_intervention, fk_entreprise, code_ticket, etage, bureau, fk_locataire, fk_batiment, visible', 'safe', 'on' => 'search'),
+            array('id_ticket, fk_statut, fk_categorie, fk_user, descriptif, fk_canal, date_intervention, fk_entreprise, code_ticket, etage, bureau, fk_locataire, fk_batiment, visible, fk_priorite', 'safe', 'on' => 'search'),
         );
     }
 
@@ -80,6 +81,7 @@ class Ticket extends CActiveRecord {
             'fk_locataire' => 'Fk Locataire',
             'fk_batiment' => 'Fk Batiment',
             'visible' => 'Visible',
+            'fk_priorite' => 'Fk Priorite',
         );
     }
 
@@ -114,12 +116,13 @@ class Ticket extends CActiveRecord {
         $criteria->compare('fk_locataire', $this->fk_locataire);
         $criteria->compare('fk_batiment', $this->fk_batiment);
         $criteria->compare('visible', Constantes::VISIBLE);
+        $criteria->compare('fk_priorite', $this->fk_priorite);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
     }
-    
+
     public function searchOpened() {
         $criteria = new CDbCriteria;
 
@@ -137,12 +140,13 @@ class Ticket extends CActiveRecord {
         $criteria->compare('fk_locataire', $this->fk_locataire);
         $criteria->compare('fk_batiment', $this->fk_batiment);
         $criteria->compare('visible', Constantes::VISIBLE);
+        $criteria->compare('fk_priorite', $this->fk_priorite);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
     }
-    
+
     public function searchInProgress() {
         $criteria = new CDbCriteria;
 
@@ -160,12 +164,13 @@ class Ticket extends CActiveRecord {
         $criteria->compare('fk_locataire', $this->fk_locataire);
         $criteria->compare('fk_batiment', $this->fk_batiment);
         $criteria->compare('visible', Constantes::VISIBLE);
+        $criteria->compare('fk_priorite', $this->fk_priorite);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
     }
-    
+
     public function searchClosed() {
         $criteria = new CDbCriteria;
 
@@ -183,12 +188,13 @@ class Ticket extends CActiveRecord {
         $criteria->compare('fk_locataire', $this->fk_locataire);
         $criteria->compare('fk_batiment', $this->fk_batiment);
         $criteria->compare('visible', Constantes::VISIBLE);
+        $criteria->compare('fk_priorite', $this->fk_priorite);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
         ));
     }
-    
+
     public function searchByLocataire($id) {
         $criteria = new CDbCriteria;
 
@@ -206,6 +212,7 @@ class Ticket extends CActiveRecord {
         $criteria->compare('fk_locataire', $id);
         $criteria->compare('fk_batiment', $this->fk_batiment);
         $criteria->compare('visible', $this->visible);
+        $criteria->compare('fk_priorite', $this->fk_priorite);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,
@@ -237,4 +244,5 @@ class Ticket extends CActiveRecord {
         $cat = CategorieIncident::model()->findByPk(array('fk_parent' => $sousCat->fk_parent, 'visible' => 1));
         return $cat->id_categorie_incident;
     }
+
 }

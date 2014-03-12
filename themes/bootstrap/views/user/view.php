@@ -4,7 +4,7 @@
 
 $this->breadcrumbs = array(
     'Users' => array('admin'),
-    $model->id_user,
+    $model->nom,
 );
 
 $this->menu = array(
@@ -14,7 +14,7 @@ $this->menu = array(
 );
 ?>
 
-<h1>Détails User <?php echo $model->nom; ?></h1>
+<h1>Détails <?php echo $model->nom; ?></h1>
 
 
 <?php

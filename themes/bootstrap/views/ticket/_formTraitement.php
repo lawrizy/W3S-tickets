@@ -52,17 +52,25 @@
         ))
     );
     ?>
-</div>
-
-<div class="buttons">
-<?php
-$this->widget('zii.widgets.jui.CJuiButton', array(
-    'buttonType' => 'submit', // Type de bouton
-    'name' => 'traitement', // L'action à lancer (ne pas oublier les rules dans le controleur)
-    'caption' => Translate::trad('ButtonTraitement'), // Le texte à afficher sur le bouton
-));
-?>
-
+    
+    <?php
+        echo $form->labelEx($model, 'fk_priorite');
+        echo $form->dropDownList($model, 'fk_priorite', array('' => '', CHtml::listData(Priorite::model()->findAll(), 'id_priorite', 'label')));
+        echo $form->error($model, 'fk_priorite');
+        
+    ?>
+    
+    
+    <?php
+    echo '<div class="buttons">';
+    $this->widget('zii.widgets.jui.CJuiButton', array(
+        'buttonType' => 'submit', // Type de bouton
+        'name' => 'traitement', // L'action à lancer (ne pas oublier les rules dans le controleur)
+        'caption' => Translate::trad('ButtonTraitement'), // Le texte à afficher sur le bouton
+    ));
+    echo '</div>';
+    ?>
+    
 </div>
 <br />
 <br />

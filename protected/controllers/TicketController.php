@@ -122,12 +122,12 @@ class TicketController extends Controller {
                 $loc = Locataire::model()->findByPk($oldmodel['fk_locataire']);
                 Yii::app()->session['EmailSend'] = 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email'];
                 Yii::trace('apres save du model', 'cron');
-// Si la sauvegarde du ticket s'est bien passé,
-// on enregistre un évènement InProgress pour le traitement du ticket
+                // Si la sauvegarde du ticket s'est bien passé,
+                // on enregistre un évènement InProgress pour le traitement du ticket
                 $histo = new HistoriqueTicket();
                 $histo->date_update = date("Y-m-d H:i:s", time());
                 $histo->fk_ticket = $oldmodel->id_ticket;
-// Lors du traitement, statut forcément à InProgress
+                // Lors du traitement, statut forcément à InProgress
                 $histo->fk_statut_ticket = Constantes::STATUT_TREATMENT;
                 $logged = Yii::app()->session['Logged'];
                 $histo->fk_user = $logged['id_user'];
@@ -178,10 +178,15 @@ class TicketController extends Controller {
             }
 
             // On met à jour la sous-catégorie (qui est liée elle-même à une catégorie mère unique).
-            if (isset($_POST['DD_sousCat']))
+            if (isset($_POST['DD_sousCat'])) {
                 $ticket['fk_categorie'] = $_POST['DD_sousCat'];
-            else
+                $cat = CategorieIncident::model()->findByPk($ticket['fk_categorie']);
+                $ticket['fk_priorite'] = $cat['fk_priorite'];
+            }
+            else {
                 $ticket['fk_categorie'] = NULL;
+                $ticket['fk_priorite'] = NULL;
+            }
 
             // Génère le code_ticket (unique à chaque ticket) selon le batiment
             $ticket['code_ticket'] = $ticket['fk_batiment'] != null ? $this->createCodeTicket($ticket['fk_batiment']) : null;

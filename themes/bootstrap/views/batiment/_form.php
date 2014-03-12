@@ -40,7 +40,7 @@
         <?php echo $form->textField($model, 'cp'); ?>
         <?php echo $form->error($model, 'cp'); ?>
 
-    <div class="row buttons">
+    <div class="buttons">
         <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
     </div>
 
