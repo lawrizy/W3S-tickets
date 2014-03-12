@@ -93,7 +93,7 @@ class User extends CActiveRecord {
         $criteria->compare('password', $this->password, true);
         $criteria->compare('fk_fonction', $this->fk_fonction);
         $criteria->compare('fk_langue', $this->fk_langue);
-        $criteria->compare('visible', Constantes::VISIBLE);
+        $criteria->compare('visible', $this->visible);
 
         return new CActiveDataProvider($this, array(
             'criteria' => $criteria,

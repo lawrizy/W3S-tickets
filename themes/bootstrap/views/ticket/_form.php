@@ -49,8 +49,8 @@
 
 
     <?php
-    echo '<label>' . Translate::trad('SelectionnerBatiment') . '<span class="required"> *</span> </label>';
-    echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAllByAttributes(array('visible' => 1)), 'id_batiment', 'nom')));
+    echo '<label>' . Translate::trad('SelectionnerBatiment') . '<span class="required"> *</span></label>';
+    echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAllByAttributes(array('visible' => Constantes::VISIBLE)), 'id_batiment', 'nom')));
     ;
     ?>
     <?php

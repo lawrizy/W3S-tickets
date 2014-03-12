@@ -19,7 +19,13 @@
 
         <div id="header">
             <?php
+            $varCheminAcces = "";
             $var = Yii::app()->session['Logged'];
+            if (Yii::app()->session['Utilisateur'] == 'Locataire') {
+                $varCheminAcces = "/locataire/changePassword?id=" . $var['id_locataire'];
+            } else {
+                $varCheminAcces = "/user/changePassword?id=" . $var['id_user'];
+            }
             $this->widget('bootstrap.widgets.TbNavbar', array(
                 'collapse' => TRUE,
                 'type' => 'inverse',
@@ -35,7 +41,7 @@
                             array('label' => Translate::trad('Creer') . Yii::app()->session['NouveauTicket'] . ' ticket', 'url' => array('/ticket/create'), 'visible' => Yii::app()->session['Utilisateur'] == 'Locataire'),
                             '---',
                             array('label' => 'Gestion du compte', 'url' => array('#'),
-                                'items' => array(array('label' => 'Changer votre mot de passe', 'url' => array('#'))),
+                                'items' => array(array('label' => 'Changer votre mot de passe', 'url' => array($varCheminAcces))),
                                 'visible' => !Yii::app()->user->isGuest),
                             '---',
                             array('label' => Translate::trad('DashBoard'), 'url' => array(''),
