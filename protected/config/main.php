@@ -113,6 +113,7 @@ return array(
                     'logFile' => 'application.log',
                     'categories' => 'cron',
                 ),
+                
                 /*
                 array(
                     'class'=>'CWebLogRoute',
