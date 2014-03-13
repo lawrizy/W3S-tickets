@@ -5,7 +5,12 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <?php
-//$controllerLocataire = new LocataireController();
+$this->breadcrumbs=array(
+	'Locataires'=>array('admin'),
+	$model->nom=>array('view','id'=>$model->id_locataire),
+	'Ajouter une adresse',
+);
+
 $this->menu = array(
     array('label' => 'Admin', 'url' => array('admin')),
     array('label' => 'View', 'url' => array('view', 'id' => $model->id_locataire))
@@ -43,7 +48,7 @@ $this->menu = array(
             <br>
             <?php
             echo CHtml::form();
-            echo CHtml::label('Sélectionner le batiment', 'Nom du batiment');
+            echo CHtml::label('Sélectionner le batiment ', 'Nom du batiment');
             echo CHtml::dropDownList('Batiment', 'id_batiment', array(CHtml::listData($batiments, 'id_batiment', 'nom')));
             ?>
             <br>

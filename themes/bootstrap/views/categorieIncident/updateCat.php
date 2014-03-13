@@ -4,7 +4,7 @@
 
 $this->breadcrumbs=array(
 	'Categorie Incidents'=>array('admin'),
-	$model->id_categorie_incident=>array('view','id'=>$model->id_categorie_incident),
+	$model->label=>array('view','id'=>$model->id_categorie_incident),
 	'Update',
 );
 

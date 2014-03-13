@@ -3,6 +3,9 @@
 /* @var $this TicketController */
 /* @var $model Ticket */
 
+$this->breadcrumbs = array(
+    'Tickets',
+);
 
 $this->menu = array(
     array('label' => Translate::trad('MenuTicketEnCours'), 'url' => array('ticket/admin?var=admin_InProgress')),

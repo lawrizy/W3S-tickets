@@ -13,7 +13,7 @@
     <textarea maxlength="800" rows="5" cols="50" style="resize:none" name="Ticket[descriptif]" id="Ticket_descriptif"></textarea>
 
 
-    <div class="row buttons">
+    <div class="buttons">
         <?php
         $this->widget('zii.widgets.jui.CJuiButton', array(
             'buttonType' => 'submit',

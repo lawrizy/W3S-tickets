@@ -14,26 +14,22 @@
     ));
     ?>
 
-    <div class="row">
-        <?php echo $form->label($model, 'nom'); ?>
-        <?php echo $form->textField($model, 'nom', array('size' => 60, 'maxlength' => 64)); ?>
+    <?php
+    echo $form->label($model, 'nom');
+    echo $form->textField($model, 'nom', array('size' => 60, 'maxlength' => 64));
+
+    echo $form->label($model, 'email');
+    echo $form->textField($model, 'email', array('size' => 60, 'maxlength' => 64));
+
+    echo $form->label($model, 'fk_fonction');
+    echo $form->dropDownList($model, 'fk_fonction', array('' => '', CHtml::listData(Fonction::model()->findAll(), 'id_fonction', 'label')));
+    ?>
+
+    <div class="buttons">
+    <?php echo CHtml::submitButton('Search'); ?>
     </div>
 
-    <div class="row">
-        <?php echo $form->label($model, 'email'); ?>
-        <?php echo $form->textField($model, 'email', array('size' => 60, 'maxlength' => 64)); ?>
-    </div>
-
-    <div class="row">
-        <?php echo $form->label($model, 'fk_fonction'); ?>
-        <?php echo $form->textField($model, 'fk_fonction'); ?>
-    </div>
-
-    <div class="row buttons">
-        <?php echo CHtml::submitButton('Search'); ?>
-    </div>
-
-    <?php $this->endWidget(); ?>
+<?php $this->endWidget(); ?>
 
 
 </div><!-- search-form -->

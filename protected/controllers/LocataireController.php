@@ -30,7 +30,7 @@ class LocataireController extends Controller {
 
             return array(
                 array('allow', // 'allow' veut dire que l'utilisateur a droit à ce qui suit.
-                    'actions' => array('admin', 'view', 'create', 'update', 'delete', 'deletelieu', 'addlieu'), // L'admin à tous les droits
+                    'actions' => array('admin', 'view', 'create', 'update', 'delete', 'deletelieu', 'addlieu','changepassword'), // L'admin à tous les droits
                     'users' => array('@'),
                 // Tous les droits accordés à tout le monde, mais comme il faut être admin 
                 // pour arriver là alors il n'y a que les admins qui ont ces droits-là
@@ -194,18 +194,16 @@ class LocataireController extends Controller {
     public function actionDeleteLieu() {
         $model = Locataire::model()->findByPk($_GET['id']);
         if (isset($_POST['Batiment'])) {
-            $modelLieu = Lieu::model()->findByAttributes(array('fk_locataire' => $_GET['id'], 'fk_batiment' => $_POST['Batiment']));
+            $modelLieu = Lieu::model()->findByAttributes(array('fk_locataire' => $_GET['id'], 'fk_batiment' => $_POST['Batiment'], 'visible' => Constantes::VISIBLE));
             $modelLieu['visible'] = Constantes::INVISIBLE;
             if ($modelLieu->save()) {
                 Yii::app()->user->setFlash('success', '<strong> Le propriétaire ' . $model->nom . ' n\'habite plus dans le bâtiment: ' . Batiment::model()->findByPk($_POST['Batiment'])->nom . '</strong>');
-                $this->render('deleteLieu', array('model' => $model));
             } else {
                 Yii::app()->user->setFlash('error', '<strong>Erreur lors de la suppresion</strong>');
-                $this->render('deleteLieu', array('model' => $model));
             }
-        } else {
-            $this->render('deleteLieu', array('model' => $model));
         }
+
+        $this->render('deleteLieu', array('model' => $model));
     }
 
     public function actionaddLieu() {
@@ -217,14 +215,30 @@ class LocataireController extends Controller {
             $modelLieu['fk_batiment'] = $_POST['Batiment'];
             if ($modelLieu->save()) {
                 Yii::app()->user->setFlash('success', '<strong>Cette adresse a bien été ajoutée pour: ' . $model->nom . '</strong>');
-                $this->render('addLieu', array('model' => $model));
             } else {
                 Yii::app()->user->setFlash('error', '<strong>Erreur lors de l\'ajout du bâtiment ' . '</strong>');
-                $this->render('addLieu', array('model' => $model));
             }
-        } else {
-            $this->render('addLieu', array('model' => $model));
         }
+        
+        $this->render('addLieu', array('model' => $model));
+    }
+
+    public function actionChangePassword() {
+        $model = Locataire::model()->findByPk($_GET['id']);
+        if (isset($_POST['AncienMdp'])) {
+            if (md5($_POST['AncienMdp']) === $model->password) {
+                if ($_POST['NouveauMdp'] != NULL && $_POST['NouveauMdp'] === $_POST['NouveauMdp1']) {
+                    $model->password = md5($_POST['NouveauMdp1']);
+                    if ($model->save())
+                        Yii::app()->user->setFlash('success', '<strong>Votre nouveau mot de passe a bien été enregistré!' . '</strong>');
+                } else {
+                    Yii::app()->user->setFlash('error', '<strong>Erreur les nouveaux mots de passe sont différents !' . '</strong>');
+                }
+            } else {
+                Yii::app()->user->setFlash('error', '<strong>Erreur votre ancien mot de passe est erroné !' . '</strong>');
+            }
+        }
+        $this->render('changePassword');
     }
 
 }

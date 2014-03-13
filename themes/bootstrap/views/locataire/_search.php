@@ -6,37 +6,25 @@
 
 <div class="wide form">
 
-    <?php $form=$this->beginWidget('CActiveForm', array(
-	'action'=>Yii::app()->createUrl($this->route),
-	'method'=>'get',
-)); ?>
+    <?php
+    $form = $this->beginWidget('CActiveForm', array(
+        'action' => Yii::app()->createUrl($this->route),
+        'method' => 'get',
+    ));
+    ?>
 
-                    <div class="row">
-            <?php echo $form->label($model,'id_locataire'); ?>
-            <?php echo $form->textField($model,'id_locataire'); ?>
-        </div>
+    <?php
+    echo $form->label($model, 'nom');
+    echo $form->textField($model, 'nom', array('size' => 60, 'maxlength' => 64));
 
-                    <div class="row">
-            <?php echo $form->label($model,'nom'); ?>
-            <?php echo $form->textField($model,'nom',array('size'=>60,'maxlength'=>64)); ?>
-        </div>
+    echo $form->label($model, 'email');
+    echo $form->textField($model, 'email', array('size' => 60, 'maxlength' => 64));
 
-                    <div class="row">
-            <?php echo $form->label($model,'email'); ?>
-            <?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>64)); ?>
-        </div>
+    echo $form->label($model, 'fk_langue');
+    echo $form->textField($model, 'fk_langue');
+    ?>
 
-                            <div class="row">
-            <?php echo $form->label($model,'fk_langue'); ?>
-            <?php echo $form->textField($model,'fk_langue'); ?>
-        </div>
-
-                    <div class="row">
-            <?php echo $form->label($model,'visible'); ?>
-            <?php echo $form->textField($model,'visible'); ?>
-        </div>
-
-        <div class="row buttons">
+    <div class="buttons">
         <?php echo CHtml::submitButton('Search'); ?>
     </div>
 

@@ -14,41 +14,36 @@
     ));
     ?>
 
-    <div class="row">
-        <?php echo $form->label($model, 'code_ticket'); ?>
-        <?php echo $form->textField($model, 'code_ticket', array('size' => 10, 'maxlength' => 10)); ?>
+    <?php
+    echo $form->label($model, 'code_ticket');
+    echo $form->textField($model, 'code_ticket', array('size' => 10, 'maxlength' => 10));
+
+    echo $form->label($model, 'fk_statut');
+    echo $form->dropDownList($model, 'fk_statut', array('' => '', CHtml::listData(StatutTicket::model()->findAll(array('condition' => 'id_statut_ticket', 'order' => 'label DESC')), 'id_statut_ticket', 'label')));
+    
+    /*
+    echo $form->label($model, 'fk_categorie');
+    echo $form->dropDownList($model, 'fk_categorie', array('' => '', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL)), 'id_categorie_incident', 'label')));
+    */
+    
+    echo $form->label($model, 'fk_batiment');
+    echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAll(), 'id_batiment', 'nom')));
+    
+    if (Yii::app()->session['Logged']->fk_fonction == Constantes::FONCTION_ADMIN || Yii::app()->session['Logged']->fk_fonction == Constantes::FONCTION_ROOT) {
+        echo $form->label($model, 'fk_user');
+        echo $form->dropDownList($model, 'fk_user', array('' => '', CHtml::listData(User::model()->findAllByAttributes(array('visible' => Constantes::VISIBLE, 'fk_fonction' => Constantes::FONCTION_USER)), 'id_user', 'nom')));
+    }
+    
+    echo $form->label($model, 'fk_canal');
+    echo $form->dropDownList($model, 'fk_canal', array('' => '', CHtml::listData(Canal::model()->findAll(), 'id_canal', 'label')));
+    ?>
+
+    <div class = "buttons">
+        <?php echo CHtml::submitButton('Search');
+        ?>
     </div>
 
-    <div class="row">
-        <?php echo $form->label($model, 'fk_statut'); ?>
-        <?php echo $form->dropDownList($model, 'fk_statut', array('' => '', CHtml::listData(StatutTicket::model()->findAll(array('condition' => 'id_statut_ticket', 'order' => 'label DESC')), 'id_statut_ticket', 'label'))); ?>
-    </div>
-
-    <div class="row">
-        <?php echo $form->label($model, 'fk_categorie'); ?>
-        <?php echo $form->dropDownList($model, 'fk_categorie', array('' => '', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL)), 'id_categorie_incident', 'label'))); ?>
-    </div>
-
-    <div class="row">
-        <?php echo $form->label($model, 'fk_batiment'); ?>
-        <?php echo $form->dropDownList($model, 'fk_batiment', array(Translate::trad("AllBatiment"), CHtml::listData(Batiment::model()->findAll(), 'id_batiment', 'nom'))); ?>
-    </div>
-    <?php if (Yii::app()->session['Logged']->fk_fonction == 2) { ?>
-        <div class="row">
-            <?php echo $form->label($model, 'fk_user'); ?>
-            <?php echo $form->textField($model, 'fk_user', array('size' => 10, 'maxlength' => 10)); ?>
-        </div>
-    <?php } ?>
-    <div class="row">
-        <?php echo $form->label($model, 'fk_canal'); ?>
-        <?php echo $form->dropDownList($model, 'fk_canal', array(Translate::trad("AllCanal"), CHtml::listData(Canal::model()->findAll(), 'id_canal', 'label'))); ?>
-    </div>
-
-    <div class="row buttons">
-        <?php echo CHtml::submitButton('Search'); ?>
-    </div>
-
-    <?php $this->endWidget(); ?>
+<?php $this->endWidget(); ?>
 
 
 </div><!-- search-form -->

@@ -13,25 +13,21 @@
     ));
     ?>
 
-    <div class="row">
-<?php echo $form->label($model, 'label'); ?>
-<?php echo $form->textField($model, 'label', array('size' => 60, 'maxlength' => 64)); ?>
+    <?php
+    echo $form->label($model, 'label');
+    echo $form->textField($model, 'label', array('size' => 60, 'maxlength' => 64));
+
+    echo $form->label($model, 'fk_parent');
+    echo $form->dropDownList($model, 'fk_parent', array('' => '', CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL, 'visible' => Constantes::VISIBLE)), 'id_categorie_incident', 'label')));
+
+    echo $form->label($model, 'fk_priorite');
+    echo $form->dropDownList($model, 'fk_priorite', array('' => '', CHtml::listData(Priorite::model()->findAll(), 'id_priorite', 'label')));
+    ?>
+
+    <div class="buttons">
+        <?php echo CHtml::submitButton('Search'); ?>
     </div>
 
-    <div class="row">
-<?php echo $form->label($model, 'fk_parent'); ?>
-<?php echo $form->textField($model, 'fk_parent'); ?>
-    </div>
-
-    <div class="row">
-<?php echo $form->label($model, 'fk_priorite'); ?>
-<?php echo $form->textField($model, 'fk_priorite'); ?>
-    </div>
-
-    <div class="row buttons">
-    <?php echo CHtml::submitButton('Search'); ?>
-    </div>
-
-<?php $this->endWidget(); ?>
+    <?php $this->endWidget(); ?>
 
 </div><!-- search-form -->

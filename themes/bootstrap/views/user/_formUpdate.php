@@ -22,17 +22,20 @@
         <p class="note">Les champs marqués de <span class="required">*</span> sont requis.</p>
 
 
-        <?php echo $form->labelEx($model, 'nom'); ?>
-        <?php echo $form->textField($model, 'nom', array('size' => 60, 'maxlength' => 64)); ?>
-        <?php echo $form->error($model, 'nom'); ?>
+        <?php
+        echo $form->labelEx($model, 'nom');
+        echo $form->textField($model, 'nom', array('size' => 60, 'maxlength' => 64));
+        echo $form->error($model, 'nom');
 
-        <?php echo $form->labelEx($model, 'email'); ?>
-        <?php echo $form->textField($model, 'email', array('size' => 60, 'maxlength' => 64)); ?>
-        <?php echo $form->error($model, 'email'); ?>
+        echo $form->labelEx($model, 'email');
+        echo $form->textField($model, 'email', array('size' => 60, 'maxlength' => 64));
+        echo $form->error($model, 'email');
 
-        <?php echo $form->labelEx($model, 'fk_fonction'); ?>
-        <?php echo $form->textField($model, 'fk_fonction'); ?>
-        <?php echo $form->error($model, 'fk_fonction'); ?>
+        echo $form->labelEx($model, 'fk_fonction');
+        echo $form->dropDownList($model, 'fk_fonction', array('' => '', CHtml::listData(Fonction::model()->findAll(), 'id_fonction', 'label')));
+        echo $form->error($model, 'fk_fonction');
+        ?>
+        
         <br>
         <?php echo CHtml::submitButton('Save'); ?>
 

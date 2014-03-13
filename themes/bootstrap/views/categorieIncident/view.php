@@ -4,7 +4,7 @@
 
 $this->breadcrumbs = array(
     'Categorie Incidents' => array('admin'),
-    $model->id_categorie_incident,
+    $model->label,
 );
 
 $this->menu = array(

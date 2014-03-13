@@ -50,34 +50,30 @@
 
     <?php
     echo '<label>' . Translate::trad('SelectionnerBatiment') . '<span class="required"> *</span></label>';
-    echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAllByAttributes(array('visible' => Constantes::VISIBLE)), 'id_batiment', 'nom')));;
-    ?>
-    <?php
+    echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAllByAttributes(array('visible' => Constantes::VISIBLE)), 'id_batiment', 'nom')));
+
     echo $form->labelEx($model, 'etage');
     echo $form->textField($model, 'etage', array('size' => 1, 'maxlength' => 10, 'style' => 'resize:none', 'value' => $model->etage));
-    ?>
-    <?php
+
     echo $form->labelEx($model, 'bureau');
     echo $form->textField($model, 'bureau', array('size' => 15, 'maxlength' => 10, 'value' => $model->bureau));
-    ?>
-    <?php
+
     echo $form->labelEx($model, 'descriptif');
     echo $form->textArea($model, 'descriptif', array('maxlength' => 800, 'rows' => 5, 'cols' => 50, 'style' => 'resize:none'));
     echo $form->error($model, 'descriptif');
     ?>
     <div class="button">
-        <?php
-        //    $this->widget('bootstrap.widgets.TbButton', array(
-        //        'label' => Translate::trad('ButtonCreer'),
-        //        'type'=>'primary',
-        //        'buttonType' => 'submit', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-        //        'size' => 'null', // null, 'large', 'small' or 'mini'
-        //    ));
-        ?>
         <?php echo CHtml::submitButton(Translate::trad('ButtonCreer')); ?>
-
-
-
-        <?php $this->endWidget(); ?>
+        <?php
+//    $this->widget('bootstrap.widgets.TbButton', array(
+//        'label' => Translate::trad('ButtonCreer'),
+//        'type'=>'primary',
+//        'buttonType' => 'submit', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
+//        'size' => 'null', // null, 'large', 'small' or 'mini'
+//    ));
+        ?>
     </div>
+    
+    <?php $this->endWidget(); ?>
+
 </div><!-- form -->

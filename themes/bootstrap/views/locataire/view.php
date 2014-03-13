@@ -1,10 +1,10 @@
-<?php
+    <?php
 /* @var $this LocataireController */
 /* @var $model Locataire */
 
 $this->breadcrumbs = array(
     'Locataires' => array('admin'),
-    $model->id_locataire,
+    $model->nom,
 );
 
 $this->menu = array(
