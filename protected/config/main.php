@@ -113,12 +113,10 @@ return array(
                     'logFile' => 'application.log',
                     'categories' => 'cron',
                 ),
-                
-                /*
-                array(
+                array
+                (
                     'class'=>'CWebLogRoute',
                 ),
-                */
             ),
         ),
         // Ajout du composant chart JS pour afficher des graphiques, etc..

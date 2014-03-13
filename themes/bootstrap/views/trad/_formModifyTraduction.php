@@ -36,12 +36,23 @@
         //TODO dropDownList des codes
         //TODO lorsque le code est rempli, charger les traductions correspondantes
     
-    $this->widget(
-        'bootstrap.widgets.TbTextArea',
-        array(
-            
+    echo $form->labelEx($model, 'code');
+    echo $form->dropDownList(
+        $model,
+        'code',
+        CHtml::listData(Trad::model()->findAll(), 'id', 'code'),
+        array // Cette array définit le chargement dynamique des valeurs dans la dropDownList des sous-catégories. (Voir dropDownList suivante appelée DD_sousCat)
+        (
+            'ajax' => array
+            (
+                'type' => 'POST',
+                'url' => CController::createUrl('modifytraduction'),
+                'data' => array('idTrad' => 'js:this.value'),
+                'update' => '#ajaxUpdate',
+            )
         )
     );
+    echo $form->error($model, 'code');
     ?>
     
     <div class="ajaxUpdated">

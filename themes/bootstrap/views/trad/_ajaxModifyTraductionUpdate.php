@@ -3,7 +3,7 @@
 /* @var $model Trad */
 /* @var $form CActiveForm */
 
-$form = $data['TradForm'];
+$form = $_POST['TradForm'];
 $model = $_POST['TradModel'];
 
 echo $form->labelEx($model, 'fr');

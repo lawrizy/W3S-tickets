@@ -83,7 +83,8 @@ class TradController extends Controller
 
     public function actionModifyTraduction()
     {
-        Yii::trace($_POST['idTrad']);
+        Yii::trace("rentrer", "cron");
+        Yii::trace($_POST['idTrad'], 'cron');
         $model = $this->loadModel($_POST['idTrad']);
         $form = $_POST['TradForm'];        
         $this->renderPartial('_ajaxModifyTraductionUpdate', array('model' => $model, 'TradForm' => $form));
