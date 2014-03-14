@@ -28,8 +28,8 @@ class CategorieIncidentController extends Controller {
             // Si ['User'] et [fonction = id_root]
             return array(
                 array('allow', // 'allow' veut dire que l'utilisateur a droit à ce qui suit.
-                    'actions' => array('*'), // Le root à tous les droits
-                    'users' => array('*'),
+                    'actions' => array('createcat','createsouscat','updatesouscat','updatecat','admin','view'), // Le root à tous les droits
+                    'users' => array('@'),
                 // Tous les droits accordés à tout le monde, mais comme il faut être root
                 // pour arriver là alors il n'y a que ui qui a ces droits-là
                 ),
@@ -38,7 +38,7 @@ class CategorieIncidentController extends Controller {
             // Si ['Locataire'] ou [['User'] et [fonction = id_user]], alors l'utilisateur n'a aucun droit
             return array(
                 array('deny', // 'deny' veut dire que l'on renie les droits à l'utilisateur
-                    'users' => array('*'),
+                    'users' => array('?'),
                     // Aucun droit à tous ceux qui arrivent ici
                     'message' => 'Vous n\'avez pas accès à cette page.'
                 // Message qu'affichera la page d'erreur
@@ -252,29 +252,18 @@ class CategorieIncidentController extends Controller {
                         $ticket['visible'] = Constantes::INVISIBLE;
                         $ticket->save(FALSE);
                     }
-
-                    // Il faut aussi retrouver tous les secteurs liés à ces sous-catégories
-                    $secteurs = Secteur::model()->findAllByAttributes(
-                            array('fk_categorie' => $sousCat['id_categorie_incident'], 'visible' => Constantes::VISIBLE));
-                    foreach ($secteurs as $secteur) { // Et aussi les passer à l'état invisible
-                        $secteur['visible'] = Constantes::INVISIBLE;
-                        $secteur->save(FALSE);
-                    }
                 }
+                // Il faut aussi retrouver le secteur lié à cette catégories
+                $secteur = Secteur::model()->findByAttributes(
+                        array('fk_categorie' => $model['id_categorie_incident'], 'visible' => Constantes::VISIBLE));
+                $secteur['visible'] = Constantes::INVISIBLE;
+                $secteur->save(FALSE);
             } else { // Si fk_parent n'est pas null, c'est donc un enfant
                 // Et si c'est un enfant, il faut juste 'delete' tous les tickets qui sont liés à lui
                 $tickets = Ticket::model()->findAllByAttributes(array('fk_categorie' => $id)); // On recherche tous les tickets qui sont liés à cette catégorie
                 foreach ($tickets as $ticket) { // et on les passe tous à l'état invisible
                     $ticket['visible'] = Constantes::INVISIBLE;
                     $ticket->save(FALSE);
-                }
-
-                // Il faut aussi retrouver tous les secteurs liés à cette sous-catégorie
-                $secteurs = Secteur::model()->findAllByAttributes(
-                        array('fk_categorie' => $sousCat['id_categorie_incident'], 'visible' => Constantes::VISIBLE));
-                foreach ($secteurs as $secteur) { // Et aussi les passer à l'état invisible
-                    $secteur['visible'] = Constantes::INVISIBLE;
-                    $secteur->save(FALSE);
                 }
             }
             // ---------------------

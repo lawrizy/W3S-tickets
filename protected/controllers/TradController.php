@@ -28,9 +28,7 @@ class TradController extends Controller
                     'message' => 'Vous n\'avez pas accès à cette page.',
                 )
             );
-        }
-        else
-        {
+        } else {
             return array(
                 array(
                     'deny',
@@ -134,4 +132,5 @@ class TradController extends Controller
         
         $this->render('modifyTraduction', array('model' => $model));
     }
+
 }
