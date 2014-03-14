@@ -124,11 +124,6 @@ class TradController extends Controller
         $model->unsetAttributes();
         if(isset($_GET['Trad']))
             $model->attributes=$_GET['Trad'];
-
-        if(isset($_POST['TRAD']))
-        {
-            
-        }
         
         $this->render('modifyTraduction', array('model' => $model));
     }
