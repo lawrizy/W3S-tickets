@@ -9,7 +9,7 @@ class TradController extends Controller
             return array(
                 array(
                     "allow",
-                    "actions" => array('addtraduction', 'modifytraduction'),
+                    "actions" => array('index', 'addtraduction', 'modifytraduction'),
                     "users" => array('@'),
                 ),
                 array(
@@ -26,9 +26,25 @@ class TradController extends Controller
                     'deny',
                     'actions' => array('*'),
                     'users' => array('*'),
+                    'message' => 'Vous n\'avez pas accès à cette page.',
                 )
             );
         }
+    }
+
+    protected function performAjaxValidation($model) {
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'trad-form') {
+            echo CActiveForm::validate($model);
+            Yii::app()->end();
+        }
+    }
+
+    public function loadModel($code)
+    {
+        $model = Batiment::model()->findByAttributes(array('code' => $code));
+        if ($model === null)
+            throw new CHttpException(404, 'The requested page does not exist.');
+        return $model;
     }
 
     public function actionIndex()
@@ -83,18 +99,13 @@ class TradController extends Controller
 
     public function actionModifyTraduction()
     {
-        Yii::trace("rentrer", "cron");
-        Yii::trace($_POST['idTrad'], 'cron');
-        $model = $this->loadModel($_POST['idTrad']);
-        $form = $_POST['TradForm'];        
-        $this->renderPartial('_ajaxModifyTraductionUpdate', array('model' => $model, 'TradForm' => $form));
-    }
-
-    public function loadModel($code)
-    {
-        $model = Batiment::model()->findByAttributes(array('code' => $code));
-        if ($model === null)
-            throw new CHttpException(404, 'The requested page does not exist.');
-        return $model;
+        $model = new Trad;
+        
+        if(isset($_POST['TRAD']))
+        {
+            
+        }
+        
+        $this->render('modifyTraduction', array('model' => $model));
     }
 }

@@ -6,13 +6,14 @@ $this->pageTitle=Yii::app()->name;
 
 <?php $this->beginWidget('bootstrap.widgets.TbHeroUnit',array(
     'heading' => Translate::trad( 'Message').Yii::app()->name,
-)); ?>
+));
+$this->endWidget();
+?>
 
 <!--<p>Congratulations! You have successfully created your Yii application.</p> -->
 
 <?php
 $this->redirect(array('login'));    
-$this->endWidget();
 ?>
 
 <!--
