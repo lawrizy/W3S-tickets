@@ -7,6 +7,7 @@
 Yii::setPathOfAlias('chartjs', dirname(__FILE__) . '/../extensions/yii-chartjs');
 Yii::setPathOfAlias('bootstrap', dirname(__FILE__) . '/../extensions/bootstrap');
 Yii::setPathOfAlias('Constantes', dirname(__FILE__) . '/../models/Constantes.php');
+Yii::setPathOfAlias('editable', dirname(__FILE__) . '/../extensions/x-editable');
 
 require_once(dirname(__FILE__) . "/../models/Constantes.php");
 
@@ -27,6 +28,7 @@ return array(
         'application.components.*',
         'application.controllers.Translate',
         'ext.yii-mail.YiiMailMessage',
+        'editable.*',
     ),
     //'theme' => 'classic',
     'theme' => 'bootstrap',
@@ -115,7 +117,7 @@ return array(
                 ),
                 array
                 (
-                    'class'=>'CWebLogRoute',
+                    'class' => 'CWebLogRoute',
                 ),
             ),
         ),
@@ -123,7 +125,16 @@ return array(
         'chartjs' => array
         (
             'class' => 'chartjs.components.ChartJs',
-        )
+        ),
+        // Ajout composant x-editable (GridView modifiables directement avec validation des inputs)
+        'editable' => array(
+            'class' => 'editable.EditableConfig',
+            'form' => 'bootstrap', //form style: 'bootstrap', 'jqueryui', 'plain' 
+            'mode' => 'popup', //mode: 'popup' or 'inline'  
+            'defaults' => array( //default settings for all editable elements
+                'emptytext' => 'Click to edit'
+            )
+        ),
     ),
     // application-level parameters that can be accessed
     // using Yii::app()->params['paramName']
