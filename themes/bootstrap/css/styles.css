@@ -1,3 +1,12 @@
 #page {
     padding-top: 60px;
 }
+
+.flashText{
+    -webkit-animation: LoginWarning 0.5s infinite;
+}
+@-webkit-keyframes LoginWarning{
+    0%{opacity: 0; }
+    100%{opacity: 1;}
+    
+}

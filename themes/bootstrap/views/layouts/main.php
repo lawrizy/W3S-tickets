@@ -54,7 +54,7 @@
                         'htmlOptions' => array('class' => 'pull-right'),
                         'items' => array(
                             '---',
-                            array('label' => Translate::trad('Connexion'), 'url' => array('/site/login'), 'visible' => Yii::app()->user->isGuest),
+                            array('label' => Translate::trad('Connexion'), 'url' => array('/site/login'),'itemOptions'=>array('class'=>'flashText','color'=>'red'), 'visible' => Yii::app()->user->isGuest,),
                             array('label' => Translate::trad('DeConnexion') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
                         ),
                     ),
