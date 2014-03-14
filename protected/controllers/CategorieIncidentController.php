@@ -252,29 +252,18 @@ class CategorieIncidentController extends Controller {
                         $ticket['visible'] = Constantes::INVISIBLE;
                         $ticket->save(FALSE);
                     }
-
-                    // Il faut aussi retrouver tous les secteurs liés à ces sous-catégories
-                    $secteurs = Secteur::model()->findAllByAttributes(
-                            array('fk_categorie' => $sousCat['id_categorie_incident'], 'visible' => Constantes::VISIBLE));
-                    foreach ($secteurs as $secteur) { // Et aussi les passer à l'état invisible
-                        $secteur['visible'] = Constantes::INVISIBLE;
-                        $secteur->save(FALSE);
-                    }
                 }
+                // Il faut aussi retrouver le secteur lié à cette catégories
+                $secteur = Secteur::model()->findByAttributes(
+                        array('fk_categorie' => $model['id_categorie_incident'], 'visible' => Constantes::VISIBLE));
+                $secteur['visible'] = Constantes::INVISIBLE;
+                $secteur->save(FALSE);
             } else { // Si fk_parent n'est pas null, c'est donc un enfant
                 // Et si c'est un enfant, il faut juste 'delete' tous les tickets qui sont liés à lui
                 $tickets = Ticket::model()->findAllByAttributes(array('fk_categorie' => $id)); // On recherche tous les tickets qui sont liés à cette catégorie
                 foreach ($tickets as $ticket) { // et on les passe tous à l'état invisible
                     $ticket['visible'] = Constantes::INVISIBLE;
                     $ticket->save(FALSE);
-                }
-
-                // Il faut aussi retrouver tous les secteurs liés à cette sous-catégorie
-                $secteurs = Secteur::model()->findAllByAttributes(
-                        array('fk_categorie' => $sousCat['id_categorie_incident'], 'visible' => Constantes::VISIBLE));
-                foreach ($secteurs as $secteur) { // Et aussi les passer à l'état invisible
-                    $secteur['visible'] = Constantes::INVISIBLE;
-                    $secteur->save(FALSE);
                 }
             }
             // ---------------------
