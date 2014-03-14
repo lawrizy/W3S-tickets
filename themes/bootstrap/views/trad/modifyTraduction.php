@@ -10,28 +10,22 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-
+    array('label' => 'Ajouter une nouvelle traduction', 'url' => array('addTraduction')),
 );
 
 ?>
 <div id="retour">
-    <a href="../admin">Retour à la page d'administration</a>
+    <a href="../admin">Retour à la page d'administration</a><br/>
 </div>
 
 <div class="form">
     <?php
-    // Création d'un nouveau widget de formulaire
-    $form = $this->beginWidget('bootstrap.widgets.TbActiveForm', array(
-        'id' => 'trad-form',
-        'enableAjaxValidation' => false,
-    ));
-    
     // FORMULAIRE START
     $this->widget('bootstrap.widgets.TbGridView', array(
         'type' => 'striped bordered condensed',
         'id' => 'trad-grid',
         'dataProvider' => $model->search(),
-        //'filter' => $model,
+        'filter' => $model,
         'columns' => array(
             array(
                 'name' => 'code',
@@ -53,11 +47,9 @@ $this->menu = array(
             array
             (
                 'class' => 'bootstrap.widgets.TbButtonColumn',
-                'template' => '{view}'
+                'template' => '{update}'
             ),
         ),
     ));
-    
-    $this->endWidget('modify-trad-form');
     ?>
 </div>

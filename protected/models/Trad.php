@@ -4,31 +4,35 @@
  * This is the model class for table "w3sys_trad".
  *
  * The followings are the available columns in table 'w3sys_trad':
+ * @property integer $id
  * @property string $code
  * @property string $fr
  * @property string $en
  * @property string $nl
  */
-class Trad extends CActiveRecord {
+class Trad extends CActiveRecord
+{
 
     /**
      * @return string the associated database table name
      */
-    public function tableName() {
+    public function tableName()
+    {
         return 'w3sys_trad';
     }
 
     /**
      * @return array validation rules for model attributes.
      */
-    public function rules() {
+    public function rules()
+    {
 // NOTE: you should only define rules for those attributes that
 // will receive user inputs.
         return array(
             array('code, fr, en, nl', 'required'), // Tous les champs sont requis lors de la création d'une traduction
             array('code', 'length', 'max' => 64),
             array('fr, en, nl', 'length', 'max' => 128),
-            
+
 // The following rule is used by search().
 // @todo Please remove those attributes that should not be searched.
             array('code, fr, en, nl', 'safe', 'on' => 'search'),
@@ -38,22 +42,24 @@ class Trad extends CActiveRecord {
     /**
      * @return array relational rules.
      */
-    public function relations() {
+    public function relations()
+    {
 // NOTE: you may need to adjust the relation name and the related
 // class name for the relations automatically generated below.
-        return array(
-        );
+        return array();
     }
 
     /**
      * @return array customized attribute labels (name=>label)
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array(
-            'code' => 'Code',
-            'fr' => 'FR',
-            'en' => 'EN',
-            'nl' => 'NL',
+            'id' => 'Identifiant',
+            'code' => Translate::trad('TradCode'),
+            'fr' => Translate::trad('Fr'),
+            'en' => Translate::trad('En'),
+            'nl' => Translate::trad('Nl'),
         );
     }
 
@@ -69,11 +75,13 @@ class Trad extends CActiveRecord {
      * @return CActiveDataProvider the data provider that can return the models
      * based on the search/filter conditions.
      */
-    public function search() {
+    public function search()
+    {
 // @todo Please modify the following code to remove attributes that should not be searched.
 
         $criteria = new CDbCriteria;
-
+    
+        $criteria->compare('id', $this->id, true);
         $criteria->compare('code', $this->code, true);
         $criteria->compare('fr', $this->fr, true);
         $criteria->compare('en', $this->en, true);
@@ -90,7 +98,8 @@ class Trad extends CActiveRecord {
      * @param string $className active record class name.
      * @return Trad the static model class
      */
-    public static function model($className = __CLASS__) {
+    public static function model($className = __CLASS__)
+    {
         return parent::model($className);
     }
 

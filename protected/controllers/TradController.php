@@ -2,6 +2,15 @@
 
 class TradController extends Controller
 {
+    public $layout = '//layouts/column2';
+
+    public function filters() {
+        return array(
+            'accessControl', // perform access control for CRUD operations
+            'postOnly + delete', // we only allow deletion via POST request
+        );
+    }
+    
     public function accessRules()
     {
         if ((Yii::app()->session['Utilisateur'] == 'User') && (Yii::app()->session['Logged']->fk_fonction >= Constantes::FONCTION_ADMIN))
@@ -9,13 +18,14 @@ class TradController extends Controller
             return array(
                 array(
                     "allow",
-                    "actions" => array('index', 'addtraduction', 'modifytraduction'),
+                    "actions" => array('view', 'index', 'addtraduction', 'modifytraduction'),
                     "users" => array('@'),
                 ),
                 array(
                     'deny',
                     'actions' => array('*'),
-                    'users' => array('*'),
+                    'users' => array('?'),
+                    'message' => 'Vous n\'avez pas accès à cette page.',
                 )
             );
         }
@@ -31,7 +41,7 @@ class TradController extends Controller
             );
         }
     }
-
+    
     protected function performAjaxValidation($model) {
         if (isset($_POST['ajax']) && $_POST['ajax'] === 'trad-form') {
             echo CActiveForm::validate($model);
@@ -39,9 +49,8 @@ class TradController extends Controller
         }
     }
 
-    public function loadModel($code)
-    {
-        $model = Batiment::model()->findByAttributes(array('code' => $code));
+    public function loadModel($id) {
+        $model = Trad::model()->findByPk($id);
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
         return $model;
@@ -49,7 +58,21 @@ class TradController extends Controller
 
     public function actionIndex()
     {
-        $this->render('index');
+        $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('modifyTraduction'));
+    }
+
+    public function actionUpdate($id) {
+        $model = $this->loadModel($id);
+
+        //$this->performAjaxValidation($model);
+
+        if (isset($_POST['Trad'])) {
+            $model->attributes = $_POST['Trad'];
+            if ($model->save())
+                $this->redirect(array('modifyTraduction'));
+        }
+
+        $this->render('update', array('model' => $model));
     }
 
     /**
@@ -99,8 +122,11 @@ class TradController extends Controller
 
     public function actionModifyTraduction()
     {
-        $model = new Trad;
-        
+        $model = new Trad('search');
+        $model->unsetAttributes();
+        if(isset($_GET['Trad']))
+            $model->attributes=$_GET['Trad'];
+
         if(isset($_POST['TRAD']))
         {
             

@@ -324,7 +324,7 @@ class TicketController extends Controller {
         if (isset($_GET['Ticket']))
             $model->attributes = $_GET['Ticket'];
 
-        $var = !isset($_GET['var']) ? 'admin' : $_GET['var'];
+        $var = !isset($_GET['var']) ? 'admin' : $_GET['var']; //TODO changer 'var' pour un nom plus explicite...
         $this->render($var, array(
             'model' => $model,
         ));

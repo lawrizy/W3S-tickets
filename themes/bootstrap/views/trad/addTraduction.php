@@ -10,12 +10,12 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    
+    array('label' => 'Modifier traduction existante', 'url' => array('modifyTraduction')),
 );
 
 ?>
 <div id="retour">
-    <a href="../admin">Retour à la page d'administration</a>
+    <a href="../admin"><?php echo Translate::trad("RetourPageAdmin");?></a>
 </div>
 
 <div class="form">
