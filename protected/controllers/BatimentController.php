@@ -29,7 +29,7 @@ class BatimentController extends Controller {
             return array(
                 array('allow', // 'allow' veut dire que l'utilisateur a droit à ce qui suit.
                     'actions' => array('view','create','delete','update','admin'), // L'admin à tous les droits
-                    'users' => array('*'),
+                    'users' => array('@'),
                 // Tous les droits accordés à tout le monde, mais comme il faut être admin 
                 // pour arriver là alors il n'y a que les admins qui ont ces droits-là
                 ),
