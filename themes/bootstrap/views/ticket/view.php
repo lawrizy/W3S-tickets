@@ -61,7 +61,7 @@ $this->widget('bootstrap.widgets.TbDetailView', array(
 ));
 
 echo '<br /><br />';
-echo '<h1><center><u>' . Yii::t('/ticket/view', 'ViewHistoriqueTitre') . '</u></center></h1>';
+echo '<h1><center><u>' . Translate::trad('ViewHistoriqueTitre') . '</u></center></h1>';
 $histo = new HistoriqueTicket();
 $this->widget('bootstrap.widgets.TbGridView', array(
     'type' => 'striped bordered condensed',

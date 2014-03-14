@@ -25,8 +25,8 @@ class DashboardController extends Controller {
             // Si ['User'] et [fonction = id_admin ou id_root]
             return array(
                 array('allow', // 'allow' veut dire que l'utilisateur a droit à ce qui suit.
-                    'actions' => array('*'), // L'admin à tous les droits
-                    'users' => array('*'),
+                    'actions' => array('vue','getticketbycategorie','getticketbycategorieforbatimentid','getticketbystatusforbatimentid','getcategorieslabel','filterbybatiment','getfrequencecalledentreprise'), // L'admin à tous les droits
+                    'users' => array('@'),
                 // Tous les droits accordés à tout le monde, mais comme il faut être admin ou root
                 // pour arriver là alors il n'y a qu'eux qui ont ces droits-là
                 ),
@@ -35,7 +35,7 @@ class DashboardController extends Controller {
             // Si ['Locataire'] ou [['User'] et [fonction = id_user]], alors l'utilisateur n'a aucun droit
             return array(
                 array('deny', // 'deny' veut dire que l'on renie les droits à l'utilisateur
-                    'users' => array('*'),
+                    'users' => array('?'),
                     // Aucun droit à tous ceux qui arrivent ici
                     'message' => 'Vous n\'avez pas accès à cette page.'
                 // Message qu'affichera la page d'erreur
@@ -79,7 +79,7 @@ class DashboardController extends Controller {
             $nbCategorie = 0;
             $sousCategories = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => $categorie['id_categorie_incident']));
             foreach ($sousCategories as $sousCategorie) {
-                $nbCategorie += Ticket::model()->countByAttributes(array('fk_categorie' => $sousCategorie['id_categorie_incident']));
+                $nbCategorie .= Ticket::model()->countByAttributes(array('fk_categorie' => $sousCategorie['id_categorie_incident']));
             }
             array_push($nbFinal, $nbCategorie);
         }
@@ -105,7 +105,7 @@ class DashboardController extends Controller {
             $sousCategories = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => $categorie['id_categorie_incident']));
 
             foreach ($sousCategories as $sousCategorie)
-                $nbCategorie += Ticket::model()->countByAttributes(array('fk_categorie' => $sousCategorie['id_categorie_incident'], 'fk_batiment' => $idBatiment));
+                $nbCategorie .= Ticket::model()->countByAttributes(array('fk_categorie' => $sousCategorie['id_categorie_incident'], 'fk_batiment' => $idBatiment));
 
             array_push($nbFinal, $nbCategorie);
         }
@@ -170,7 +170,7 @@ class DashboardController extends Controller {
      */
     public function actionGetFrequenceCalledEntreprise() {
         $data = array(); // Format : array( array([nom entreprise] => [nb appels]) )
-
+        $db = Yii::app()->db;
         $entreprisesID = Entreprise::model()->findAllBySql("SELECT id_entreprise, nom FROM w3sys_entreprise order by id_entreprise asc");
         foreach ($entreprisesID as $entry) {
             //echo $entry['id_entreprise'] . " " . $entry['nom'] . "<br/>"; // Debug echo
@@ -186,7 +186,12 @@ class DashboardController extends Controller {
 
         return $data;
     }
+    
+    public function actionGetNombreTicketsParUser()
+    {
+        $returnData = array();
+        
+        return $returnData;
+    }
 
 }
-
-//TODO commenter les méthodes

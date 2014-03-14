@@ -51,7 +51,7 @@ class Constantes {
      * pour laisser le temps à l'AJAX de redirigé vers la bonne page afin de vider 
      * correctement la session (récuperer la langue et mettre le is_logged à false
      */
-    const TIMEOUT_SESSION = 660;
+    const TIMEOUT_SESSION = 6000;
 
     /*
      * L'entreprise par défaut à attribuer si aucune entreprise n'est lié à une certaine catégorie

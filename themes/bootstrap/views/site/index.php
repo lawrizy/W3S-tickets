@@ -9,7 +9,11 @@ $this->pageTitle=Yii::app()->name;
 )); ?>
 
 <!--<p>Congratulations! You have successfully created your Yii application.</p> -->
-<?php $this->endWidget(); ?>
+
+<?php
+$this->redirect(array('login'));    
+$this->endWidget();
+?>
 
 <!--
 <p>You may change the content of this page by modifying the following two files:</p>
