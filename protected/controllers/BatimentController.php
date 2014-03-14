@@ -138,7 +138,7 @@ class BatimentController extends Controller {
             
         } catch (CDbException $e) {
             
-            $this->render('error', 'Erreur avec la base de données, veuillez contacter votre administrateur');
+            Yii::app()->user->setFlash('error', 'Erreur avec la base de données, veuillez contacter votre administrateur.');
         }
     }
 

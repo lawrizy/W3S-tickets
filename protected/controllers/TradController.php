@@ -2,6 +2,35 @@
 
 class TradController extends Controller
 {
+    public function accessRules()
+    {
+        if ((Yii::app()->session['Utilisateur'] == 'User') && (Yii::app()->session['Logged']->fk_fonction >= Constantes::FONCTION_ADMIN))
+        {
+            return array(
+                array(
+                    "allow",
+                    "actions" => array('addtraduction', 'modifytraduction'),
+                    "users" => array('@'),
+                ),
+                array(
+                    'deny',
+                    'actions' => array('*'),
+                    'users' => array('*'),
+                )
+            );
+        }
+        else
+        {
+            return array(
+                array(
+                    'deny',
+                    'actions' => array('*'),
+                    'users' => array('*'),
+                )
+            );
+        }
+    }
+
     public function actionIndex()
     {
         $this->render('index');
@@ -51,10 +80,14 @@ class TradController extends Controller
             'model' => $model,
         ));
     }
-    
+
     public function actionModifyTraduction()
     {
-        
+        Yii::trace("rentrer", "cron");
+        Yii::trace($_POST['idTrad'], 'cron');
+        $model = $this->loadModel($_POST['idTrad']);
+        $form = $_POST['TradForm'];        
+        $this->renderPartial('_ajaxModifyTraductionUpdate', array('model' => $model, 'TradForm' => $form));
     }
 
     public function loadModel($code)

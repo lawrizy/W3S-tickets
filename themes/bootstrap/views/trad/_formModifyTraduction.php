@@ -33,34 +33,39 @@
 
     <?php
     // FORMULAIRE START
-    // Champs Code
+        //TODO dropDownList des codes
+        //TODO lorsque le code est rempli, charger les traductions correspondantes
+    
     echo $form->labelEx($model, 'code');
-    echo $form->textField($model, 'code', array('size' => 64, 'maxlength' => 64));
+    echo $form->dropDownList(
+        $model,
+        'code',
+        CHtml::listData(Trad::model()->findAll(), 'id', 'code'),
+        array // Cette array définit le chargement dynamique des valeurs dans la dropDownList des sous-catégories. (Voir dropDownList suivante appelée DD_sousCat)
+        (
+            'ajax' => array
+            (
+                'type' => 'POST',
+                'url' => CController::createUrl('modifytraduction'),
+                'data' => array('idTrad' => 'js:this.value'),
+                'update' => '#ajaxUpdate',
+            )
+        )
+    );
     echo $form->error($model, 'code');
-
-    // Champs FR
-    echo $form->labelEx($model, 'fr');
-    echo $form->textField($model, 'fr', array('size' => 128, 'maxlength' => 128));
-    echo $form->error($model, 'fr');
-    
-    // Champs EN
-    echo $form->labelEx($model, 'en');
-    echo $form->textField($model, 'en', array('size' => 128, 'maxlength' => 128));
-    echo $form->error($model, 'en');
-    
-    // Champs NL
-    echo $form->labelEx($model, 'nl');
-    echo $form->textField($model, 'nl', array('size' => 128, 'maxlength' => 128));
-    echo $form->error($model, 'nl');
     ?>
-
+    
+    <div class="ajaxUpdated">
+        
+    </div>
+    
     <div class="buttons">
         <?php
         // Bouton d'envoi
         $this->widget('bootstrap.widgets.TbButton', array(
             'buttonType'=>'submit',
             'type' => 'primary',
-            'label' => 'Envoyer la nouvelle traduction',
+            'label' => 'Modifier la traduction',
         ));
         // FORMULAIRE END
         ?>

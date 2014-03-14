@@ -171,6 +171,11 @@ $this->widget(
         'options' => array()
     )
 );
+
+/* BEGIN Graphique de répartitions des tickets entre les différents users */
+
+/* END */
+
 // ******************** END ************************
 
 ?>

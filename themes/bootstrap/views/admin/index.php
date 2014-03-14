@@ -65,6 +65,6 @@ $this->pageTitle = Yii::app()->name . ' - Admin';
     <b>I18N:</b>
     <ul>
         <li><a href="trad/addTraduction">Ajouter une nouvelle traduction</a></li>
-        <li>Modifier une traduction existante</li>
+        <li><a href="trad/modifyTraduction">Modifier une traduction existante</a></li>
     </ul>
 </p>

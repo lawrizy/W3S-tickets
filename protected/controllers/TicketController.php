@@ -85,7 +85,6 @@ class TicketController extends Controller {
             try {
                 $model->save(false);
                 $loc = Locataire::model()->findByPk($model['fk_locataire']);
-                Yii::app()->session['EmailSend'] = 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email'];
                 $histo = new HistoriqueTicket();
                 $histo->date_update = date("Y-m-d H:i:s", time());
                 $histo->fk_ticket = $model->id_ticket;
@@ -93,8 +92,11 @@ class TicketController extends Controller {
                 $histo->fk_statut_ticket = Constantes::STATUT_CLOSED;
                 $logged = Yii::app()->session['Logged'];
                 $histo->fk_user = $logged['id_user'];
-                $histo->save(FALSE);
-                Yii::trace('apres save de l\'historique', 'cron');
+                if($histo->save(false))
+                {
+                    $this->actionSendNotificationMail($model);
+                    Yii::app()->user->setFlash('success', 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email']);
+                }
                 $this->actionSendNotificationMail($model);
                 $this->redirect(array('view', 'id' => $model['id_ticket']));
             } catch (CDbException $ex) {
@@ -120,7 +122,6 @@ class TicketController extends Controller {
             try {
                 $oldmodel->save(FALSE);
                 $loc = Locataire::model()->findByPk($oldmodel['fk_locataire']);
-                Yii::app()->session['EmailSend'] = 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email'];
                 Yii::trace('apres save du model', 'cron');
                 // Si la sauvegarde du ticket s'est bien passé,
                 // on enregistre un évènement InProgress pour le traitement du ticket
@@ -131,9 +132,11 @@ class TicketController extends Controller {
                 $histo->fk_statut_ticket = Constantes::STATUT_TREATMENT;
                 $logged = Yii::app()->session['Logged'];
                 $histo->fk_user = $logged['id_user'];
-                $histo->save(FALSE);
-                Yii::trace('apres save de l\'historique', 'cron');
-                $this->actionSendNotificationMail($oldmodel);
+                if($histo->save(false))
+                {
+                    $this->actionSendNotificationMail($model);
+                    Yii::app()->user->setFlash('success', 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email']);
+                }
                 $this->redirect(array('view', 'id' => $oldmodel['id_ticket']));
             } catch (CDbException $ex) {
                 Yii::trace('dans catch', 'cron');
@@ -153,7 +156,7 @@ class TicketController extends Controller {
      */
     public function actionCreate() {
         $model = new Ticket;
-
+        
         // Vérifie si a bien reçu un objet 'Ticket'
         // ==> si non, c'est que c'est la première arrivée sur la page create,
         // ==> si oui, c'est que c'est la page create elle-même qui renvoie ici pour la création d'un ticket
@@ -198,7 +201,6 @@ class TicketController extends Controller {
                 $model->save();
                 Yii::trace('Dans try apres save', 'cron');
                 $loc = Locataire::model()->findByPk($model['fk_locataire']);
-                Yii::app()->session['EmailSend'] = 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email'];
                 // Si la sauvegarde du ticket s'est bien passé,
                 // on enregistre un évènement opened pour la création du ticket
                 $histo = new HistoriqueTicket();
@@ -207,8 +209,11 @@ class TicketController extends Controller {
                 // Lors de la création, statut forcément à opened
                 $histo->fk_statut_ticket = Constantes::STATUT_OPENED;
                 $histo->fk_user = $model['fk_user'];
-                $histo->save(FALSE);
-                $this->actionSendNotificationMail($model);
+                if($histo->save(false))
+                {
+                    $this->actionSendNotificationMail($model);
+                    Yii::app()->user->setFlash('success', 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email']);
+                }
                 // Si tout s'est bien passé, on redirige vers la page view
                 Yii::app()->session['NouveauTicket'] = 'nouveau';
                 $this->redirect(array('view', 'id' => $model->id_ticket));
@@ -391,8 +396,14 @@ class TicketController extends Controller {
             default:
                 return;
         }
-
-        Yii::app()->mail->send($message);
+        
+        try
+        {
+            Yii::app()->mail->send($message);
+        } catch(Swift_SwiftException $mailException)
+        {
+            Yii::app()->user->setFlash('error', 'L\'envoi du mail a échoué.<br/>' . $mailException->getMessage());
+        }
     }
 
     /**
