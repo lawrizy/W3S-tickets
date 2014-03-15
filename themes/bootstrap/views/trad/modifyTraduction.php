@@ -6,7 +6,7 @@
 
 $this->breadcrumbs = array(
     'admin' => '../admin',
-    'Modifier une traduction existante',
+    Translate::trad('ModifierTradExistante'),
 );
 
 $this->menu = array(

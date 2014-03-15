@@ -62,7 +62,7 @@ class TradController extends Controller
     public function actionUpdate($id) {
         $model = $this->loadModel($id);
 
-        //$this->performAjaxValidation($model);
+        $this->performAjaxValidation($model);
 
         if (isset($_POST['Trad'])) {
             $model->attributes = $_POST['Trad'];
@@ -95,7 +95,7 @@ class TradController extends Controller
                 {
                     $model->save(true);
                     Yii::app()->user->setFlash("success", "L'insertion de la nouvelle traduction s'est bien passée.<br/>
-                                Vous pouvez désormais l'utiliser en écrivant Translate::trad(\"" . $model->code . "\");");
+                                Vous pouvez désormais l'utiliser en écrivant Translate::trad(\"" . $model->code . "\")");
                 } catch (CDbException $cdbe)
                 {
                     Yii::app()->user->setFlash("error", "Le code que vous voulez assigner est déjà utilisé.");
@@ -107,7 +107,7 @@ class TradController extends Controller
             {
                 // Un soucis s'est produit (champs vide, etc...)
                 //Yii::trace("La Trad ne passe pas le validate", "cron");
-                Yii::app()->user->setFlash("error", "L'un des champs n'a pas pu être validé.");
+                Yii::app()->user->setFlash("error", "Un ou plusieurs champs n'a pas pu être validé.");
                 if (!isset($_GET['ajax']))
                     $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('addTraduction'));
             }

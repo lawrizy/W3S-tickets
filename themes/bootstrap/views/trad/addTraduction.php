@@ -10,7 +10,7 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Modifier traduction existante', 'url' => array('modifyTraduction')),
+    array('label' => Translate::trad('ModifierTradExistante'), 'url' => array('modifyTraduction')),
 );
 
 ?>
