@@ -79,7 +79,7 @@ class DashboardController extends Controller {
             $nbCategorie = 0;
             $sousCategories = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => $categorie['id_categorie_incident']));
             foreach ($sousCategories as $sousCategorie) {
-                $nbCategorie .= Ticket::model()->countByAttributes(array('fk_categorie' => $sousCategorie['id_categorie_incident']));
+                $nbCategorie += Ticket::model()->countByAttributes(array('fk_categorie' => $sousCategorie['id_categorie_incident']));
             }
             array_push($nbFinal, $nbCategorie);
         }
@@ -105,7 +105,7 @@ class DashboardController extends Controller {
             $sousCategories = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => $categorie['id_categorie_incident']));
 
             foreach ($sousCategories as $sousCategorie)
-                $nbCategorie .= Ticket::model()->countByAttributes(array('fk_categorie' => $sousCategorie['id_categorie_incident'], 'fk_batiment' => $idBatiment));
+                $nbCategorie += Ticket::model()->countByAttributes(array('fk_categorie' => $sousCategorie['id_categorie_incident'], 'fk_batiment' => $idBatiment));
 
             array_push($nbFinal, $nbCategorie);
         }
