@@ -134,7 +134,7 @@ class TicketController extends Controller {
                 $histo->fk_user = $logged['id_user'];
                 if($histo->save(false))
                 {
-                    $this->actionSendNotificationMail($model);
+                    $this->actionSendNotificationMail($oldmodel);
                     Yii::app()->user->setFlash('success', 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email']);
                 }
                 $this->redirect(array('view', 'id' => $oldmodel['id_ticket']));
