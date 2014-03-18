@@ -1,4 +1,5 @@
 <?php
+
 // uncomment the following to define a path alias
 // Yii::setPathOfAlias('local','path/to/local-folder');
 // This is the main Web application configuration. Any writable
@@ -16,11 +17,10 @@ return array(
     'name' => 'Ticket System',
     // preloading 'log' component
     'preload' => array
-    (
+        (
         'log',
         'chartjs',
         'yiimail',
-
     ),
     // autoloading model and component classes
     'import' => array(
@@ -57,6 +57,7 @@ return array(
             'class' => 'CDbHttpSession',
             'connectionID' => 'db', // Ca fix le problème avec CHTTPSession
             'timeout' => Constantes::TIMEOUT_SESSION,
+            'sessionTableName' => 'yiisession',
         ),
         'bootstrap' => array(
             'class' => 'bootstrap.components.Bootstrap',
@@ -115,17 +116,17 @@ return array(
                     'logFile' => 'application.log',
                     'categories' => 'cron',
                 ),
-                /*
-                array
-                (
-                    'class' => 'CWebLogRoute',
-                ),
-                */
+            /*
+              array
+              (
+              'class' => 'CWebLogRoute',
+              ),
+             */
             ),
         ),
         // Ajout du composant chart JS pour afficher des graphiques, etc..
         'chartjs' => array
-        (
+            (
             'class' => 'chartjs.components.ChartJs',
         ),
         // Ajout composant x-editable (GridView modifiables directement avec validation des inputs)
@@ -133,7 +134,7 @@ return array(
             'class' => 'editable.EditableConfig',
             'form' => 'bootstrap', //form style: 'bootstrap', 'jqueryui', 'plain' 
             'mode' => 'popup', //mode: 'popup' or 'inline'  
-            'defaults' => array( //default settings for all editable elements
+            'defaults' => array(//default settings for all editable elements
                 'emptytext' => 'Click to edit'
             )
         ),

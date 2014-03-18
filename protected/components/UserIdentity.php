@@ -21,26 +21,27 @@ class UserIdentity extends CUserIdentity {
 //----------------------------------------------------------------------------------------
 //-------------------------------------Locataire------------------------------------------
 //----------------------------------------------------------------------------------------
-
         try {
             if (($record = Locataire::model()->findByAttributes(array('email' => $this->username))) !== null) { //recupération d'un record en fonction de l'email
                 if ($record->password !== md5($this->password)) {// si le mot de passe est différent du mot de passe de la db en md5
                     Yii::app()->user->setFlash('error', '<strong>Le mot de passe ou le nom d\'utilisateur est incorrect.!</strong>');
                     $this->errorCode = self::ERROR_PASSWORD_INVALID; // code error est password error
                 } else {
-                    if (!$record->is_logged) {
-                        $record['is_logged'] = 1;      //on indique que la personne est loggé plus authentification possible sans un logout
-                        $record->save(); // mise a jour dans la db de is_logged = 1
-                        $this->_id = $record->id_locataire;    //recupération  de l'id du locataire
-                        $this->errorCode = self::ERROR_NONE;   // aucune erreur
-                        Yii::app()->session['Utilisateur'] = 'Locataire'; // création d'une variable de session pour stocker le type d'user
-                        $record->password = ''; // vidage du mot de passe 
-                        Yii::app()->session['Logged'] = $record; // enregistrement du record dans la session
-                        $this->getLanguage($record);
-                        Yii::app()->user->setFlash('success', '<strong>Bienvenue: ' . $record->nom . ' !</strong>'); // message en cas de connexion simultanée
-                    } else {
-                        Yii::app()->user->setFlash('error', '<strong>Vous êtes déjà connecté !</strong>'); // message en cas de connexion simultanée
+                    if (($Session = Session::model()->findByAttributes(array('email' => $record->email))) != NULL) {
+                        $yiisession = Yiisession::model()->findByPk($Session->fk_yiisession);
+                        $yiisession->delete();
                     }
+                    $Session = new Session();
+                    $Session->email = $record->email;
+                    $Session->fk_yiisession = Yii::app()->session->sessionID;
+                    $Session->save();
+                    $this->_id = $record->id_locataire;    //recupération  de l'id du locataire
+                    $this->errorCode = self::ERROR_NONE;   // aucune erreur
+                    Yii::app()->session['Utilisateur'] = 'Locataire'; // création d'une variable de session pour stocker le type d'user
+                    $record->password = ''; // vidage du mot de passe 
+                    Yii::app()->session['Logged'] = $record; // enregistrement du record dans la session
+                    $this->getLanguage($record);
+                    Yii::app()->user->setFlash('success', '<strong>Bienvenue: ' . $record->nom . ' !</strong>'); // message en cas de connexion simultanée
                 }
 
                 return !$this->errorCode; // return le code d'erreur
@@ -53,26 +54,28 @@ class UserIdentity extends CUserIdentity {
                     $this->errorCode = self::ERROR_PASSWORD_INVALID;
                 }// si le mot de passe est différent du mot de passe de la db en md5
                 else {
-                    if (!$record->is_logged) {
-                        $record['is_logged'] = 1; //on indique que la personne est loggé plus authentification possible sans un logout
-                        $record->save(); //mise a jour dans la db de is_logged = 1
-                        $this->_id = $record->id_user; //recupération  de l'id du user
-                        $this->errorCode = self::ERROR_NONE; // aucune erreur
-                        Yii::app()->session['Utilisateur'] = 'User'; // création d'une variable de session pour stocker le type d'user
-                        $record->password = ''; // vidage du mot de passe 
-                        Yii::app()->session['Logged'] = $record; // enregistrement du record dans la session 
-                        $this->getLanguage($record);
-                        Yii::app()->user->setFlash('success', '<strong>Bienvenue: ' . $record->nom . ' !</strong>'); // message en cas de connexion simultanée
-                    } else {
-                        Yii::app()->user->setFlash('error', '<strong>Vous êtes déjà connecté !</strong>'); // message en cas de connexion simultanée
+                    if (($Session = Session::model()->findByAttributes(array('email' => $record->email))) != NULL) {
+                        $yiisession = Yiisession::model()->findByPk($Session->fk_yiisession);
+                        $yiisession->delete();
                     }
+                    $Session = new Session();
+                    $Session->email = $record->email;
+                    $Session->fk_yiisession = Yii::app()->session->sessionID;
+                    $Session->save();
+                    $this->_id = $record->id_user; //recupération  de l'id du user
+                    $this->errorCode = self::ERROR_NONE; // aucune erreur
+                    Yii::app()->session['Utilisateur'] = 'User'; // création d'une variable de session pour stocker le type d'user
+                    $record->password = ''; // vidage du mot de passe 
+                    Yii::app()->session['Logged'] = $record; // enregistrement du record dans la session 
+                    $this->getLanguage($record);
+                    Yii::app()->user->setFlash('success', '<strong>Bienvenue: ' . $record->nom . ' !</strong>'); // message en cas de connexion simultanée
                 }
                 return !$this->errorCode; // return le code d'erreur
             }
             Yii::app()->session['Language'] = 'en'; //langue par défaut 
             return !self::ERROR_UNKNOWN_IDENTITY; //return utilisateur inconnu
         } catch (CDbException $ex) {
-            Yii::app()->user->setFlash('error', '<strong>La base de donnnée est indisponible pour le moment</strong>'); // message d'erreur lors de db indisponible
+            Yii::app()->user->setFlash('error', '<strong>La base de donnnée est indisponible pour le moment: ' . $ex->getMessage() . '</strong>'); // message d'erreur lors de db indisponible
         }
     }
 

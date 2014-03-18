@@ -24,7 +24,7 @@
             if (Yii::app()->session['Utilisateur'] == 'Locataire') {
                 $varCheminAcces = "locataire/changepassword?id=" . $var['id_locataire'];
             } else {
-                $varCheminAcces = "user/changepassword?id=". $var['id_user'];
+                $varCheminAcces = "user/changepassword?id=" . $var['id_user'];
             }
             $this->widget('bootstrap.widgets.TbNavbar', array(
                 'collapse' => TRUE,
@@ -54,7 +54,7 @@
                         'htmlOptions' => array('class' => 'pull-right'),
                         'items' => array(
                             '---',
-                            array('label' => Translate::trad('Connexion'), 'url' => array('/site/login'),'itemOptions'=>array('class'=>'flashText','color'=>'red'), 'visible' => Yii::app()->user->isGuest,),
+                            array('label' => Translate::trad('Connexion'), 'url' => array('/site/login'), 'itemOptions' => array('class' => 'flashText', 'color' => 'red'), 'visible' => Yii::app()->user->isGuest,),
                             array('label' => Translate::trad('DeConnexion') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
                         ),
                     ),
@@ -147,15 +147,19 @@
 </html>
 
 <script>
-    var currentVal = <?php var_export(Constantes::TIMEOUT_SESSION - 60); ?>;
+    var currentVal = <?php var_export(Constantes::TIMEOUT_SESSION-60); ?>;
     var endVal = 0;
     var interval = 1000;
     var thread = setInterval(function() {
         currentVal -= interval / 1000;
         if (currentVal == endVal && <?php var_export(!Yii::app()->user->isGuest); ?>)
         {
-            window.location.replace('<?php echo Yii::app()->baseUrl . '/index.php/site/logout'; ?>');
+            window.location.replace('<?php echo Yii::app()->baseUrl . '/index.php/site/logout?isAjax=1'; ?>');
             clearInterval(thread);
         }
     }, interval);
 </script>  
+<?php
+Yii::app()->clientScript->registerCoreScript('jquery');
+Yii::app()->clientScript->registerScript(null, '$("#alert_session").delay(5000).fadeOut();')
+?>

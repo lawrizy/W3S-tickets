@@ -18,11 +18,18 @@ $this->menu = array(
 <h1>Détails Entreprise: <?php echo $model->nom; ?></h1>
 
 <?php
+//------------------------------------------------------------------------------
+//-------------------Détermination de la categorie à l'entreprise---------------
+//------------------------------------------------------------------------------
+
 $string = " ";
-$varSecteur = Secteur::model()->findAllByAttributes(array('fk_entreprise' => $model->id_entreprise));
-foreach ($varSecteur as $secteur) {
+$varSecteur = Secteur::model()->findAllByAttributes(array('fk_entreprise' => $model->id_entreprise)); // recupération d'un tableau de  Secteur
+foreach ($varSecteur as $secteur) { // Boucle pour récuperer la categorie 
     $string .=CategorieIncident::model()->findByAttributes(array('id_categorie_incident' => $secteur->fk_categorie))->label . ' ';
-}
+}// $String  est la liste des catégories   
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+
 $this->widget('bootstrap.widgets.TbDetailView', array(
     'type' => 'striped bordered',
     'data' => $model,

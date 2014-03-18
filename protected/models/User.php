@@ -33,7 +33,7 @@ class User extends CActiveRecord {
 // NOTE: you should only define rules for those attributes that
 // will receive user inputs.
         return array(
-            array('nom, email, password, fk_fonction, fk_langue', 'required', 'message' => Translate::trad('Required')),
+            array('nom, email, password, fk_fonction, fk_langue', 'required'),
             array('fk_fonction, fk_langue, visible', 'numerical', 'integerOnly' => true),
             array('nom, email', 'length', 'max' => 64),
             array('password', 'length', 'max' => 32),
