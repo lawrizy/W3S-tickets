@@ -130,8 +130,15 @@ class SiteController extends Controller {
         }
         if (Yii::app()->session['Utilisateur'] == 'User') {
             $model = User::model()->findByPk(Yii::app()->session['Logged']->id_user);
+            $model = User::model()->findByPk(Yii::app()->session['Logged']->id_locataire);
+            $Session = Session::model()->findByAttributes(array('email' => $model->email));
+            $yiisession = Yiisession::model()->findByPk($Session->fk_yiisession);
+            $yiisession->delete();
         } elseif (Yii::app()->session['Utilisateur'] == 'Locataire') {
             $model = Locataire::model()->findByPk(Yii::app()->session['Logged']->id_locataire);
+            $Session = Session::model()->findByAttributes(array('email' => $model->email));
+            $yiisession = Yiisession::model()->findByPk($Session->fk_yiisession);
+            $yiisession->delete();
         }Yii::app()->session->clear();
         $model->save();
         Yii::app()->user->logout();
