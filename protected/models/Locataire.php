@@ -31,6 +31,7 @@ class Locataire extends CActiveRecord {
             array('nom, email, password, fk_langue', 'required'),
             array('fk_langue, visible, is_logged', 'numerical', 'integerOnly' => true),
             array('nom, email', 'length', 'max' => 64),
+            array('email', 'email'),
             array('password', 'length', 'max' => 32),
 // The following rule is used by search().
 // @todo Please remove those attributes that should not be searched.
@@ -85,7 +86,7 @@ class Locataire extends CActiveRecord {
         $criteria->compare('email', $this->email, true);
         $criteria->compare('password', $this->password, true);
         $criteria->compare('fk_langue', $this->fk_langue);
-        $criteria->compare('visible', $this->visible);
+        $criteria->compare('visible', Constantes::VISIBLE);
         $criteria->compare('is_logged', $this->is_logged);
 
         return new CActiveDataProvider($this, array(
