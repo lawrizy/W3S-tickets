@@ -10,7 +10,7 @@ $this->breadcrumbs = array(
 );
 ?>
 
-<h1><?php echo Translate::trad('ConnexionTitre'); ?></h1>
+<h1 class="h1"><?php echo Translate::trad('ConnexionTitre'); ?></h1>
 
 <p><?php echo Translate::trad('Indication'); ?></p>
 
@@ -28,7 +28,6 @@ $this->breadcrumbs = array(
     ?>
 
     <p class="note"><?php echo Translate::trad('Required'); ?>
-
         <?php echo $form->textFieldRow($model, 'username', array('id' => 'IWantTheFocus')); ?>
 
         <?php

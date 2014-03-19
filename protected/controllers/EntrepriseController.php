@@ -2,6 +2,14 @@
 
 class EntrepriseController extends Controller {
 
+    Const ID_CONTROLLER = 5;
+    Const ACTION_VIEW = 1;
+    Const ACTION_CREATE = 2;
+    COnst ACTION_DELETE = 4;
+    const ACTION_UPDATE = 8;
+    const ACTION_ADMIN = 16;
+    Const ACTION_SECTEUR = 32;
+
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -28,8 +36,8 @@ class EntrepriseController extends Controller {
             // Si ['User'] et [fonction = id_admin], alors c'est un admin
             return array(
                 array('allow', // 'allow' veut dire que l'utilisateur a droit à ce qui suit.
-                    'actions' => array('*'), // L'admin à tous les droits
-                    'users' => array('*'),
+                    'actions' => array('view', 'secteur', 'create', 'update', 'delete', 'admin'), // L'admin à tous les droits
+                    'users' => array('@'),
                 // Tous les droits accordés à tout le monde, mais comme il faut être admin 
                 // pour arriver là alors il n'y a que les admins qui ont ces droits-là
                 ),
@@ -38,7 +46,7 @@ class EntrepriseController extends Controller {
             // Si ['Locataire'] ou [['User'] et [fonction = id_user]], alors l'utilisateur n'a aucun droit
             return array(
                 array('deny', // 'deny' veut dire que l'on renie les droits à l'utilisateur
-                    'users' => array('*'),
+                    'users' => array('?'),
                     // Aucun droit à tous ceux qui arrivent ici
                     'message' => 'Vous n\'avez pas accès à cette page.'
                 // Message qu'affichera la page d'erreur

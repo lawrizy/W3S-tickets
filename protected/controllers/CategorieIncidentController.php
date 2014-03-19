@@ -2,6 +2,14 @@
 
 class CategorieIncidentController extends Controller {
 
+    Const ID_CONTROLLER = 3;
+    Const ACTION_VIEW = 1;
+    Const ACTION_CREATECAT = 2;
+    COnst ACTION_CREATESOUSCAT = 4;
+    const ACTION_UPDATECAT = 8;
+    const ACTION_UPDATESOUSCAT = 16;
+    const ACTION_ADMIN = 32;
+
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -28,7 +36,7 @@ class CategorieIncidentController extends Controller {
             // Si ['User'] et [fonction = id_root]
             return array(
                 array('allow', // 'allow' veut dire que l'utilisateur a droit à ce qui suit.
-                    'actions' => array('createcat','createsouscat','updatesouscat','updatecat','admin','view'), // Le root à tous les droits
+                    'actions' => array('createcat', 'createsouscat', 'updatesouscat', 'updatecat', 'admin', 'view'), // Le root à tous les droits
                     'users' => array('@'),
                 // Tous les droits accordés à tout le monde, mais comme il faut être root
                 // pour arriver là alors il n'y a que ui qui a ces droits-là

@@ -2,6 +2,16 @@
 
 class TicketController extends Controller {
 
+    Const ID_CONTROLLER = 8;
+    Const ACTION_VIEW = 1;
+    Const ACTION_CREATE = 2;
+    COnst ACTION_DELETE = 4;
+    const ACTION_UPDATE = 8;
+    const ACTION_ADMIN = 16;
+    const ACTION_GETSOUSCATEGORIESDYNAMIQUEQ = 32;
+    const ACTION_CLOSE = 64;
+    Const ACTION_SENDNOTIFICATIONMAIL = 128;
+
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -92,8 +102,7 @@ class TicketController extends Controller {
                 $histo->fk_statut_ticket = Constantes::STATUT_CLOSED;
                 $logged = Yii::app()->session['Logged'];
                 $histo->fk_user = $logged['id_user'];
-                if($histo->save(false))
-                {
+                if ($histo->save(false)) {
                     $this->actionSendNotificationMail($model);
                     Yii::app()->user->setFlash('success', 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email']);
                 }
@@ -132,8 +141,7 @@ class TicketController extends Controller {
                 $histo->fk_statut_ticket = Constantes::STATUT_TREATMENT;
                 $logged = Yii::app()->session['Logged'];
                 $histo->fk_user = $logged['id_user'];
-                if($histo->save(false))
-                {
+                if ($histo->save(false)) {
                     $this->actionSendNotificationMail($oldmodel);
                     Yii::app()->user->setFlash('success', 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email']);
                 }
@@ -156,7 +164,7 @@ class TicketController extends Controller {
      */
     public function actionCreate() {
         $model = new Ticket;
-        
+
         // Vérifie si a bien reçu un objet 'Ticket'
         // ==> si non, c'est que c'est la première arrivée sur la page create,
         // ==> si oui, c'est que c'est la page create elle-même qui renvoie ici pour la création d'un ticket
@@ -185,8 +193,7 @@ class TicketController extends Controller {
                 $ticket['fk_categorie'] = $_POST['DD_sousCat'];
                 $cat = CategorieIncident::model()->findByPk($ticket['fk_categorie']);
                 $ticket['fk_priorite'] = $cat['fk_priorite'];
-            }
-            else {
+            } else {
                 $ticket['fk_categorie'] = NULL;
                 $ticket['fk_priorite'] = NULL;
             }
@@ -209,8 +216,7 @@ class TicketController extends Controller {
                 // Lors de la création, statut forcément à opened
                 $histo->fk_statut_ticket = Constantes::STATUT_OPENED;
                 $histo->fk_user = $model['fk_user'];
-                if($histo->save(false))
-                {
+                if ($histo->save(false)) {
                     $this->actionSendNotificationMail($model);
                     Yii::app()->user->setFlash('success', 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email']);
                 }
@@ -396,12 +402,10 @@ class TicketController extends Controller {
             default:
                 return;
         }
-        
-        try
-        {
+
+        try {
             Yii::app()->mail->send($message);
-        } catch(Swift_SwiftException $mailException)
-        {
+        } catch (Swift_SwiftException $mailException) {
             Yii::app()->user->setFlash('error', 'L\'envoi du mail a échoué.<br/>' . $mailException->getMessage());
         }
     }

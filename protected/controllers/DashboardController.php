@@ -2,6 +2,16 @@
 
 class DashboardController extends Controller {
 
+    Const ID_CONTROLLER = 4;
+    Const ACTION_VIEW = 1;
+    Const ACTION_GETTICKETBYCATEGORIE = 2;
+    COnst ACTION_GETTICKETBYCATEGORIEFORBATIMENTID = 4;
+    const ACTION_GETTICKETBYSTATUSFORBATIMENTID = 8;
+    const ACTION_GETCATEGORIESLABEL = 16;
+    Const ACTION_FILTERBYBATIMENT= 32;
+    Const ACTION_GETFREQUENCECALLEDBYENTREPRISE= 64;
+ 
+
     /**
      * @return array action filters
      */
@@ -25,7 +35,7 @@ class DashboardController extends Controller {
             // Si ['User'] et [fonction = id_admin ou id_root]
             return array(
                 array('allow', // 'allow' veut dire que l'utilisateur a droit à ce qui suit.
-                    'actions' => array('vue','getticketbycategorie','getticketbycategorieforbatimentid','getticketbystatusforbatimentid','getcategorieslabel','filterbybatiment','getfrequencecalledentreprise'), // L'admin à tous les droits
+                    'actions' => array('vue', 'getticketbycategorie', 'getticketbycategorieforbatimentid', 'getticketbystatusforbatimentid', 'getcategorieslabel', 'filterbybatiment', 'getfrequencecalledentreprise'), // L'admin à tous les droits
                     'users' => array('@'),
                 // Tous les droits accordés à tout le monde, mais comme il faut être admin ou root
                 // pour arriver là alors il n'y a qu'eux qui ont ces droits-là
@@ -186,11 +196,10 @@ class DashboardController extends Controller {
 
         return $data;
     }
-    
-    public function actionGetNombreTicketsParUser()
-    {
+
+    public function actionGetNombreTicketsParUser() {
         $returnData = array();
-        
+
         return $returnData;
     }
 

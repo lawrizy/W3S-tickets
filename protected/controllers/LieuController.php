@@ -3,6 +3,13 @@
 class LieuController extends Controller
 {
 
+    Const ID_CONTROLLER = 6;
+    Const ACTION_VIEW = 1;
+    Const ACTION_CREATE = 2;
+    COnst ACTION_DELETE = 4;
+    const ACTION_UPDATE = 8;
+    const ACTION_ADMIN = 16;
+
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
