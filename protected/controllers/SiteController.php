@@ -90,7 +90,7 @@ class SiteController extends Controller {
     public function actionLogin() {
         $this->assignLangue();
         if (isset($_GET['expiration'])) {
-            if ($_GET['expiration'] === '1') {
+            if ($_GET['expiration'] === Constantes::ISAJAX_TRUE) {
                 echo Yii::app()->user->setFlash('info', '<strong>Session expirée: Vous avez été déconnecté </strong>');
                 unset($_GET['expiration']);
             }
@@ -124,16 +124,14 @@ class SiteController extends Controller {
      */
     public function actionLogout() {
         if (!isset($_GET['isAjax']))
-            $varIsAjax = 0;
+            $varIsAjax = Constantes::ISAJAX_FALSE;
         else {
-            $varIsAjax = 1;
+            $varIsAjax = Constantes::ISAJAX_TRUE;
         }
         if (Yii::app()->session['Utilisateur'] == 'User') {
             $model = User::model()->findByPk(Yii::app()->session['Logged']->id_user);
-            $model->is_logged = 0;
         } elseif (Yii::app()->session['Utilisateur'] == 'Locataire') {
             $model = Locataire::model()->findByPk(Yii::app()->session['Logged']->id_locataire);
-            $model->is_logged = 0;
         }Yii::app()->session->clear();
         $model->save();
         Yii::app()->user->logout();

@@ -147,14 +147,14 @@
 </html>
 
 <script>
-    var currentVal = <?php var_export(Constantes::TIMEOUT_SESSION-60); ?>;
+    var currentVal = <?php var_export(Constantes::TIMEOUT_SESSION - 60); ?>;
     var endVal = 0;
     var interval = 1000;
     var thread = setInterval(function() {
         currentVal -= interval / 1000;
         if (currentVal == endVal && <?php var_export(!Yii::app()->user->isGuest); ?>)
         {
-            window.location.replace('<?php echo Yii::app()->baseUrl . '/index.php/site/logout?isAjax=1'; ?>');
+            window.location.replace('<?php echo Yii::app()->baseUrl . '/index.php/site/logout?isAjax=' . Constantes::ISAJAX_TRUE; ?>');
             clearInterval(thread);
         }
     }, interval);
