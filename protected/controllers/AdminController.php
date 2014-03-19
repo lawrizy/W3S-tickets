@@ -1,17 +1,20 @@
 <?php
 
 class AdminController extends Controller {
-    
+
+    Const ID_CONTROLLER = 1;
+    const ACTION_INDEX = 1;
+
     /**
      * @return array action filters
      */
     public function filters() {
         return array(
-            'accessControl', 
+            'accessControl',
             'postOnly + delete',
         );
     }
-    
+
     /**
      * La fonction permettant d'accorder des droits aux différents utilisateurs.
      * Quand la méthode est appellée, on vérifie le type de l'utilisateur,
@@ -54,5 +57,5 @@ class AdminController extends Controller {
     public function actionIndex() {
         $this->render('index');
     }
-   
+
 }

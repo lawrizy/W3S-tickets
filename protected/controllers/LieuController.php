@@ -2,6 +2,13 @@
 
 class LieuController extends Controller {
 
+    Const ID_CONTROLLER = 6;
+    Const ACTION_VIEW = 1;
+    Const ACTION_CREATE = 2;
+    COnst ACTION_DELETE = 4;
+    const ACTION_UPDATE = 8;
+    const ACTION_ADMIN = 16;
+
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -28,7 +35,7 @@ class LieuController extends Controller {
             // Si ['User'] et [fonction = id_admin], alors c'est un admin
             return array(
                 array('allow', // 'allow' veut dire que l'utilisateur a droit à ce qui suit.
-                    'actions' => array('view','create','update','delete','admin'), // L'admin à tous les droits
+                    'actions' => array('view', 'create', 'update', 'delete', 'admin'), // L'admin à tous les droits
                     'users' => array('@'),
                 // Tous les droits accordés à tout le monde, mais comme il faut être admin 
                 // pour arriver là alors il n'y a que les admins qui ont ces droits-là
