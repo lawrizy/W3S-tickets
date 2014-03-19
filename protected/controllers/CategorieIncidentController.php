@@ -52,6 +52,9 @@ class CategorieIncidentController extends Controller {
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
     public function actionCreateCat() {
+        $db = Yii::app()->db;
+        $tsql = $db->beginTransaction();
+        
         $model = new CategorieIncident();
         // On génère un premier modèle
         // Vérifie si a bien reçu un objet 'CategorieIncident'
@@ -76,8 +79,8 @@ class CategorieIncidentController extends Controller {
                     $sousCat['label'] = 'Autre';
                     $sousCat['fk_priorite'] = Constantes::PRIORITE_LOW;
                     // Une sous-catégorie 'Autre' est toujours à priorité basse
-                    $sousCat->save();
-
+                    $sousCat->save(true);
+                            
                     $secteur = new Secteur();
                     $secteur->fk_entreprise = $_POST['fk_entreprise'];
                     $secteur['fk_categorie'] = $model['id_categorie_incident'];
