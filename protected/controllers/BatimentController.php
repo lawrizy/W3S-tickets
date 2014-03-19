@@ -2,8 +2,8 @@
 
 class BatimentController extends Controller {
 
-    Const ID_CONTROLLER = null;
-    Const ACTION_VIEW = 2;
+    Const ID_CONTROLLER = 2;
+    Const ACTION_VIEW = 1;
     Const ACTION_CREATE = 2;
     COnst ACTION_DELETE = 4;
     const ACTION_UPDATE = 8;
