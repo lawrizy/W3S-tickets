@@ -18,23 +18,45 @@ class UserIdentity extends CUserIdentity {
     private $_id;
 
     public function authenticate() {
-//----------------------------------------------------------------------------------------
-//-------------------------------------Locataire------------------------------------------
-//----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//-------------------------------------Locataire--------------------------------
+//------------------------------------------------------------------------------
         try {
             if (($record = Locataire::model()->findByAttributes(array('email' => $this->username))) !== null) { //recupération d'un record en fonction de l'email
                 if ($record->password !== md5($this->password)) {// si le mot de passe est différent du mot de passe de la db en md5
                     Yii::app()->user->setFlash('error', '<strong>Le mot de passe ou le nom d\'utilisateur est incorrect.!</strong>');
                     $this->errorCode = self::ERROR_PASSWORD_INVALID; // code error est password error
                 } else {
-                    if (($Session = Session::model()->findByAttributes(array('email' => $record->email))) != NULL) {
-                        $yiisession = Yiisession::model()->findByPk($Session->fk_yiisession);
-                        $yiisession->delete();
+                    //----------------------------------------------------------
+                    //--------------Traitement de la session unique-------------
+                    //----------------------------------------------------------
+                    //**********************************************************
+                    //----------------------------------------------------------
+                    //--------------Cas Locataire déjà connecté-----------------
+                    //----------------------------------------------------------
+                    if (($Session = Session::model()->findByAttributes(array('email' => $record->email))) != NULL) { // rechere du record dans la table w3sys_Session par l'email de l'utilisateur
+                        $yiisession = Yiisession::model()->findByPk($Session->fk_yiisession); //on recupere le record de sa session dans la table yiisession
+                        $yiisession->delete(); // on supprime sa ligne /!\ la suppression de cette ligne supprime la ligne correspondante dans la table w3sys_Session delete on cascade
                     }
-                    $Session = new Session();
-                    $Session->email = $record->email;
-                    $Session->fk_yiisession = Yii::app()->session->sessionID;
-                    $Session->save();
+                    //----------------------------------------------------------
+                    //----------------Fin Locataire déjà connecté---------------
+                    //----------------------------------------------------------
+                    //**********************************************************
+                    //----------------------------------------------------------
+                    //---------------------Dans tous les cas--------------------
+                    //----------------------------------------------------------
+                    $Session = new Session(); //on crée un nouveau record dans la table w3sys_session
+                    $Session->email = $record->email; // on y m'est l'email du locataire
+                    $Session->fk_yiisession = Yii::app()->session->sessionID; //on lie la table W3sys_session avec la table yiisession 
+                    $Session->save(); // on enregistre le record
+                    //----------------------------------------------------------
+                    //-------------------Fin de tous les cas-------------------- 
+                    //----------------------------------------------------------
+                    //**********************************************************
+                    //----------------------------------------------------------
+                    //-----------Fin de traitement de session unique------------
+                    //----------------------------------------------------------
+
                     $this->_id = $record->id_locataire;    //recupération  de l'id du locataire
                     $this->errorCode = self::ERROR_NONE;   // aucune erreur
                     Yii::app()->session['Utilisateur'] = 'Locataire'; // création d'une variable de session pour stocker le type d'user
@@ -45,23 +67,48 @@ class UserIdentity extends CUserIdentity {
                 }
 
                 return !$this->errorCode; // return le code d'erreur
-//----------------------------------------------------------------------------------------
-//---------------------------------------User---------------------------------------------
-//----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//----------------------------------Fin Locataire-------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//---------------------------------------User-----------------------------------
+//------------------------------------------------------------------------------
             } elseif (($record = User::model()->findByAttributes(array('email' => $this->username))) !== NULL) {  //recuperation d'un record User
                 if ($record->password !== md5($this->password)) {
                     Yii::app()->user->setFlash('error', '<strong>Le mot de passe ou le nom d\'utilisateur est incorrect.!</strong>');
                     $this->errorCode = self::ERROR_PASSWORD_INVALID;
                 }// si le mot de passe est différent du mot de passe de la db en md5
                 else {
-                    if (($Session = Session::model()->findByAttributes(array('email' => $record->email))) != NULL) {
-                        $yiisession = Yiisession::model()->findByPk($Session->fk_yiisession);
-                        $yiisession->delete();
+                    //----------------------------------------------------------
+                    //--------------Traitement de la session unique-------------
+                    //----------------------------------------------------------
+                    //**********************************************************
+                    //----------------------------------------------------------
+                    //--------------Cas Utilisateur déjà connecté---------------
+                    //----------------------------------------------------------
+                    if (($Session = Session::model()->findByAttributes(array('email' => $record->email))) != NULL) {// rechere du record dans la table w3sys_Session par l'email de l'utilisateur
+                        $yiisession = Yiisession::model()->findByPk($Session->fk_yiisession); //on recupere le record de sa session dans la table yiisession
+                        $yiisession->delete(); // on supprime sa ligne /!\ la suppression de cette ligne supprime la ligne correspondante dans la table w3sys_Session delete on cascade
                     }
-                    $Session = new Session();
-                    $Session->email = $record->email;
-                    $Session->fk_yiisession = Yii::app()->session->sessionID;
-                    $Session->save();
+                    //----------------------------------------------------------
+                    //---------------Fin d'utilisateur déjà connecté------------
+                    //----------------------------------------------------------
+                    //**********************************************************
+                    //----------------------------------------------------------
+                    //--------------------Dans tous les cas---------------------
+                    //----------------------------------------------------------
+                    $Session = new Session(); //on crée un nouveau record dans la table w3sys_session
+                    $Session->email = $record->email; // on y m'est l'email du locataire
+                    $Session->fk_yiisession = Yii::app()->session->sessionID; //on lie la table W3sys_session avec la table yiisession 
+                    $Session->save(); // on enregistre le record
+                    //----------------------------------------------------------
+                    //---------------------Fin de tous les cas------------------
+                    //----------------------------------------------------------
+                    ////********************************************************
+                    //----------------------------------------------------------
+                    //--------------------Fin de session unique-----------------
+                    //----------------------------------------------------------
+
                     $this->_id = $record->id_user; //recupération  de l'id du user
                     $this->errorCode = self::ERROR_NONE; // aucune erreur
                     Yii::app()->session['Utilisateur'] = 'User'; // création d'une variable de session pour stocker le type d'user
@@ -71,6 +118,9 @@ class UserIdentity extends CUserIdentity {
                     Yii::app()->user->setFlash('success', '<strong>Bienvenue: ' . $record->nom . ' !</strong>'); // message en cas de connexion simultanée
                 }
                 return !$this->errorCode; // return le code d'erreur
+//------------------------------------------------------------------------------
+//---------------------------------Fin User-------------------------------------
+//------------------------------------------------------------------------------
             }
             Yii::app()->session['Language'] = 'en'; //langue par défaut 
             return !self::ERROR_UNKNOWN_IDENTITY; //return utilisateur inconnu
@@ -79,21 +129,21 @@ class UserIdentity extends CUserIdentity {
         }
     }
 
-//----------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 
     public function getId() {
         return $this->_id; // recupere l'id
     }
 
-//----------------------------------------------------------------------------------------
-//--------------------------------------Langue--------------------------------------------
-//----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//--------------------------------------Langue----------------------------------
+//------------------------------------------------------------------------------
 
     public function getLanguage($record) {
-//----------------------------------------------------------------------------------------
-//------------Recupere la langue pour l'application une fois la personne authentifié------
-//----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//-----Recupere la langue pour l'application une fois la personne authentifié---
+//------------------------------------------------------------------------------
 
         if ($record->fk_langue == Constantes::LANGUE_FR) {
             Yii::app()->session['_lang'] = 'fr';
@@ -104,6 +154,10 @@ class UserIdentity extends CUserIdentity {
         }
     }
 
-//----------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 }
+
+//------------------------------------------------------------------------------
+//----------------------------Fin Langue----------------------------------------
+//------------------------------------------------------------------------------
