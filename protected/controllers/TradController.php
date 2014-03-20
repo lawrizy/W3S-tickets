@@ -24,28 +24,50 @@ class TradController extends Controller {
      * ce controleur et génère les arrays 'allow' (permis) et 'deny' (refusé)
      * selon ces droits-là.
      */
-    public function accessRules() {
-        if ((Yii::app()->session['Utilisateur'] == 'User') && (Yii::app()->session['Logged']->fk_fonction >= Constantes::FONCTION_ADMIN)) {
+    public function accessRules() { // droit des utilisateur sur les actions
+        if (Yii::app()->session['Utilisateur'] == 'Locataire') { // Locataire a des droits fixes
             return array(
-                array(
-                    "allow",
-                    "actions" => array('view', 'index', 'addtraduction', 'modifytraduction'),
-                    "users" => array('@'),
+                array('deny', // refuse autre users
+                    'users' => array('@'), //tous utilisateur
+                    'message' => 'Vous n\'avez pas accès à cette page.'
                 ),
-                array(
-                    'deny',
-                    'users' => array('?'),
-                    'message' => 'Vous n\'avez pas accès à cette page.',
-                )
             );
-        } else {
-            return array(
-                array(
-                    'deny',
-                    'users' => array('?'),
-                    'message' => 'Vous n\'avez pas accès à cette page.',
-                )
-            );
+        } elseif (Yii::app()->session['Utilisateur'] == 'User') { // Génération des droits selon le user
+            
+            // On récupère d'abord le user et ses droits de la session
+            $logged = Yii::app()->session['Logged'];
+            $rights = Yii::app()->session['Rights']->getUser();
+            // On initialise ensuite les array qui stockeront les droits
+            $allow = array();
+            
+            // Et enfin on teste chaque droit un à un, et si le droit est bien accordé,
+            // on le rajoute à l'array qui sera envoyé dans le return
+            if ($rights & self::ACTION_VIEW) array_push($allow, 'view');
+            if ($rights & self::ACTION_INDEX) array_push($allow, 'index');
+            if ($rights & self::ACTION_ADDTRADUCTION) array_push($allow, 'addtraduction');
+            if ($rights & self::ACTION_UPDATE) array_push($allow, 'update');
+            if ($rights & self::ACTION_ADMIN) array_push($allow, 'admin');
+            if ($rights & self::ACTION_CHANGEPASSWORD) array_push($allow, 'changepassword');
+            
+            return array( // Ici on a plus qu'à envoyer la liste des droits
+                    array('allow', // Ici l'array des droits 'permis'
+                        'actions' => $allow, // Et on lui communique l'array que l'on a généré plus tôt
+                        'users' => array('@'), // Autorisé pour les user loggés
+                    ),
+                    array('deny', // Refuse autre users
+                        'users' => array('@'), // Refus aux visiteurs non loggés
+                        'message' => 'Vous n\'avez pas accès à cette page.'
+                            // Le message qui sera affiché
+                    ),
+                );
+        } else { // Si autre utilisateur (visiteur)
+            return array( // Ici on a plus qu'à envoyer la liste des droits
+                    array('deny', // Refuse autre users
+                        'users' => array('?'), // Refus aux visiteurs non loggés
+                        'message' => 'Vous n\'avez pas accès à cette page.'
+                            // Le message qui sera affiché
+                    ),
+                );
         }
     }
 
