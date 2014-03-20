@@ -141,7 +141,10 @@ class BatimentController extends Controller
             {
                 $model->attributes = $_POST['Batiment'];
                 if ($model->save(true))
+                {
+                    $tsql->commit();
                     $this->redirect(array('view', 'id' => $model->id_batiment));
+                }
                 else
                 {
                     $errMessage = "Une erreur est survenue : <br/>";
