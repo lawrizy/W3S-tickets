@@ -4,7 +4,7 @@ class TradController extends Controller
 {
 
     Const ID_CONTROLLER = 9;
-    Const ACTION_VIEW = 1;
+    Const ACTION_UPDATE = 1;
     Const ACTION_INDEX = 2;
     COnst ACTION_ADDTRADUCTION = 4;
     const ACTION_MODIFYTRADUCTION = 8;
@@ -48,7 +48,7 @@ class TradController extends Controller
 
             // Et enfin on teste chaque droit un à un, et si le droit est bien accordé,
             // on le rajoute à l'array qui sera envoyé dans le return
-            if ($rights & self::ACTION_VIEW) array_push($allow, 'view');
+            if ($rights & self::ACTION_UPDATE) array_push($allow, 'update');
             if ($rights & self::ACTION_INDEX) array_push($allow, 'index');
             if ($rights & self::ACTION_ADDTRADUCTION) array_push($allow, 'addtraduction');
             if ($rights & self::ACTION_MODIFYTRADUCTION) array_push($allow, 'modifytraduction');
