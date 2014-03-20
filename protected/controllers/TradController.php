@@ -36,7 +36,7 @@ class TradController extends Controller {
             
             // On récupère d'abord le user et ses droits de la session
             $logged = Yii::app()->session['Logged'];
-            $rights = Yii::app()->session['Rights']->getUser();
+            $rights = Yii::app()->session['Rights']->getTrad();
             // On initialise ensuite les array qui stockeront les droits
             $allow = array();
             
@@ -45,9 +45,7 @@ class TradController extends Controller {
             if ($rights & self::ACTION_VIEW) array_push($allow, 'view');
             if ($rights & self::ACTION_INDEX) array_push($allow, 'index');
             if ($rights & self::ACTION_ADDTRADUCTION) array_push($allow, 'addtraduction');
-            if ($rights & self::ACTION_UPDATE) array_push($allow, 'update');
-            if ($rights & self::ACTION_ADMIN) array_push($allow, 'admin');
-            if ($rights & self::ACTION_CHANGEPASSWORD) array_push($allow, 'changepassword');
+            if ($rights & self::ACTION_MODIFYTRADUCTION) array_push($allow, 'modifytraduction');
             
             return array( // Ici on a plus qu'à envoyer la liste des droits
                     array('allow', // Ici l'array des droits 'permis'

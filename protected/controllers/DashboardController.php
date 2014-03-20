@@ -3,7 +3,7 @@
 class DashboardController extends Controller {
 
     Const ID_CONTROLLER = 4;
-    Const ACTION_VIEW = 1;
+    Const ACTION_VUE = 1;
     Const ACTION_GETTICKETBYCATEGORIE = 2;
     COnst ACTION_GETTICKETBYCATEGORIEFORBATIMENTID = 4;
     const ACTION_GETTICKETBYSTATUSFORBATIMENTID = 8;
@@ -21,7 +21,7 @@ class DashboardController extends Controller {
             'postOnly + delete', // we only allow deletion via POST request
         );
     }
-
+    
     /**
      * La méthode permettant d'accorder des droits aux différents utilisateurs.
      * Cette méthode est appelée à chaque fois que l'on veut accéder à une action
@@ -29,30 +29,51 @@ class DashboardController extends Controller {
      * ce controleur et génère les arrays 'allow' (permis) et 'deny' (refusé)
      * selon ces droits-là.
      */
-    public function accessRules() {
-        $logged = Yii::app()->session['Logged'];
-        if ((Yii::app()->session['Utilisateur'] == 'User') &&
-                (($logged->fk_fonction == Constantes::FONCTION_ADMIN) || ($logged->fk_fonction == Constantes::FONCTION_ROOT))
-        ) {
-            // Si ['User'] et [fonction = id_admin ou id_root]
+    public function accessRules() { // droit des utilisateur sur les actions
+        if (Yii::app()->session['Utilisateur'] == 'Locataire') { // Locataire a des droits fixes
             return array(
-                array('allow', // 'allow' veut dire que l'utilisateur a droit à ce qui suit.
-                    'actions' => array('vue', 'getticketbycategorie', 'getticketbycategorieforbatimentid', 'getticketbystatusforbatimentid', 'getcategorieslabel', 'filterbybatiment', 'getfrequencecalledentreprise'), // L'admin à tous les droits
-                    'users' => array('@'),
-                // Tous les droits accordés à tout le monde, mais comme il faut être admin ou root
-                // pour arriver là alors il n'y a qu'eux qui ont ces droits-là
-                ),
-            );
-        } else {
-            // Si ['Locataire'] ou [['User'] et [fonction = id_user]], alors l'utilisateur n'a aucun droit
-            return array(
-                array('deny', // 'deny' veut dire que l'on renie les droits à l'utilisateur
-                    'users' => array('?'),
-                    // Aucun droit à tous ceux qui arrivent ici
+                array('deny', // refuse autre users
+                    'users' => array('@'), //tous utilisateur
                     'message' => 'Vous n\'avez pas accès à cette page.'
-                // Message qu'affichera la page d'erreur
                 ),
             );
+        } elseif (Yii::app()->session['Utilisateur'] == 'User') { // Génération des droits selon le user
+            
+            // On récupère d'abord le user et ses droits de la session
+            $logged = Yii::app()->session['Logged'];
+            $rights = Yii::app()->session['Rights']->getDashboard();
+            // On initialise ensuite les array qui stockeront les droits
+            $allow = array();
+            
+            // Et enfin on teste chaque droit un à un, et si le droit est bien accordé,
+            // on le rajoute à l'array qui sera envoyé dans le return
+            if ($rights & self::ACTION_VUE) array_push($allow, 'vue');
+            if ($rights & self::ACTION_GETTICKETBYCATEGORIE) array_push($allow, 'getticketbycategorie');
+            if ($rights & self::ACTION_GETTICKETBYCATEGORIEFORBATIMENTID) array_push($allow, 'getticketbycategorieforbatimentid');
+            if ($rights & self::ACTION_GETTICKETBYSTATUSFORBATIMENTID) array_push($allow, 'getticketbystatusforbatimentid');
+            if ($rights & self::ACTION_GETCATEGORIESLABEL) array_push($allow, 'getcategorieslabel');
+            if ($rights & self::ACTION_FILTERBYBATIMENT) array_push($allow, 'filterbybatiment');
+            if ($rights & self::ACTION_GETFREQUENCECALLEDBYENTREPRISE) array_push($allow, 'getfrequencecalledentreprise');
+            
+            return array( // Ici on a plus qu'à envoyer la liste des droits
+                    array('allow', // Ici l'array des droits 'permis'
+                        'actions' => $allow, // Et on lui communique l'array que l'on a généré plus tôt
+                        'users' => array('@'), // Autorisé pour les user loggés
+                    ),
+                    array('deny', // Refuse autre users
+                        'users' => array('@'), // Refus aux visiteurs non loggés
+                        'message' => 'Vous n\'avez pas accès à cette page.'
+                            // Le message qui sera affiché
+                    ),
+                );
+        } else { // Si autre utilisateur (visiteur)
+            return array( // Ici on a plus qu'à envoyer la liste des droits
+                    array('deny', // Refuse autre users
+                        'users' => array('?'), // Refus aux visiteurs non loggés
+                        'message' => 'Vous n\'avez pas accès à cette page.'
+                            // Le message qui sera affiché
+                    ),
+                );
         }
     }
 
