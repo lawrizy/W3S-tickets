@@ -8,7 +8,7 @@ class TicketController extends Controller {
     COnst ACTION_DELETE = 4;
     const ACTION_UPDATE = 8;
     const ACTION_ADMIN = 16;
-    const ACTION_GETSOUSCATEGORIESDYNAMIQUEQ = 32;
+    const ACTION_GETSOUSCATEGORIESDYNAMIQUES = 32;
     const ACTION_CLOSE = 64;
     Const ACTION_SENDNOTIFICATIONMAIL = 128;
 
@@ -29,11 +29,85 @@ class TicketController extends Controller {
     }
 
     /**
-     * La fonction permettant d'accorder des droits aux différents utilisateurs.
-     * Quand la méthode est appellée, on vérifie le type de l'utilisateur,
-     * et en fonction de cela, les droits accordés peuvent varient.
+     * La méthode permettant d'accorder des droits aux différents utilisateurs.
+     * Cette méthode est appelée à chaque fois que l'on veut accéder à une action
+     * de ce controleur. La méthode vérifie les droits que cet utilisateur a sur
+     * ce controleur et génère les arrays 'allow' (permis) et 'deny' (refusé)
+     * selon ces droits-là.
      */
-    public function accessRules() { // // droit des utilisateur sur les urls
+    public function accessRules() { // droit des utilisateur sur les actions
+        //*
+        if (Yii::app()->session['Utilisateur'] == 'Locataire') { // Locataire a des droits fixes
+            return array(
+                array('allow', // le locataire peut juste creer un ticket et voir
+                    'actions' => array('view', 'create', 'getsouscategoriesdynamiques', 'sendnotificationmail'),
+                    'users' => array('@'), // user authentifier
+                ),
+                array('deny', // refuse autre users
+                    'users' => array('?'), //tous utilisateur
+                    'message' => 'Vous n\'avez pas accès à cette page.'
+                ),
+            );
+        } elseif (Yii::app()->session['Utilisateur'] == 'User') { // Génération des droits selon le user
+            
+            // On récupère d'abord le user et ses droits de la session
+            $logged = Yii::app()->session['Logged'];
+            $rights = Yii::app()->session['Rights'];
+            // On initialise ensuite les array qui stockeront les droits
+            $allow = array();
+            // $deny = array();
+            
+            // Et enfin on teste chaque droit un à un, et si le droit est bien accordé,
+            // on le rajoute à l'array qui sera envoyé dans le return
+            if ($rights & self::ACTION_VIEW) array_push($allow, 'view');
+            // else array_push($deny, 'view');
+
+            if ($rights & self::ACTION_CREATE) array_push($allow, 'create');
+            // else array_push($deny, 'create');
+
+            if ($rights & self::ACTION_DELETE) array_push($allow, 'delete');
+            // else array_push($deny, 'delete');
+
+            if ($rights & self::ACTION_UPDATE) array_push($allow, 'update');
+            // else array_push($deny, 'update');
+
+            //if ($rights & self::ACTION_ADMIN) array_push($allow, 'admin');
+            // else array_push($deny, 'admin');
+
+            if ($rights & self::ACTION_GETSOUSCATEGORIESDYNAMIQUES) array_push($allow, 'getsouscategoriesdynamiques');
+            // else array_push($deny, 'getsouscategoriesdynamiques');
+
+            if ($rights & self::ACTION_CLOSE) array_push($allow, 'close');
+            // else array_push($deny, 'close');
+
+            if ($rights & self::ACTION_SENDNOTIFICATIONMAIL) array_push($allow, 'sendnotificationmail');
+            // else array_push($deny, 'sendnotificationmail');
+
+            return array( // Ici on a plus qu'à envoyer la liste des droits
+                    array('allow', // Ici l'array des droits 'permis'
+                        'actions' => $allow, // Et on lui communique l'array que l'on a généré plus tôt
+                        'users' => array('@'), // Autorisé pour les user loggés
+                    ),
+                    array('deny', // Refuse autre users
+                        'actions' => array(),
+                        'users' => array('@'), // Refus aux visiteurs non loggés
+                        'message' => 'Vous n\'avez pas accès à cette page.'
+                            // Le message qui sera affiché
+                    ),
+                );
+        } else {
+            return array( // Ici on a plus qu'à envoyer la liste des droits
+                    array('deny', // Refuse autre users
+                        'users' => array('?'), // Refus aux visiteurs non loggés
+                        'message' => 'Vous n\'avez pas accès à cette page.'
+                            // Le message qui sera affiché
+                    ),
+                );
+        }
+        //*/
+        
+        
+        /*
         $logged = Yii::app()->session['Logged'];
         if (Yii::app()->session['Utilisateur'] == 'Locataire') {
             return array(
@@ -42,6 +116,7 @@ class TicketController extends Controller {
                     'users' => array('@'), // user authentifier
                 ),
                 array('deny', // refuse autre users
+                    'actions' => array('admin'),
                     'users' => array('?'), //tous utilisateur
                     'message' => 'Vous n\'avez pas accès à cette page.'
                 ),
@@ -74,6 +149,8 @@ class TicketController extends Controller {
                 ),
             );
         }
+        
+        //*/
     }
 
     /**

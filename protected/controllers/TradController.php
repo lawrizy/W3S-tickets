@@ -17,6 +17,13 @@ class TradController extends Controller {
         );
     }
 
+    /**
+     * La méthode permettant d'accorder des droits aux différents utilisateurs.
+     * Cette méthode est appelée à chaque fois que l'on veut accéder à une action
+     * de ce controleur. La méthode vérifie les droits que cet utilisateur a sur
+     * ce controleur et génère les arrays 'allow' (permis) et 'deny' (refusé)
+     * selon ces droits-là.
+     */
     public function accessRules() {
         if ((Yii::app()->session['Utilisateur'] == 'User') && (Yii::app()->session['Logged']->fk_fonction >= Constantes::FONCTION_ADMIN)) {
             return array(
