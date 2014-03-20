@@ -10,7 +10,8 @@ class TicketController extends Controller {
     const ACTION_ADMIN = 16;
     const ACTION_GETSOUSCATEGORIESDYNAMIQUES = 32;
     const ACTION_CLOSE = 64;
-    Const ACTION_SENDNOTIFICATIONMAIL = 128;
+    const ACTION_SENDNOTIFICATIONMAIL = 128;
+    const ACTION_TRAITEMENT = 256;
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -36,7 +37,6 @@ class TicketController extends Controller {
      * selon ces droits-là.
      */
     public function accessRules() { // droit des utilisateur sur les actions
-        //*
         if (Yii::app()->session['Utilisateur'] == 'Locataire') { // Locataire a des droits fixes
             return array(
                 array('allow', // le locataire peut juste creer un ticket et voir
@@ -44,7 +44,7 @@ class TicketController extends Controller {
                     'users' => array('@'), // user authentifier
                 ),
                 array('deny', // refuse autre users
-                    'users' => array('?'), //tous utilisateur
+                    'users' => array('@'), //tous utilisateur
                     'message' => 'Vous n\'avez pas accès à cette page.'
                 ),
             );
@@ -55,33 +55,18 @@ class TicketController extends Controller {
             $rights = Yii::app()->session['Rights']->getTicket();
             // On initialise ensuite les array qui stockeront les droits
             $allow = array();
-            // $deny = array();
             
             // Et enfin on teste chaque droit un à un, et si le droit est bien accordé,
             // on le rajoute à l'array qui sera envoyé dans le return
             if ($rights & self::ACTION_VIEW) array_push($allow, 'view');
-            // else array_push($deny, 'view');
-
             if ($rights & self::ACTION_CREATE) array_push($allow, 'create');
-            // else array_push($deny, 'create');
-
             if ($rights & self::ACTION_DELETE) array_push($allow, 'delete');
-            // else array_push($deny, 'delete');
-
             if ($rights & self::ACTION_UPDATE) array_push($allow, 'update');
-            // else array_push($deny, 'update');
-
             if ($rights & self::ACTION_ADMIN) array_push($allow, 'admin');
-            // else array_push($deny, 'admin');
-
             if ($rights & self::ACTION_GETSOUSCATEGORIESDYNAMIQUES) array_push($allow, 'getsouscategoriesdynamiques');
-            // else array_push($deny, 'getsouscategoriesdynamiques');
-
             if ($rights & self::ACTION_CLOSE) array_push($allow, 'close');
-            // else array_push($deny, 'close');
-
             if ($rights & self::ACTION_SENDNOTIFICATIONMAIL) array_push($allow, 'sendnotificationmail');
-            // else array_push($deny, 'sendnotificationmail');
+            if ($rights & self::ACTION_TRAITEMENT) array_push ($allow, 'traitement');
             
             return array( // Ici on a plus qu'à envoyer la liste des droits
                     array('allow', // Ici l'array des droits 'permis'
@@ -89,13 +74,12 @@ class TicketController extends Controller {
                         'users' => array('@'), // Autorisé pour les user loggés
                     ),
                     array('deny', // Refuse autre users
-                        'actions' => array(),
                         'users' => array('@'), // Refus aux visiteurs non loggés
                         'message' => 'Vous n\'avez pas accès à cette page.'
                             // Le message qui sera affiché
                     ),
                 );
-        } else {
+        } else { // Si autre utilisateur (visiteur)
             return array( // Ici on a plus qu'à envoyer la liste des droits
                     array('deny', // Refuse autre users
                         'users' => array('?'), // Refus aux visiteurs non loggés
@@ -104,53 +88,6 @@ class TicketController extends Controller {
                     ),
                 );
         }
-        //*/
-        
-        
-        /*
-        $logged = Yii::app()->session['Logged'];
-        if (Yii::app()->session['Utilisateur'] == 'Locataire') {
-            return array(
-                array('allow', // le locataire peut juste creer un ticket et voir
-                    'actions' => array('view', 'create', 'getsouscategoriesdynamiques', 'sendnotificationmail'),
-                    'users' => array('@'), // user authentifier
-                ),
-                array('deny', // refuse autre users
-                    'actions' => array('admin'),
-                    'users' => array('?'), //tous utilisateur
-                    'message' => 'Vous n\'avez pas accès à cette page.'
-                ),
-            );
-        } elseif ((Yii::app()->session['Utilisateur'] == 'User') && ($logged->fk_fonction == Constantes::FONCTION_USER)) { // Utilisateur peut creer ,voir ,manager,traiter et fermer des ticket
-            return array(
-                array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                    'actions' => array('create', 'update', 'view', 'admin', 'traitement', 'getsouscategoriesdynamiques', 'close', 'sendnotificationmail'),
-                    'users' => array('@'), //user logger
-                ),
-                array('deny', // refuse autre users
-                    'users' => array('?'), //tous utilisateur
-                    'message' => 'Vous n\'avez pas accès à cette page.'
-                ),
-            );
-        } elseif ((Yii::app()->session['Utilisateur'] == 'User') &&
-                (($logged->fk_fonction == Constantes::FONCTION_ADMIN) || ($logged->fk_fonction == Constantes::FONCTION_ROOT))
-        ) { // Utilisateur peut creer ,voir ,manager,traiter et fermer des ticket
-            return array(
-                array('allow', // allow authenticated user to perform 'create' and 'update' actions
-                    'actions' => array('create', 'update', 'view', 'admin', 'traitement', 'getsouscategoriesdynamiques', 'close', 'sendnotificationmail', 'delete'),
-                    'users' => array('@'), //user logger
-                ),
-            );
-        } else {
-            return array(
-                array('deny',
-                    'users' => array('?'), //user non loger peut rien faire
-                    'message' => 'Vous n\'avez pas accès à cette page.'
-                ),
-            );
-        }
-        
-        //*/
     }
 
     /**
