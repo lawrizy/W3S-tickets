@@ -393,7 +393,7 @@ class TicketController extends Controller {
                         . "Commentaire: " . $modelTicket->descriptif . "<br/>"
                         . "<br/><br/>"
                         . "Si votre probl&egrave;me persiste, veuillez r&eacute;ouvrir un ticket &agrave; l'adresse suivante: "
-                        . "http://localhost/w3s-tickets" // TODO changer l'adresse ici!!
+                        . "http://www.web3sys.com/tickets/" // TODO changer l'adresse ici!!
                         . "</div>"
                         , 'text/html'
                 );
