@@ -52,7 +52,7 @@ class TicketController extends Controller {
             
             // On récupère d'abord le user et ses droits de la session
             $logged = Yii::app()->session['Logged'];
-            $rights = Yii::app()->session['Rights'];
+            $rights = Yii::app()->session['Rights']->getTicket();
             // On initialise ensuite les array qui stockeront les droits
             $allow = array();
             // $deny = array();
@@ -71,7 +71,7 @@ class TicketController extends Controller {
             if ($rights & self::ACTION_UPDATE) array_push($allow, 'update');
             // else array_push($deny, 'update');
 
-            //if ($rights & self::ACTION_ADMIN) array_push($allow, 'admin');
+            if ($rights & self::ACTION_ADMIN) array_push($allow, 'admin');
             // else array_push($deny, 'admin');
 
             if ($rights & self::ACTION_GETSOUSCATEGORIESDYNAMIQUES) array_push($allow, 'getsouscategoriesdynamiques');
@@ -82,7 +82,7 @@ class TicketController extends Controller {
 
             if ($rights & self::ACTION_SENDNOTIFICATIONMAIL) array_push($allow, 'sendnotificationmail');
             // else array_push($deny, 'sendnotificationmail');
-
+            
             return array( // Ici on a plus qu'à envoyer la liste des droits
                     array('allow', // Ici l'array des droits 'permis'
                         'actions' => $allow, // Et on lui communique l'array que l'on a généré plus tôt
