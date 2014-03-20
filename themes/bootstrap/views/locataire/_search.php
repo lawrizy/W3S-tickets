@@ -21,7 +21,7 @@
     echo $form->textField($model, 'email', array('size' => 60, 'maxlength' => 64));
 
     echo $form->label($model, 'fk_langue');
-    echo $form->textField($model, 'fk_langue');
+    echo $form->dropDownList($model, 'fk_langue', array('' => '', CHtml::listData(Langue::model()->findAll(), 'id', 'label')));
     ?>
 
     <div class="buttons">
