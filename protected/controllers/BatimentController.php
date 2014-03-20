@@ -77,15 +77,20 @@ class BatimentController extends Controller
      */
     public function actionCreate()
     {
+        /*
+         * CDbCommand failed to execute the SQL statement: SQLSTATE[23000]: Integrity constraint violation: 1062 
+         * Duplic6ate entry 'test' for key 'code_UNIQUE'. The SQL statement executed was: 
+         * INSERT INTO `w3sys_batiment` (`cpt`, `visible`, `nom`, `code`, `adresse`, `commune`, `cp`) VALUES (:yp0, :yp1, :yp2, :yp3, :yp4, :yp5, :yp6)
+         */
         /* @var CDbConnection $db */
         /* @var CDbTransaction $tsql */
         $db = Yii::app()->db;
         $tsql = $db->beginTransaction();
-
+        
         $model = new Batiment;
-
+        
 // Uncomment the following line if AJAX validation is needed
-// $this->performAjaxValidation($model);
+//$this->performAjaxValidation($model);
 
         if (isset($_POST['Batiment']))
         {
@@ -110,6 +115,7 @@ class BatimentController extends Controller
             {
                 $tsql->rollback();
                 Yii::app()->user->setFlash('error', $erreur->getMessage());
+                $this->redirect(array('create'));
             }
         }
 
@@ -156,6 +162,7 @@ class BatimentController extends Controller
             {
                 $tsql->rollback();
                 Yii::app()->user->setFlash('error', $erreur->getMessage());
+                $this->redirect(array('update', 'id' => $model->id_batiment));
             }
         }
 
@@ -182,7 +189,9 @@ class BatimentController extends Controller
         {
             if ($model->save(true)) // et enfin on enregistre cet état invisible dans la DB
             {
+                $tsql->commit();
                 Yii::app()->user->setFlash('success', 'La suppression du bâtiment s\'est bien passée.');
+                $this->redirect(array('admin'));
             }
             else
             {
@@ -201,6 +210,7 @@ class BatimentController extends Controller
             try
             {
                 $ticket->save(true);
+                $tsql->commit();
             } catch(Exception $erreur)
             {
                 $tsql->rollback();
@@ -215,6 +225,7 @@ class BatimentController extends Controller
             try
             {
                 $lieu->save(true);
+                $tsql->commit();
             } catch(Exception $erreur)
             {
                 Yii::app()->user->setFlash('error', $erreur->getMessage());
@@ -238,9 +249,7 @@ class BatimentController extends Controller
                 }
             }
         }
-
-        $tsql->commit();
-
+        
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
