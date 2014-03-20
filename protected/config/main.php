@@ -26,7 +26,7 @@ return array(
     'import' => array(
         'application.models.*',
         'application.components.*',
-        'application.controllers.Translate',
+        'application.controllers.*',
         'ext.yii-mail.YiiMailMessage',
         'editable.*',
     ),

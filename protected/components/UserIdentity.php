@@ -62,7 +62,7 @@ class UserIdentity extends CUserIdentity {
                     $Session->save(); // on enregistre le record
                     //--------------------Fin de session unique-----------------
                     
-                    // $this->setDroits($record->id_user); // Va rechercher et mettre les droits de ce user en session
+                    $this->setDroits($record->id_user); // Va rechercher et mettre les droits de ce user en session
                     $this->_id = $record->id_user; //recupération  de l'id du user
                     $this->errorCode = self::ERROR_NONE; // aucune erreur
                     Yii::app()->session['Utilisateur'] = 'User'; // création d'une variable de session pour stocker le type d'user
@@ -115,25 +115,25 @@ class UserIdentity extends CUserIdentity {
         $rights = new Rights();
         
         $rights->setAdmin(Droit::model()->findByAttributes(
-                array('visible' => Constantes::VISIBLE, 'fk_controleur' => AdminController::ID_CONTROLLER, 'fk_user' => $id))->droits);
+                array('fk_controleur' => AdminController::ID_CONTROLLER, 'fk_user' => $id))->droits);
         $rights->setBatiment(Droit::model()->findByAttributes(
-                array('visible' => Constantes::VISIBLE, 'fk_controleur' => BatimentController::ID_CONTROLLER, 'fk_user' => $id))->droits);
+                array('fk_controleur' => BatimentController::ID_CONTROLLER, 'fk_user' => $id))->droits);
         $rights->setCategorie(Droit::model()->findByAttributes(
-                array('visible' => Constantes::VISIBLE, 'fk_controleur' => CategorieIncidentController::ID_CONTROLLER, 'fk_user' => $id))->droits);
+                array('fk_controleur' => CategorieIncidentController::ID_CONTROLLER, 'fk_user' => $id))->droits);
         $rights->setDashboard(Droit::model()->findByAttributes(
-                array('visible' => Constantes::VISIBLE, 'fk_controleur' => DashboardController::ID_CONTROLLER, 'fk_user' => $id))->droits);
+                array('fk_controleur' => DashboardController::ID_CONTROLLER, 'fk_user' => $id))->droits);
         $rights->setEntreprise(Droit::model()->findByAttributes(
-                array('visible' => Constantes::VISIBLE, 'fk_controleur' => EntrepriseController::ID_CONTROLLER, 'fk_user' => $id))->droits);
+                array('fk_controleur' => EntrepriseController::ID_CONTROLLER, 'fk_user' => $id))->droits);
         $rights->setLieu(Droit::model()->findByAttributes(
-                array('visible' => Constantes::VISIBLE, 'fk_controleur' => LieuController::ID_CONTROLLER, 'fk_user' => $id))->droits);
+                array('fk_controleur' => LieuController::ID_CONTROLLER, 'fk_user' => $id))->droits);
         $rights->setLocataire(Droit::model()->findByAttributes(
-                array('visible' => Constantes::VISIBLE, 'fk_controleur' => LocataireController::ID_CONTROLLER, 'fk_user' => $id))->droits);
+                array('fk_controleur' => LocataireController::ID_CONTROLLER, 'fk_user' => $id))->droits);
         $rights->setTicket(Droit::model()->findByAttributes(
-                array('visible' => Constantes::VISIBLE, 'fk_controleur' => TicketController::ID_CONTROLLER, 'fk_user' => $id))->droits);
+                array('fk_controleur' => TicketController::ID_CONTROLLER, 'fk_user' => $id))->droits);
         $rights->setTrad(Droit::model()->findByAttributes(
-                array('visible' => Constantes::VISIBLE, 'fk_controleur' => TradController::ID_CONTROLLER, 'fk_user' => $id))->droits);
+                array('fk_controleur' => TradController::ID_CONTROLLER, 'fk_user' => $id))->droits);
         $rights->setUser(Droit::model()->findByAttributes(
-                array( 'visible' => Constantes::VISIBLE, 'fk_controleur' => UserController::ID_CONTROLLER, 'fk_user' => $id))->droits);
+                array('fk_controleur' => UserController::ID_CONTROLLER, 'fk_user' => $id))->droits);
         
         Yii::app()->session['Rights'] = $rights;
     }
