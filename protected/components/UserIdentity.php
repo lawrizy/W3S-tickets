@@ -99,6 +99,18 @@ class UserIdentity extends CUserIdentity {
     }
     
     
+    /*
+     * Cette méthode sert à retrouver les droits de l'utilisateur qui se log.
+     * Elle est appelée à partir de la méthode 'authenticate' plus haut.
+     * Cette méthode reçoit donc en paramètre l'id de la personne qui se log et
+     * instancie un objet 'Rights'. On stocke dans cet objet tous les droits que
+     * ce user à sur tous les controleurs en faisant la recherche dans la DB
+     * des droits selon le user et le controleur.
+     * Une fois cela fait, on met l'objet 'Rights' en variable de session pour
+     * pouvoir être utilisé par les méthodes 'accessRules' des controleurs
+     * (pour détails, voir classe 'Rights' elle-même et les méthodes
+     * 'accessRules()' dans les controleurs)
+     */
     public function setDroits($id) {
         $rights = new Rights();
         
@@ -123,7 +135,7 @@ class UserIdentity extends CUserIdentity {
         $rights->setUser(Droit::model()->findByAttributes(
                 array( 'visible' => Constantes::VISIBLE, 'fk_controleur' => UserController::ID_CONTROLLER, 'fk_user' => $id))->droits);
         
-        Yii::app()->session['droits'] = $rights;
+        Yii::app()->session['Rights'] = $rights;
     }
     
 }

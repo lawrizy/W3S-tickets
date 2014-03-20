@@ -1,7 +1,15 @@
 <?php
 
 class Rights {
-    
+    /*
+     * Cette classe servira pour la gestion des droits dynamiques.
+     * Plutôt que de faire une recherche dans la DB à chaque fois qu'on passe par les accessRules,
+     * on instancie cet objet avec les valeurs des droits de l'utilisateur qui se log
+     * et on met cet objet comme variable de session (tout ça dans le UserIdentity,
+     * lorsqu'une personne se log).
+     * Dans cette classe les droits sont divisés par controleur et sont tous des integer
+     * (voir méthode 'setDroits()' dans 'UserIdentity' et méthode 'AccessRules()' dans les controleurs)
+     */
     private $admin;
     private $batiment;
     private $categorie;
