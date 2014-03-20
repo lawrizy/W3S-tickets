@@ -20,11 +20,11 @@
         <div id="header">
             <?php
             $varCheminAcces = "";
-            $var = Yii::app()->session['Logged'];
+            $personneAuthentifie = Yii::app()->session['Logged'];
             if (Yii::app()->session['Utilisateur'] == 'Locataire') {
-                $varCheminAcces = "locataire/changepassword?id=" . $var['id_locataire'];
+                $varCheminAcces = "locataire/changepassword?id=" . $personneAuthentifie['id_locataire'];
             } else {
-                $varCheminAcces = "user/changepassword?id=" . $var['id_user'];
+                $varCheminAcces = "user/changepassword?id=" . $personneAuthentifie['id_user'];
             }
             $this->widget('bootstrap.widgets.TbNavbar', array(
                 'collapse' => TRUE,
@@ -41,13 +41,12 @@
                             array('label' => Translate::trad('Creer') . Yii::app()->session['NouveauTicket'] . ' ticket', 'url' => array('/ticket/create'), 'visible' => Yii::app()->session['Utilisateur'] == 'Locataire'),
                             '---',
                             array('label' => Translate::trad("GestionCompte"), 'url' => array('#'),
-                                'items' => array(array('label' => Translate::trad("ChangePassword"), 'url' => array($varCheminAcces))),
+                                'items' => array(
+                                    array('label' => Translate::trad("ChangePassword"), 'url' => array($varCheminAcces)),
+                                    array('label' => Translate::trad('Graphique'), 'url' => array('dashboard/vue'), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && ($personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ADMIN || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ROOT))),
                                 'visible' => !Yii::app()->user->isGuest),
                             '---',
-                            array('label' => Translate::trad('DashBoard'), 'url' => array(''),
-                                'items' => array(array('label' => Translate::trad('Graphique'), 'url' => array('dashboard/vue'))),
-                                'visible' => Yii::app()->session['Utilisateur'] == 'User' && ($var['fk_fonction'] == Constantes::FONCTION_ADMIN || $var['fk_fonction'] == Constantes::FONCTION_ROOT)),
-                            array('label' => 'Admin', 'url' => array('/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $var['fk_fonction'] == Constantes::FONCTION_ROOT),
+                            array('label' => 'Admin', 'url' => array('/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ROOT),
                         )),
                     array(
                         'class' => 'bootstrap.widgets.TbMenu',
