@@ -1,6 +1,7 @@
 <?php
 
-class EntrepriseController extends Controller {
+class EntrepriseController extends Controller
+{
 
     Const ID_CONTROLLER = 5;
     Const ACTION_VIEW = 1;
@@ -19,7 +20,8 @@ class EntrepriseController extends Controller {
     /**
      * @return array action filters
      */
-    public function filters() {
+    public function filters()
+    {
         return array(
             'accessControl', // perform access control for CRUD operations
             'postOnly + delete', // we only allow deletion via POST request
@@ -81,18 +83,67 @@ class EntrepriseController extends Controller {
     }
 
     /**
+     * LA DOCUMENTATION POUR CETTE FONCTION SE TROUVE ICI : http://web3sys.com/tickets/wiki/index.php?title=Fonction_%22AttemptSave%22
+     *
+     * Tente une sauvegarde de l'objet passé en paramètre sur la DB, et ce en utilisant les transactions SQL.
+     * Les validations seront de toutes façon effectuées car elles sont nécéssaires à l'intégrité des données.
+     * @param null $objectToSave L'active record dont les changements doivent être commit vers la DB.
+     * @return bool Un booléen qui signifie si la sauvegarde s'est bien passé ou non.
+     */
+    private function attemptSave($objectToSave)
+    {
+        /* @var CDbConnection $db */
+        /* @var CDbTransaction $tsql */
+        $db = Yii::app()->db;
+        $tsql = $db->beginTransaction();
+
+        if($objectToSave === null) return false;
+        try
+        {
+            // Si la validation est passée ET qu'aucune erreur n'est retournée par la DB
+            if($objectToSave->validate() && $objectToSave->save(true))
+            {
+                // On commite les changements
+                $tsql->commit();
+            }
+            else // Non validé
+            {
+                // Si la validation n'est pas passée, on génère le message d'erreur
+                $err = "Une erreur est survenue : <br/>";
+                // ici on récupère les strings d'erreur contenues dans le modèle, pour les ajouter à la string d'erreur "principale"
+                foreach($objectToSave->getErrors() as $k=>$v)
+                    $err .= $v[0] . "<br/>";
+                // On lance une exception qui sera catchée juste ci-dessous pour le rollback et l'affichage du TbAlert
+                throw new Exception($err);
+            }
+        }
+        catch(Exception $e)
+        {
+            // On annule les changements préparés
+            $tsql->rollback();
+            // On affiche un TbAlert avec le message d'erreur
+            Yii::app()->user->setFlash('error', $e->getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
      */
-    public function actionView($id) {
+    public function actionView($id)
+    {
         $this->render('view', array(
             'model' => $this->loadModel($id),
         ));
     }
 
-    public function actionSecteur($id) {
+    public function actionSecteur($id)
+    {
 
-        if (isset($_POST['idCat'])) {
+        if (isset($_POST['idCat']))
+        {
             $secteur = new Secteur();
             $secteur['fk_categorie'] = $_POST['idCat'];
             $secteur['fk_entreprise'] = $_POST['id_entreprise'];
@@ -100,7 +151,9 @@ class EntrepriseController extends Controller {
             $this->render('view', array(
                 'model' => $this->loadModel($id),
             ));
-        } else {
+        }
+        else
+        {
             $this->render('secteur', array(
                 'model' => $this->loadModel($id),
             ));
@@ -111,16 +164,41 @@ class EntrepriseController extends Controller {
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
+        /* @var CDbConnection $db */
+        /* @var CDbTransaction $tsql */
+        $db = Yii::app()->db;
+        $tsql = $db->beginTransaction();
+
         $model = new Entreprise;
 
 // Uncomment the following line if AJAX validation is needed
 // $this->performAjaxValidation($model);
 
-        if (isset($_POST['Entreprise'])) {
-            $model->attributes = $_POST['Entreprise'];
-            if ($model->save())
-                $this->redirect(array('view', 'id' => $model->id_entreprise));
+        if (isset($_POST['Entreprise']))
+        {
+            try
+            {
+                $model->attributes = $_POST['Entreprise'];
+                if ($model->validate() && $model->save())
+                {
+                    $tsql->commit();
+                    $this->redirect(array('view', 'id' => $model->id_entreprise));
+                }
+                else // Non validé
+                {
+                    $errMessage = "Erreur à la création d'une entreprise : <br/>";
+                    foreach ($model->getErrors() as $key => $value)
+                        $errMessage .= $value[0] . "<br/>";
+                    throw new Exception($errMessage);
+                }
+            } catch (Exception $erreur)
+            {
+                $tsql->rollback();
+                Yii::app()->user->setFlash('error', $erreur->getMessage());
+                $this->redirect(array('admin'));
+            }
         }
 
         $this->render('create', array(
@@ -133,16 +211,41 @@ class EntrepriseController extends Controller {
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id)
+    {
+        /* @var CDbTransaction $tsql */
+        /* @var CDbConnection $db */
+        $db = Yii::app()->db;
+        $tsql = $db->beginTransaction();
+
         $model = $this->loadModel($id);
 
 // Uncomment the following line if AJAX validation is needed
 // $this->performAjaxValidation($model);
 
-        if (isset($_POST['Entreprise'])) {
-            $model->attributes = $_POST['Entreprise'];
-            if ($model->save())
-                $this->redirect(array('view', 'id' => $model->id_entreprise));
+        if (isset($_POST['Entreprise']))
+        {
+            try
+            {
+                $model->attributes = $_POST['Entreprise'];
+                if ($model->validate() && $model->save())
+                {
+                    $tsql->commit();
+                    $this->redirect(array('view', 'id' => $model->id_entreprise));
+                }
+                else // Non validé
+                {
+                    $errMessage = "Une erreur est survenue : <br/>";
+                    foreach ($model->getErrors() as $key => $value)
+                        $errMessage .= $value[0] . "<br/>";
+                    throw new Exception($errMessage);
+                }
+            } catch (Exception $e)
+            {
+                $tsql->rollback();
+                Yii::app()->user->setFlash('error', $e->getMessage());
+                $this->redirect(array('update', 'id' => $model->id_entreprise));
+            }
         }
 
         $this->render('update', array(
@@ -155,28 +258,35 @@ class EntrepriseController extends Controller {
      * If deletion is successful, the browser will be redirected to the 'admin' page.
      * @param integer $id the ID of the model to be deleted
      */
-    public function actionDelete($id) { // Soft-delete, on passe un champ visible à 0 plutôt que de supprimer l'enregistrement
+    public function actionDelete($id) // TODO transactions
+    { // Soft-delete, on passe un champ visible à 0 plutôt que de supprimer l'enregistrement
         $model = $this->loadModel($id); // On récupère l'enregistrement de cet entreprise
+
         $model['visible'] = Constantes::INVISIBLE; // et on met l'enregistrement à l'état invisible
-        $model->save(FALSE); // et enfin on enregistre cet état invisible dans la DB
+        //$model->save(true); // et enfin on enregistre cet état invisible dans la DB
+        $this->attemptSave($model);
 
         $tickets = Ticket::model()->findAllByAttributes(array('fk_entreprise' => $id, 'visible' => Constantes::VISIBLE));
         // On recherche tous les tickets qui sont liés à cet entreprise
-        foreach ($tickets as $ticket) { // et on les passe tous à l'état invisible
+        foreach ($tickets as $ticket)
+        { // et on les passe tous à l'état invisible
             $ticket['visible'] = Constantes::INVISIBLE;
-            $ticket->save(FALSE);
+            //$ticket->save(true);
+            $this->attemptSave($ticket);
         }
 
-        $secteurs = Secteur::model()->findByAttributes(array('fk_entreprise' => $id, 'visible' => Constantes::VISIBLE));
+        $secteurs = Secteur::model()->findAllByAttributes(array('fk_entreprise' => $id, 'visible' => Constantes::VISIBLE));
         // On recherche aussi tous les secteurs liés à cet entreprise
-        foreach ($secteurs as $secteur) { // et on les passe tous à l'état invisible
+        foreach ($secteurs as $secteur)
+        { // et on les passe tous à l'état invisible
             $secteur['visible'] = Constantes::INVISIBLE;
-            $secteur->save(FALSE);
+            $secteur->save(true);
             $newSecteur = new Secteur();
             // Il faut aussi que la catégorie ne reste pas vide, pour cela on crée un nouveau secteur avec une entreprise par défaut
             $newSecteur->fk_categorie = $secteur['fk_categorie']; // on garde 
             $newSecteur->fk_entreprise = Constantes::ENTREPRISE_DEFAUT;
-            $newSecteur->save(FALSE);
+            //$newSecteur->save(true);
+            $this->attemptSave($newSecteur);
         }
 
 //        $categories = CategorieIncident::model()->findByPk($id);
@@ -188,7 +298,8 @@ class EntrepriseController extends Controller {
     /**
      * Lists all models.
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $dataProvider = new CActiveDataProvider('Entreprise');
         $this->render('index', array(
             'dataProvider' => $dataProvider,
@@ -198,9 +309,10 @@ class EntrepriseController extends Controller {
     /**
      * Manages all models.
      */
-    public function actionAdmin() {
+    public function actionAdmin()
+    {
         $model = new Entreprise('search');
-        $model->unsetAttributes();  // clear any default values
+        $model->unsetAttributes(); // clear any default values
         if (isset($_GET['Entreprise']))
             $model->attributes = $_GET['Entreprise'];
 
@@ -216,7 +328,8 @@ class EntrepriseController extends Controller {
      * @return Entreprise the loaded model
      * @throws CHttpException
      */
-    public function loadModel($id) {
+    public function loadModel($id)
+    {
         $model = Entreprise::model()->findByPk($id);
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
@@ -227,8 +340,10 @@ class EntrepriseController extends Controller {
      * Performs the AJAX validation.
      * @param Entreprise $model the model to be validated
      */
-    protected function performAjaxValidation($model) {
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'entreprise-form') {
+    protected function performAjaxValidation($model)
+    {
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'entreprise-form')
+        {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }

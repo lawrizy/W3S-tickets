@@ -100,6 +100,52 @@ class TicketController extends Controller {
         ));
     }
 
+    /**
+     * LA DOCUMENTATION POUR CETTE FONCTION SE TROUVE ICI : http://web3sys.com/tickets/wiki/index.php?title=Fonction_%22AttemptSave%22
+     * 
+     * Tente une sauvegarde de l'objet passé en paramètre sur la DB, et ce en utilisant les transactions SQL.
+     * Les validations seront de toutes façon effectuées car elles sont nécéssaires à l'intégrité des données.
+     * @param null $objectToSave L'active record dont les changements doivent être commit vers la DB.
+     * @return bool Un booléen qui signifie si la sauvegarde s'est bien passé ou non.
+     */
+    private function attemptSave($objectToSave)
+    {
+        /* @var CDbConnection $db */
+        /* @var CDbTransaction $tsql */
+        $db = Yii::app()->db;
+        $tsql = $db->beginTransaction();
+        
+        if($objectToSave === null) return false;
+        try
+        {
+            // Si la validation est passée ET qu'aucune erreur n'est retournée par la DB
+            if($objectToSave->validate() && $objectToSave->save(true))
+            {
+                // On commite les changements
+                $tsql->commit();
+            }
+            else // Non validé
+            {
+                // Si la validation n'est pas passée, on génère le message d'erreur
+                $err = "Une erreur est survenue : <br/>";
+                // ici on récupère les strings d'erreur contenues dans le modèle, pour les ajouter à la string d'erreur "principale"
+                foreach($objectToSave->getErrors() as $k=>$v)
+                    $err .= $v[0] . "<br/>";
+                // On lance une exception qui sera catchée juste ci-dessous pour le rollback et l'affichage du TbAlert
+                throw new Exception($err);
+            }
+        }
+        catch(Exception $e)
+        {
+            // On annule les changements préparés
+            $tsql->rollback();
+            // On affiche un TbAlert avec le message d'erreur
+            Yii::app()->user->setFlash('error', $e->getMessage());
+            return false;
+        }
+        return true;
+    }
+    
     public function actionClose($id) {
         if (isset($_POST['Ticket'])) {
             $var = $_POST['Ticket'];
@@ -107,7 +153,9 @@ class TicketController extends Controller {
             $model->descriptif = $model->descriptif . ' ---------- Cloture ---------- ' . $var['descriptif'];
             $model->fk_statut = Constantes::STATUT_CLOSED;
             try {
-                $model->save(false);
+                //$model->save(false);
+                if(!$this->attemptSave($model))
+                    $this->redirect(array('view', 'id'=>$model->id_ticket));
                 $loc = Locataire::model()->findByPk($model['fk_locataire']);
                 $histo = new HistoriqueTicket();
                 $histo->date_update = date("Y-m-d H:i:s", time());
@@ -116,11 +164,16 @@ class TicketController extends Controller {
                 $histo->fk_statut_ticket = Constantes::STATUT_CLOSED;
                 $logged = Yii::app()->session['Logged'];
                 $histo->fk_user = $logged['id_user'];
-                if ($histo->save(false)) {
+                //if ($histo->save(false)) {
+                if($this->attemptSave($histo))
+                {
                     $this->actionSendNotificationMail($model);
                     Yii::app()->user->setFlash('success', 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email']);
                 }
-                $this->actionSendNotificationMail($model);
+                else
+                {
+                    $this->redirect(array('view', 'id'=>$model->id_ticket));
+                }
                 $this->redirect(array('view', 'id' => $model['id_ticket']));
             } catch (CDbException $ex) {
                 
@@ -143,9 +196,10 @@ class TicketController extends Controller {
             $oldmodel['fk_entreprise'] = $model['fk_entreprise'];
             $oldmodel['fk_statut'] = Constantes::STATUT_TREATMENT;
             try {
-                $oldmodel->save(FALSE);
+                //$oldmodel->save(FALSE);
+                if(!$this->attemptSave($oldmodel))
+                    $this->redirect(array('admin'));
                 $loc = Locataire::model()->findByPk($oldmodel['fk_locataire']);
-                Yii::trace('apres save du model', 'cron');
                 // Si la sauvegarde du ticket s'est bien passé,
                 // on enregistre un évènement InProgress pour le traitement du ticket
                 $histo = new HistoriqueTicket();
@@ -155,9 +209,14 @@ class TicketController extends Controller {
                 $histo->fk_statut_ticket = Constantes::STATUT_TREATMENT;
                 $logged = Yii::app()->session['Logged'];
                 $histo->fk_user = $logged['id_user'];
-                if ($histo->save(false)) {
+                //if ($histo->save(false)) {
+                if($this->attemptSave($histo)) {
                     $this->actionSendNotificationMail($oldmodel);
                     Yii::app()->user->setFlash('success', 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email']);
+                }
+                else
+                {
+                    $this->redirect(array('admin'));
                 }
                 $this->redirect(array('view', 'id' => $oldmodel['id_ticket']));
             } catch (CDbException $ex) {
@@ -218,9 +277,9 @@ class TicketController extends Controller {
             // (dans la méthode save, on fait d'abord une validation des attributs)
             $model->attributes = $ticket;
             try {
-                Yii::trace('Dans try avant save', 'cron');
-                $model->save();
-                Yii::trace('Dans try apres save', 'cron');
+                //$model->save();
+                if(!$this->attemptSave($model))
+                    $this->redirect(array('admin'));
                 $loc = Locataire::model()->findByPk($model['fk_locataire']);
                 // Si la sauvegarde du ticket s'est bien passé,
                 // on enregistre un évènement opened pour la création du ticket
@@ -230,9 +289,15 @@ class TicketController extends Controller {
                 // Lors de la création, statut forcément à opened
                 $histo->fk_statut_ticket = Constantes::STATUT_OPENED;
                 $histo->fk_user = $model['fk_user'];
-                if ($histo->save(false)) {
+                //if ($histo->save(false))
+                if($this->attemptSave($histo))
+                {
                     $this->actionSendNotificationMail($model);
                     Yii::app()->user->setFlash('success', 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email']);
+                }
+                else
+                {
+                    $this->redirect(array('admin'));
                 }
                 // Si tout s'est bien passé, on redirige vers la page view
                 Yii::app()->session['NouveauTicket'] = 'nouveau';
@@ -254,7 +319,8 @@ class TicketController extends Controller {
         // On incrémente le compteur de 1
         $batiment->cpt += 1;
         // On save pour enregistrer l'incrémentation sinon recommence toujours du même nombre
-        $batiment->save(false);
+        //$batiment->save(false);
+        $this->attemptSave($batiment);
         // On return le string du code_ticket
         return $batiment->code . $batiment->cpt;
     }
@@ -286,7 +352,9 @@ class TicketController extends Controller {
 
 // Ensuite on sauvegarde les changements normalement.
             try {
-                $model->save();
+                //$model->save();
+                if(!$this->attemptSave($model))
+                    $this->redirect(array('update', 'id'=>$model->id_ticket));
                 $loc = Locataire::model()->findByPk($model['fk_locataire']);
                 Yii::app()->session['EmailSend'] = 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email'];
 // Si la sauvegarde du ticket s'est bien passé,
@@ -296,9 +364,9 @@ class TicketController extends Controller {
                 $histo->fk_ticket = $model->id_ticket;
                 $logged = Yii::app()->session['Logged'];
                 $histo->fk_user = $logged['id_user'];
-// TODO TODO
                 $histo->fk_statut_ticket = $model->fk_statut;
-                $histo->save();
+                //$histo->save();
+                $this->attemptSave($histo);
                 $this->actionSendNotificationMail($model);
                 $this->redirect(array('view', 'id' => $model->id_ticket));
             } catch (Exception $ex) {
@@ -317,12 +385,11 @@ class TicketController extends Controller {
      * @param integer $id the ID of the model to be deleted
      */
     public function actionDelete($id) {
-        //$this->loadModel($id)->delete();
         $model = $this->loadModel($id);
         $model->setAttribute("visible", Constantes::INVISIBLE);
-        $model->save(true);
-        $this->redirect(admin);
-// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
+        //$model->save(true);
+        $this->attemptSave($model);
+        $this->redirect(array('admin'));
     }
 
     /**
@@ -449,6 +516,8 @@ class TicketController extends Controller {
         }
     }
 
+    // TODO utiliser des vues pour faire les requêtes suivantes :
+    
     /**
      * Retourne une liste d'entreprises pouvant être contactées dans le cadre d'un ticket
      * @param $idTicket L'identifiant du ticket concerné

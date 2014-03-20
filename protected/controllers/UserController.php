@@ -1,6 +1,7 @@
 <?php
 
-class UserController extends Controller {
+class UserController extends Controller
+{
 
     Const ID_CONTROLLER = 10;
     Const ACTION_VIEW = 1;
@@ -19,7 +20,8 @@ class UserController extends Controller {
     /**
      * @return array action filters
      */
-    public function filters() {
+    public function filters()
+    {
         return array(
             'accessControl', // perform access control for CRUD operations
             'postOnly + delete', // we only allow deletion via POST request
@@ -33,22 +35,26 @@ class UserController extends Controller {
      * ce controleur et génère les arrays 'allow' (permis) et 'deny' (refusé)
      * selon ces droits-là.
      */
-    public function accessRules() { // droit des utilisateur sur les actions
-        if (Yii::app()->session['Utilisateur'] == 'Locataire') { // Locataire a des droits fixes
+    public function accessRules()
+    { // droit des utilisateur sur les actions
+        if (Yii::app()->session['Utilisateur'] == 'Locataire')
+        { // Locataire a des droits fixes
             return array(
                 array('deny', // refuse autre users
                     'users' => array('@'), //tous utilisateur
                     'message' => 'Vous n\'avez pas accès à cette page.'
                 ),
             );
-        } elseif (Yii::app()->session['Utilisateur'] == 'User') { // Génération des droits selon le user
-            
+        }
+        elseif (Yii::app()->session['Utilisateur'] == 'User')
+        { // Génération des droits selon le user
+
             // On récupère d'abord le user et ses droits de la session
             $logged = Yii::app()->session['Logged'];
             $rights = Yii::app()->session['Rights']->getUser();
             // On initialise ensuite les array qui stockeront les droits
             $allow = array();
-            
+
             // Et enfin on teste chaque droit un à un, et si le droit est bien accordé,
             // on le rajoute à l'array qui sera envoyé dans le return
             if ($rights & self::ACTION_VIEW) array_push($allow, 'view');
@@ -57,26 +63,28 @@ class UserController extends Controller {
             if ($rights & self::ACTION_UPDATE) array_push($allow, 'update');
             if ($rights & self::ACTION_ADMIN) array_push($allow, 'admin');
             if ($rights & self::ACTION_CHANGEPASSWORD) array_push($allow, 'changepassword');
-            
+
             return array( // Ici on a plus qu'à envoyer la liste des droits
-                    array('allow', // Ici l'array des droits 'permis'
-                        'actions' => $allow, // Et on lui communique l'array que l'on a généré plus tôt
-                        'users' => array('@'), // Autorisé pour les user loggés
-                    ),
-                    array('deny', // Refuse autre users
-                        'users' => array('@'), // Refus aux visiteurs non loggés
-                        'message' => 'Vous n\'avez pas accès à cette page.'
-                            // Le message qui sera affiché
-                    ),
-                );
-        } else { // Si autre utilisateur (visiteur)
+                array('allow', // Ici l'array des droits 'permis'
+                    'actions' => $allow, // Et on lui communique l'array que l'on a généré plus tôt
+                    'users' => array('@'), // Autorisé pour les user loggés
+                ),
+                array('deny', // Refuse autre users
+                    'users' => array('@'), // Refus aux visiteurs non loggés
+                    'message' => 'Vous n\'avez pas accès à cette page.'
+                    // Le message qui sera affiché
+                ),
+            );
+        }
+        else
+        { // Si autre utilisateur (visiteur)
             return array( // Ici on a plus qu'à envoyer la liste des droits
-                    array('deny', // Refuse autre users
-                        'users' => array('?'), // Refus aux visiteurs non loggés
-                        'message' => 'Vous n\'avez pas accès à cette page.'
-                            // Le message qui sera affiché
-                    ),
-                );
+                array('deny', // Refuse autre users
+                    'users' => array('?'), // Refus aux visiteurs non loggés
+                    'message' => 'Vous n\'avez pas accès à cette page.'
+                    // Le message qui sera affiché
+                ),
+            );
         }
     }
 
@@ -84,7 +92,8 @@ class UserController extends Controller {
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
      */
-    public function actionView($id) {
+    public function actionView($id)
+    {
         $this->render('view', array(
             'model' => $this->loadModel($id),
         ));
@@ -94,19 +103,42 @@ class UserController extends Controller {
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
+        /* @var CDbConnection $db */
+        /* @var CDbTransaction $tsql */
+        $db = Yii::app()->db;
+        $tsql = $db->beginTransaction();
+
         $model = new User;
 
         // Uncomment the following line if AJAX validation is needed
         // $this->performAjaxValidation($model);
 
-        if (isset($_POST['User'])) {
-            $model->attributes = $tmp = $_POST['User'];
-            if ($model->validate()) {
+        if (isset($_POST['User']))
+        {
+            try
+            {
+                $model->attributes = $tmp = $_POST['User'];
                 $tmp['password'] = md5($tmp['password']);
                 $model->attributes = $tmp;
-                $model->save();
-                $this->redirect(array('view', 'id' => $model->id_user));
+                if ($model->validate() && $model->save(true))
+                {
+                    $tsql->commit();
+                    $this->redirect(array('view', 'id' => $model->id_user));
+                }
+                else
+                {
+                    $err = "Une erreur est survenue : <br/>";
+                    foreach ($model->getErrors() as $k => $v)
+                        $err .= $v[0] . "<br/>";
+                    throw new Exception($err);
+                }
+            } catch (Exception $e)
+            {
+                $tsql->rollback();
+                Yii::app()->user->setFlash('error', $e->getMessage());
+                $this->redirect(array('create'));
             }
         }
 
@@ -120,15 +152,41 @@ class UserController extends Controller {
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id the ID of the model to be updated
      */
-    public function actionUpdate($id) {
+    public function actionUpdate($id)
+    {
+        /* @var CDbConnection $db */
+        /* @var CDbTransaction $tsql */
+        $db = Yii::app()->db;
+        $tsql = $db->beginTransaction();
+
         $model = $this->loadModel($id);
 
-        if (isset($_POST['User'])) {
-            $user = $_POST['User'];
-            $user['password'] = $model->password;
-            $model->attributes = $user;
-            if ($model->save())
-                $this->redirect(array('view', 'id' => $model->id_user));
+        if (isset($_POST['User']))
+        {
+            try
+            {
+                $user = $_POST['User'];
+                $user['password'] = $model->password;
+                $model->attributes = $user;
+
+                if ($model->validate() && $model->save())
+                {
+                    $tsql->commit();
+                    $this->redirect(array('view', 'id' => $model->id_user));
+                }
+                else
+                {
+                    $err = "Une erreur est survenue : <br/>";
+                    foreach ($model->getErrors() as $k => $v)
+                        $err .= $v[0] . "<br/>";
+                    throw new Exception($err);
+                }
+            } catch (Exception $e)
+            {
+                $tsql->rollback();
+                Yii::app()->user->setFlash('error', $e->getMessage());
+                $this->redirect(array('update', 'id' => $model->id_user));
+            }
         }
 
         $this->render('update', array(
@@ -141,11 +199,35 @@ class UserController extends Controller {
      * If deletion is successful, the browser will be redirected to the 'admin' page.
      * @param integer $id the ID of the model to be deleted
      */
-    public function actionDelete($id) {
-        //$this->loadModel($id)->delete();
+    public function actionDelete($id)
+    {
+        /* @var CDbConnection $db */
+        /* @var CDbTransaction $tsql */
+        $db = Yii::app()->db;
+        $tsql = $db->beginTransaction();
+
         $model = $this->loadModel($id);
         $model->setAttribute("visible", 0);
-        $model->save(true);
+        try
+        {
+            if ($model->validate() && $model->save(true))
+            {
+                $tsql->commit();
+                $this->redirect(array('admin'));
+            }
+            else
+            {
+                $err = "Une erreur est survenue : <br/>";
+                foreach ($model->getErrors() as $k => $v)
+                    $err .= $v[0] . "<br/>";
+                throw new Exception($err);
+            }
+        } catch (Exception $e)
+        {
+            $tsql->rollback();
+            Yii::app()->user->setFlash('error', $e->getMessage());
+            $this->redirect(array('admin'));
+        }
 
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))
@@ -155,7 +237,8 @@ class UserController extends Controller {
     /**
      * Lists all models.
      */
-    public function actionIndex() {
+    public function actionIndex()
+    {
         $dataProvider = new CActiveDataProvider('User');
         $this->render('index', array(
             'dataProvider' => $dataProvider,
@@ -165,9 +248,10 @@ class UserController extends Controller {
     /**
      * Manages all models.
      */
-    public function actionAdmin() {
+    public function actionAdmin()
+    {
         $model = new User('search');
-        $model->unsetAttributes();  // clear any default values
+        $model->unsetAttributes(); // clear any default values
         if (isset($_GET['User']))
             $model->attributes = $_GET['User'];
 
@@ -183,7 +267,8 @@ class UserController extends Controller {
      * @return User the loaded model
      * @throws CHttpException
      */
-    public function loadModel($id) {
+    public function loadModel($id)
+    {
         $model = User::model()->findByPk($id);
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
@@ -194,27 +279,59 @@ class UserController extends Controller {
      * Performs the AJAX validation.
      * @param User $model the model to be validated
      */
-    protected function performAjaxValidation($model) {
-        if (isset($_POST['ajax']) && $_POST['ajax'] === 'user-form') {
+    protected function performAjaxValidation($model)
+    {
+        if (isset($_POST['ajax']) && $_POST['ajax'] === 'user-form')
+        {
             echo CActiveForm::validate($model);
             Yii::app()->end();
         }
     }
 
-    public function actionChangePassword() {
+    public function actionChangePassword()
+    {
+        /* @var CDbConnection $db */
+        /* @var CDbTransaction $tsql */
+        $db = Yii::app()->db;
+        $tsql = $db->beginTransaction();
+
         $model = User::model()->findByPk($_GET['id']);
         //    $this->render('changePassword', array('model' => $varUser));
-        if (isset($_POST['AncienMdp'])) {
-            if (md5($_POST['AncienMdp']) === $model->password) {
-                if ($_POST['NouveauMdp'] != NULL && $_POST['NouveauMdp'] === $_POST['NouveauMdp1']) {
-                    $model->password = md5($_POST['NouveauMdp1']);
-                    if ($model->save())
-                        Yii::app()->user->setFlash('success', '<strong>Votre nouveau mot de passe a bien été enregistré!' . '</strong>');
-                } else {
-                    Yii::app()->user->setFlash('error', '<strong>Erreur les nouveaux mots de passe sont différents !' . '</strong>');
+        if (isset($_POST['AncienMdp']))
+        {
+            try
+            {
+                if (md5($_POST['AncienMdp']) === $model->password)
+                {
+                    if ($_POST['NouveauMdp'] != NULL && $_POST['NouveauMdp'] === $_POST['NouveauMdp1'])
+                    {
+                        $model->password = md5($_POST['NouveauMdp1']);
+                        if ($model->validate() && $model->save())
+                        {
+                            $tsql->commit();
+                            Yii::app()->user->setFlash('success', '<strong>Votre nouveau mot de passe a bien été enregistré!' . '</strong>');
+                        }
+                        else
+                        {
+                            $err = "Une erreur est survenue : <br/>";
+                            foreach($model->getErrors() as $k=>$v)
+                                $err .= $v[0] . "<br/>";
+                            throw new Exception($err);
+                        }
+                    }
+                    else
+                    {
+                        throw new Exception('<strong>Erreur les nouveaux mots de passe sont différents !' . '</strong>');
+                    }
                 }
-            } else {
-                Yii::app()->user->setFlash('error', '<strong>Erreur votre ancien mot de passe est erroné !' . '</strong>');
+                else
+                {
+                    throw new Exception('<strong>Erreur votre ancien mot de passe est erroné !' . '</strong>');
+                }
+            } catch (Exception $e)
+            {
+                $tsql->rollback();
+                Yii::app()->user->setFlash('error', $e->getMessage());
             }
         }
         $this->render('changePassword');

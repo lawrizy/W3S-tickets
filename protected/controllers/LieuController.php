@@ -111,13 +111,23 @@ class LieuController extends Controller
             $model->attributes = $_POST['Lieu'];
             try
             {
-                $model->save();
-                $tsql->commit();
-                $this->redirect(array('view', 'id' => $model->id_lieu));
+                if($model->validate() && $model->save())
+                {
+                    $tsql->commit();
+                    $this->redirect(array('view', 'id' => $model->id_lieu));
+                }
+                else // Non validé
+                {
+                    $err = "Une erreur est survenue : <br/>";
+                    foreach($model->getErrors() as $key=>$value)
+                        $err .= $value[0] . "<br/>";
+                    throw new Exception($err);
+                }
             } catch (Exception $erreur)
             {
                 $tsql->rollback();
-                Yii::app()->user->setFlash('error', 'Erreur à la création d\'un lieu : ' . $erreur->getMessage());
+                Yii::app()->user->setFlash('error', $erreur->getMessage());
+                $this->redirect(array('admin'));
             }
         }
 
@@ -133,6 +143,11 @@ class LieuController extends Controller
      */
     public function actionUpdate($id)
     {
+        /* @var CDbConnection $db */
+        /* @var CDbTransaction $tsql */
+        $db = Yii::app()->db;
+        $tsql = $db->beginTransaction();
+        
         $model = $this->loadModel($id);
 
         // Uncomment the following line if AJAX validation is needed
@@ -140,9 +155,26 @@ class LieuController extends Controller
 
         if (isset($_POST['Lieu']))
         {
-            $model->attributes = $_POST['Lieu'];
-            if ($model->save())
-                $this->redirect(array('view', 'id' => $model->id_lieu));
+            try
+            {
+                $model->attributes = $_POST['Lieu'];
+                if ($model->validate() && $model->save())
+                {
+                    $tsql->commit();
+                    $this->redirect(array('view', 'id' => $model->id_lieu));
+                }
+                else // Non validé
+                {
+                    $err = "Une erreur est survenue : <br/>";
+                    foreach($model->getErrors() as $key=>$value)
+                        $err .= $value[0] . "<br/>";
+                    throw new Exception($err);
+                }
+            } catch(Exception $e)
+            {
+                $tsql->rollback();
+                Yii::app()->user->setFlash('error', $e->getMessage());
+            }
         }
 
         $this->render('update', array(
@@ -179,15 +211,26 @@ class LieuController extends Controller
         {
             // On fait le save() comme d'habitude, mais celui-ci n'est PAS ENCORE EFFECTIF sur la DB, il faut
             // faire un commit()
-            $model->save(true);
-            // On commit si tout s'est bien passé, sinon le catch va s'exécuter.
-            $tsql->commit();
+            if($model->validate() && $model->save(true))
+            {
+                // On commit si tout s'est bien passé, sinon le catch va s'exécuter.
+                $tsql->commit();
+                $this->redirect(array('view', $model->id_lieu));
+            }
+            else // Non validé
+            {
+                $err = "Une erreur est survenue : <br/>";
+                foreach($model->getErrors() as $k=>$v)
+                    $err .= $v[0] . "<br/>";
+                throw new Exception($err);
+            }
         } catch (Exception $erreur)
         {
             // Rollback() des changements effectués en cas de problème!
             $tsql->rollback();
             // Apparition d'une banière signifiant la nature de l'erreur.
-            Yii::app()->user->setFlash('error', 'Une erreur s\'est produite : <br/>' . $erreur->getMessage());
+            Yii::app()->user->setFlash('error', $erreur->getMessage());
+            $this->redirect(array('view', 'id' => $model->id_lieu));
         }
 
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser

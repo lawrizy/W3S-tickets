@@ -81,6 +81,52 @@ class CategorieIncidentController extends Controller {
     }
 
     /**
+     * LA DOCUMENTATION POUR CETTE FONCTION SE TROUVE ICI : http://web3sys.com/tickets/wiki/index.php?title=Fonction_%22AttemptSave%22
+     *
+     * Tente une sauvegarde de l'objet passé en paramètre sur la DB, et ce en utilisant les transactions SQL.
+     * Les validations seront de toutes façon effectuées car elles sont nécéssaires à l'intégrité des données.
+     * @param null $objectToSave L'active record dont les changements doivent être commit vers la DB.
+     * @return bool Un booléen qui signifie si la sauvegarde s'est bien passé ou non.
+     */
+    private function attemptSave($objectToSave)
+    {
+        /* @var CDbConnection $db */
+        /* @var CDbTransaction $tsql */
+        $db = Yii::app()->db;
+        $tsql = $db->beginTransaction();
+
+        if($objectToSave === null) return false;
+        try
+        {
+            // Si la validation est passée ET qu'aucune erreur n'est retournée par la DB
+            if($objectToSave->validate() && $objectToSave->save(true))
+            {
+                // On commite les changements
+                $tsql->commit();
+            }
+            else // Non validé
+            {
+                // Si la validation n'est pas passée, on génère le message d'erreur
+                $err = "Une erreur est survenue : <br/>";
+                // ici on récupère les strings d'erreur contenues dans le modèle, pour les ajouter à la string d'erreur "principale"
+                foreach($objectToSave->getErrors() as $k=>$v)
+                    $err .= $v[0] . "<br/>";
+                // On lance une exception qui sera catchée juste ci-dessous pour le rollback et l'affichage du TbAlert
+                throw new Exception($err);
+            }
+        }
+        catch(Exception $e)
+        {
+            // On annule les changements préparés
+            $tsql->rollback();
+            // On affiche un TbAlert avec le message d'erreur
+            Yii::app()->user->setFlash('error', $e->getMessage());
+            return false;
+        }
+        return true;
+    }
+    
+    /**
      * Creates a new model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
@@ -101,7 +147,8 @@ class CategorieIncidentController extends Controller {
             if ($model->validate() && $_POST['fk_entreprise'] != null) {
                 // Si la validation du modèle (vérifie que tout est bien présent comme il faut)
                 // et que l'entreprise reçu n'est pas null, alors on peut enregistrer
-                if ($model->save(FALSE)) {  // Le FALSE indique qu'on ne désire pas 
+                //if ($model->save(FALSE)) {  // Le FALSE indique qu'on ne désire pas
+                if($this->attemptSave($model)) {
                     // faire la validation avant le save. Validation
                     // faite au dessus, pas besoin de la refaire
                     // Si le save s'est bien passé, on crée une sous-catégorie 'Autre'
@@ -159,10 +206,7 @@ class CategorieIncidentController extends Controller {
         // ==> si oui, c'est que c'est la page create elle-même qui renvoie ici pour la création d'une catégorie
         if (isset($_POST['CategorieIncident'])) {
             $model->attributes = $_POST['CategorieIncident'];
-            if ($model->validate() && $model['fk_parent'] != null) {
-                $model->save(FALSE);    // Le FALSE indique qu'on ne désire pas faire la validation avant
-                // le save. Validation faite au dessus, pas besoin de la refaire
-                // Si le save s'est bien passé, on redirige
+            if ($model['fk_parent'] != null && $this->attemptSave($model)) {
                 $this->redirect(array('view', 'id' => $model->id_categorie_incident));
             } else { // Si validation pas ok ou parent null
                 if ($model['fk_parent'] == null) // On vérifie si c'est le parent qui pose problème
@@ -199,7 +243,8 @@ class CategorieIncidentController extends Controller {
             // de repasser ces champs à null, par contre on peut supprimer le label d'ou le
             // fait de laisser la validation se faire dans le "$model->save()"
             $model->attributes = $_POST['CategorieIncident'];
-            if ($model->save()) // Si la sauvegarde s'est bien passée, on redirige
+            //if ($model->save()) // Si la sauvegarde s'est bien passée, on redirige
+            if($this->attemptSave($model))
                 $this->redirect(array('view', 'id' => $model->id_categorie_incident));
         }
 
@@ -231,7 +276,8 @@ class CategorieIncidentController extends Controller {
             // de repasser ces champs à null, par contre on peut supprimer le label d'ou le
             // fait de laisser la validation se faire dans le "$model->save()"
             $model->attributes = $_POST['CategorieIncident'];
-            if ($model->save()) { // Si l'enregistrement se passe bien, on continue
+            //if ($model->save()) { // Si l'enregistrement se passe bien, on continue
+            if($this->attemptSave($model)) {
                 $secteur['visible'] = Constantes::INVISIBLE;
                 $secteur->save(); // On passe ce secteur à invisible
 
@@ -265,7 +311,8 @@ class CategorieIncidentController extends Controller {
         try {
             $model = $this->loadModel($id); // On récupère l'enregistrement de cette catégorie
             $model['visible'] = Constantes::INVISIBLE; // et on met l'enregistrement à l'état invisible
-            $model->save(FALSE); // et enfin on enregistre cet état invisible dans la DB
+            //$model->save(FALSE); // et enfin on enregistre cet état invisible dans la DB
+            $this->attemptSave($model);
             // ---------------------
 
             /*
@@ -279,27 +326,31 @@ class CategorieIncidentController extends Controller {
                         array('fk_parent' => $id, 'visible' => Constantes::VISIBLE));
                 foreach ($sousCats as $sousCat) { // parcourir toutes les sous-catégories et les passer à l'état invisible
                     $sousCat['visible'] = Constantes::INVISIBLE;
-                    $sousCat->save(FALSE);
+                    //$sousCat->save(FALSE);
+                    $this->attemptSave($sousCat);
 
                     // Retrouver tous les tickets qui sont liés à cette sous-catégorie
                     $tickets = Ticket::model()->findAllByAttributes(
                             array('fk_categorie' => $sousCat['id_categorie_incident'], 'visible' => Constantes::VISIBLE));
                     foreach ($tickets as $ticket) { // Et aussi les passer à l'état invisible
                         $ticket['visible'] = Constantes::INVISIBLE;
-                        $ticket->save(FALSE);
+                        //$ticket->save(FALSE);
+                        $this->attemptSave($ticket);
                     }
                 }
                 // Il faut aussi retrouver le secteur lié à cette catégories
                 $secteur = Secteur::model()->findByAttributes(
                         array('fk_categorie' => $model['id_categorie_incident'], 'visible' => Constantes::VISIBLE));
                 $secteur['visible'] = Constantes::INVISIBLE;
-                $secteur->save(FALSE);
+//                $secteur->save(FALSE);
+                $this->attemptSave($secteur);
             } else { // Si fk_parent n'est pas null, c'est donc un enfant
                 // Et si c'est un enfant, il faut juste 'delete' tous les tickets qui sont liés à lui
                 $tickets = Ticket::model()->findAllByAttributes(array('fk_categorie' => $id)); // On recherche tous les tickets qui sont liés à cette catégorie
                 foreach ($tickets as $ticket) { // et on les passe tous à l'état invisible
                     $ticket['visible'] = Constantes::INVISIBLE;
-                    $ticket->save(FALSE);
+//                    $ticket->save(FALSE);
+                    $this->attemptSave($ticket);
                 }
             }
             // ---------------------
