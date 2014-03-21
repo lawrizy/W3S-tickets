@@ -41,7 +41,7 @@ $('.search-form form').submit(function(){
         'model' => $model,
     ));
     ?>
-    
+
 </div><!-- search-form -->
 <?php
 $this->widget('bootstrap.widgets.TbGridView', array(
@@ -50,12 +50,12 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'dataProvider' => $model->search(),
     // 'filter' => $model,
     'columns' => array(
-        array( 
+        array(
             'name' => Translate::trad('CodeTicket'),
             'value' => '$data->code_ticket'),
-//        array(
-//            'name' => Translate::trad('LocataireTicket'),
-//            'value' => 'User::model()->fi  ndByPk($data->fk_locataire)->nom'),
+        array(
+            'name' => Translate::trad('LocataireTicket'),
+            'value' => 'User::model()->findByPk($data->fk_locataire)->nom'),
         array(
             'name' => Translate::trad('StatutTicket'),
             'value' => 'Translate::trad(StatutTicket::model()->findByPk($data->fk_statut)->label);'

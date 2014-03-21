@@ -40,7 +40,7 @@ return false;
 $this->widget('bootstrap.widgets.TbGridView', array(
     'type' => 'striped bordered condensed',
     'id' => 'locataire-grid',
-    'dataProvider' => $model->search(),
+    'dataProvider' => $model->searchLocataire(),
     'columns' => array(
        array('name' => 'Nom',
             'value' => '$data->nom;'

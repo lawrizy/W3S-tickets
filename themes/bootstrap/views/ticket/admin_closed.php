@@ -54,7 +54,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
             'value' => '$data->code_ticket'),
         array(
             'name' => Translate::trad('LocataireTicket'),
-            'value' => 'Locataire::model()->findByPk($data->fk_locataire)->nom'),
+            'value' => 'User::model()->findByPk($data->fk_locataire)->nom'),
         array(
             'name' => Translate::trad('StatutTicket'),
             'value' => 'Translate::trad(StatutTicket::model()->findByPk($data->fk_statut)->label);'
