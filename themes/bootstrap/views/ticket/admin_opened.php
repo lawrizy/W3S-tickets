@@ -26,7 +26,7 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1><?php echo Translate::trad( 'AdminOpenedTitre');
+<h1><?php echo Translate::trad('AdminOpenedTitre');
 ?></h1>
 <!--
 <p>
@@ -34,7 +34,7 @@ $('.search-form form').submit(function(){
     or <b>=</b>) at the beginning of each of your search values to specify how the comparison should be done.
 </p>-->
 
-<?php echo CHtml::link(Translate::trad( 'RechercheAvancee'), '#', array('class' => 'search-button')); ?>
+<?php echo CHtml::link(Translate::trad('RechercheAvancee'), '#', array('class' => 'search-button')); ?>
 <div class="search-form" style="display:none">
     <?php
     $this->renderPartial('_search', array(
@@ -55,7 +55,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
             'value' => '$data->code_ticket'),
         array(
             'name' => Translate::trad('LocataireTicket'),
-            'value' => 'Locataire::model()->findByPk($data->fk_locataire)->nom'),
+            'value' => 'User::model()->findByPk($data->fk_locataire)->nom'),
         array(
             'name' => Translate::trad('StatutTicket'),
             'value' => 'Translate::trad(StatutTicket::model()->findByPk($data->fk_statut)->label);'
