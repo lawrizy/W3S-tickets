@@ -348,7 +348,7 @@ class LocataireController extends Controller
         $this->render('deleteLieu', array('model' => $model));
     }
 
-    public function actionaddLieu()
+    public function actionAddLieu()
     {
         /* @var CDbConnection $db */
         /* @var CDbTransaction $tsql */
