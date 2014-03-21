@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_categorie_incident` (
   PRIMARY KEY (`id_categorie_incident`),
   INDEX `fk_w3sys_categorie_incident_w3sys_categorie_incident1_idx` (`fk_parent` ASC),
   INDEX `fk_w3sys_categorie_incident_w3sys_priorite1_idx` (`fk_priorite` ASC))
-ENGINE = MyISAM;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_statut_ticket` (
   `label` VARCHAR(64) NOT NULL,
   PRIMARY KEY (`id_statut_ticket`),
   UNIQUE INDEX `label_UNIQUE` (`label` ASC))
-ENGINE = MyISAM
+ENGINE = InnoDB
 AUTO_INCREMENT = 8;
 
 
@@ -152,7 +152,6 @@ CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_ticket` (
   `code_ticket` VARCHAR(10) NOT NULL,
   `etage` VARCHAR(45) NULL,
   `bureau` VARCHAR(45) NULL,
-  `fk_locataire` INT(10) NOT NULL,
   `fk_batiment` INT(10) NOT NULL,
   `fk_priorite` INT(10) NOT NULL,
   `fk_locataire` INT(10) NOT NULL,
@@ -168,7 +167,7 @@ CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_ticket` (
   INDEX `fk_w3sys_ticket_w3sys_priorite1_idx` (`fk_priorite` ASC),
   INDEX `fk_w3sys_ticket_w3sys_user2_idx` (`fk_locataire` ASC),
   INDEX `fk_w3sys_ticket_w3sys_canal1_idx` (`fk_canal` ASC))
-ENGINE = MyISAM;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
@@ -207,14 +206,13 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_lieu` (
   `id_lieu` INT(10) NOT NULL AUTO_INCREMENT,
-  `fk_locataire` INT(10) NOT NULL,
   `fk_batiment` INT(10) NOT NULL,
   `visible` TINYINT(1) NULL DEFAULT 1,
   `fk_locataire` INT(10) NOT NULL,
   PRIMARY KEY (`id_lieu`),
   INDEX `fk_w3sys_lieu_w3sys_batiment1_idx` (`fk_batiment` ASC),
   INDEX `fk_w3sys_lieu_w3sys_user1_idx` (`fk_locataire` ASC))
-ENGINE = MyISAM;
+ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
