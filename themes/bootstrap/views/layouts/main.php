@@ -21,7 +21,7 @@
             <?php
             $varCheminAcces = "";
             $personneAuthentifie = Yii::app()->session['Logged'];
-            if (Yii::app()->session['Utilisateur'] == 'Locataire') {
+            if ($personneAuthentifie['fk_fonction'] == Constantes::FONCTION_LOCATAIRE) {
                 $varCheminAcces = "locataire/changepassword?id=" . $personneAuthentifie['id_user'];
             } else {
                 $varCheminAcces = "user/changepassword?id=" . $personneAuthentifie['id_user'];
@@ -36,17 +36,17 @@
                             array('label' => Translate::trad('APropos'), 'url' => array('/site/page', 'view' => 'about')),
                             array('label' => Translate::trad('Contact'), 'url' => array('/site/contact')),
                             '---',
-                            array('label' => Translate::trad('CreerTicket'), 'url' => array('/locataire/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
-                            array('label' => Translate::trad('ListeTicket'), 'url' => array('/ticket/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User'),
-                            array('label' => Translate::trad('Creer') . Yii::app()->session['NouveauTicket'] . ' ticket', 'url' => array('/ticket/create'), 'visible' => Yii::app()->session['Utilisateur'] == 'Locataire'),
+                            array('label' => Translate::trad('CreerTicket'), 'url' => array('/locataire/admin'), 'visible' => $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_USER || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ADMIN || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ROOT),
+                            array('label' => Translate::trad('ListeTicket'), 'url' => array('/ticket/admin'), 'visible' => $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_USER || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ADMIN || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ROOT),
+                            array('label' => Translate::trad('Creer') . Yii::app()->session['NouveauTicket'] . ' ticket', 'url' => array('/ticket/create'), 'visible' => $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_LOCATAIRE),
                             '---',
                             array('label' => Translate::trad("GestionCompte"), 'url' => array('#'),
                                 'items' => array(
                                     array('label' => Translate::trad("ChangePassword"), 'url' => array($varCheminAcces)),
-                                    array('label' => Translate::trad('Graphique'), 'url' => array('dashboard/vue'), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && ($personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ADMIN || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ROOT))),
+                                    array('label' => Translate::trad('Graphique'), 'url' => array('dashboard/vue'), 'visible' => ($personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ADMIN || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ROOT))),
                                 'visible' => !Yii::app()->user->isGuest),
                             '---',
-                            array('label' => 'Admin', 'url' => array('/admin'), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ROOT),
+                            array('label' => 'Admin', 'url' => array('/admin'), 'visible' => $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ROOT),
                         )),
                     array(
                         'class' => 'bootstrap.widgets.TbMenu',

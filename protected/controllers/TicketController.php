@@ -231,7 +231,7 @@ class TicketController extends Controller {
             $ticket = $_POST['Ticket'];
             $logged = Yii::app()->session['Logged'];
             // Vérifie quel utilisateur est enregistré (si User ou Locataire)
-            if (Yii::app()->session['Utilisateur'] == 'Locataire') {
+            if (Yii::app()->session['Logged']->fk_fonction == Constantes::FONCTION_LOCATAIRE) {
                 // Si locataire, on attribue le ticket a un user par défaut (le 1 dans ce cas-ci)
                 $ticket['fk_user'] = Constantes::USER_DEFAUT;
                 // Si locataire, on met le canal à web automatiquement
