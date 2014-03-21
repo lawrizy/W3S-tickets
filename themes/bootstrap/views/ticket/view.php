@@ -25,7 +25,7 @@ echo '<h4></br><font color="green" >' . Yii::app()->session['EmailSend'] . '</fo
 Yii::app()->session['EmailSend'] = '';
 ?>
 <?php
-$batiment = Batiment::model()->findByPk($model->fk_batiment);
+$batiment = Batiment::model()->findByPk($model->fk_batiment);   
 $this->widget('bootstrap.widgets.TbDetailView', array(
     'type' => 'striped condensed bordered',
     'data' => $model,

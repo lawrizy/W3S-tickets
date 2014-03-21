@@ -22,7 +22,7 @@
             $varCheminAcces = "";
             $personneAuthentifie = Yii::app()->session['Logged'];
             if (Yii::app()->session['Utilisateur'] == 'Locataire') {
-                $varCheminAcces = "locataire/changepassword?id=" . $personneAuthentifie['id_locataire'];
+                $varCheminAcces = "locataire/changepassword?id=" . $personneAuthentifie['id_user'];
             } else {
                 $varCheminAcces = "user/changepassword?id=" . $personneAuthentifie['id_user'];
             }
