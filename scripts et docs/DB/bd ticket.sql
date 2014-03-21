@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_categorie_incident` (
   PRIMARY KEY (`id_categorie_incident`),
   INDEX `fk_w3sys_categorie_incident_w3sys_categorie_incident1_idx` (`fk_parent` ASC),
   INDEX `fk_w3sys_categorie_incident_w3sys_priorite1_idx` (`fk_priorite` ASC))
-ENGINE = InnoDB;
+ENGINE = MyISAM;
 
 
 -- -----------------------------------------------------
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_statut_ticket` (
   `label` VARCHAR(64) NOT NULL,
   PRIMARY KEY (`id_statut_ticket`),
   UNIQUE INDEX `label_UNIQUE` (`label` ASC))
-ENGINE = InnoDB
+ENGINE = MyISAM
 AUTO_INCREMENT = 8;
 
 
@@ -93,17 +93,6 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `db_ticketing`.`w3sys_canal`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_canal` (
-  `id_canal` INT(10) NOT NULL AUTO_INCREMENT,
-  `label` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`id_canal`),
-  UNIQUE INDEX `label_UNIQUE` (`label` ASC))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
 -- Table `db_ticketing`.`w3sys_entreprise`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_entreprise` (
@@ -117,22 +106,6 @@ CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_entreprise` (
   `visible` TINYINT(1) NULL DEFAULT 1,
   PRIMARY KEY (`id_entreprise`),
   UNIQUE INDEX `tva_UNIQUE` (`tva` ASC))
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `db_ticketing`.`w3sys_locataire`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_locataire` (
-  `id_locataire` INT(10) NOT NULL AUTO_INCREMENT,
-  `nom` VARCHAR(64) NOT NULL,
-  `email` VARCHAR(64) NOT NULL,
-  `password` VARCHAR(32) NOT NULL,
-  `fk_langue` INT(10) NOT NULL,
-  `visible` TINYINT(1) NULL DEFAULT 1,
-  PRIMARY KEY (`id_locataire`),
-  UNIQUE INDEX `email_UNIQUE` (`email` ASC),
-  INDEX `fk_w3sys_locataire_w3sys_langue1_idx` (`fk_langue` ASC))
 ENGINE = InnoDB;
 
 
@@ -155,6 +128,17 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
+-- Table `db_ticketing`.`w3sys_canal`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_canal` (
+  `id_canal` INT(10) NOT NULL AUTO_INCREMENT,
+  `label` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id_canal`),
+  UNIQUE INDEX `label_UNIQUE` (`label` ASC))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
 -- Table `db_ticketing`.`w3sys_ticket`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_ticket` (
@@ -163,7 +147,6 @@ CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_ticket` (
   `fk_categorie` INT(10) NOT NULL,
   `fk_user` INT(10) NULL,
   `descriptif` TEXT NULL,
-  `fk_canal` INT(10) NOT NULL,
   `date_intervention` DATE NULL,
   `fk_entreprise` INT(10) NULL,
   `code_ticket` VARCHAR(10) NOT NULL,
@@ -171,17 +154,21 @@ CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_ticket` (
   `bureau` VARCHAR(45) NULL,
   `fk_locataire` INT(10) NOT NULL,
   `fk_batiment` INT(10) NOT NULL,
-  `visible` TINYINT(1) NULL,
+  `fk_priorite` INT(10) NOT NULL,
+  `fk_locataire` INT(10) NOT NULL,
+  `visible` TINYINT(1) NOT NULL,
+  `fk_canal` INT(10) NOT NULL,
   PRIMARY KEY (`id_ticket`),
   INDEX `fk_w3sys_ticket_w3sys_statut_ticket1_idx` (`fk_statut` ASC),
   INDEX `fk_w3sys_ticket_w3sys_categorie_incident1_idx` (`fk_categorie` ASC),
   INDEX `fk_w3sys_ticket_w3sys_user1_idx` (`fk_user` ASC),
-  INDEX `fk_w3sys_ticket_w3sys_canal1_idx` (`fk_canal` ASC),
   INDEX `fk_w3sys_ticket_w3sys_entreprise1_idx` (`fk_entreprise` ASC),
   UNIQUE INDEX `code_ticket_UNIQUE` (`code_ticket` ASC),
-  INDEX `fk_w3sys_ticket_w3sys_locataire1_idx` (`fk_locataire` ASC),
-  INDEX `fk_w3sys_ticket_w3sys_batiment1_idx` (`fk_batiment` ASC))
-ENGINE = InnoDB;
+  INDEX `fk_w3sys_ticket_w3sys_batiment1_idx` (`fk_batiment` ASC),
+  INDEX `fk_w3sys_ticket_w3sys_priorite1_idx` (`fk_priorite` ASC),
+  INDEX `fk_w3sys_ticket_w3sys_user2_idx` (`fk_locataire` ASC),
+  INDEX `fk_w3sys_ticket_w3sys_canal1_idx` (`fk_canal` ASC))
+ENGINE = MyISAM;
 
 
 -- -----------------------------------------------------
@@ -223,10 +210,11 @@ CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_lieu` (
   `fk_locataire` INT(10) NOT NULL,
   `fk_batiment` INT(10) NOT NULL,
   `visible` TINYINT(1) NULL DEFAULT 1,
+  `fk_locataire` INT(10) NOT NULL,
   PRIMARY KEY (`id_lieu`),
-  INDEX `fk_w3sys_lieu_w3sys_locataire1_idx` (`fk_locataire` ASC),
-  INDEX `fk_w3sys_lieu_w3sys_batiment1_idx` (`fk_batiment` ASC))
-ENGINE = InnoDB;
+  INDEX `fk_w3sys_lieu_w3sys_batiment1_idx` (`fk_batiment` ASC),
+  INDEX `fk_w3sys_lieu_w3sys_user1_idx` (`fk_locataire` ASC))
+ENGINE = MyISAM;
 
 
 -- -----------------------------------------------------
@@ -263,8 +251,58 @@ CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_trad` (
   `nl` VARCHAR(128) NULL,
   `code` VARCHAR(64) NULL,
   PRIMARY KEY (`id`),
-  UNIQUE INDEX `id_UNIQUE` (`id` ASC),
   UNIQUE INDEX `code_UNIQUE` (`code` ASC))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `db_ticketing`.`w3sys_session`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_session` (
+  `id_session` INT(10) NOT NULL AUTO_INCREMENT,
+  `fk_yiisession` CHAR(32) NOT NULL,
+  `email` VARCHAR(64) NOT NULL,
+  PRIMARY KEY (`id_session`),
+  INDEX `fk_w3sys_session_yiisession1_idx` (`fk_yiisession` ASC),
+  CONSTRAINT `fk_w3sys_session_yiisession1`
+    FOREIGN KEY (`fk_yiisession`)
+    REFERENCES `db_ticketing`.`yiisession` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `db_ticketing`.`w3sys_controleur`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_controleur` (
+  `id_controleur` INT(10) NOT NULL AUTO_INCREMENT,
+  `label` VARCHAR(64) NULL,
+  PRIMARY KEY (`id_controleur`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `db_ticketing`.`w3sys_droit`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `db_ticketing`.`w3sys_droit` (
+  `id_droit` INT(10) NOT NULL AUTO_INCREMENT,
+  `fk_controleur` INT(10) NOT NULL,
+  `fk_user` INT(10) NOT NULL,
+  `droits` INT(4) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id_droit`),
+  INDEX `fk_w3sys_droit_w3sys_controleur1_idx` (`fk_controleur` ASC),
+  INDEX `fk_w3sys_droit_w3sys_user1_idx` (`fk_user` ASC),
+  CONSTRAINT `fk_w3sys_droit_w3sys_controleur1`
+    FOREIGN KEY (`fk_controleur`)
+    REFERENCES `db_ticketing`.`w3sys_controleur` (`id_controleur`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_w3sys_droit_w3sys_user1`
+    FOREIGN KEY (`fk_user`)
+    REFERENCES `db_ticketing`.`w3sys_user` (`id_user`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 

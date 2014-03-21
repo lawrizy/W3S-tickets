@@ -10,6 +10,7 @@ class UserController extends Controller
     const ACTION_UPDATE = 8;
     const ACTION_ADMIN = 16;
     const ACTION_CHANGEPASSWORD = 32;
+    const ACTION_ACCORDER_DROIT = 64;
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -63,6 +64,7 @@ class UserController extends Controller
             if ($rights & self::ACTION_UPDATE) array_push($allow, 'update');
             if ($rights & self::ACTION_ADMIN) array_push($allow, 'admin');
             if ($rights & self::ACTION_CHANGEPASSWORD) array_push($allow, 'changepassword');
+            // if ($rights & self::ACTION_ACCORDER_DROIT) array_push($allow, 'accorderdroit');
 
             return array( // Ici on a plus qu'à envoyer la liste des droits
                 array('allow', // Ici l'array des droits 'permis'
@@ -88,6 +90,23 @@ class UserController extends Controller
         }
     }
 
+    /*
+     * Cette action nous permet d'attribuer des droits aux utilisateurs.
+     * Sur la vue associée, on tombe sur un tableau permettant de choisir quels
+     * droits donner à l'utilisateur selectionné.
+     */
+    public function actionAccorderDroit($id){
+        $model = $this->loadModel($id);
+        
+        if (isset($_POST['Admin'])) {
+            
+            
+            $this->redirect(array('view', 'id' => $model->id_user));
+        }
+        
+        $this->render('accorderDroit', array('model' => $model));
+    }
+    
     /**
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
@@ -98,6 +117,9 @@ class UserController extends Controller
             'model' => $this->loadModel($id),
         ));
     }
+    
+    
+    
 
     /**
      * Creates a new model.
