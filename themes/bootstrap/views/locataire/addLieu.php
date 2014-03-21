@@ -5,15 +5,15 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <?php
-$this->breadcrumbs=array(
-	'Locataires'=>array('admin'),
-	$model->nom=>array('view','id'=>$model->id_locataire),
-	'Ajouter une adresse',
+$this->breadcrumbs = array(
+    'Locataires' => array('admin'),
+    $model->nom => array('view', 'id' => $model->id_user),
+    'Ajouter une adresse',
 );
 
 $this->menu = array(
     array('label' => 'Admin', 'url' => array('admin')),
-    array('label' => 'View', 'url' => array('view', 'id' => $model->id_locataire))
+    array('label' => 'View', 'url' => array('view', 'id' => $model->id_user))
         )
 ?>
 
@@ -34,7 +34,7 @@ $this->menu = array(
         ));
         ?>
         <?php
-        $lieux = Lieu::model()->findAllByAttributes(array('visible' => Constantes::VISIBLE, 'fk_locataire' => $model['id_locataire']));
+        $lieux = Lieu::model()->findAllByAttributes(array('visible' => Constantes::VISIBLE, 'fk_locataire' => $model['id_user']));
         $batiments = Batiment::model()->findAllByAttributes(array('visible' => Constantes::VISIBLE));
 
         foreach ($lieux as $lieu) {
