@@ -100,6 +100,24 @@ class User extends CActiveRecord {
         ));
     }
 
+    public function searchLocataire() {
+// @todo Please modify the following code to remove attributes that should not be searched.
+
+        $criteria = new CDbCriteria;
+
+        $criteria->compare('id_user', $this->id_user);
+        $criteria->compare('nom', $this->nom, true);
+        $criteria->compare('email', $this->email, true);
+        $criteria->compare('password', $this->password, true);
+        $criteria->compare('fk_fonction', $this->fk_fonction = Constantes::FONCTION_LOCATAIRE);
+        $criteria->compare('fk_langue', $this->fk_langue);
+        $criteria->compare('visible', $this->visible);
+
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
+    }
+
     /**
      * Returns the static model of the specified AR class.
      * Please note that you should have this exact method in all your CActiveRecord descendants!

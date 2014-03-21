@@ -267,7 +267,7 @@ class LocataireController extends Controller
      */
     public function actionAdmin()
     {
-        $model = new Locataire('search');
+        $model = new User('search');
         $model->unsetAttributes(); // clear any default values
         if (isset($_GET['Locataire']))
             $model->attributes = $_GET['Locataire'];
@@ -286,7 +286,7 @@ class LocataireController extends Controller
      */
     public function loadModel($id)
     {
-        $model = Locataire::model()->findByPk($id);
+        $model = User::model()->findByPk($id);
         if ($model === null)
             throw new CHttpException(404, 'The requested page does not exist.');
         return $model;
