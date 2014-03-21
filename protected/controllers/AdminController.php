@@ -24,14 +24,7 @@ class AdminController extends Controller {
      * selon ces droits-là.
      */
     public function accessRules() { // droit des utilisateur sur les actions
-        if (Yii::app()->session['Utilisateur'] == 'Locataire') { // Locataire a des droits fixes
-            return array(
-                array('deny', // refuse autre users
-                    'users' => array('@'), //tous utilisateur
-                    'message' => 'Vous n\'avez pas accès à cette page.'
-                ),
-            );
-        } elseif (Yii::app()->session['Utilisateur'] == 'User') { // Génération des droits selon le user
+        if (!Yii::app()->user->isGuest) { // Génération des droits selon le user
             
             // On récupère d'abord le user et ses droits de la session
             $logged = Yii::app()->session['Logged'];
@@ -42,7 +35,7 @@ class AdminController extends Controller {
             // Et enfin on teste chaque droit un à un, et si le droit est bien accordé,
             // on le rajoute à l'array qui sera envoyé dans le return
             if ($rights & self::ACTION_INDEX) array_push($allow, 'index');
-            if ($rights & self::ACTION_DROIT) array_push ($allow, 'droit');
+            if ($rights & self::ACTION_DROIT) array_push($allow, 'droit');
             
             return array( // Ici on a plus qu'à envoyer la liste des droits
                     array('allow', // Ici l'array des droits 'permis'
@@ -70,10 +63,19 @@ class AdminController extends Controller {
         $this->render('index');
     }
     
+    
+    
     public function actionDroit($id) {
+        Yii::trace('actionDroit','cron');
         $model = User::model()->findByPk($id);
+        Yii::trace('actionDroit après find','cron');
+//        if (isset($_POST['Batiment'])) {
+//            
+//            $this->redirect(array('user/view', 'id' => $model->id_user));
+//        }
         
-        
+        $this->render('droit', array('model' => $model));
+        Yii::trace('actionDroit après render','cron');
     }
 
 }
