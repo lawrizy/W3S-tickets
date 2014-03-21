@@ -35,8 +35,11 @@ class DashboardController extends Controller {
             // On récupère d'abord le user et ses droits de la session
             $logged = Yii::app()->session['Logged'];
             $rights = Yii::app()->session['Rights']->getDashboard();
-            // On initialise ensuite les array qui stockeront les droits
-            $allow = array();
+            
+            $allow = array('noright');
+                // On initialise ensuite l'array qui stockera les droits
+                // On lui met une action inexistante car la méthode accessRules
+                // considère qu'un array vide c'est avoir tous les droits
             
             // Et enfin on teste chaque droit un à un, et si le droit est bien accordé,
             // on le rajoute à l'array qui sera envoyé dans le return
