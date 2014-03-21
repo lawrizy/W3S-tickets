@@ -132,7 +132,7 @@
                             }
                             ?>
                             <div id="copyright">
-                                Copyright &copy; <?php echo date('Y') . ' ' . Translate::trad('Par'); ?>  <a href="http://web3sys.com">Web3Sys</a>.<br/>
+                                Copyright <?php echo Yii::app()->name . ' &copy; v0.1.5'; ?> <?php echo date('Y') . ' ' . Translate::trad('Par'); ?>  <a href="http://web3sys.com">Web3Sys</a>.<br/>
                                 <?php echo Translate::trad('DroitsReserve'); ?><br/>
                             </div>
                     </div>

@@ -29,6 +29,7 @@ class Constantes {
     const FONCTION_USER = 1;
     const FONCTION_ADMIN = 2;
     const FONCTION_ROOT = 3;
+    const FONCTION_LOCATAIRE = 4;
 
     /*
      * Les langues étant fixes, on stocke directement la valeur de leur id ici pour pouvoir les tester
@@ -62,14 +63,14 @@ class Constantes {
      * L'utilisateur par défaut à assigner lors de la création de ticket
      */
     const USER_DEFAUT = 1;
-    
+
     /*
      * IsAjax permet de savoir si un utilisateur à été déconnecté parce que la 
      * durée de la session à expiré ou si il s'est déconnecté seul 
      * dans le cas ou c'est l'utilisateur qui s'est déconnecté aucun message n'apparait 
      * dans le cas contraire un message le lui indique 
      */
-    const ISAJAX_TRUE=1;
-    const ISAJAX_FALSE=0;
+    const ISAJAX_TRUE = 1;
+    const ISAJAX_FALSE = 0;
 
 }
