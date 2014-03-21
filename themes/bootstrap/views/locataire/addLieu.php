@@ -34,6 +34,12 @@ $this->menu = array(
         ));
         ?>
         <?php
+//        $ListeBatiments=  Yii::app()->db->createCommand()
+//                ->
+//                ->
+//                ->
+//                ->
+                
         $lieux = Lieu::model()->findAllByAttributes(array('visible' => Constantes::VISIBLE, 'fk_locataire' => $model['id_user']));
         $batiments = Batiment::model()->findAllByAttributes(array('visible' => Constantes::VISIBLE));
 

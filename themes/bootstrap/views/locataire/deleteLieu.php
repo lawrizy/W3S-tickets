@@ -5,10 +5,10 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <?php
-$this->breadcrumbs=array(
-	'Locataires'=>array('admin'),
-	$model->nom=>array('view','id'=>$model->id_user),
-	'Retirer une adresse',
+$this->breadcrumbs = array(
+    'Locataires' => array('admin'),
+    $model->nom => array('view', 'id' => $model->id_user),
+    'Retirer une adresse',
 );
 
 $this->menu = array(
