@@ -52,9 +52,9 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         array(
             'name' => Translate::trad('CodeTicket'),
             'value' => '$data->code_ticket'),
-        array(
-            'name' => Translate::trad('LocataireTicket'),
-            'value' => 'Locataire::model()->findByPk($data->fk_locataire)->nom'),
+//        array(
+//            'name' => Translate::trad('LocataireTicket'),
+//            'value' => 'User::model()->fi  ndByPk($data->fk_locataire)->nom'),
         array(
             'name' => Translate::trad('StatutTicket'),
             'value' => 'Translate::trad(StatutTicket::model()->findByPk($data->fk_statut)->label);'
