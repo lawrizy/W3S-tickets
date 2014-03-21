@@ -2,8 +2,9 @@
 
 class AdminController extends Controller {
 
-    Const ID_CONTROLLER = 1;
+    const ID_CONTROLLER = 1;
     const ACTION_INDEX = 1;
+    const ACTION_DROIT = 2;
 
     /**
      * @return array action filters
@@ -41,6 +42,7 @@ class AdminController extends Controller {
             // Et enfin on teste chaque droit un à un, et si le droit est bien accordé,
             // on le rajoute à l'array qui sera envoyé dans le return
             if ($rights & self::ACTION_INDEX) array_push($allow, 'index');
+            if ($rights & self::ACTION_DROIT) array_push ($allow, 'droit');
             
             return array( // Ici on a plus qu'à envoyer la liste des droits
                     array('allow', // Ici l'array des droits 'permis'
@@ -66,6 +68,12 @@ class AdminController extends Controller {
 
     public function actionIndex() {
         $this->render('index');
+    }
+    
+    public function actionDroit($id) {
+        $model = User::model()->findByPk($id);
+        
+        
     }
 
 }

@@ -3,12 +3,14 @@
 class LocataireController extends Controller
 {
 
-    Const ID_CONTROLLER = 7;
-    Const ACTION_VIEW = 1;
-    Const ACTION_CREATE = 2;
-    COnst ACTION_DELETE = 4;
+    const ID_CONTROLLER = 7;
+    const ACTION_VIEW = 1;
+    const ACTION_CREATE = 2;
+    const ACTION_DELETE = 4;
     const ACTION_UPDATE = 8;
     const ACTION_ADMIN = 16;
+    const ACTION_ADDLIEU = 32;
+    const ACTION_DELETELIEU = 64;
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -57,6 +59,8 @@ class LocataireController extends Controller
             if ($rights & self::ACTION_DELETE) array_push($allow, 'delete');
             if ($rights & self::ACTION_UPDATE) array_push($allow, 'update');
             if ($rights & self::ACTION_ADMIN) array_push($allow, 'admin');
+            if ($rights & self::ACTION_ADDLIEU) array_push($allow, 'addlieu');
+            if ($rights & self::ACTION_DELETELIEU) array_push($allow, 'deletelieu');
             
             return array( // Ici on a plus qu'à envoyer la liste des droits
                     array('allow', // Ici l'array des droits 'permis'
