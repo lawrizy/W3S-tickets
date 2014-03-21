@@ -36,7 +36,7 @@ $this->widget('bootstrap.widgets.TbDetailView', array(
         ),
         array(
             'name' => 'fk_locataire',
-            'value' => Locataire::model()->findByPk($model->fk_locataire)->nom
+            'value' => User::model()->findByPk($model->fk_locataire)->nom
         ),
         array(
             'name' => Translate::trad('CategTicket'),

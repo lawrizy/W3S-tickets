@@ -49,44 +49,52 @@ class TicketController extends Controller {
                 ),
             );
         } elseif (Yii::app()->session['Utilisateur'] == 'User') { // Génération des droits selon le user
-            
             // On récupère d'abord le user et ses droits de la session
             $logged = Yii::app()->session['Logged'];
             $rights = Yii::app()->session['Rights']->getTicket();
             // On initialise ensuite les array qui stockeront les droits
             $allow = array();
-            
+
             // Et enfin on teste chaque droit un à un, et si le droit est bien accordé,
             // on le rajoute à l'array qui sera envoyé dans le return
-            if ($rights & self::ACTION_VIEW) array_push($allow, 'view');
-            if ($rights & self::ACTION_CREATE) array_push($allow, 'create');
-            if ($rights & self::ACTION_DELETE) array_push($allow, 'delete');
-            if ($rights & self::ACTION_UPDATE) array_push($allow, 'update');
-            if ($rights & self::ACTION_ADMIN) array_push($allow, 'admin');
-            if ($rights & self::ACTION_GETSOUSCATEGORIESDYNAMIQUES) array_push($allow, 'getsouscategoriesdynamiques');
-            if ($rights & self::ACTION_CLOSE) array_push($allow, 'close');
-            if ($rights & self::ACTION_SENDNOTIFICATIONMAIL) array_push($allow, 'sendnotificationmail');
-            if ($rights & self::ACTION_TRAITEMENT) array_push ($allow, 'traitement');
-            
-            return array( // Ici on a plus qu'à envoyer la liste des droits
-                    array('allow', // Ici l'array des droits 'permis'
-                        'actions' => $allow, // Et on lui communique l'array que l'on a généré plus tôt
-                        'users' => array('@'), // Autorisé pour les user loggés
-                    ),
-                    array('deny', // Refuse autre users
-                        'users' => array('@'), // Refus aux visiteurs non loggés
-                        'message' => 'Vous n\'avez pas accès à cette page.'
-                            // Le message qui sera affiché
-                    ),
-                );
+            if ($rights & self::ACTION_VIEW)
+                array_push($allow, 'view');
+            if ($rights & self::ACTION_CREATE)
+                array_push($allow, 'create');
+            if ($rights & self::ACTION_DELETE)
+                array_push($allow, 'delete');
+            if ($rights & self::ACTION_UPDATE)
+                array_push($allow, 'update');
+            if ($rights & self::ACTION_ADMIN)
+                array_push($allow, 'admin');
+            if ($rights & self::ACTION_GETSOUSCATEGORIESDYNAMIQUES)
+                array_push($allow, 'getsouscategoriesdynamiques');
+            if ($rights & self::ACTION_CLOSE)
+                array_push($allow, 'close');
+            if ($rights & self::ACTION_SENDNOTIFICATIONMAIL)
+                array_push($allow, 'sendnotificationmail');
+            if ($rights & self::ACTION_TRAITEMENT)
+                array_push($allow, 'traitement');
+
+            return array(// Ici on a plus qu'à envoyer la liste des droits
+                array('allow', // Ici l'array des droits 'permis'
+                    'actions' => $allow, // Et on lui communique l'array que l'on a généré plus tôt
+                    'users' => array('@'), // Autorisé pour les user loggés
+                ),
+                array('deny', // Refuse autre users
+                    'users' => array('@'), // Refus aux visiteurs non loggés
+                    'message' => 'Vous n\'avez pas accès à cette page.'
+                // Le message qui sera affiché
+                ),
+            );
         } else { // Si autre utilisateur (visiteur)
-            return array( // Ici on a plus qu'à envoyer la liste des droits
-                    array('deny', // Refuse autre users
-                        'users' => array('?'), // Refus aux visiteurs non loggés
-                        'message' => 'Vous n\'avez pas accès à cette page.'
-                            // Le message qui sera affiché
-                    ),
-                );
+            return array(// Ici on a plus qu'à envoyer la liste des droits
+                array('deny', // Refuse autre users
+                    'users' => array('?'), // Refus aux visiteurs non loggés
+                    'message' => 'Vous n\'avez pas accès à cette page.'
+                // Le message qui sera affiché
+                ),
+            );
         }
     }
 
@@ -108,35 +116,29 @@ class TicketController extends Controller {
      * @param null $objectToSave L'active record dont les changements doivent être commit vers la DB.
      * @return bool Un booléen qui signifie si la sauvegarde s'est bien passé ou non.
      */
-    private function attemptSave($objectToSave)
-    {
+    private function attemptSave($objectToSave) {
         /* @var CDbConnection $db */
         /* @var CDbTransaction $tsql */
         $db = Yii::app()->db;
         $tsql = $db->beginTransaction();
-        
-        if($objectToSave === null) return false;
-        try
-        {
+
+        if ($objectToSave === null)
+            return false;
+        try {
             // Si la validation est passée ET qu'aucune erreur n'est retournée par la DB
-            if($objectToSave->validate() && $objectToSave->save(true))
-            {
+            if ($objectToSave->validate() && $objectToSave->save(true)) {
                 // On commite les changements
                 $tsql->commit();
-            }
-            else // Non validé
-            {
+            } else { // Non validé
                 // Si la validation n'est pas passée, on génère le message d'erreur
                 $err = "Une erreur est survenue : <br/>";
                 // ici on récupère les strings d'erreur contenues dans le modèle, pour les ajouter à la string d'erreur "principale"
-                foreach($objectToSave->getErrors() as $k=>$v)
+                foreach ($objectToSave->getErrors() as $k => $v)
                     $err .= $v[0] . "<br/>";
                 // On lance une exception qui sera catchée juste ci-dessous pour le rollback et l'affichage du TbAlert
                 throw new Exception($err);
             }
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             // On annule les changements préparés
             $tsql->rollback();
             // On affiche un TbAlert avec le message d'erreur
@@ -145,7 +147,7 @@ class TicketController extends Controller {
         }
         return true;
     }
-    
+
     public function actionClose($id) {
         if (isset($_POST['Ticket'])) {
             $var = $_POST['Ticket'];
@@ -154,9 +156,9 @@ class TicketController extends Controller {
             $model->fk_statut = Constantes::STATUT_CLOSED;
             try {
                 //$model->save(false);
-                if(!$this->attemptSave($model))
-                    $this->redirect(array('view', 'id'=>$model->id_ticket));
-                $loc = Locataire::model()->findByPk($model['fk_locataire']);
+                if (!$this->attemptSave($model))
+                    $this->redirect(array('view', 'id' => $model->id_ticket));
+                $loc = User::model()->findByPk($model['fk_locataire']);
                 $histo = new HistoriqueTicket();
                 $histo->date_update = date("Y-m-d H:i:s", time());
                 $histo->fk_ticket = $model->id_ticket;
@@ -165,14 +167,11 @@ class TicketController extends Controller {
                 $logged = Yii::app()->session['Logged'];
                 $histo->fk_user = $logged['id_user'];
                 //if ($histo->save(false)) {
-                if($this->attemptSave($histo))
-                {
+                if ($this->attemptSave($histo)) {
                     $this->actionSendNotificationMail($model);
                     Yii::app()->user->setFlash('success', 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email']);
-                }
-                else
-                {
-                    $this->redirect(array('view', 'id'=>$model->id_ticket));
+                } else {
+                    $this->redirect(array('view', 'id' => $model->id_ticket));
                 }
                 $this->redirect(array('view', 'id' => $model['id_ticket']));
             } catch (CDbException $ex) {
@@ -197,9 +196,9 @@ class TicketController extends Controller {
             $oldmodel['fk_statut'] = Constantes::STATUT_TREATMENT;
             try {
                 //$oldmodel->save(FALSE);
-                if(!$this->attemptSave($oldmodel))
+                if (!$this->attemptSave($oldmodel))
                     $this->redirect(array('admin'));
-                $loc = Locataire::model()->findByPk($oldmodel['fk_locataire']);
+                $loc = User::model()->findByPk($oldmodel['fk_locataire']);
                 // Si la sauvegarde du ticket s'est bien passé,
                 // on enregistre un évènement InProgress pour le traitement du ticket
                 $histo = new HistoriqueTicket();
@@ -210,12 +209,10 @@ class TicketController extends Controller {
                 $logged = Yii::app()->session['Logged'];
                 $histo->fk_user = $logged['id_user'];
                 //if ($histo->save(false)) {
-                if($this->attemptSave($histo)) {
+                if ($this->attemptSave($histo)) {
                     $this->actionSendNotificationMail($oldmodel);
                     Yii::app()->user->setFlash('success', 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email']);
-                }
-                else
-                {
+                } else {
                     $this->redirect(array('admin'));
                 }
                 $this->redirect(array('view', 'id' => $oldmodel['id_ticket']));
@@ -251,7 +248,7 @@ class TicketController extends Controller {
                 // Si locataire, on met le canal à web automatiquement
                 $ticket['fk_canal'] = Constantes::CANAL_WEB;
                 // Et si locataire, on reprend son propre id pour la création du ticket
-                $ticket['fk_locataire'] = $logged->id_locataire;
+                $ticket['fk_locataire'] = $logged->id_user;
             } else {
                 // Si user, c'est lui-même qui s'occupera de ce ticket-ci
                 $ticket['fk_user'] = $logged['id_user'];
@@ -278,9 +275,9 @@ class TicketController extends Controller {
             $model->attributes = $ticket;
             try {
                 //$model->save();
-                if(!$this->attemptSave($model))
+                if (!$this->attemptSave($model))
                     $this->redirect(array('admin'));
-                $loc = Locataire::model()->findByPk($model['fk_locataire']);
+                $loc = User::model()->findByPk($model['fk_locataire']);
                 // Si la sauvegarde du ticket s'est bien passé,
                 // on enregistre un évènement opened pour la création du ticket
                 $histo = new HistoriqueTicket();
@@ -290,13 +287,10 @@ class TicketController extends Controller {
                 $histo->fk_statut_ticket = Constantes::STATUT_OPENED;
                 $histo->fk_user = $model['fk_user'];
                 //if ($histo->save(false))
-                if($this->attemptSave($histo))
-                {
+                if ($this->attemptSave($histo)) {
                     $this->actionSendNotificationMail($model);
                     Yii::app()->user->setFlash('success', 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email']);
-                }
-                else
-                {
+                } else {
                     $this->redirect(array('admin'));
                 }
                 // Si tout s'est bien passé, on redirige vers la page view
@@ -353,8 +347,8 @@ class TicketController extends Controller {
 // Ensuite on sauvegarde les changements normalement.
             try {
                 //$model->save();
-                if(!$this->attemptSave($model))
-                    $this->redirect(array('update', 'id'=>$model->id_ticket));
+                if (!$this->attemptSave($model))
+                    $this->redirect(array('update', 'id' => $model->id_ticket));
                 $loc = Locataire::model()->findByPk($model['fk_locataire']);
                 Yii::app()->session['EmailSend'] = 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email'];
 // Si la sauvegarde du ticket s'est bien passé,
@@ -423,7 +417,7 @@ class TicketController extends Controller {
      */
     private function actionSendNotificationMail($modelTicket) {
         $message = new YiiMailMessage;
-        $locataire = Locataire::model()->findByPk($modelTicket->fk_locataire);
+        $locataire = User::model()->findByPk($modelTicket->fk_locataire);
         $message->from = 'mailer@web3sys.com';
         $message->addTo($locataire->email);
 
@@ -517,7 +511,7 @@ class TicketController extends Controller {
     }
 
     // TODO utiliser des vues pour faire les requêtes suivantes :
-    
+
     /**
      * Retourne une liste d'entreprises pouvant être contactées dans le cadre d'un ticket
      * @param $idTicket L'identifiant du ticket concerné
