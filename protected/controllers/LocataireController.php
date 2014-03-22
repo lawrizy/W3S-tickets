@@ -35,20 +35,15 @@ class LocataireController extends Controller {
      * selon ces droits-là.
      */
     public function accessRules() { // droit des utilisateur sur les actions
-        if (Yii::app()->session['Utilisateur'] == 'Locataire') { // Locataire a des droits fixes
-            return array(
-                array('deny', // refuse autre users
-                    'users' => array('@'), //tous utilisateur
-                    'message' => 'Vous n\'avez pas accès à cette page.'
-                ),
-            );
-        } elseif (Yii::app()->session['Utilisateur'] == 'User') { // Génération des droits selon le user
+        if (!Yii::app()->user->isGuest) { // Génération des droits selon le user
             // On récupère d'abord le user et ses droits de la session
             $logged = Yii::app()->session['Logged'];
             $rights = Yii::app()->session['Rights']->getLocataire();
-            // On initialise ensuite les array qui stockeront les droits
-            $allow = array();
 
+            $allow = array('noright');
+            // On initialise ensuite l'array qui stockera les droits
+            // On lui met une action inexistante car la méthode accessRules
+            // considère qu'un array vide c'est avoir tous les droits
             // Et enfin on teste chaque droit un à un, et si le droit est bien accordé,
             // on le rajoute à l'array qui sera envoyé dans le return
             if ($rights & self::ACTION_VIEW)
@@ -299,7 +294,7 @@ class LocataireController extends Controller {
                 if ($modelLieu->validate() && $modelLieu->save()) {
                     $tsql->commit();
                     Yii::app()->user->setFlash('success', '<strong> Le propriétaire ' . $model->nom . ' n\'habite plus dans le bâtiment: ' . Batiment::model()->findByPk($_POST['Batiment'])->nom . '</strong>');
-                    $this->redirect(array('admin'));
+                    $this->redirect(array('deleteLieu?id=' . $model->id_user));
                 } else {
                     $err = "Une erreur est survenue : <br/>";
                     foreach ($modelLieu->getErrors() as $k => $v)
@@ -331,7 +326,7 @@ class LocataireController extends Controller {
                 if ($modelLieu->validate() && $modelLieu->save()) {
                     $tsql->commit();
                     Yii::app()->user->setFlash('success', '<strong>Cette adresse a bien été ajoutée pour: ' . $model->nom . '</strong>');
-                    $this->redirect(array('admin'));
+                    $this->redirect(array('addLieu?id=' . $model->id_user));
                 } else {
                     $err = "Une erreur est survenue : <br/>";
                     foreach ($modelLieu->getErrors() as $k => $v)

@@ -8,18 +8,17 @@ $this->breadcrumbs = array(
     $model->code_ticket,
 );
 
-if (Yii::app()->session['Utilisateur'] === 'User') {
-    $this->menu = array(
-        // array('label' => Yii::t('/ticket/view', 'MenuModifierTicket'), 'url' => array('update', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $model->fk_statut != Constantes::STATUT_CLOSED),
-        array('label' => Translate::trad('MenuMettreEnTraitementTicket'), 'url' => array('traitement', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $model->fk_statut != Constantes::STATUT_CLOSED),
-        array('label' => Translate::trad('MenuCloseTicket'), 'url' => array('close', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $model->fk_statut == Constantes::STATUT_TREATMENT),
-        // TODO
-        array('label' => Translate::trad('MenuTicketDelete'), 'url' => array('delete', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && Yii::app()->session['Logged']->fk_fonction == Constantes::FONCTION_ADMIN)
-    );
-}
-?>
 
-<h1><?php echo Translate::trad('ViewTitre') . $model->code_ticket; ?></h1>
+$this->menu = array(
+// array('label' => Yii::t('/ticket/view', 'MenuModifierTicket'), 'url' => array('update', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $model->fk_statut != Constantes::STATUT_CLOSED),
+    array('label' => Translate::trad('MenuMettreEnTraitementTicket'), 'url' => array('traitement', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Logged']->fk_fonction != Constantes::FONCTION_LOCATAIRE && $model->fk_statut != Constantes::STATUT_CLOSED),
+    array('label' => Translate::trad('MenuCloseTicket'), 'url' => array('close', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Logged']->fk_fonction != Constantes::FONCTION_LOCATAIRE && $model->fk_statut == Constantes::STATUT_TREATMENT),
+    // TODO
+    array('label' => Translate::trad('MenuTicketDelete'), 'url' => array('delete', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Logged']->fk_fonction != Constantes::FONCTION_LOCATAIRE)
+        )
+?>
+<h1><?php echo Translate::trad('ViewTitre') . $model->code_ticket;
+?></h1>
 <?php
 echo '<h4></br><font color="green" >' . Yii::app()->session['EmailSend'] . '</font></h4></b> ';
 Yii::app()->session['EmailSend'] = '';

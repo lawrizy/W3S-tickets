@@ -37,23 +37,15 @@ class TicketController extends Controller {
      * selon ces droits-là.
      */
     public function accessRules() { // droit des utilisateur sur les actions
-        if (Yii::app()->session['Utilisateur'] == 'Locataire') { // Locataire a des droits fixes
-            return array(
-                array('allow', // le locataire peut juste creer un ticket et voir
-                    'actions' => array('view', 'create', 'getsouscategoriesdynamiques', 'sendnotificationmail'),
-                    'users' => array('@'), // user authentifier
-                ),
-                array('deny', // refuse autre users
-                    'users' => array('@'), //tous utilisateur
-                    'message' => 'Vous n\'avez pas accès à cette page.'
-                ),
-            );
-        } elseif (Yii::app()->session['Utilisateur'] == 'User') { // Génération des droits selon le user
+        if (!Yii::app()->user->isGuest) { // Génération des droits selon le user
             // On récupère d'abord le user et ses droits de la session
             $logged = Yii::app()->session['Logged'];
             $rights = Yii::app()->session['Rights']->getTicket();
-            // On initialise ensuite les array qui stockeront les droits
-            $allow = array();
+            
+            $allow = array('noright');
+                // On initialise ensuite l'array qui stockera les droits
+                // On lui met une action inexistante car la méthode accessRules
+                // considère qu'un array vide c'est avoir tous les droits
 
             // Et enfin on teste chaque droit un à un, et si le droit est bien accordé,
             // on le rajoute à l'array qui sera envoyé dans le return
@@ -242,7 +234,7 @@ class TicketController extends Controller {
             $ticket = $_POST['Ticket'];
             $logged = Yii::app()->session['Logged'];
             // Vérifie quel utilisateur est enregistré (si User ou Locataire)
-            if (Yii::app()->session['Utilisateur'] == 'Locataire') {
+            if (Yii::app()->session['Logged']->fk_fonction == Constantes::FONCTION_LOCATAIRE) {
                 // Si locataire, on attribue le ticket a un user par défaut (le 1 dans ce cas-ci)
                 $ticket['fk_user'] = Constantes::USER_DEFAUT;
                 // Si locataire, on met le canal à web automatiquement

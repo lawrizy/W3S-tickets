@@ -108,7 +108,7 @@ class SiteController extends Controller {
             $model->attributes = $_POST['LoginForm'];
             // validate user input and redirect to the previous page if valid
             if ($model->validate() && $model->login()) {
-                if (Yii::app()->session['Utilisateur'] == 'Locataire')
+                if (Yii::app()->session['Logged']->fk_fonction == Constantes::FONCTION_LOCATAIRE)
                     $this->redirect(array('./ticket/create'));
                 else {
                     $this->redirect(array('./ticket/admin?var=admin'));
@@ -128,18 +128,10 @@ class SiteController extends Controller {
         else {
             $varIsAjax = Constantes::ISAJAX_TRUE;
         }
-        if (Yii::app()->session['Utilisateur'] == 'User') {
-            $model = User::model()->findByPk(Yii::app()->session['Logged']->id_user);
-            $model = User::model()->findByPk(Yii::app()->session['Logged']->id_user);
-            $Session = Session::model()->findByAttributes(array('email' => $model->email));
-            $yiisession = Yiisession::model()->findByPk($Session->fk_yiisession);
-            $yiisession->delete();
-        } elseif (Yii::app()->session['Utilisateur'] == 'Locataire') {
-            $model = Locataire::model()->findByPk(Yii::app()->session['Logged']->id_locataire);
-            $Session = Session::model()->findByAttributes(array('email' => $model->email));
-            $yiisession = Yiisession::model()->findByPk($Session->fk_yiisession);
-            $yiisession->delete();
-        }
+        $model = User::model()->findByPk(Yii::app()->session['Logged']->id_user);
+        $Session = Session::model()->findByAttributes(array('email' => $model->email));
+        $yiisession = Yiisession::model()->findByPk($Session->fk_yiisession);
+        $yiisession->delete();
         $model->save();
         Yii::app()->user->logout();
         Yii::app()->language = Yii::app()->session['_lang'];

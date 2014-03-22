@@ -65,11 +65,6 @@ class UserIdentity extends CUserIdentity {
                     $this->setDroits($record->id_user); // Va rechercher et mettre les droits de ce user en session
                     $this->_id = $record->id_user; //recupération  de l'id du user
                     $this->errorCode = self::ERROR_NONE; // aucune erreur
-                    if ($record->fk_fonction == Constantes::FONCTION_LOCATAIRE) {
-                        Yii::app()->session['Utilisateur'] = 'Locataire'; // création d'une variable de session pour stocker le type d'user
-                    } else {
-                        Yii::app()->session['Utilisateur'] = 'User';
-                    }
                     $record->password = ''; // vidage du mot de passe 
                     Yii::app()->session['Logged'] = $record; // enregistrement du record dans la session 
                     $this->getLanguage($record);
