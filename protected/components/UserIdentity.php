@@ -49,8 +49,8 @@ class UserIdentity extends CUserIdentity {
                 if ($record->password !== md5($this->password)) {
                     Yii::app()->user->setFlash('error', '<strong>Le mot de passe ou le nom d\'utilisateur est incorrect.!</strong>');
                     $this->errorCode = self::ERROR_PASSWORD_INVALID;
-                }// si le mot de passe est différent du mot de passe de la db en md5
-                else {
+                }
+                else {// si le mot de passe est différent du mot de passe de la db
                     //--------------Traitement de la session unique-------------
                     if (($Session = Session::model()->findByAttributes(array('email' => $record->email))) != NULL) {// rechere du record dans la table w3sys_Session par l'email de l'utilisateur
                         $yiisession = Yiisession::model()->findByPk($Session->fk_yiisession); //on recupere le record de sa session dans la table yiisession
@@ -62,7 +62,8 @@ class UserIdentity extends CUserIdentity {
                     $Session->save(); // on enregistre le record
                     //--------------------Fin de session unique-----------------
 
-                    $this->setDroits($record->id_user); // Va rechercher et mettre les droits de ce user en session
+                    Yii::app()->session['Rights'] = $this->setDroits($record->id_user);
+                        // Va rechercher et mettre les droits de ce user en session
                     $this->_id = $record->id_user; //recupération  de l'id du user
                     $this->errorCode = self::ERROR_NONE; // aucune erreur
                     $record->password = ''; // vidage du mot de passe 
@@ -84,8 +85,8 @@ class UserIdentity extends CUserIdentity {
     }
 
     public function getLanguage($record) {
-//-----Recupere la langue pour l'application une fois la personne authentifié---
-
+        //-----Recupere la langue pour l'application une fois la personne authentifié---
+        
         if ($record->fk_langue == Constantes::LANGUE_FR) {
             Yii::app()->session['_lang'] = 'fr';
         } elseif ($record->fk_langue == Constantes::LANGUE_EN) {
@@ -98,19 +99,20 @@ class UserIdentity extends CUserIdentity {
     /*
      * Cette méthode sert à retrouver les droits de l'utilisateur qui se log.
      * Elle est appelée à partir de la méthode 'authenticate' plus haut.
-     * Cette méthode reçoit donc en paramètre l'id de la personne qui se log et
-     * instancie un objet 'Rights'. On stocke dans cet objet tous les droits que
-     * ce user à sur tous les controleurs en faisant la recherche dans la DB
-     * des droits selon le user et le controleur.
-     * Une fois cela fait, on met l'objet 'Rights' en variable de session pour
-     * pouvoir être utilisé par les méthodes 'accessRules' des controleurs
+     * Cette méthode reçoit donc en paramètre l'id de la personne pour qui on 
+     * recherche les droits et instancie un objet 'Rights'.
+     * On stocke dans cet objet tous les droits que ce user a sur tous les 
+     * controleurs en faisant la recherche dans la DB des droits selon le user
+     * et le controleur.
+     * Une fois que c'est fait, on renvoie l'objet 'Rights' que l'on a créé.
      * (pour détails, voir classe 'Rights' elle-même et les méthodes
      * 'accessRules()' dans les controleurs)
      */
 
     public function setDroits($id) {
         $rights = new Rights();
-
+        
+        // Ici on recherche les droits pour chaque contrôleur pour l'id du user reçu en paramètre
         $rights->setAdmin(Droit::model()->findByAttributes(
                         array('fk_controleur' => AdminController::ID_CONTROLLER, 'fk_user' => $id))->droits);
         $rights->setBatiment(Droit::model()->findByAttributes(
@@ -131,8 +133,8 @@ class UserIdentity extends CUserIdentity {
                         array('fk_controleur' => TradController::ID_CONTROLLER, 'fk_user' => $id))->droits);
         $rights->setUser(Droit::model()->findByAttributes(
                         array('fk_controleur' => UserController::ID_CONTROLLER, 'fk_user' => $id))->droits);
-
-        Yii::app()->session['Rights'] = $rights;
+        
+        return $rights;
     }
 
 }

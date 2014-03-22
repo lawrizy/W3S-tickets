@@ -1,7 +1,12 @@
 <?php
 
 class CategorieIncidentController extends Controller {
-
+    /*
+     * Les constantes suivantes correspondent aux actions. Il y a une constante
+     * pour chaque action de ce contrôleur. Ces constantes serviront à attribuer
+     * ou non des droits aux utilisateurs (voir la méthode 'accessRules()' de 
+     * ce même contrôleur)
+     */
     Const ID_CONTROLLER = 3;
     Const ACTION_VIEW = 1;
     Const ACTION_CREATECAT = 2;
@@ -9,6 +14,7 @@ class CategorieIncidentController extends Controller {
     const ACTION_UPDATECAT = 8;
     const ACTION_UPDATESOUSCAT = 16;
     const ACTION_ADMIN = 32;
+    const ACTION_DELETE = 64;
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -36,23 +42,34 @@ class CategorieIncidentController extends Controller {
     public function accessRules() { // droit des utilisateur sur les actions
         if (!Yii::app()->user->isGuest) { // Génération des droits selon le user
             
-            // On récupère d'abord le user et ses droits de la session
+            // On récupère d'abord le user de la session
             $logged = Yii::app()->session['Logged'];
+            // ainsi que ses droits sur ce contrôleur
             $rights = Yii::app()->session['Rights']->getCategorie();
+                // La méthode getCategorie() demande à ne récupérer que les droits
+                // lié à ce contrôleur-ci (en l'occurence, categorie)
             
             $allow = array('noright');
                 // On initialise ensuite l'array qui stockera les droits
                 // On lui met une action inexistante car la méthode accessRules
                 // considère qu'un array vide c'est avoir tous les droits
             
-            // Et enfin on teste chaque droit un à un, et si le droit est bien accordé,
-            // on le rajoute à l'array qui sera envoyé dans le return
+            /* Et enfin on teste chaque droit un à un, et si le droit est bien accordé,
+             * on le rajoute à l'array qui sera envoyé dans le return
+             */
+            // Le test s'effectue grâce à un opérateur de comparaison de bit.
+            // On vérifie que dans l'integer représentant les droits sur ce contrôleur,
+            // le bit correspondant à un certain nombre soit bien à un.
+            // Ces nombres-là sont les valeurs des constantes tout en haut de la classe,
+            // on a volontairement choisi des nombres binaires (1, 2, 4, 8, ...) pour que
+            // chaque nombre n'ait qu'un seul bit à '1' et n'accorde donc qu'un seul droit
             if ($rights & self::ACTION_VIEW) array_push($allow, 'view');
             if ($rights & self::ACTION_CREATECAT) array_push($allow, 'createcat');
             if ($rights & self::ACTION_CREATESOUSCAT) array_push($allow, 'createsouscat');
             if ($rights & self::ACTION_UPDATESOUSCAT) array_push($allow, 'updatesouscat');
             if ($rights & self::ACTION_UPDATECAT) array_push($allow, 'updatecat');
             if ($rights & self::ACTION_ADMIN) array_push($allow, 'admin');
+            if ($rights & self::ACTION_DELETE) array_push($allow, 'delete');
 
             return array( // Ici on a plus qu'à envoyer la liste des droits
                     array('allow', // Ici l'array des droits 'permis'

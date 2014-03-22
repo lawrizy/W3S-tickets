@@ -1,7 +1,12 @@
 <?php
 
 class LocataireController extends Controller {
-
+    /*
+     * Les constantes suivantes correspondent aux actions. Il y a une constante
+     * pour chaque action de ce contrôleur. Ces constantes serviront à attribuer
+     * ou non des droits aux utilisateurs (voir la méthode 'accessRules()' de 
+     * ce même contrôleur)
+     */
     const ID_CONTROLLER = 7;
     const ACTION_VIEW = 1;
     const ACTION_CREATE = 2;
@@ -39,14 +44,23 @@ class LocataireController extends Controller {
             // On récupère d'abord le user et ses droits de la session
             $logged = Yii::app()->session['Logged'];
             $rights = Yii::app()->session['Rights']->getLocataire();
+                // La méthode getLocataire() demande à ne récupérer que les droits
+                // lié à ce contrôleur-ci (en l'occurence, locataire)
             
             $allow = array('noright');
                 // On initialise ensuite l'array qui stockera les droits
                 // On lui met une action inexistante car la méthode accessRules
                 // considère qu'un array vide c'est avoir tous les droits
 
-            // Et enfin on teste chaque droit un à un, et si le droit est bien accordé,
-            // on le rajoute à l'array qui sera envoyé dans le return
+            /* Et enfin on teste chaque droit un à un, et si le droit est bien accordé,
+             * on le rajoute à l'array qui sera envoyé dans le return
+             */
+            // Le test s'effectue grâce à un opérateur de comparaison de bit.
+            // On vérifie que dans l'integer représentant les droits sur ce contrôleur,
+            // le bit correspondant à un certain nombre soit bien à un.
+            // Ces nombres-là sont les valeurs des constantes tout en haut de la classe,
+            // on a volontairement choisi des nombres binaires (1, 2, 4, 8, ...) pour que
+            // chaque nombre n'ait qu'un seul bit à '1' et n'accorde donc qu'un seul droit
             if ($rights & self::ACTION_VIEW)
                 array_push($allow, 'view');
             if ($rights & self::ACTION_CREATE)
