@@ -66,11 +66,6 @@
     ));
     ?>
     </div>
-    
-</div>
-<br />
-<br />
-
 
 <?php $this->endWidget(); ?>
 

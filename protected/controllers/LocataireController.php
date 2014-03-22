@@ -309,7 +309,7 @@ class LocataireController extends Controller {
                 if ($modelLieu->validate() && $modelLieu->save()) {
                     $tsql->commit();
                     Yii::app()->user->setFlash('success', '<strong> Le propriétaire ' . $model->nom . ' n\'habite plus dans le bâtiment: ' . Batiment::model()->findByPk($_POST['Batiment'])->nom . '</strong>');
-                    $this->redirect(array('admin'));
+                    $this->redirect(array('deleteLieu?id=' . $model->id_user));
                 } else {
                     $err = "Une erreur est survenue : <br/>";
                     foreach ($modelLieu->getErrors() as $k => $v)
@@ -341,7 +341,7 @@ class LocataireController extends Controller {
                 if ($modelLieu->validate() && $modelLieu->save()) {
                     $tsql->commit();
                     Yii::app()->user->setFlash('success', '<strong>Cette adresse a bien été ajoutée pour: ' . $model->nom . '</strong>');
-                    $this->redirect(array('admin'));
+                    $this->redirect(array('addLieu?id=' . $model->id_user));
                 } else {
                     $err = "Une erreur est survenue : <br/>";
                     foreach ($modelLieu->getErrors() as $k => $v)

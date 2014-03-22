@@ -21,7 +21,11 @@ $this->menu = array(
 //------------------------------------------------------------------------------
 //-------------------Détermination de la categorie à l'entreprise---------------
 //------------------------------------------------------------------------------
-
+//$CategorieList = Yii::app()->db->createCommand()
+//        ->select('label')
+//        ->from('w3sys_categorie_incident')
+//        ->where('id_categorie_incident in (select fk_categorie FROM w3sys_secteur WHERE fk_entreprise= ' . $model->id_entreprise . ')')
+//        ->queryAll();
 $string = " ";
 $varSecteur = Secteur::model()->findAllByAttributes(array('fk_entreprise' => $model->id_entreprise)); // recupération d'un tableau de  Secteur
 foreach ($varSecteur as $secteur) { // Boucle pour récuperer la categorie 
