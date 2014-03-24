@@ -53,18 +53,25 @@ $this->pageTitle = Yii::app()->name . ' - Admin';
 
 <br />
 <p>
-    <b>Catégorie:</b>
+    <b><?php echo Translate::trad('CategTicket') ?>:</b>
 <ul>
-    <li><a href="categorieIncident/admin">Liste des Catégories</a>&nbsp;(pour voir, modifier ou supprimer une catégorie)</li>
-    <li><a href="categorieIncident/createCat">Rajouter une Catégorie</a></li>
-    <li><a href="categorieIncident/createSousCat">Rajouter une Sous-Catégorie</a></li>
+    <li><a href="categorieIncident/admin"><?php echo Translate::trad('ListCategorie'); ?></a>&nbsp;<?php echo Translate::trad('ExplicationCategorie'); ?></li>
+    <li><a href="categorieIncident/createCat"><?php echo Translate::trad('AjouterCategorie'); ?></a></li>
+    <li><a href="categorieIncident/createSousCat"><?php echo Translate::trad('AjouterSousCategorie'); ?></a></li>
 </ul>
 </p>
 
 <p>
     <b>I18N:</b>
-    <ul>
-        <li><a href="trad/addTraduction">Ajouter une nouvelle traduction</a></li>
-        <li><a href="trad/modifyTraduction">Modifier une traduction existante</a></li>
-    </ul>
+<ul>
+    <li><a href="trad/addTraduction"><?php echo Translate::trad('AjouterNouvelleTraduction'); ?></a></li>
+    <li><a href="trad/modifyTraduction"><?php echo Translate::trad('ModifierTradExistante'); ?></a></li>
+</ul>
+</p>
+<p>
+    <b><?php echo Translate::trad('ChangerDroits'); ?>:</b>
+<ul>
+    <?php $id_user= Yii::app()->session['Logged']->id_user; ?>
+    <li><a href="admin/update?id=<?php echo $id_user?>"><?php echo Translate::trad('ChangerDroitsUtilisateur'); ?></a></li>
+</ul>
 </p>

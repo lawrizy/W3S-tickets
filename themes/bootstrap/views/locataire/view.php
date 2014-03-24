@@ -14,6 +14,7 @@ $this->menu = array(
     array('label' => Translate::trad('ManageLocataire'), 'url' => array('admin'), 'visible' => Yii::app()->session['Rights']->getLocataire() & LocataireController::ACTION_ADMIN),
     array('label' => Translate::trad('Rajouterlieu'), 'url' => array('locataire/addLieu?id=' . $model->id_user), 'visible' => Yii::app()->session['Rights']->getLocataire() & LocataireController::ACTION_ADDLIEU),
     array('label' => Translate::trad('Supprimerlieu'), 'url' => array('locataire/deleteLieu?id=' . $model->id_user), 'visible' => Yii::app()->session['Rights']->getLocataire() & LocataireController::ACTION_DELETELIEU),
+    array('label' => Translate::trad('ChangerDroits'), 'url' => array('admin/update?id=' . $model->id_user), 'visible' => Yii::app()->session['Rights']->getAdmin() & AdminController::ACTION_UPDATE),
 );
 ?>
 

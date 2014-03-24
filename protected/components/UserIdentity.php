@@ -107,7 +107,7 @@ class UserIdentity extends CUserIdentity {
      * 'accessRules()' dans les controleurs)
      */
 
-    public function setDroits($id) {
+    public static function setDroits($id) {
         $rights = new Rights();
 
         // Ici on recherche les droits pour chaque contrôleur pour l'id du user reçu en paramètre
