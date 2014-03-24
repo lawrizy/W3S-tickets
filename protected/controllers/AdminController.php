@@ -53,15 +53,8 @@ class AdminController extends Controller {
             // Ces nombres-là sont les valeurs des constantes tout en haut de la classe.
             // Nous avons volontairement choisi des nombres binaires (1, 2, 4, 8, ...) pour que
             // chaque nombre n'ait qu'un seul bit à '1' et n'accorde donc qu'un seul droit
-            if ($rights & self::ACTION_INDEX){
-                array_push($allow, 'index');
-                Yii::trace('index ok','cron');
-            }
-            if ($rights & self::ACTION_UPDATE){
-                array_push($allow, 'update');
-                Yii::trace('droit ok','cron');
-            }
-            
+            if ($rights & self::ACTION_INDEX) array_push($allow, 'index');
+            if ($rights & self::ACTION_UPDATE) array_push($allow, 'update');
             
             return array( // Ici on a plus qu'à envoyer la liste des droits
                     array('allow', // Ici l'array des droits 'permis'
@@ -95,10 +88,86 @@ class AdminController extends Controller {
         Yii::trace('actionUpdate','cron');
         $model = User::model()->findByPk($id);
         Yii::trace('actionUpdate après find','cron');
-//        if (isset($_POST['Batiment'])) {
-//            
-//            $this->redirect(array('user/view', 'id' => $model->id_user));
-//        }
+        if (isset($_POST['tmp'])) {
+            /*
+            // Droits sur AdminController
+            $right = 0;
+            $right += isset($_POST['Admin[index]']) ? AdminController::ACTION_INDEX : 0 ;
+            $right += isset($_POST['Admin[update]']) ? AdminController::ACTION_UPDATE : 0 ;
+            // save dans DB
+            
+            $right = 0;
+            $right += isset($_POST['Batiment[view]']) ? BatimentController::ACTION_VIEW : 0 ;
+            $right += isset($_POST['Batiment[admin]']) ? BatimentController::ACTION_ADMIN : 0 ;
+            $right += isset($_POST['Batiment[create]']) ? BatimentController::ACTION_CREATE : 0 ;
+            $right += isset($_POST['Batiment[update]']) ? BatimentController::ACTION_UPDATE : 0 ;
+            $right += isset($_POST['Batiment[delete]']) ? BatimentController::ACTION_DELETE : 0 ;
+            // save dans DB
+            
+            $right = 0;
+            $right += isset($_POST['Category[view]']) ? CategorieIncidentController::ACTION_VIEW : 0 ;
+            $right += isset($_POST['Category[admin]']) ? CategorieIncidentController::ACTION_ADMIN : 0 ;
+            $right += isset($_POST['Category[create]']) ? 
+                    CategorieIncidentController::ACTION_CREATECAT 
+                    + CategorieIncidentController::ACTION_CREATESOUSCAT : 0 ;
+            $right += isset($_POST['Category[update]']) ? 
+                    CategorieIncidentController::ACTION_UPDATECAT 
+                    + CategorieIncidentController::ACTION_UPDATESOUSCAT : 0 ;
+            $right += isset($_POST['Category[delete]']) ? CategorieIncidentController::ACTION_DELETE : 0 ;
+            // save dans DB
+            
+            $right = 0;
+            $right += isset($_POST['DashBoard[vue]']) ? DashboardController::ACTION_VUE : 0 ;
+            // save dans DB
+            
+            $right = 0;
+            $right += isset($_POST['Entreprise[view]']) ? EntrepriseController::ACTION_VIEW : 0 ;
+            $right += isset($_POST['Entreprise[admin]']) ? EntrepriseController::ACTION_ADMIN : 0 ;
+            $right += isset($_POST['Entreprise[create]']) ? EntrepriseController::ACTION_CREATE : 0 ;
+            $right += isset($_POST['Entreprise[update]']) ? EntrepriseController::ACTION_UPDATE : 0 ;
+            $right += isset($_POST['Entreprise[delete]']) ? EntrepriseController::ACTION_DELETE : 0 ;
+            $right += isset($_POST['Entreprise[secteur]']) ? EntrepriseController::ACTION_SECTEUR : 0 ;
+            // save dans DB
+            
+            $right = 0;
+            $right += isset($_POST['Lieu[view]']) ? LieuController::ACTION_VIEW : 0 ;
+            // save dans DB
+            
+            $right = 0;
+            $right += isset($_POST['Locataire[view]']) ? LocataireController::ACTION_VIEW : 0 ;
+            $right += isset($_POST['Locataire[admin]']) ? LocataireController::ACTION_ADMIN : 0 ;
+            $right += isset($_POST['Locataire[create]']) ? LocataireController::ACTION_CREATE : 0 ;
+            $right += isset($_POST['Locataire[update]']) ? LocataireController::ACTION_UPDATE 
+                    + LocataireController::ACTION_ADDLIEU 
+                    + LocataireController::ACTION_DELETELIEU : 0 ;
+            $right += isset($_POST['Locataire[delete]']) ? LocataireController::ACTION_DELETE : 0 ;
+            // save dans DB
+            
+            $right = 0;
+            $right += isset($_POST['Ticket[view]']) ? TicketController::ACTION_VIEW : 0 ;
+            $right += isset($_POST['Ticket[admin]']) ? TicketController::ACTION_ADMIN : 0 ;
+            $right += isset($_POST['Ticket[create]']) ? TicketController::ACTION_CREATE : 0 ;
+            $right += isset($_POST['Ticket[update]']) ? TicketController::ACTION_UPDATE : 0 ;
+            $right += isset($_POST['Ticket[delete]']) ? TicketController::ACTION_DELETE : 0 ;
+            $right += isset($_POST['Ticket[traitement]']) ? TicketController::ACTION_TRAITEMENT
+                    + TicketController::ACTION_CLOSE : 0 ;
+            // save dans DB
+            
+            $right = 0;
+            $right += isset($_POST['Trad[index]']) ? TradController::ACTION_ : 0 ;
+            // save dans DB
+            
+            $right = 0;
+            $right += isset($_POST['User[view]']) ? UserController::ACTION_ : 0 ;
+            $right += isset($_POST['User[admin]']) ? UserController::ACTION_ : 0 ;
+            $right += isset($_POST['User[create]']) ? UserController::ACTION_ : 0 ;
+            $right += isset($_POST['User[update]']) ? UserController::ACTION_ : 0 ;
+            $right += isset($_POST['User[delete]']) ? UserController::ACTION_ : 0 ;
+            // save dans DB
+            */
+            
+            $this->redirect(array('user/view', 'id' => $model->id_user));
+        }
         
         $this->render('update', array('model' => $model));
         Yii::trace('actionUpdate après render','cron');
