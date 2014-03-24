@@ -8,10 +8,11 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Mise à jour Entreprise', 'url' => array('update', 'id' => $model->id_entreprise)),
-    array('label' => 'Suppression Entreprise', 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id_entreprise), 'confirm' => 'Are you sure you want to delete this item?')),
-    array('label' => 'Liste Entreprise', 'url' => array('admin')),
-    array('label' => 'Ajouter une Catégorie pour cette entreprise', 'url' => array('secteur', 'id' => $model->id_entreprise)),
+    array('label' => 'Mise à jour Entreprise', 'url' => array('update', 'id' => $model->id_entreprise), 'visible' => Yii::app()->session['Rights']->getEntreprise() & EntrepriseController::ACTION_UPDATE),
+    array('label' => 'Suppression Entreprise', 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id_entreprise), 'confirm' => 'Are you sure you want to delete this item?'), 'visible' => Yii::app()->session['Rights']->getEntreprise() & EntrepriseController::ACTION_DELETE),
+    array('label' => 'Liste Entreprise', 'url' => array('admin'), 'visible' => Yii::app()->session['Rights']->getEntreprise() & EntrepriseController::ACTION_ADMIN
+    ),
+    array('label' => 'Ajouter une Catégorie pour cette entreprise', 'url' => array('secteur', 'id' => $model->id_entreprise), 'visible' => Yii::app()->session['Rights']->getEntreprise() & EntrepriseController::ACTION_SECTEUR),
 );
 ?>
 

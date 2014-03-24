@@ -10,7 +10,7 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => Translate::trad('ModifierTradExistante'), 'url' => array('modifyTraduction')),
+    array('label' => Translate::trad('ModifierTradExistante'), 'url' => array('modifyTraduction'),'visible' => Yii::app()->session['Rights']->getTrad() & TradController::ACTION_MODIFYTRADUCTION),
 );
 
 ?>

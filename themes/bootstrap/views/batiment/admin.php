@@ -7,7 +7,7 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Create Batiment', 'url' => array('create')),
+    array('label' => 'Create Batiment', 'url' => array('create'), 'visible' => Yii::app()->session['Rights']->getBatiment() & BatimentController::ACTION_CREATE),
 );
 
 Yii::app()->clientScript->registerScript('search', "

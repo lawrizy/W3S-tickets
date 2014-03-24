@@ -9,7 +9,7 @@
 
 
     <div class="SousCateg">
-        <p class = "note">Field with <span class = "required">*</span> are required.</p>
+        <p class = "note"><?php echo Translate::trad('Required'); ?></p>
         <?php
         $form = $this->beginWidget('CActiveForm', array(
             'id' => 'categorie-incident-form',

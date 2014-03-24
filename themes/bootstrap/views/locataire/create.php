@@ -8,7 +8,7 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-array('label'=>'Manage Locataire', 'url'=>array('admin')),
+array('label'=>'Manage Locataire', 'url'=>array('admin'),'visible'=>  Yii::app()->session['Rights']->getLocataire()& LocataireController::ACTION_ADMIN),
 );
 ?>
 

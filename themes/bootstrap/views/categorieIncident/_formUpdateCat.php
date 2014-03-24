@@ -18,7 +18,7 @@
     ?>
 
     <hr>
-    <p class="note">Field with  <span class="required">*</span> are required.</p>
+    <p class="note"><?php echo Translate::trad('Required'); ?></p>
 
 
     <?php

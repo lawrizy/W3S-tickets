@@ -16,34 +16,31 @@
     ));
     ?>
 
-    <p class="note">Les champs marqués de <span class="required">*</span> sont requis.</p>
+    <p class="note"<?php echo Translate::trad('Required'); ?></p>
 
     <div class="row">
         <?php
         // Form pour la sélection de la catégorie
-        echo $form->labelEx($model, Yii::t('/model/ticket','CategTicket'));
+        echo $form->labelEx($model, Translate::trad('CategTicket'));
         //$defaultCat =
-        echo  CHtml::dropDownList
+        echo CHtml::dropDownList
+                (
+                'Categorie', 'fk_categorie', array
             (
-                'Categorie',
-                'fk_categorie',
-                array
+            '' => '',
+            CHtml::encodeArray($this->getCategoriesLabel(), 'id_categorie_incident', 'label')
+                ), array
+            (
+            'options' => array($model->getCategorieFromSousCategorie() => array('selected' => true)),
+            'ajax' => array
                 (
-                    '' => '',
-                     CHtml::encodeArray($this->getCategoriesLabel(), 'id_categorie_incident', 'label')
-                ),
-                array
-                (
-                    'options' => array($model->getCategorieFromSousCategorie() => array('selected' => true) ),
-                    'ajax' => array
-                    (
-                        'type' => 'POST',
-                        'url' => CController::createUrl('getsouscategoriesdynamiques'),
-                        'data' => array('paramID' => 'js:this.value'),
-                        'update' => '#DD_sousCat',
-                    )
+                'type' => 'POST',
+                'url' => CController::createUrl('getsouscategoriesdynamiques'),
+                'data' => array('paramID' => 'js:this.value'),
+                'update' => '#DD_sousCat',
+            )
                 )
-            );
+        );
 
         // Form pour la sélection de la sous-catégorie (devrait être dynamiquement rempli à la sélection d'un catégorie)
         echo $form->labelEx($model, 'Sous-Cat&eacute;gorie');
@@ -53,17 +50,16 @@
 
 
     <div class="row">
-        <?php
-        echo $form->labelEx($model, 'fk_batiment');
-        echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAllByAttributes(array('visible' => 1)), 'id_batiment', 'nom')));
-        ;
-        ?>
+<?php
+echo $form->labelEx($model, 'fk_batiment');
+echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAllByAttributes(array('visible' => 1)), 'id_batiment', 'nom')));
+;
+?>
     </div>
     <div class="row">
         <?php
         echo $form->labelEx($model, 'Etage');
         echo $form->textField($model, 'etage', array('size' => 1, 'maxlength' => 10, 'style' => 'resize:none', 'value' => $model->etage));
-
         ?>
     </div>
     <div class="row">
@@ -84,8 +80,9 @@
         <?php echo CHtml::submitButton($model->isNewRecord ? 'Create' : 'Save'); ?>
     </div>
 
-    <?php echo Yii::app()->session['erreurDB'];
-    Yii::app()->session['erreurDB']=''; ?>
+        <?php echo Yii::app()->session['erreurDB'];
+        Yii::app()->session['erreurDB'] = '';
+        ?>
 
     <?php $this->endWidget(); ?>
 

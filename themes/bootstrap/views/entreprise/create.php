@@ -2,16 +2,16 @@
 /* @var $this EntrepriseController */
 /* @var $model Entreprise */
 
-$this->breadcrumbs=array(
-	'Entreprises'=>array('admin'),
-	'Create',
+$this->breadcrumbs = array(
+    'Entreprises' => array('admin'),
+    'Create',
 );
 
-$this->menu=array(
-array('label'=>'Manage Entreprise', 'url'=>array('admin')),
+$this->menu = array(
+    array('label' => 'Manage Entreprise', 'url' => array('admin'), 'visible' => Yii::app()->session['Rights']->getEntreprise() & EntrepriseController::ACTION_ADMIN),
 );
 ?>
 
 <h1>Create Entreprise</h1>
 
-<?php $this->renderPartial('_form', array('model'=>$model)); ?>
+<?php $this->renderPartial('_form', array('model' => $model)); ?>

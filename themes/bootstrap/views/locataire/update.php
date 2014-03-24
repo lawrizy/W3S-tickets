@@ -9,8 +9,8 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Détails Locataire', 'url' => array('view', 'id' => $model->id_user)),
-    array('label' => 'Liste Locataire', 'url' => array('admin')),
+    array('label' => 'Détails Locataire', 'url' => array('view', 'id' => $model->id_user), 'visible' => Yii::app()->session['Rights']->getLocataire() & LocataireController::ACTION_VIEW),
+    array('label' => 'Liste Locataire', 'url' => array('admin'), 'visible' => Yii::app()->session['Rights']->getLocataire() & LocataireController::ACTION_ADMIN),
 );
 ?>
 

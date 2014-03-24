@@ -7,7 +7,8 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Create new Categorie', 'url' => array('create')),
+    array('label' => 'Create new Categorie', 'url' => array('createcat'), 'visible' => Yii::app()->session['Rights']->getCategorie() & CategorieIncidentController::ACTION_CREATECAT),
+    array('label' => 'Create new Categorie', 'url' => array('createsouscat'), 'visible' => Yii::app()->session['Rights']->getCategorie() & CategorieIncidentController::ACTION_CREATESOUSCAT),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -58,5 +59,4 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         ),
     ),
 ));
-
 ?>
