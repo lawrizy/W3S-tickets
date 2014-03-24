@@ -85,86 +85,99 @@ class AdminController extends Controller {
     
     
     public function actionUpdate($id) {
-        Yii::trace('actionUpdate','cron');
         $model = User::model()->findByPk($id);
-        Yii::trace('actionUpdate après find','cron');
         if (isset($_POST['tmp'])) {
             /*
+            
+            $rights = new Rights();
+            
             // Droits sur AdminController
-            $right = 0;
-            $right += isset($_POST['Admin[index]']) ? AdminController::ACTION_INDEX : 0 ;
-            $right += isset($_POST['Admin[update]']) ? AdminController::ACTION_UPDATE : 0 ;
-            // save dans DB
+            $droit = 0;
+            $droit += isset($_POST['Admin[index]']) ? AdminController::ACTION_INDEX : 0 ;
+            $droit += isset($_POST['Admin[update]']) ? AdminController::ACTION_UPDATE : 0 ;
+            $rights->setAdmin($droit);
             
-            $right = 0;
-            $right += isset($_POST['Batiment[view]']) ? BatimentController::ACTION_VIEW : 0 ;
-            $right += isset($_POST['Batiment[admin]']) ? BatimentController::ACTION_ADMIN : 0 ;
-            $right += isset($_POST['Batiment[create]']) ? BatimentController::ACTION_CREATE : 0 ;
-            $right += isset($_POST['Batiment[update]']) ? BatimentController::ACTION_UPDATE : 0 ;
-            $right += isset($_POST['Batiment[delete]']) ? BatimentController::ACTION_DELETE : 0 ;
-            // save dans DB
+            // Droits sur BatimentController
+            $droit = 0;
+            $droit += isset($_POST['Batiment[view]']) ? BatimentController::ACTION_VIEW : 0 ;
+            $droit += isset($_POST['Batiment[admin]']) ? BatimentController::ACTION_ADMIN : 0 ;
+            $droit += isset($_POST['Batiment[create]']) ? BatimentController::ACTION_CREATE : 0 ;
+            $droit += isset($_POST['Batiment[update]']) ? BatimentController::ACTION_UPDATE : 0 ;
+            $droit += isset($_POST['Batiment[delete]']) ? BatimentController::ACTION_DELETE : 0 ;
+            $rights->setBatiment($droit);
             
-            $right = 0;
-            $right += isset($_POST['Category[view]']) ? CategorieIncidentController::ACTION_VIEW : 0 ;
-            $right += isset($_POST['Category[admin]']) ? CategorieIncidentController::ACTION_ADMIN : 0 ;
-            $right += isset($_POST['Category[create]']) ? 
+            // Droits sur CategorieIncidentController
+            $droit = 0;
+            $droit += isset($_POST['Category[view]']) ? CategorieIncidentController::ACTION_VIEW : 0 ;
+            $droit += isset($_POST['Category[admin]']) ? CategorieIncidentController::ACTION_ADMIN : 0 ;
+            $droit += isset($_POST['Category[create]']) ? 
                     CategorieIncidentController::ACTION_CREATECAT 
                     + CategorieIncidentController::ACTION_CREATESOUSCAT : 0 ;
-            $right += isset($_POST['Category[update]']) ? 
+            $droit += isset($_POST['Category[update]']) ? 
                     CategorieIncidentController::ACTION_UPDATECAT 
                     + CategorieIncidentController::ACTION_UPDATESOUSCAT : 0 ;
-            $right += isset($_POST['Category[delete]']) ? CategorieIncidentController::ACTION_DELETE : 0 ;
-            // save dans DB
+            $droit += isset($_POST['Category[delete]']) ? CategorieIncidentController::ACTION_DELETE : 0 ;
+            $rights->setCategorie($droit);
             
-            $right = 0;
-            $right += isset($_POST['DashBoard[vue]']) ? DashboardController::ACTION_VUE : 0 ;
-            // save dans DB
+            // Droits sur DashboardController
+            $droit = 0;
+            $droit += isset($_POST['DashBoard[vue]']) ? DashboardController::ACTION_VUE : 0 ;
+            $rights->setDashboard($droit);
             
-            $right = 0;
-            $right += isset($_POST['Entreprise[view]']) ? EntrepriseController::ACTION_VIEW : 0 ;
-            $right += isset($_POST['Entreprise[admin]']) ? EntrepriseController::ACTION_ADMIN : 0 ;
-            $right += isset($_POST['Entreprise[create]']) ? EntrepriseController::ACTION_CREATE : 0 ;
-            $right += isset($_POST['Entreprise[update]']) ? EntrepriseController::ACTION_UPDATE : 0 ;
-            $right += isset($_POST['Entreprise[delete]']) ? EntrepriseController::ACTION_DELETE : 0 ;
-            $right += isset($_POST['Entreprise[secteur]']) ? EntrepriseController::ACTION_SECTEUR : 0 ;
-            // save dans DB
+            // Droits sur EntrepriseController
+            $droit = 0;
+            $droit += isset($_POST['Entreprise[view]']) ? EntrepriseController::ACTION_VIEW : 0 ;
+            $droit += isset($_POST['Entreprise[admin]']) ? EntrepriseController::ACTION_ADMIN : 0 ;
+            $droit += isset($_POST['Entreprise[create]']) ? EntrepriseController::ACTION_CREATE : 0 ;
+            $droit += isset($_POST['Entreprise[update]']) ? EntrepriseController::ACTION_UPDATE : 0 ;
+            $droit += isset($_POST['Entreprise[delete]']) ? EntrepriseController::ACTION_DELETE : 0 ;
+            $droit += isset($_POST['Entreprise[secteur]']) ? EntrepriseController::ACTION_SECTEUR : 0 ;
+            $rights->setEntreprise($droit);
             
-            $right = 0;
-            $right += isset($_POST['Lieu[view]']) ? LieuController::ACTION_VIEW : 0 ;
-            // save dans DB
+            // Droits sur LieuController
+            $droit = 0;
+            $droit += isset($_POST['Lieu[view]']) ? LieuController::ACTION_VIEW : 0 ;
+            $rights->setLieu($droit);
             
-            $right = 0;
-            $right += isset($_POST['Locataire[view]']) ? LocataireController::ACTION_VIEW : 0 ;
-            $right += isset($_POST['Locataire[admin]']) ? LocataireController::ACTION_ADMIN : 0 ;
-            $right += isset($_POST['Locataire[create]']) ? LocataireController::ACTION_CREATE : 0 ;
-            $right += isset($_POST['Locataire[update]']) ? LocataireController::ACTION_UPDATE 
+            // Droits sur LocataireController
+            $droit = 0;
+            $droit += isset($_POST['Locataire[view]']) ? LocataireController::ACTION_VIEW : 0 ;
+            $droit += isset($_POST['Locataire[admin]']) ? LocataireController::ACTION_ADMIN : 0 ;
+            $droit += isset($_POST['Locataire[create]']) ? LocataireController::ACTION_CREATE : 0 ;
+            $droit += isset($_POST['Locataire[update]']) ? LocataireController::ACTION_UPDATE 
                     + LocataireController::ACTION_ADDLIEU 
                     + LocataireController::ACTION_DELETELIEU : 0 ;
-            $right += isset($_POST['Locataire[delete]']) ? LocataireController::ACTION_DELETE : 0 ;
-            // save dans DB
+            $droit += isset($_POST['Locataire[delete]']) ? LocataireController::ACTION_DELETE : 0 ;
+            $rights->setLocataire($droit);
             
-            $right = 0;
-            $right += isset($_POST['Ticket[view]']) ? TicketController::ACTION_VIEW : 0 ;
-            $right += isset($_POST['Ticket[admin]']) ? TicketController::ACTION_ADMIN : 0 ;
-            $right += isset($_POST['Ticket[create]']) ? TicketController::ACTION_CREATE : 0 ;
-            $right += isset($_POST['Ticket[update]']) ? TicketController::ACTION_UPDATE : 0 ;
-            $right += isset($_POST['Ticket[delete]']) ? TicketController::ACTION_DELETE : 0 ;
-            $right += isset($_POST['Ticket[traitement]']) ? TicketController::ACTION_TRAITEMENT
+            // Droits sur TicketController
+            $droit = 0;
+            $droit += isset($_POST['Ticket[view]']) ? TicketController::ACTION_VIEW : 0 ;
+            $droit += isset($_POST['Ticket[admin]']) ? TicketController::ACTION_ADMIN : 0 ;
+            $droit += isset($_POST['Ticket[create]']) ? TicketController::ACTION_CREATE : 0 ;
+            $droit += isset($_POST['Ticket[update]']) ? TicketController::ACTION_UPDATE : 0 ;
+            $droit += isset($_POST['Ticket[delete]']) ? TicketController::ACTION_DELETE : 0 ;
+            $droit += isset($_POST['Ticket[traitement]']) ? TicketController::ACTION_TRAITEMENT
                     + TicketController::ACTION_CLOSE : 0 ;
-            // save dans DB
+            $rights->setTicket($droit);
             
-            $right = 0;
-            $right += isset($_POST['Trad[index]']) ? TradController::ACTION_ : 0 ;
-            // save dans DB
+            // Droits sur TradController
+            $droit = 0;
+            $droit += isset($_POST['Trad[index]']) ? TradController::ACTION_UPDATE
+                    + TradController::ACTION_INDEX
+                    + TradController::ACTION_ADDTRADUCTION
+                    + TradController::ACTION_MODIFYTRADUCTION: 0 ;
+            $rights->setTrad($droit);
             
-            $right = 0;
-            $right += isset($_POST['User[view]']) ? UserController::ACTION_ : 0 ;
-            $right += isset($_POST['User[admin]']) ? UserController::ACTION_ : 0 ;
-            $right += isset($_POST['User[create]']) ? UserController::ACTION_ : 0 ;
-            $right += isset($_POST['User[update]']) ? UserController::ACTION_ : 0 ;
-            $right += isset($_POST['User[delete]']) ? UserController::ACTION_ : 0 ;
-            // save dans DB
-            */
+            // Droits sur UserController
+            $droit = 0;
+            $droit += isset($_POST['User[view]']) ? UserController::ACTION_VIEW : 0 ;
+            $droit += isset($_POST['User[admin]']) ? UserController::ACTION_ADMIN : 0 ;
+            $droit += isset($_POST['User[create]']) ? UserController::ACTION_CREATE : 0 ;
+            $droit += isset($_POST['User[update]']) ? UserController::ACTION_UPDATE : 0 ;
+            $droit += isset($_POST['User[delete]']) ? UserController::ACTION_DELETE : 0 ;
+            $rights->setUser($droit);
+            //*/
             
             $this->redirect(array('user/view', 'id' => $model->id_user));
         }

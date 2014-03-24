@@ -14,7 +14,6 @@ class UserController extends Controller {
     const ACTION_UPDATE = 8;
     const ACTION_ADMIN = 16;
     const ACTION_CHANGEPASSWORD = 32;
-    const ACTION_ACCORDER_DROIT = 64;
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -100,23 +99,23 @@ class UserController extends Controller {
         }
     }
 
-    /*
-     * Cette action nous permet d'attribuer des droits aux utilisateurs.
-     * Sur la vue associée, on tombe sur un tableau permettant de choisir quels
-     * droits donner à l'utilisateur selectionné.
-     */
-
-    public function actionAccorderDroit($id) {
-        $model = $this->loadModel($id);
-
-        if (isset($_POST['Admin'])) {
-
-
-            $this->redirect(array('view', 'id' => $model->id_user));
-        }
-
-        $this->render('accorderDroit', array('model' => $model));
-    }
+//    /*
+//     * Cette action nous permet d'attribuer des droits aux utilisateurs.
+//     * Sur la vue associée, on tombe sur un tableau permettant de choisir quels
+//     * droits donner à l'utilisateur selectionné.
+//     */
+//
+//    public function actionAccorderDroit($id) {
+//        $model = $this->loadModel($id);
+//
+//        if (isset($_POST['Admin'])) {
+//
+//
+//            $this->redirect(array('view', 'id' => $model->id_user));
+//        }
+//
+//        $this->render('accorderDroit', array('model' => $model));
+//    }
 
     /**
      * Displays a particular model.

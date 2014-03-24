@@ -7,15 +7,21 @@
         <?php
         /*
          * $model => Le user dont les droits seront ré-organisés ici
-         * $rights => 
+         * $rights => Les droits du user en question
          */
         ?>
         <h1>Attribution de droits à <?php echo $model->nom . ' [' . $model->fkFonction->label . ']'; ?></h1>
+            <!-- Ici on affiche le nom ainsi que la fonction du user concerné -->
         <br /><br />
         <form action="update?id=<?php echo $model->id_user; ?>" method="post">
-            <input type="hidden" name="tmp" />
+            <input type="hidden" name="tmp" /> 
+                <!-- Servira de variable dans l'action, pour vérifier que l'on
+                     vient bien de la vue. Les autres champs n'étant que des
+                     checkbox, on ne peut pas les tester dans l'action 
+                     (les checkbox peuvent ne pas être cochés et donc ne pas être envoyés) -->
+                
             <div class="form">
-                <?php
+                <?php // Ici on récupère tous les droits du user en question
                 $rights = new Rights();
 
                 $rights->setAdmin(Droit::model()->findByAttributes(
@@ -40,7 +46,7 @@
                                 array('fk_controleur' => UserController::ID_CONTROLLER, 'fk_user' => $model->id_user))->droits);
                 ?>
                 <table class="table table-bordered table-responsive" style="text-align: center;">
-                    <tr>
+                    <tr> <!-- Les titres de toutes les colonnes -->
                         <th style="background-color: black;"></th>
                         <th>Index</th>
                         <th>View</th>
