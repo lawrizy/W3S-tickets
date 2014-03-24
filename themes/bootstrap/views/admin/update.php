@@ -12,7 +12,8 @@
         ?>
         <h1>Attribution de droits à <?php echo $model->nom . ' [' . $model->fkFonction->label . ']'; ?></h1>
         <br /><br />
-        <form action="update" method="post">
+        <form action="update?id=<?php echo $model->id_user; ?>" method="post">
+            <input type="hidden" name="tmp" />
             <div class="form">
                 <?php
                 $rights = new Rights();
