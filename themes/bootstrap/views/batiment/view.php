@@ -8,9 +8,9 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Mise à jour Batiment', 'url' => array('update', 'id' => $model->id_batiment)),
-    array('label' => 'Suppression Batiment', 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id_batiment), 'confirm' => 'Are you sure you want to delete this item?')),
-    array('label' => 'Liste Batiment', 'url' => array('admin')),
+    array('label' => 'Mise à jour Batiment', 'url' => array('update', 'id' => $model->id_batiment), 'visible' => Yii::app()->session['Rights']->getBatiment() & BatimentController::ACTION_UPDATE),
+    array('label' => 'Suppression Batiment', 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id_batiment), 'confirm' => 'Are you sure you want to delete this item?'), 'visible' => Yii::app()->session['Rights']->getBatiment() & BatimentController::ACTION_DELETE),
+    array('label' => 'Liste Batiment', 'url' => array('admin'), 'visible' => Yii::app()->session['Rights']->getBatiment() & BatimentController::ACTION_ADMIN),
 );
 ?>
 

@@ -26,9 +26,9 @@ and open the template in the editor.
             'closeText' => '&times;', // close link text - if set to false, no close link is displayed
         ));
         ?>
-        <div class="table-bordered">
+        <div class="table table-bordered"style="padding-left: 12px;" >
             <?php
-            echo '<h4 class="h47" style="text-decoration:underline;">Les champs marqués de <span class=required>*</span> sont obligatoire</h4>';
+            echo '<h4 class="h4" style="text-decoration:underline;">Les champs marqués de <span class=required>*</span> sont obligatoire</h4>';
             echo '</br>';
             echo CHtml::form();
             echo CHtml::label('Votre ancien mot de passe :<span class=required>&nbsp;*</span> ', 'amdp');

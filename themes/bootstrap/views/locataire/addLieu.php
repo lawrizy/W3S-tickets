@@ -12,8 +12,8 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Admin', 'url' => array('admin')),
-    array('label' => 'View', 'url' => array('view', 'id' => $model->id_user))
+    array('label' => 'Admin', 'url' => array('admin'),'visible'=>  Yii::app()->session['Rights']->getLocataire()& LocataireController::ACTION_ADMIN),
+    array('label' => 'View', 'url' => array('view', 'id' => $model->id_user),'visible'=>  Yii::app()->session['Rights']->getLocataire()& LocataireController::ACTION_VIEW)
         )
 ?>
 

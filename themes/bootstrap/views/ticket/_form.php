@@ -23,26 +23,26 @@
     // Form pour la sélection de la catégorie
     echo '<label>' . Translate::trad('SelectionnerCategorie') . '<span class="required"> *</span> </label>';
     echo CHtml::dropDownList
-        (
+            (
             'Categorie', // Le nom de cette dropDownList
             'fk_categorie', // La colonne à sélectionner
             array // Cette array remplit la dropDownList avec les catégories mères disponibles dans la DB.
-            (
-                '' => '',
-                $this->getCategoriesLabel(),
+        (
+        '' => '',
+        $this->getCategoriesLabel(),
             ), array // Cette array définit le chargement dynamique des valeurs dans la dropDownList des sous-catégories. (Voir dropDownList suivante appelée DD_sousCat)
+        (
+        'ajax' => array
             (
-                'ajax' => array
-                (
-                    'type' => 'POST',
-                    'url' => CController::createUrl('getsouscategoriesdynamiques'),
-                    'data' => array('paramID' => 'js:this.value'),
-                    'update' => '#DD_sousCat',
-                )
+            'type' => 'POST',
+            'url' => CController::createUrl('getsouscategoriesdynamiques'),
+            'data' => array('paramID' => 'js:this.value'),
+            'update' => '#DD_sousCat',
+        )
             )
-        );
+    );
 
-    echo $form->labelEx($model, 'fk_categorie');
+    echo '<label>' . Translate::trad('SelectionnerSousCategorie') . ':<span class="required"> *</span> </label>';
     // Cette dropDownList est initialisée vide car elle sera remplie après la sélection d'une catégorie ci-dessus.
     echo CHtml::dropDownList('DD_sousCat', '', array());
     ?>
@@ -73,7 +73,7 @@
 //    ));
         ?>
     </div>
-    
+
     <?php $this->endWidget(); ?>
 
 </div><!-- form -->

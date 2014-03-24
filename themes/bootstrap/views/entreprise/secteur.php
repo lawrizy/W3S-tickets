@@ -9,8 +9,8 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Liste Entreprise', 'url' => array('admin')),
-    array('label' => 'Détails Entreprise', 'url' => array('view', 'id' => $model->id_entreprise))
+    array('label' => 'Liste Entreprise', 'url' => array('admin') ,'visible' => Yii::app()->session['Rights']->getEntreprise() & EntrepriseController::ACTION_ADMIN),
+    array('label' => 'Détails Entreprise', 'url' => array('view', 'id' => $model->id_entreprise), 'visible' => Yii::app()->session['Rights']->getEntreprise() & EntrepriseController::ACTION_VIEW)
 );
 $this->beginWidget('CActiveForm', array('id' => 'ticket-form', 'enableAjaxValidation' => false));
 ?>

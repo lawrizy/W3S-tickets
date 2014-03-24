@@ -49,12 +49,10 @@ class UserIdentity extends CUserIdentity {
                 if ($record->password !== md5($this->password)) {
                     Yii::app()->user->setFlash('error', '<strong>Le mot de passe ou le nom d\'utilisateur est incorrect.!</strong>');
                     $this->errorCode = self::ERROR_PASSWORD_INVALID;
-                }
-                else {// si le mot de passe est différent du mot de passe de la db
+                } else {// si le mot de passe est différent du mot de passe de la db
                     //--------------Traitement de la session unique-------------
                     if (($Session = Session::model()->findByAttributes(array('email' => $record->email))) != NULL) {// rechere du record dans la table w3sys_Session par l'email de l'utilisateur
-                        $yiisession = Yiisession::model()->findByPk($Session->fk_yiisession); //on recupere le record de sa session dans la table yiisession
-                        $yiisession->delete(); // on supprime sa ligne /!\ la suppression de cette ligne supprime la ligne correspondante dans la table w3sys_Session delete on cascade
+                        $Session->fkYiisession->delete();  // on supprime sa ligne /!\ la suppression de cette ligne supprime la ligne correspondante dans la table w3sys_Session delete on cascade
                     }
                     $Session = new Session(); //on crée un nouveau record dans la table w3sys_session
                     $Session->email = $record->email; // on y m'est l'email du locataire
@@ -63,7 +61,7 @@ class UserIdentity extends CUserIdentity {
                     //--------------------Fin de session unique-----------------
 
                     Yii::app()->session['Rights'] = $this->setDroits($record->id_user);
-                        // Va rechercher et mettre les droits de ce user en session
+                    // Va rechercher et mettre les droits de ce user en session
                     $this->_id = $record->id_user; //recupération  de l'id du user
                     $this->errorCode = self::ERROR_NONE; // aucune erreur
                     $record->password = ''; // vidage du mot de passe 
@@ -86,7 +84,7 @@ class UserIdentity extends CUserIdentity {
 
     public function getLanguage($record) {
         //-----Recupere la langue pour l'application une fois la personne authentifié---
-        
+
         if ($record->fk_langue == Constantes::LANGUE_FR) {
             Yii::app()->session['_lang'] = 'fr';
         } elseif ($record->fk_langue == Constantes::LANGUE_EN) {
@@ -111,7 +109,7 @@ class UserIdentity extends CUserIdentity {
 
     public function setDroits($id) {
         $rights = new Rights();
-        
+
         // Ici on recherche les droits pour chaque contrôleur pour l'id du user reçu en paramètre
         $rights->setAdmin(Droit::model()->findByAttributes(
                         array('fk_controleur' => AdminController::ID_CONTROLLER, 'fk_user' => $id))->droits);
@@ -133,7 +131,7 @@ class UserIdentity extends CUserIdentity {
                         array('fk_controleur' => TradController::ID_CONTROLLER, 'fk_user' => $id))->droits);
         $rights->setUser(Droit::model()->findByAttributes(
                         array('fk_controleur' => UserController::ID_CONTROLLER, 'fk_user' => $id))->droits);
-        
+
         return $rights;
     }
 

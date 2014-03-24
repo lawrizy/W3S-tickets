@@ -17,10 +17,10 @@ $form = $this->beginWidget('CActiveForm', array(
     // There is a call to performAjaxValidation() commented in generated controller code.
     // See class documentation of CActiveForm for details on this.
     'enableAjaxValidation' => false,
-));
+        ));
 ?>
 
-<p class="note">Les champs marqués de <span class="required">*</span> sont requis.</p>
+<p class="note"><?php echo Translate::trad('Required'); ?></p>
 <br/>
 
 
@@ -45,7 +45,7 @@ $form = $this->beginWidget('CActiveForm', array(
     <?php
     // Bouton d'envoi
     $this->widget('bootstrap.widgets.TbButton', array(
-        'buttonType'=>'submit',
+        'buttonType' => 'submit',
         'type' => 'primary',
         'label' => 'Modifier la traduction',
     ));

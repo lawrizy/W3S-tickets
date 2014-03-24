@@ -1,13 +1,16 @@
 <?php
 /* @var $this LocataireController */
 /* @var $model Locataire */
-
+$DroitIcone = " ";
+Yii::app()->session['Rights']->getLocataire() & LocataireController::ACTION_VIEW ? $DroitIcone.=" {view}" : NULL;
+Yii::app()->session['Rights']->getLocataire() & LocataireController::ACTION_UPDATE ? $DroitIcone.=" {update}" : NULL;
+Yii::app()->session['Rights']->getLocataire() & LocataireController::ACTION_DELETE ? $DroitIcone.=" {delete}" : NULL;
 $this->breadcrumbs = array(
     'Manage',
 );
 
 $this->menu = array(
-    array('label' => 'Create Locataire', 'url' => array('create')),
+    array('label' => 'Create Locataire', 'url' => array('create'), 'visible' => Yii::app()->session['Rights']->getLocataire() & LocataireController::ACTION_CREATE),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -42,7 +45,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'id' => 'locataire-grid',
     'dataProvider' => $model->searchLocataire(),
     'columns' => array(
-       array('name' => 'Nom',
+        array('name' => 'Nom',
             'value' => '$data->nom;'
         ),
         array('name' => 'Email',
@@ -53,6 +56,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         ),
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',
+            'template' => $DroitIcone
         ),
     ),
 ));

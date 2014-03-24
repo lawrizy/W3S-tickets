@@ -1,5 +1,4 @@
 <?php
-
 /* @var $this TradController */
 /* @var $model Trad */
 /* @var $form CActiveForm */
@@ -10,46 +9,44 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Ajouter une nouvelle traduction', 'url' => array('addTraduction')),
+    array('label' => 'Ajouter une nouvelle traduction', 'url' => array('addTraduction'), 'visible' => Yii::app()->session['Rights']->getTrad() & TradController::ACTION_ADDTRADUCTION),
 );
-
 ?>
 <div id="retour">
     <a href="../admin">Retour à la page d'administration</a><br/>
 </div>
 
 <div class="form">
-    <?php
-    // FORMULAIRE START
-    $this->widget('bootstrap.widgets.TbGridView', array(
-        'type' => 'striped bordered condensed',
-        'id' => 'trad-grid',
-        'dataProvider' => $model->search(),
-        'filter' => $model,
-        'columns' => array(
-            array(
-                'name' => 'code',
-                'value' => '$data->code',
-            ),
-            array(
-                'name' => 'fr',
-                'value' => '$data->fr',
-            ),
-            array(
-                'name' => 'en',
-                'value' => '$data->en',
-            ),
-            array(
-                'name' => 'nl',
-                'value' => '$data->nl',
-            ),
-
-            array
-            (
-                'class' => 'bootstrap.widgets.TbButtonColumn',
-                'template' => '{update}'
-            ),
+<?php
+// FORMULAIRE START
+$this->widget('bootstrap.widgets.TbGridView', array(
+    'type' => 'striped bordered condensed',
+    'id' => 'trad-grid',
+    'dataProvider' => $model->search(),
+    'filter' => $model,
+    'columns' => array(
+        array(
+            'name' => 'code',
+            'value' => '$data->code',
         ),
-    ));
-    ?>
+        array(
+            'name' => 'fr',
+            'value' => '$data->fr',
+        ),
+        array(
+            'name' => 'en',
+            'value' => '$data->en',
+        ),
+        array(
+            'name' => 'nl',
+            'value' => '$data->nl',
+        ),
+        array
+            (
+            'class' => 'bootstrap.widgets.TbButtonColumn',
+            'template' => '{update}'
+        ),
+    ),
+));
+?>
 </div>

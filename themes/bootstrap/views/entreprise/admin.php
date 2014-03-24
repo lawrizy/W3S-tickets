@@ -7,7 +7,7 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Create Entreprise', 'url' => array('create')),
+    array('label' => 'Create Entreprise', 'url' => array('create'), 'visible' => Yii::app()->session['Rights']->getEntreprise() & EntrepriseController::ACTION_CREATE),
 );
 
 Yii::app()->clientScript->registerScript('search', "

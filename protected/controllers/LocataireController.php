@@ -7,6 +7,7 @@ class LocataireController extends Controller {
      * ou non des droits aux utilisateurs (voir la méthode 'accessRules()' de 
      * ce même contrôleur)
      */
+
     const ID_CONTROLLER = 7;
     const ACTION_VIEW = 1;
     const ACTION_CREATE = 2;
@@ -15,6 +16,7 @@ class LocataireController extends Controller {
     const ACTION_ADMIN = 16;
     const ACTION_ADDLIEU = 32;
     const ACTION_DELETELIEU = 64;
+    const ACTION_CHANGEPASSWORD = 128;
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -44,13 +46,13 @@ class LocataireController extends Controller {
             // On récupère d'abord le user et ses droits de la session
             $logged = Yii::app()->session['Logged'];
             $rights = Yii::app()->session['Rights']->getLocataire();
-                // La méthode getLocataire() demande à ne récupérer que les droits
-                // lié à ce contrôleur-ci (en l'occurence, locataire)
-            
+            // La méthode getLocataire() demande à ne récupérer que les droits
+            // lié à ce contrôleur-ci (en l'occurence, locataire)
+
             $allow = array('noright');
-                // On initialise ensuite l'array qui stockera les droits
-                // On lui met une action inexistante car la méthode accessRules
-                // considère qu'un array vide c'est avoir tous les droits
+            // On initialise ensuite l'array qui stockera les droits
+            // On lui met une action inexistante car la méthode accessRules
+            // considère qu'un array vide c'est avoir tous les droits
 
             /* Et enfin on teste chaque droit un à un, et si le droit est bien accordé,
              * on le rajoute à l'array qui sera envoyé dans le return
@@ -75,6 +77,8 @@ class LocataireController extends Controller {
                 array_push($allow, 'addlieu');
             if ($rights & self::ACTION_DELETELIEU)
                 array_push($allow, 'deletelieu');
+            if ($rights & self::ACTION_CHANGEPASSWORD)
+                array_push($allow, 'changepassword');
 
             return array(// Ici on a plus qu'à envoyer la liste des droits
                 array('allow', // Ici l'array des droits 'permis'
