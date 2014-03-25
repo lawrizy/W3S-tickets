@@ -7,6 +7,7 @@ class UserController extends Controller {
      * ou non des droits aux utilisateurs (voir la méthode 'accessRules()' de 
      * ce même contrôleur)
      */
+
     Const ID_CONTROLLER = 10;
     Const ACTION_VIEW = 1;
     Const ACTION_CREATE = 2;
@@ -15,7 +16,6 @@ class UserController extends Controller {
     const ACTION_ADMIN = 16;
     const ACTION_CHANGEPASSWORD = 32;
 
-    
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
      * using two-column layout. See 'protected/views/layouts/column2.php'.
@@ -41,14 +41,13 @@ class UserController extends Controller {
      */
     public function accessRules() { // droit des utilisateur sur les actions
         if (!Yii::app()->user->isGuest) { // Génération des droits selon le user
-            
             // On récupère d'abord le user de la session
             $logged = Yii::app()->session['Logged'];
             // ainsi que ses droits sur ce contrôleur
             $rights = Yii::app()->session['Rights']->getUser();
-                // La méthode getUser() demande à ne récupérer que les droits
-                // lié à ce contrôleur-ci (en l'occurence, user)
-            
+            // La méthode getUser() demande à ne récupérer que les droits
+            // lié à ce contrôleur-ci (en l'occurence, user)
+
             $allow = array('noright');
             // On initialise ensuite l'array qui stockera les droits
             // On lui met une action inexistante car la méthode accessRules
@@ -73,9 +72,8 @@ class UserController extends Controller {
                 array_push($allow, 'update');
             if ($rights & self::ACTION_ADMIN)
                 array_push($allow, 'admin');
-            if ($rights & self::ACTION_CHANGEPASSWORD)
-                array_push($allow, 'changepassword');
-            // if ($rights & self::ACTION_ACCORDER_DROIT) array_push($allow, 'accorderdroit');
+
+            array_push($allow, 'changepassword');
 
             return array(// Ici on a plus qu'à envoyer la liste des droits
                 array('allow', // Ici l'array des droits 'permis'

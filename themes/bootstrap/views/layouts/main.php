@@ -21,11 +21,7 @@
             <?php
             $varCheminAcces = "";
             $personneAuthentifie = Yii::app()->session['Logged'];
-            if ($personneAuthentifie['fk_fonction'] == Constantes::FONCTION_LOCATAIRE) {
-                $varCheminAcces = "locataire/changepassword?id=" . $personneAuthentifie['id_user'];
-            } else {
-                $varCheminAcces = "user/changepassword?id=" . $personneAuthentifie['id_user'];
-            }
+            $varCheminAcces = "user/changepassword?id=" . $personneAuthentifie['id_user'];
             $this->widget('bootstrap.widgets.TbNavbar', array(
                 'collapse' => TRUE,
                 'type' => 'inverse',
