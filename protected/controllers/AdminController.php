@@ -97,10 +97,10 @@ class AdminController extends Controller {
 
             // Droits sur AdminController
             $droit = 0;
-            $droit += isset($_POST['Admin'][0]) ? AdminController::ACTION_INDEX : 0;
-             Yii::trace($droit, 'cron');
+            $droit +=(int) isset($_POST['Admin'][0]) ? AdminController::ACTION_INDEX : 0;
+            Yii::trace($droit, 'cron');
             // Yii::trace(AdminController::ACTION_UPDATE, 'cron');
-            $droit += isset($_POST['Admin'][1]) ? AdminController::ACTION_UPDATE : 0;
+            $droit +=(int) isset($_POST['Admin'][1]) ? AdminController::ACTION_UPDATE : 0;
             $DroitModel = Droit::model()->findByAttributes(array('fk_user' => $model->id_user, 'fk_controleur' => AdminController::ID_CONTROLLER));
             $DroitModel->droits = $droit;
             $DroitModel->save();

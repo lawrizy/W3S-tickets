@@ -8,7 +8,8 @@ class Controller extends CController {
 
     public function init() {
         parent::init();
-        Yii::app()->session['Rights'] = UserIdentity::setDroits(Yii::app()->session['Logged']->id_user);
+        if (isset(Yii::app()->session['Rights']))
+            Yii::app()->session['Rights'] = UserIdentity::setDroits(Yii::app()->session['Logged']->id_user);
     }
 
     /**
