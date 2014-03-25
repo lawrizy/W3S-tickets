@@ -5,12 +5,10 @@
 
 // Graphique en bâtonnets -> fréquence des catégories d'incidents (Pour tous les bâtiments ou pour un bâtiment spécifique)
 
-if ($idBatiment == 'ALL')
-{ // Cas 1 : sélectionner tous les bâtiments
-    ?>
-    <p><h3><?php echo Translate::trad('AjaxTitre'); ?></h3></p>
-    <?php ?>
-    <div><?php
+if ($idBatiment == 'ALL') { // Cas 1 : sélectionner tous les bâtiments
+    echo '<p><h3>' . Translate::trad('AjaxTitre') . '</h3></p>';
+    
+    echo '<div>';
     $this->widget(
         'chartjs.widgets.ChBars', array(
             'width' => 500,
@@ -27,7 +25,8 @@ if ($idBatiment == 'ALL')
             'options' => array()
         )
     );
-    ?></div><?php
+    echo '</div>';
+    
     echo '<p><h3>' . Translate::trad('AjaxStatutTicket') . '</h3></p>';
 
     $this->widget(
@@ -57,14 +56,11 @@ if ($idBatiment == 'ALL')
             ()
         )
     );
-}
-else
-{ // Cas 2 : Un bâtiment spécifique a été sélectionné
+} else { // Cas 2 : Un bâtiment spécifique a été sélectionné
     echo '<p><h3>' . Translate::trad('AjaxFrequenceStatutTicket') .
         Batiment::model()->findByAttributes(array('id_batiment' => $idBatiment))->nom
         . ') </h3></p>';
-    ?>
-    <?php
+    
     $this->widget(
         'chartjs.widgets.ChBars', array(
             'width' => 500,
@@ -92,7 +88,7 @@ else
             'height' => 175,
             'htmlOptions' => array(),
             'drawLabels' => true,
-//'animation' => false,
+            //'animation' => false,
             'datasets' => $this->actionGetTicketByStatusForBatimentID($idBatiment),
             'options' => array
             ()
@@ -102,11 +98,9 @@ else
 
 // Placer les graphiques indépendants ci-dessous
 // Graphique des fréquences des entreprises appelées
-?>
-<br/><br/><br/>
+echo '<br/><br/><br/>';
+echo '<h3>' . Translate::trad('AjaxFrenquenceEntreprise') . '</h3>';
 
-<h3><?php echo Translate::trad('AjaxFrenquenceEntreprise'); ?></h3>
-<?php
 $entrepriseFreqAllData = $this->actionGetFrequenceCalledEntreprise();
 $color_step = 100;
 $r = 0;
@@ -115,11 +109,9 @@ $b = 0;
 $entryCount = 1;
 $entrepriseFreqDataSet = array();
 
-foreach ($entrepriseFreqAllData as $key => $value)
-{
-    // Change couleur
-    switch ($entryCount * rand(1, 1000) % 3)
-    {
+foreach ($entrepriseFreqAllData as $key => $value) {
+    // Couleur aléatoire
+    switch ($entryCount * rand(1, 1000) % 3) {
         case 0:
             $r += $color_step;
             if ($r > 255)
@@ -139,13 +131,6 @@ foreach ($entrepriseFreqAllData as $key => $value)
     ++$entryCount;
 
     // Construire le dataset
-    /*
-     * Problème réglé, solution du problème ici : http://stackoverflow.com/questions/16358973/parse-error-syntax-error-unexpected-with-php-5-3
-     * Le problème résidait bien dans le fait qu'en PHP 5.3 il est impossible de prendre une valeur directement depuis la valeur de retour d'une fonction.
-     * exemple (PHP 5.3):
-     * $name = $array_keys($value)[0]; // IMPOSSIBLE en 5.3! On ne peut pas prendre une valeur d'un tableau retourné par une fonction directement.
-     * Solution -> Il faut passer par une variable temporaire avant de pouvoir utiliser les "brackets".
-     */
     $nameTemp = array_keys($value);
     $name = (string)$nameTemp[0];
     if ($name === "Entreprise_defaut") // On ne prend pas en compte l'entreprise par défaut

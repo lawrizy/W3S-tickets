@@ -92,10 +92,7 @@ class DashboardController extends Controller {
      * Lists all models.
      */
     public function actionVue() {
-
         $data = array('idBatiment' => 'ALL');
-
-        $data['idBatiment'] = 'ALL';
         $this->render('index', $data);
     }
 
@@ -167,11 +164,19 @@ class DashboardController extends Controller {
     public function actionGetTicketByStatusForBatimentID($idBatiment) {
         $nbStatutTicket = array();
 
-        for ($idStatut = Constantes::PRIORITE_LOW; $idStatut <= Constantes::PRIORITE_HIGH; ++$idStatut) {
+        for ($idStatut = Constantes::STATUT_OPENED; $idStatut <= Constantes::STATUT_CLOSED; ++$idStatut) {
             $nbTicket = Ticket::model()->countByAttributes(array('fk_batiment' => $idBatiment, 'fk_statut' => $idStatut));
 
-            $label = $idStatut != Constantes::PRIORITE_LOW ? $idStatut == Constantes::PRIORITE_HIGH ? ' en cours' : ' clôturé(s)'  : ' nouveau(x)';
-            $color = $idStatut != Constantes::PRIORITE_LOW ? $idStatut == Constantes::PRIORITE_HIGH ? "rgba(242,106,22,1)" : "rgba(66,200,22,1)"  : "rgba(220, 0,0,1)";
+            if ($idStatut == Constantes::STATUT_OPENED) {
+                $label = ' nouveau(x)';
+                $color = 'rgba(220, 0,0,1)';
+            } elseif ($idStatut == Constantes::STATUT_TREATMENT) {
+                $label = ' clôturé(s)';
+                $color = 'rgba(66,200,22,1)';
+            } else {
+                $label = ' en cours';
+                $color = 'rgba(242,106,22,1)';
+            }
             $value = array(
                 "value" => (int) $nbTicket,
                 "color" => $color,
