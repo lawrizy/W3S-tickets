@@ -171,10 +171,10 @@ class DashboardController extends Controller {
                 $label = ' nouveau(x)';
                 $color = 'rgba(220, 0,0,1)';
             } elseif ($idStatut == Constantes::STATUT_TREATMENT) {
-                $label = ' clôturé(s)';
+                $label = ' en cours';
                 $color = 'rgba(66,200,22,1)';
             } else {
-                $label = ' en cours';
+                $label = ' clôturé(s)';
                 $color = 'rgba(242,106,22,1)';
             }
             $value = array(
