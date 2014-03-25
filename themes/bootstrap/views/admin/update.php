@@ -166,7 +166,7 @@
                         <td><input type="checkbox" name="TicketView" <?php echo $droit & TicketController::ACTION_VIEW ? 'checked' : ''; ?> /></td> <!-- View -->
                         <td><input type="checkbox" name="TicketAdmin" <?php echo $droit & TicketController::ACTION_ADMIN ? 'checked' : ''; ?> /></td> <!-- Admin -->
                         <td><input type="checkbox" name="TicketCreate" <?php echo $droit & TicketController::ACTION_CREATE ? 'checked' : ''; ?> /></td> <!-- Create -->
-                        <td><input type="checkbox" name="TicketUpdate'" <?php echo $droit & TicketController::ACTION_UPDATE ? 'checked' : ''; ?> /></td> <!-- Update -->
+                        <td><input type="checkbox" name="TicketUpdate" <?php echo $droit & TicketController::ACTION_UPDATE ? 'checked' : ''; ?> /></td> <!-- Update -->
                         <td><input type="checkbox" name="TicketDelete" <?php echo $droit & TicketController::ACTION_DELETE ? 'checked' : ''; ?> /></td> <!-- Delete -->
                         <td><input type="checkbox" name="TicketTraitement" <?php echo $droit & TicketController::ACTION_TRAITEMENT ? 'checked' : ''; ?> /></td> <!-- Traitement -->
                         <td style="background-color: #802420"></td> <!-- AddCategory -->

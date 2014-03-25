@@ -120,7 +120,7 @@ class AdminController extends Controller {
             $droit = 0;
             $droit += isset($_POST['CategoryView']) ? CategorieIncidentController::ACTION_VIEW : 0;
             $droit += isset($_POST['CategoryAdmin']) ? CategorieIncidentController::ACTION_ADMIN : 0;
-            $droit += isset($_POST['CategoryCreate']) ?
+            $droit += isset($_POST['CategoryCreateCat']) ?
                     CategorieIncidentController::ACTION_CREATECAT + CategorieIncidentController::ACTION_CREATESOUSCAT : 0;
             $droit += isset($_POST['CategoryUpdateCat']) ?
                     CategorieIncidentController::ACTION_UPDATECAT + CategorieIncidentController::ACTION_UPDATESOUSCAT : 0;
@@ -153,7 +153,7 @@ class AdminController extends Controller {
 
             // Droits sur LieuController
             $droit = 0;
-            $droit += isset($_POST['LieuVue']) ? LieuController::ACTION_VIEW : 0;
+            $droit += isset($_POST['LieuView']) ? LieuController::ACTION_VIEW : 0;
             $DroitModel = Droit::model()->findByAttributes(array('fk_user' => $model->id_user, 'fk_controleur' => LieuController::ID_CONTROLLER));
             $DroitModel->droits = $droit;
             $DroitModel->save();
