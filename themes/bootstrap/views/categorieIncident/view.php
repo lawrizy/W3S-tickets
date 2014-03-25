@@ -8,10 +8,15 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Mise à jour Sous-Categorie', 'url' => array('updateSousCat', 'id' => $model->id_categorie_incident), 'visible' => $model->fk_parent != null) && Yii::app()->session['Rights']->getCategorie() & CategorieIncidentController::ACTION_UPDATESOUSCAT,
-    array('label' => 'Mise à jour Categorie', 'url' => array('updateCat', 'id' => $model->id_categorie_incident), 'visible' => $model->fk_parent == null && Yii::app()->session['Rights']->getCategorie() & CategorieIncidentController::ACTION_UPDATECAT),
-    array('label' => 'Suppression Categorie', 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id_categorie_incident), 'confirm' => 'Are you sure you want to delete this item?'), 'visible' => Yii::app()->session['Rights']->getCategorie() & CategorieIncidentController::ACTION_DELETE),
-    array('label' => 'Liste Categories', 'url' => array('admin'),'visible'=>  Yii::app()->session['Rights']->getCategorie() & CategorieIncidentController::ACTION_ADMIN),
+    array('label' => 'Mise à jour Sous-Categorie', 'url' => array('updateSousCat', 'id' => $model->id_categorie_incident),
+        'visible' => $model->fk_parent != null && Yii::app()->session['Rights']->getCategorie() & CategorieIncidentController::ACTION_UPDATE),
+    array('label' => 'Mise à jour Categorie', 'url' => array('updateCat', 'id' => $model->id_categorie_incident),
+        'visible' => $model->fk_parent == null && Yii::app()->session['Rights']->getCategorie() & CategorieIncidentController::ACTION_UPDATE),
+    array('label' => 'Suppression Categorie', 'url' => '#', 
+        'linkOptions' => array('submit' => array('delete', 'id' => $model->id_categorie_incident), 'confirm' => 'Are you sure you want to delete this item?'),
+        'visible' => Yii::app()->session['Rights']->getCategorie() & CategorieIncidentController::ACTION_DELETE),
+    array('label' => 'Liste Categories', 'url' => array('admin'),
+        'visible'=>  Yii::app()->session['Rights']->getCategorie() & CategorieIncidentController::ACTION_ADMIN),
 );
 
 $parent = CategorieIncident::model()->findByPk($model->fk_parent);

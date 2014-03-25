@@ -11,10 +11,14 @@ $this->breadcrumbs = array(
 
 $this->menu = array(
 // array('label' => Yii::t('/ticket/view', 'MenuModifierTicket'), 'url' => array('update', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Utilisateur'] == 'User' && $model->fk_statut != Constantes::STATUT_CLOSED),
-    array('label' => Translate::trad('MenuMettreEnTraitementTicket'), 'url' => array('traitement', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Rights']->getTicket() & TicketController::ACTION_TRAITEMENT && $model->fk_statut != Constantes::STATUT_CLOSED),
-    array('label' => Translate::trad('MenuCloseTicket'), 'url' => array('close', 'id' => $model->id_ticket), 'visible' => Yii::app()->session['Rights']->getTicket() & TicketController::ACTION_CLOSE && $model->fk_statut == Constantes::STATUT_TREATMENT),
-    array('label' => Translate::trad('MenuTicketDelete'), 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id_ticket), 'confirm' => 'Are you sure you want to delete this item?'), 'visible' => Yii::app()->session['Rights']->getTicket() & TicketController::ACTION_DELETE),
-        )
+    array('label' => Translate::trad('MenuMettreEnTraitementTicket'), 'url' => array('traitement', 'id' => $model->id_ticket),
+        'visible' => Yii::app()->session['Rights']->getTicket() & TicketController::ACTION_UPDATE && $model->fk_statut != Constantes::STATUT_CLOSED),
+    array('label' => Translate::trad('MenuCloseTicket'), 'url' => array('close', 'id' => $model->id_ticket),
+        'visible' => Yii::app()->session['Rights']->getTicket() & TicketController::ACTION_UPDATE && $model->fk_statut == Constantes::STATUT_TREATMENT),
+    array('label' => Translate::trad('MenuTicketDelete'), 'url' => '#',
+        'linkOptions' => array('submit' => array('delete', 'id' => $model->id_ticket), 'confirm' => 'Are you sure you want to delete this item?'),
+        'visible' => Yii::app()->session['Rights']->getTicket() & TicketController::ACTION_DELETE),
+    )
 ?>
 <h1><?php echo Translate::trad('ViewTitre') . $model->code_ticket;
 ?></h1>

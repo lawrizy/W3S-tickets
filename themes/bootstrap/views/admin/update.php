@@ -16,16 +16,14 @@
 
         <?php
         CHtml::form();
-        echo CHtml::dropDownList('UserList', '', array(CHtml::listData(User::model()->findAll(), 'id_user', 'nom')), array // Cette array définit le chargement dynamique des valeurs dans la dropDownList des sous-catégories. (Voir dropDownList suivante appelée DD_sousCat)
-            (
-            'ajax' => array
-                (
-                'type' => 'POST',
-                'url' => CController::createUrl('admin/update?id=idPost'),
-                'data' => array('idPost' => 'js:this.value'),
-                'update' => ".DI"
-            )
-                )
+        echo CHtml::dropDownList('UserList', '', array(CHtml::listData(User::model()->findAll(), 'id_user', 'nom')), 
+            array( // Cette array définit le chargement dynamique des valeurs dans la dropDownList des sous-catégories. (Voir dropDownList suivante appelée DD_sousCat)
+                'ajax' => array(
+                    'type' => 'POST',
+                    'url' => CController::createUrl('admin/update?id=idPost'),
+                    'data' => array('idPost' => 'js:this.value'),
+                    'update' => ".DI"
+            ))
         );
         CHtml::endForm();
         ?>
@@ -40,28 +38,7 @@
             <div class="form">
                 <?php
                 // Ici on récupère tous les droits du user en question
-                $rights = new Rights();
-
-                $rights->setAdmin(Droit::model()->findByAttributes(
-                                array('fk_controleur' => AdminController::ID_CONTROLLER, 'fk_user' => $model->id_user))->droits);
-                $rights->setBatiment(Droit::model()->findByAttributes(
-                                array('fk_controleur' => BatimentController::ID_CONTROLLER, 'fk_user' => $model->id_user))->droits);
-                $rights->setCategorie(Droit::model()->findByAttributes(
-                                array('fk_controleur' => CategorieIncidentController::ID_CONTROLLER, 'fk_user' => $model->id_user))->droits);
-                $rights->setDashboard(Droit::model()->findByAttributes(
-                                array('fk_controleur' => DashboardController::ID_CONTROLLER, 'fk_user' => $model->id_user))->droits);
-                $rights->setEntreprise(Droit::model()->findByAttributes(
-                                array('fk_controleur' => EntrepriseController::ID_CONTROLLER, 'fk_user' => $model->id_user))->droits);
-                $rights->setLieu(Droit::model()->findByAttributes(
-                                array('fk_controleur' => LieuController::ID_CONTROLLER, 'fk_user' => $model->id_user))->droits);
-                $rights->setLocataire(Droit::model()->findByAttributes(
-                                array('fk_controleur' => LocataireController::ID_CONTROLLER, 'fk_user' => $model->id_user))->droits);
-                $rights->setTicket(Droit::model()->findByAttributes(
-                                array('fk_controleur' => TicketController::ID_CONTROLLER, 'fk_user' => $model->id_user))->droits);
-                $rights->setTrad(Droit::model()->findByAttributes(
-                                array('fk_controleur' => TradController::ID_CONTROLLER, 'fk_user' => $model->id_user))->droits);
-                $rights->setUser(Droit::model()->findByAttributes(
-                                array('fk_controleur' => UserController::ID_CONTROLLER, 'fk_user' => $model->id_user))->droits);
+                $rights = RightsController::getDroits($model->id_user);
                 ?>
                 <table class="table table-bordered table-responsive " style="text-align: center;">
                     <tr> <!-- Les titres de toutes les colonnes -->
@@ -73,7 +50,6 @@
                         <th>Update</th>
                         <th>Delete</th>
                         <th>Traitement</th>
-                        <th>AddCategory</th>
                     </tr>
                     <?php $droit = $rights->getAdmin(); ?>
                     <tr>
@@ -85,7 +61,6 @@
                         <td><input class="AdminUpdate" type="checkbox" name="AdminUpdate" <?php echo $droit & AdminController::ACTION_UPDATE ? 'checked' : ''; ?> /></td> <!-- Update -->
                         <td style="background-color: #802420"></td> <!-- Delete -->
                         <td style="background-color: #802420"></td> <!-- Traitement -->
-                        <td style="background-color: #802420"></td> <!-- AddCategory -->
                     </tr>
                     <?php $droit = $rights->getBatiment(); ?>
                     <tr>
@@ -97,7 +72,6 @@
                         <td><input class="BatimentUpdate" type="checkbox" name="BatimentUpdate" <?php echo $droit & BatimentController::ACTION_UPDATE ? 'checked' : ''; ?> /></td> <!-- Update -->
                         <td><input class="BatimentDelete" type="checkbox" name="BatimentDelete" <?php echo $droit & BatimentController::ACTION_DELETE ? 'checked' : ''; ?> /></td> <!-- Delete -->
                         <td style="background-color: #802420"></td> <!-- Traitement -->
-                        <td style="background-color: #802420"></td> <!-- AddCategory -->
                     </tr>
                     <?php $droit = $rights->getCategorie(); ?>
                     <tr>
@@ -105,23 +79,21 @@
                         <td style="background-color: #802420"></td> <!-- Index -->
                         <td><input class="CategoryView" type="checkbox" name="CategoryView" <?php echo $droit & CategorieIncidentController::ACTION_VIEW ? 'checked' : ''; ?> /></td> <!-- View -->
                         <td><input class="CategoryAdmin" type="checkbox" name="CategoryAdmin" <?php echo $droit & CategorieIncidentController::ACTION_ADMIN ? 'checked' : ''; ?> /></td> <!-- Admin -->
-                        <td><input class="CategoryCreateCat" type="checkbox" name="CategoryCreateCat" <?php echo $droit & CategorieIncidentController::ACTION_CREATECAT ? 'checked' : ''; ?> /></td> <!-- Create -->
-                        <td><input class="CategoryUpdateCat" type="checkbox" name="CategoryUpdateCat" <?php echo $droit & CategorieIncidentController::ACTION_UPDATECAT ? 'checked' : ''; ?> /></td> <!-- Update -->
+                        <td><input class="CategoryCreateCat" type="checkbox" name="CategoryCreate" <?php echo $droit & CategorieIncidentController::ACTION_CREATE ? 'checked' : ''; ?> /></td> <!-- Create -->
+                        <td><input class="CategoryUpdateCat" type="checkbox" name="CategoryUpdate" <?php echo $droit & CategorieIncidentController::ACTION_UPDATE ? 'checked' : ''; ?> /></td> <!-- Update -->
                         <td><input class="CategoryDelete" type="checkbox" name="CategoryDelete" <?php echo $droit & CategorieIncidentController::ACTION_DELETE ? 'checked' : ''; ?> /></td> <!-- Delete -->
                         <td style="background-color: #802420"></td> <!-- Traitement -->
-                        <td style="background-color: #802420"></td> <!-- AddCategory -->
                     </tr>
                     <?php $droit = $rights->getDashboard(); ?>
                     <tr>
                         <td>Dashboard</td>
-                        <td><input  class="DashBoardVue" type="checkbox" name="DashBoardVue" <?php echo $droit & DashboardController::ACTION_VUE ? 'checked' : ''; ?> /></td> <!-- Index -->
+                        <td><input  class="DashBoardVue" type="checkbox" name="DashBoardVue" <?php echo $droit & DashboardController::ACTION_TOUS ? 'checked' : ''; ?> /></td> <!-- Index -->
                         <td style="background-color: #802420"></td> <!-- View -->
                         <td style="background-color: #802420"></td> <!-- Admin -->
                         <td style="background-color: #802420"></td> <!-- Create -->
                         <td style="background-color: #802420"></td> <!-- Update -->
                         <td style="background-color: #802420"></td> <!-- Delete -->
                         <td style="background-color: #802420"></td> <!-- Traitement -->
-                        <td style="background-color: #802420"></td> <!-- AddCategory -->
                     </tr>
                     <?php $droit = $rights->getEntreprise(); ?>
                     <tr>
@@ -133,19 +105,17 @@
                         <td><input  class="EntrepriseUpdate" type="checkbox" name="EntrepriseUpdate" <?php echo $droit & EntrepriseController::ACTION_UPDATE ? 'checked' : ''; ?> /></td> <!-- Update -->
                         <td><input  class="EntrepriseDelete" type="checkbox" name="EntrepriseDelete" <?php echo $droit & EntrepriseController::ACTION_DELETE ? 'checked' : ''; ?> /></td> <!-- Delete -->
                         <td style="background-color: #802420"></td> <!-- Traitement -->
-                        <td><input  class="EntrepriseSecteur" type="checkbox" name="EntrepriseSecteur" <?php echo $droit & EntrepriseController::ACTION_SECTEUR ? 'checked' : ''; ?> /></td> <!-- AddCategory -->
                     </tr>
                     <?php $droit = $rights->getLieu(); ?>
                     <tr>
                         <td>Lieu</td>
                         <td style="background-color: #802420"></td> <!-- Index -->
-                        <td><input  class="LieuView" type="checkbox" name="LieuView" <?php echo $droit & LieuController::ACTION_VIEW ? 'checked' : ''; ?> /></td> <!-- View -->
+                        <td><input  class="LieuView" type="checkbox" name="LieuView" <?php echo $droit & LieuController::ACTION_TOUS ? 'checked' : ''; ?> /></td> <!-- View -->
                         <td style="background-color: #802420"></td> <!-- Admin -->
                         <td style="background-color: #802420"></td> <!-- Create -->
                         <td style="background-color: #802420"></td> <!-- Update -->
                         <td style="background-color: #802420"></td> <!-- Delete -->
                         <td style="background-color: #802420"></td> <!-- Traitement -->
-                        <td style="background-color: #802420"></td> <!-- AddCategory -->
                     </tr>
                     <?php $droit = $rights->getLocataire(); ?>
                     <tr>
@@ -157,7 +127,6 @@
                         <td><input  class="LocataireUpdate" type="checkbox" name="LocataireUpdate" <?php echo $droit & LocataireController::ACTION_UPDATE ? 'checked' : ''; ?> /></td> <!-- Update -->
                         <td><input  class="LocataireDelete" type="checkbox" name="LocataireDelete" <?php echo $droit & LocataireController::ACTION_DELETE ? 'checked' : ''; ?> /></td> <!-- Delete -->
                         <td style="background-color: #802420"></td> <!-- Traitement -->
-                        <td style="background-color: #802420"></td> <!-- AddCategory -->
                     </tr>
                     <?php $droit = $rights->getTicket(); ?>
                     <tr>
@@ -168,20 +137,18 @@
                         <td><input class="TicketCreate" type="checkbox" name="TicketCreate" <?php echo $droit & TicketController::ACTION_CREATE ? 'checked' : ''; ?> /></td> <!-- Create -->
                         <td><input class="TicketUpdate" type="checkbox" name="TicketUpdate" <?php echo $droit & TicketController::ACTION_UPDATE ? 'checked' : ''; ?> /></td> <!-- Update -->
                         <td><input class="TicketDelete" type="checkbox" name="TicketDelete" <?php echo $droit & TicketController::ACTION_DELETE ? 'checked' : ''; ?> /></td> <!-- Delete -->
-                        <td><input class="TicketTraitement" type="checkbox" name="TicketTraitement" <?php echo $droit & TicketController::ACTION_TRAITEMENT ? 'checked' : ''; ?> /></td> <!-- Traitement -->
-                        <td style="background-color: #802420"></td> <!-- AddCategory -->
+                        <td style="background-color: #802420"></td> <!-- Traitement -->
                     </tr>
                     <?php $droit = $rights->getTrad(); ?>
                     <tr>
                         <td>Trad</td>
                         <td style="background-color: #802420"></td> <!-- Index -->
-                        <td><input class="TradIndex" type="checkbox" name="TradIndex" <?php echo $droit & TradController::ACTION_INDEX ? 'checked' : ''; ?> /></td> <!-- View -->
+                        <td><input class="TradIndex" type="checkbox" name="TradIndex" <?php echo $droit & TradController::ACTION_TOUS ? 'checked' : ''; ?> /></td> <!-- View -->
                         <td style="background-color: #802420"></td> <!-- Admin -->
                         <td style="background-color: #802420"></td> <!-- Create -->
                         <td style="background-color: #802420"></td> <!-- Update -->
                         <td style="background-color: #802420"></td> <!-- Delete -->
                         <td style="background-color: #802420"></td> <!-- Traitement -->
-                        <td style="background-color: #802420"></td> <!-- AddCategory -->
                     </tr>
                     <?php $droit = $rights->getUser(); ?>
                     <tr>
@@ -193,7 +160,6 @@
                         <td><input class="UserUpdate" type="checkbox" name="UserUpdate" <?php echo $droit & UserController::ACTION_UPDATE ? 'checked' : ''; ?> /></td> <!-- Update -->
                         <td><input class="UserDelete" type="checkbox" name="UserDelete" <?php echo $droit & UserController::ACTION_DELETE ? 'checked' : ''; ?> /></td> <!-- Delete -->
                         <td style="background-color: #802420"></td> <!-- Traitement -->
-                        <td style="background-color: #802420"></td> <!-- AddCategory -->
                     </tr>
                 </table>
                 <?php
@@ -211,54 +177,41 @@
 </html>
 <script>
     $(".AdminUpdate").click(function() {
-        if ($(".AdminUpdate").is(':checked'))
-        {
+        if ($(".AdminUpdate").is(':checked')) {
             $(".AdminIndex").attr('checked', true);
             $(".AdminUpdate").attr('checked', true);
-
-        }
-    });
+    }});
     $(".AdminIndex").click(function() {
-        if (!$(".AdminIndex").is(':checked'))
-        {
-            $(".AdminUpdate").attr('checked', false);
-        }
-
+        if (!$(".AdminIndex").is(':checked')) $(".AdminUpdate").attr('checked', false);
     });
+    // ------------------------------ Fin Admin --------------------------------
+    
     $(".BatimentDelete").click(function() {
-        if ($(".BatimentDelete").is(':checked')) {
-            $(".BatimentAdmin").attr('checked', true);
-        }
-    }
-    );
+        if ($(".BatimentDelete").is(':checked')) $(".BatimentAdmin").attr('checked', true);
+    });
     $(".BatimentCreate").click(function() {
-
-        if ($(".BatimentCreate").is(':checked')) {
-
-            $(".BatimentView").attr('checked', true);
-        }
-
-    }
-    );
+        if ($(".BatimentCreate").is(':checked')) $(".BatimentView").attr('checked', true);
+    });
     $(".BatimentUpdate").click(function() {
-
         if ($(".BatimentUpdate").is(':checked')) {
-
             $(".BatimentView").attr('checked', true);
             $(".BatimentAdmin").attr('checked', true);
-        }
-
-    }
-    );
+    }});
     $(".BatimentView").click(function() {
+        if ($(".BatimentView").is(':checked'))  $(".BatimentAdmin").attr('checked', true);
+        else {
+            $(".BatimentCreate").attr('checked', false);
+            $(".BatimentUpdate").attr('checked', false);
+    }});
+    $(".BatimentAdmin").click(function() {
+        if (!$(".BatimentAdmin").is(':checked')) {
+            $(".BatimentView").attr('checked', false);
+            $(".BatimentUpdate").attr('checked', false);
+            $(".BatimentCreate").attr('checked', false);
+            $(".BatimentDelete").attr('checked', false);
 
-        if ($(".BatimentView").is(':checked')) {
-
-            $(".BatimentAdmin").attr('checked', true);
-        }
-
-    }
-    );
-
+    }});
+    // ----------------------------- Fin Batiment ------------------------------
+    
 
 </script>

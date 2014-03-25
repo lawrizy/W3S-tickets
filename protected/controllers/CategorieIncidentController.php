@@ -9,10 +9,12 @@ class CategorieIncidentController extends Controller {
      */
     Const ID_CONTROLLER = 3;
     Const ACTION_VIEW = 1;
-    Const ACTION_CREATECAT = 2;
-    COnst ACTION_CREATESOUSCAT = 4;
-    const ACTION_UPDATECAT = 8;
-    const ACTION_UPDATESOUSCAT = 16;
+    Const ACTION_CREATE = 2;
+    // const ACTION_CREATECAR = 2;
+    //COnst ACTION_CREATESOUSCAT = 4;
+    const ACTION_UPDATE = 8;
+    // const ACTION_UPDATECAR = 8;
+    //const ACTION_UPDATESOUSCAT = 16;
     const ACTION_ADMIN = 32;
     const ACTION_DELETE = 64;
 
@@ -64,10 +66,14 @@ class CategorieIncidentController extends Controller {
             // on a volontairement choisi des nombres binaires (1, 2, 4, 8, ...) pour que
             // chaque nombre n'ait qu'un seul bit à '1' et n'accorde donc qu'un seul droit
             if ($rights & self::ACTION_VIEW) array_push($allow, 'view');
-            if ($rights & self::ACTION_CREATECAT) array_push($allow, 'createcat');
-            if ($rights & self::ACTION_CREATESOUSCAT) array_push($allow, 'createsouscat');
-            if ($rights & self::ACTION_UPDATESOUSCAT) array_push($allow, 'updatesouscat');
-            if ($rights & self::ACTION_UPDATECAT) array_push($allow, 'updatecat');
+            if ($rights & self::ACTION_CREATE) {
+                array_push($allow, 'createcat');
+                array_push($allow, 'createsouscat');
+            }
+            if ($rights & self::ACTION_UPDATE) {
+                array_push($allow, 'updatecat');
+                array_push($allow, 'updatesouscat');
+            }
             if ($rights & self::ACTION_ADMIN) array_push($allow, 'admin');
             if ($rights & self::ACTION_DELETE) array_push($allow, 'delete');
 

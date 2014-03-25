@@ -34,7 +34,8 @@
     <?php echo $form->error($model, 'password', array('style' => 'color: red;')); ?>
 
     <?php echo $form->labelEx($model, 'fk_langue'); ?>
-    <?php echo $form->dropDownList($model, 'fk_langue', array('' => '', CHtml::listData(Langue::model()->findAll(), 'id', 'label')), array('class' => 'toolbar')); ?>
+    <?php echo $form->dropDownList($model, 'fk_langue', array('' => '', 
+        CHtml::listData(Langue::model()->findAll(), 'id', 'label')), array('class' => 'toolbar')); ?>
     <?php echo $form->error($model, 'fk_langue', array('style' => 'color: red;')); ?>
 
     <div class="controls">

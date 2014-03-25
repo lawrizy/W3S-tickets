@@ -1,23 +1,23 @@
 <?php
 
 class TicketController extends Controller {
+    
     /*
      * Les constantes suivantes correspondent aux actions. Il y a une constante
      * pour chaque action de ce contrôleur. Ces constantes serviront à attribuer
      * ou non des droits aux utilisateurs (voir la méthode 'accessRules()' de 
      * ce même contrôleur)
      */
-
     Const ID_CONTROLLER = 8;
     Const ACTION_VIEW = 1;
     Const ACTION_CREATE = 2;
     COnst ACTION_DELETE = 4;
     const ACTION_UPDATE = 8;
     const ACTION_ADMIN = 16;
-    const ACTION_GETSOUSCATEGORIESDYNAMIQUES = 32;
-    const ACTION_CLOSE = 64;
-    const ACTION_SENDNOTIFICATIONMAIL = 128;
-    const ACTION_TRAITEMENT = 256;
+    // const ACTION_GETSOUSCATEGORIESDYNAMIQUES = 32;
+    // const ACTION_CLOSE = 64;
+    // const ACTION_SENDNOTIFICATIONMAIL = 128;
+    // const ACTION_TRAITEMENT = 256;
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -72,18 +72,16 @@ class TicketController extends Controller {
                 array_push($allow, 'create');
             if ($rights & self::ACTION_DELETE)
                 array_push($allow, 'delete');
-            if ($rights & self::ACTION_UPDATE)
-                array_push($allow, 'update');
             if ($rights & self::ACTION_ADMIN)
                 array_push($allow, 'admin');
-            if ($rights & self::ACTION_GETSOUSCATEGORIESDYNAMIQUES)
-                array_push($allow, 'getsouscategoriesdynamiques');
-            if ($rights & self::ACTION_CLOSE)
+            if ($rights & self::ACTION_UPDATE) {
+                array_push($allow, 'update');
                 array_push($allow, 'close');
-            if ($rights & self::ACTION_SENDNOTIFICATIONMAIL)
-                array_push($allow, 'sendnotificationmail');
-            if ($rights & self::ACTION_TRAITEMENT)
                 array_push($allow, 'traitement');
+            }
+
+            array_push($allow, 'getsouscategoriesdynamiques');
+            array_push($allow, 'sendnotificationmail');
 
             return array(// Ici on a plus qu'à envoyer la liste des droits
                 array('allow', // Ici l'array des droits 'permis'

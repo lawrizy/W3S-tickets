@@ -9,12 +9,19 @@ $this->breadcrumbs = array(
 
 $this->menu = array(
     //   array('label' => 'Update Locataire', 'url' => array('update', 'id' => $model->id_locataire)),
-    array('label' => Translate::trad('CreerTicket'), 'url' => array('ticket/create?id=' . $model->id_user), 'visible' => Yii::app()->session['Rights']->getLocataire() & LocataireController::ACTION_CREATE),
-    array('label' => Translate::trad('DeleteLocataire'), 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id_user), 'confirm' => 'Are you sure you want to delete this item?', 'visible' => Yii::app()->session['Rights']->getLocataire() & LocataireController::ACTION_DELETE)),
-    array('label' => Translate::trad('ManageLocataire'), 'url' => array('admin'), 'visible' => Yii::app()->session['Rights']->getLocataire() & LocataireController::ACTION_ADMIN),
-    array('label' => Translate::trad('Rajouterlieu'), 'url' => array('locataire/addLieu?id=' . $model->id_user), 'visible' => Yii::app()->session['Rights']->getLocataire() & LocataireController::ACTION_ADDLIEU),
-    array('label' => Translate::trad('Supprimerlieu'), 'url' => array('locataire/deleteLieu?id=' . $model->id_user), 'visible' => Yii::app()->session['Rights']->getLocataire() & LocataireController::ACTION_DELETELIEU),
-    array('label' => Translate::trad('ChangerDroits'), 'url' => array('admin/update?id=' . $model->id_user), 'visible' => Yii::app()->session['Rights']->getAdmin() & AdminController::ACTION_UPDATE),
+    array('label' => Translate::trad('CreerTicket'), 'url' => array('ticket/create?id=' . $model->id_user),
+        'visible' => Yii::app()->session['Rights']->getLocataire() & LocataireController::ACTION_CREATE),
+    array('label' => Translate::trad('DeleteLocataire'), 'url' => '#',
+        'linkOptions' => array('submit' => array('delete', 'id' => $model->id_user), 'confirm' => 'Are you sure you want to delete this item?',
+            'visible' => Yii::app()->session['Rights']->getLocataire() & LocataireController::ACTION_DELETE)),
+    array('label' => Translate::trad('ManageLocataire'), 'url' => array('admin'),
+        'visible' => Yii::app()->session['Rights']->getLocataire() & LocataireController::ACTION_ADMIN),
+    array('label' => Translate::trad('Rajouterlieu'), 'url' => array('locataire/addLieu?id=' . $model->id_user),
+        'visible' => Yii::app()->session['Rights']->getLocataire() & LocataireController::ACTION_UPDATE),
+    array('label' => Translate::trad('Supprimerlieu'), 'url' => array('locataire/deleteLieu?id=' . $model->id_user),
+        'visible' => Yii::app()->session['Rights']->getLocataire() & LocataireController::ACTION_UPDATE),
+    array('label' => Translate::trad('ChangerDroits'), 'url' => array('admin/update?id=' . $model->id_user),
+        'visible' => Yii::app()->session['Rights']->getLocataire() & LocataireController::ACTION_UPDATE),
 );
 ?>
 

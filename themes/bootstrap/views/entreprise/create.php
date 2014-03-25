@@ -8,7 +8,8 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Manage Entreprise', 'url' => array('admin'), 'visible' => Yii::app()->session['Rights']->getEntreprise() & EntrepriseController::ACTION_ADMIN),
+    array('label' => 'Manage Entreprise', 'url' => array('admin'),
+        'visible' => Yii::app()->session['Rights']->getEntreprise() & EntrepriseController::ACTION_ADMIN),
 );
 ?>
 

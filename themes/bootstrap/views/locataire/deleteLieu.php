@@ -38,8 +38,12 @@ $this->menu = array(
             <?php
             echo CHtml::form();
             echo CHtml::label('Sélectionner le batiment', 'Nom du batiment');
-            echo CHtml::dropDownList('Batiment', 'id_batiment', array(CHtml::listData(Batiment::model()->findAllBySql("SELECT b.nom,b.id_batiment FROM db_ticketing.w3sys_lieu l inner join w3sys_batiment b on  l.fk_batiment = b.id_batiment
-                    WHERE l.fk_locataire =" . $model->id_user . " and l.visible=" . Constantes::VISIBLE), 'id_batiment', 'nom')));
+            echo CHtml::dropDownList('Batiment', 'id_batiment', array(
+                CHtml::listData(Batiment::model()->findAllBySql(
+                        "SELECT b.nom,b.id_batiment FROM db_ticketing.w3sys_lieu l 
+                        INNER JOIN w3sys_batiment b on  l.fk_batiment = b.id_batiment
+                        WHERE l.fk_locataire =" . $model->id_user . " and "
+                        . "l.visible=" . Constantes::VISIBLE), 'id_batiment', 'nom')));
             ?>
             <br>
             <?php

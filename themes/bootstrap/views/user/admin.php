@@ -3,9 +3,9 @@
 /* @var $model User */
 
 $DroitIcone = " ";
-Yii::app()->session['Rights']->getLocataire() & UserController::ACTION_VIEW ? $DroitIcone.=" {view}" : NULL;
-Yii::app()->session['Rights']->getLocataire() & UserController::ACTION_UPDATE ? $DroitIcone.=" {update}" : NULL;
-Yii::app()->session['Rights']->getLocataire() & UserController::ACTION_DELETE ? $DroitIcone.=" {delete}" : NULL;
+Yii::app()->session['Rights']->getUser() & UserController::ACTION_VIEW ? $DroitIcone.=" {view}" : NULL;
+Yii::app()->session['Rights']->getUser() & UserController::ACTION_UPDATE ? $DroitIcone.=" {update}" : NULL;
+Yii::app()->session['Rights']->getUser() & UserController::ACTION_DELETE ? $DroitIcone.=" {delete}" : NULL;
 $this->breadcrumbs = array(
     'Manage',
 );

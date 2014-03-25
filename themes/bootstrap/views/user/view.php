@@ -10,7 +10,8 @@ $this->breadcrumbs = array(
 $this->menu = array(
     array('label' => 'List User', 'url' => array('admin')),
     array('label' => 'Update User', 'url' => array('update', 'id' => $model->id_user)),
-    array('label' => 'Delete User', 'url' => '#', 'linkOptions' => array('submit' => array('delete', 'id' => $model->id_user), 'confirm' => 'Are you sure you want to delete this item?')),
+    array('label' => 'Delete User', 'url' => '#',
+        'linkOptions' => array('submit' => array('delete', 'id' => $model->id_user), 'confirm' => 'Are you sure you want to delete this item?')),
 );
 ?>
 

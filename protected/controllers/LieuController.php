@@ -9,11 +9,11 @@ class LieuController extends Controller
      * ce même contrôleur)
      */
     Const ID_CONTROLLER = 6;
-    Const ACTION_VIEW = 1;
-    Const ACTION_CREATE = 2;
-    COnst ACTION_DELETE = 4;
-    const ACTION_UPDATE = 8;
-    const ACTION_ADMIN = 16;
+    Const ACTION_TOUS = 1;
+//    Const ACTION_CREATE = 2;
+//    COnst ACTION_DELETE = 4;
+//    const ACTION_UPDATE = 8;
+//    const ACTION_ADMIN = 16;
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -63,11 +63,13 @@ class LieuController extends Controller
             // Ces nombres-là sont les valeurs des constantes tout en haut de la classe,
             // on a volontairement choisi des nombres binaires (1, 2, 4, 8, ...) pour que
             // chaque nombre n'ait qu'un seul bit à '1' et n'accorde donc qu'un seul droit
-            if ($rights & self::ACTION_VIEW) array_push($allow, 'view');
-            if ($rights & self::ACTION_CREATE) array_push($allow, 'create');
-            if ($rights & self::ACTION_DELETE) array_push($allow, 'delete');
-            if ($rights & self::ACTION_UPDATE) array_push($allow, 'update');
-            if ($rights & self::ACTION_ADMIN) array_push($allow, 'admin');
+            if ($rights & self::ACTION_TOUS) {
+                array_push($allow, 'view');
+                array_push($allow, 'create');
+                array_push($allow, 'update');
+                array_push($allow, 'delete');
+                array_push($allow, 'admin');
+            }
             
             return array( // Ici on a plus qu'à envoyer la liste des droits
                     array('allow', // Ici l'array des droits 'permis'

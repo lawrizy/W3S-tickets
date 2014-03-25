@@ -2,9 +2,9 @@
 /* @var $this TicketController */
 /* @var $model Ticket */
 $DroitIcone = " ";
-Yii::app()->session['Rights']->getLocataire() & TicketController::ACTION_VIEW ? $DroitIcone.=" {view}" : NULL;
-Yii::app()->session['Rights']->getLocataire() & TicketController::ACTION_UPDATE ? $DroitIcone.=" {update}" : NULL;
-Yii::app()->session['Rights']->getLocataire() & TicketController::ACTION_DELETE ? $DroitIcone.=" {delete}" : NULL;
+Yii::app()->session['Rights']->getTicket() & TicketController::ACTION_VIEW ? $DroitIcone.=" {view}" : NULL;
+Yii::app()->session['Rights']->getTicket() & TicketController::ACTION_UPDATE ? $DroitIcone.=" {update}" : NULL;
+Yii::app()->session['Rights']->getTicket() & TicketController::ACTION_DELETE ? $DroitIcone.=" {delete}" : NULL;
 $this->breadcrumbs = array(
     'Tickets',
 );

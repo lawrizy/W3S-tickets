@@ -2,10 +2,10 @@
 /* @var $this EntrepriseController */
 /* @var $model Entreprise */
 
-$DroitIcone = " ";
-Yii::app()->session['Rights']->getLocataire() & EntrepriseController::ACTION_VIEW ? $DroitIcone.=" {view}" : NULL;
-Yii::app()->session['Rights']->getLocataire() & EntrepriseController::ACTION_UPDATE ? $DroitIcone.=" {update}" : NULL;
-Yii::app()->session['Rights']->getLocataire() & EntrepriseController::ACTION_DELETE ? $DroitIcone.=" {delete}" : NULL;
+$DroitIcone = '';
+$DroitIcone .= Yii::app()->session['Rights']->getEntreprise() & EntrepriseController::ACTION_VIEW ? ' {view}' : '';
+$DroitIcone .= Yii::app()->session['Rights']->getEntreprise() & EntrepriseController::ACTION_UPDATE ? ' {update}' : '';
+$DroitIcone .= Yii::app()->session['Rights']->getEntreprise() & EntrepriseController::ACTION_DELETE ? ' {delete}' : '';
 $this->breadcrumbs = array(
     'Manage',
 );

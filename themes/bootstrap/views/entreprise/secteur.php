@@ -5,12 +5,14 @@
 $this->breadcrumbs = array(
     'Entreprises' => array('admin'),
     $model->nom => array('view', 'id' => $model->id_entreprise),
-    $model->nom,
+    'Ajouter une catégorie',
 );
 
 $this->menu = array(
-    array('label' => 'Liste Entreprise', 'url' => array('admin') ,'visible' => Yii::app()->session['Rights']->getEntreprise() & EntrepriseController::ACTION_ADMIN),
-    array('label' => 'Détails Entreprise', 'url' => array('view', 'id' => $model->id_entreprise), 'visible' => Yii::app()->session['Rights']->getEntreprise() & EntrepriseController::ACTION_VIEW)
+    array('label' => 'Liste Entreprise', 'url' => array('admin') ,
+        'visible' => Yii::app()->session['Rights']->getEntreprise() & EntrepriseController::ACTION_ADMIN),
+    array('label' => 'Détails Entreprise', 'url' => array('view', 'id' => $model->id_entreprise),
+        'visible' => Yii::app()->session['Rights']->getEntreprise() & EntrepriseController::ACTION_VIEW)
 );
 $this->beginWidget('CActiveForm', array('id' => 'ticket-form', 'enableAjaxValidation' => false));
 ?>

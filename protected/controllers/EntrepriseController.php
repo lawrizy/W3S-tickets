@@ -14,7 +14,6 @@ class EntrepriseController extends Controller
     COnst ACTION_DELETE = 4;
     const ACTION_UPDATE = 8;
     const ACTION_ADMIN = 16;
-    Const ACTION_SECTEUR = 32;
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -67,9 +66,11 @@ class EntrepriseController extends Controller
             if ($rights & self::ACTION_VIEW) array_push($allow, 'view');
             if ($rights & self::ACTION_CREATE) array_push($allow, 'create');
             if ($rights & self::ACTION_DELETE) array_push($allow, 'delete');
-            if ($rights & self::ACTION_UPDATE) array_push($allow, 'update');
+            if ($rights & self::ACTION_UPDATE) {
+                array_push($allow, 'update');
+                array_push($allow, 'secteur');
+            }
             if ($rights & self::ACTION_ADMIN) array_push($allow, 'admin');
-            if ($rights & self::ACTION_SECTEUR) array_push($allow, 'secteur');
             
             return array( // Ici on a plus qu'à envoyer la liste des droits
                     array('allow', // Ici l'array des droits 'permis'

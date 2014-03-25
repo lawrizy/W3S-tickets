@@ -90,21 +90,18 @@ class AdminController extends Controller {
         } else {
             $model = User::model()->findByPk($id);
         }
-        $DroitModel = Droit::model()->findByAttributes(array('fk_user' => $model->id_user, 'fk_controleur' => AdminController::ID_CONTROLLER));
+
         if (isset($_POST['tmp'])) {
-            /*
-             *
-             */
-            $rights = new Rights();
+//            $rights = new Rights();
 
             // Droits sur AdminController
             $droit = 0;
-
             $droit +=(int) isset($_POST['AdminIndex']) ? AdminController::ACTION_INDEX : 0;
             $droit +=(int) isset($_POST['AdminUpdate']) ? AdminController::ACTION_UPDATE : 0;
             $DroitModel = Droit::model()->findByAttributes(array('fk_user' => $model->id_user, 'fk_controleur' => AdminController::ID_CONTROLLER));
             $DroitModel->droits = $droit;
             $DroitModel->save();
+//            $rights->setAdmin($droit);
 
             // Droits sur BatimentController
             $droit = 0;
@@ -113,31 +110,33 @@ class AdminController extends Controller {
             $droit += isset($_POST['BatimentCreate']) ? BatimentController::ACTION_CREATE : 0;
             $droit += isset($_POST['BatimentUpdate']) ? BatimentController::ACTION_UPDATE : 0;
             $droit += isset($_POST['BatimentDelete']) ? BatimentController::ACTION_DELETE : 0;
-            $rights->setBatiment($droit);
             $DroitModel = Droit::model()->findByAttributes(array('fk_user' => $model->id_user, 'fk_controleur' => BatimentController::ID_CONTROLLER));
             $DroitModel->droits = $droit;
             $DroitModel->save();
-//             Droits sur CategorieIncidentController
+//            $rights->setBatiment($droit);
+            
+            // Droits sur CategorieIncidentController
             $droit = 0;
             $droit += isset($_POST['CategoryView']) ? CategorieIncidentController::ACTION_VIEW : 0;
             $droit += isset($_POST['CategoryAdmin']) ? CategorieIncidentController::ACTION_ADMIN : 0;
-            $droit += isset($_POST['CategoryCreateCat']) ?
-                    CategorieIncidentController::ACTION_CREATECAT + CategorieIncidentController::ACTION_CREATESOUSCAT : 0;
-            $droit += isset($_POST['CategoryUpdateCat']) ?
-                    CategorieIncidentController::ACTION_UPDATECAT + CategorieIncidentController::ACTION_UPDATESOUSCAT : 0;
+            $droit += isset($_POST['CategoryCreate']) ? CategorieIncidentController::ACTION_CREATE : 0;
+                    // Ce droit regroupe les actions createCat et createSousCat
+            $droit += isset($_POST['CategoryUpdate']) ? CategorieIncidentController::ACTION_UPDATE : 0;
+                    // Ce droit regroupe les actions updateCat et updateSousCat
             $droit += isset($_POST['CategoryDelete']) ? CategorieIncidentController::ACTION_DELETE : 0;
             $DroitModel = Droit::model()->findByAttributes(array('fk_user' => $model->id_user, 'fk_controleur' => CategorieIncidentController::ID_CONTROLLER));
             $DroitModel->droits = $droit;
             $DroitModel->save();
-            $rights->setCategorie($droit);
+//            $rights->setCategorie($droit);
 
             // Droits sur DashboardController
             $droit = 0;
-            $droit += isset($_POST['DashBoardVue']) ? DashboardController::ACTION_VUE + DashboardController::ACTION_FILTERBYBATIMENT + DashboardController::ACTION_GETCATEGORIESLABEL + DashboardController::ACTION_GETFREQUENCECALLEDBYENTREPRISE + DashboardController::ACTION_GETTICKETBYCATEGORIE + DashboardController::ACTION_GETTICKETBYCATEGORIEFORBATIMENTID + DashboardController::ACTION_GETTICKETBYSTATUSFORBATIMENTID : 0;
+            $droit += isset($_POST['DashBoardVue']) ? DashboardController::ACTION_TOUS : 0;
+                    // Dans le cas du dashboard, on a tous les droits ou on en a aucun
             $DroitModel = Droit::model()->findByAttributes(array('fk_user' => $model->id_user, 'fk_controleur' => DashboardController::ID_CONTROLLER));
             $DroitModel->droits = $droit;
             $DroitModel->save();
-            $rights->setDashboard($droit);
+//            $rights->setDashboard($droit);
 
             // Droits sur EntrepriseController
             $droit = 0;
@@ -146,52 +145,51 @@ class AdminController extends Controller {
             $droit += isset($_POST['EntrepriseCreate']) ? EntrepriseController::ACTION_CREATE : 0;
             $droit += isset($_POST['EntrepriseUpdate']) ? EntrepriseController::ACTION_UPDATE : 0;
             $droit += isset($_POST['EntrepriseDelete']) ? EntrepriseController::ACTION_DELETE : 0;
-            $droit += isset($_POST['EntrepriseSecteur']) ? EntrepriseController::ACTION_SECTEUR : 0;
             $DroitModel = Droit::model()->findByAttributes(array('fk_user' => $model->id_user, 'fk_controleur' => EntrepriseController::ID_CONTROLLER));
             $DroitModel->droits = $droit;
             $DroitModel->save();
-            $rights->setEntreprise($droit);
+//            $rights->setEntreprise($droit);
 
             // Droits sur LieuController
             $droit = 0;
-            $droit += isset($_POST['LieuView']) ? LieuController::ACTION_VIEW : 0;
+            $droit += isset($_POST['LieuView']) ? LieuController::ACTION_TOUS : 0;
             $DroitModel = Droit::model()->findByAttributes(array('fk_user' => $model->id_user, 'fk_controleur' => LieuController::ID_CONTROLLER));
             $DroitModel->droits = $droit;
             $DroitModel->save();
-            $rights->setLieu($droit);
+//            $rights->setLieu($droit);
 
             // Droits sur LocataireController
             $droit = 0;
             $droit += isset($_POST['LocataireView']) ? LocataireController::ACTION_VIEW : 0;
             $droit += isset($_POST['LocataireAdmin']) ? LocataireController::ACTION_ADMIN : 0;
             $droit += isset($_POST['LocataireCreate']) ? LocataireController::ACTION_CREATE : 0;
-            $droit += isset($_POST['LocataireUpdate']) ? LocataireController::ACTION_UPDATE + LocataireController::ACTION_ADDLIEU + LocataireController::ACTION_DELETELIEU : 0;
+            $droit += isset($_POST['LocataireUpdate']) ? LocataireController::ACTION_UPDATE : 0;
             $droit += isset($_POST['LocataireDelete']) ? LocataireController::ACTION_DELETE : 0;
             $DroitModel = Droit::model()->findByAttributes(array('fk_user' => $model->id_user, 'fk_controleur' => LocataireController::ID_CONTROLLER));
             $DroitModel->droits = $droit;
             $DroitModel->save();
-            $rights->setLocataire($droit);
+//            $rights->setLocataire($droit);
 
             // Droits sur TicketController
             $droit = 0;
             $droit += isset($_POST['TicketView']) ? TicketController::ACTION_VIEW : 0;
             $droit += isset($_POST['TicketAdmin']) ? TicketController::ACTION_ADMIN : 0;
-            $droit += isset($_POST['TicketCreate']) ? TicketController::ACTION_CREATE + TicketController::ACTION_GETSOUSCATEGORIESDYNAMIQUES + TicketController::ACTION_SENDNOTIFICATIONMAIL : 0;
+            $droit += isset($_POST['TicketCreate']) ? TicketController::ACTION_CREATE : 0;
             $droit += isset($_POST['TicketUpdate']) ? TicketController::ACTION_UPDATE : 0;
             $droit += isset($_POST['TicketDelete']) ? TicketController::ACTION_DELETE : 0;
-            $droit += isset($_POST['TicketTraitement']) ? TicketController::ACTION_TRAITEMENT + TicketController::ACTION_CLOSE : 0;
             $DroitModel = Droit::model()->findByAttributes(array('fk_user' => $model->id_user, 'fk_controleur' => TicketController::ID_CONTROLLER));
             $DroitModel->droits = $droit;
             $DroitModel->save();
-            $rights->setTicket($droit);
+//            $rights->setTicket($droit);
 
             // Droits sur TradController
             $droit = 0;
-            $droit += isset($_POST['TradIndex']) ? TradController::ACTION_UPDATE + TradController::ACTION_INDEX + TradController::ACTION_ADDTRADUCTION + TradController::ACTION_MODIFYTRADUCTION : 0;
+            $droit += isset($_POST['TradIndex']) ? TradController::ACTION_TOUS : 0;
+                    // Dans le cas du trad, on a tous les droits ou on en a aucun
             $DroitModel = Droit::model()->findByAttributes(array('fk_user' => $model->id_user, 'fk_controleur' => TradController::ID_CONTROLLER));
             $DroitModel->droits = $droit;
             $DroitModel->save();
-            $rights->setTrad($droit);
+//            $rights->setTrad($droit);
 
             // Droits sur UserController
             $droit = 0;
@@ -203,9 +201,8 @@ class AdminController extends Controller {
             $DroitModel = Droit::model()->findByAttributes(array('fk_user' => $model->id_user, 'fk_controleur' => UserController::ID_CONTROLLER));
             $DroitModel->droits = $droit;
             $DroitModel->save();
-            $rights->setUser($droit);
+//            $rights->setUser($droit);
             //*/
-            Yii::app()->session['Rights'] = UserIdentity::setDroits($model->id_user);
             $this->redirect(array('user/view', 'id' => $model->id_user));
         }
 

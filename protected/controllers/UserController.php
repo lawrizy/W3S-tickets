@@ -72,7 +72,8 @@ class UserController extends Controller {
                 array_push($allow, 'update');
             if ($rights & self::ACTION_ADMIN)
                 array_push($allow, 'admin');
-
+            
+            // Ce droit est un droit que tout le monde a
             array_push($allow, 'changepassword');
 
             return array(// Ici on a plus qu'à envoyer la liste des droits

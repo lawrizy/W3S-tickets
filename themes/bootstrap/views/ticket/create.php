@@ -9,7 +9,8 @@
 
 
 $this->menu = array(
-    array('label' => 'Manage', 'url' => array('admin'), 'visible' => Yii::app()->session['Rights']->getTicket() & TicketController::ACTION_ADMIN),
+    array('label' => 'Manage', 'url' => array('admin'),
+        'visible' => Yii::app()->session['Rights']->getTicket() & TicketController::ACTION_ADMIN),
 );
 ?>
 <h1>

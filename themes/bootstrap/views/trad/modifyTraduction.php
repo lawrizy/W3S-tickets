@@ -9,7 +9,7 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Ajouter une nouvelle traduction', 'url' => array('addTraduction'), 'visible' => Yii::app()->session['Rights']->getTrad() & TradController::ACTION_ADDTRADUCTION),
+    array('label' => 'Ajouter une nouvelle traduction', 'url' => array('addTraduction')),
 );
 ?>
 <div id="retour">

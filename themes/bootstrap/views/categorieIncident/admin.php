@@ -3,16 +3,16 @@
 /* @var $model CategorieIncident */
 
 $DroitIcone = " ";
-Yii::app()->session['Rights']->getLocataire() & CategorieIncidentController::ACTION_VIEW ? $DroitIcone.=" {view}" : NULL;
-Yii::app()->session['Rights']->getLocataire() & CategorieIncidentController::ACTION_UPDATE ? $DroitIcone.=" {update}" : NULL;
-Yii::app()->session['Rights']->getLocataire() & CategorieIncidentController::ACTION_DELETE ? $DroitIcone.=" {delete}" : NULL;
+Yii::app()->session['Rights']->getCategorie() & CategorieIncidentController::ACTION_VIEW ? $DroitIcone.=" {view}" : NULL;
+Yii::app()->session['Rights']->getCategorie() & CategorieIncidentController::ACTION_UPDATE ? $DroitIcone.=" {update}" : NULL;
+Yii::app()->session['Rights']->getCategorie() & CategorieIncidentController::ACTION_DELETE ? $DroitIcone.=" {delete}" : NULL;
 $this->breadcrumbs = array(
     'Liste',
 );
 
 $this->menu = array(
-    array('label' => 'Create new Categorie', 'url' => array('createcat'), 'visible' => Yii::app()->session['Rights']->getCategorie() & CategorieIncidentController::ACTION_CREATECAT),
-    array('label' => 'Create new Categorie', 'url' => array('createsouscat'), 'visible' => Yii::app()->session['Rights']->getCategorie() & CategorieIncidentController::ACTION_CREATESOUSCAT),
+    array('label' => 'Create new Categorie', 'url' => array('createcat'), 'visible' => Yii::app()->session['Rights']->getCategorie() & CategorieIncidentController::ACTION_CREATE),
+    array('label' => 'Create new Categorie', 'url' => array('createsouscat'), 'visible' => Yii::app()->session['Rights']->getCategorie() & CategorieIncidentController::ACTION_CREATE),
 );
 
 Yii::app()->clientScript->registerScript('search', "
