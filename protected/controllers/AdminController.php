@@ -99,6 +99,7 @@ class AdminController extends Controller {
 
             // Droits sur AdminController
             $droit = 0;
+
             $droit +=(int) isset($_POST['AdminIndex']) ? AdminController::ACTION_INDEX : 0;
             $droit +=(int) isset($_POST['AdminUpdate']) ? AdminController::ACTION_UPDATE : 0;
             $DroitModel = Droit::model()->findByAttributes(array('fk_user' => $model->id_user, 'fk_controleur' => AdminController::ID_CONTROLLER));
@@ -132,7 +133,7 @@ class AdminController extends Controller {
 
             // Droits sur DashboardController
             $droit = 0;
-            $droit += isset($_POST['DashBoardVue']) ? DashboardController::ACTION_VUE : 0;
+            $droit += isset($_POST['DashBoardVue']) ? DashboardController::ACTION_VUE + DashboardController::ACTION_FILTERBYBATIMENT + DashboardController::ACTION_GETCATEGORIESLABEL + DashboardController::ACTION_GETFREQUENCECALLEDBYENTREPRISE + DashboardController::ACTION_GETTICKETBYCATEGORIE + DashboardController::ACTION_GETTICKETBYCATEGORIEFORBATIMENTID + DashboardController::ACTION_GETTICKETBYSTATUSFORBATIMENTID : 0;
             $DroitModel = Droit::model()->findByAttributes(array('fk_user' => $model->id_user, 'fk_controleur' => DashboardController::ID_CONTROLLER));
             $DroitModel->droits = $droit;
             $DroitModel->save();

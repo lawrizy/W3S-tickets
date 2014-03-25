@@ -2,6 +2,11 @@
 /* @var $this BatimentController */
 /* @var $model Batiment */
 
+$DroitIcone = " ";
+Yii::app()->session['Rights']->getLocataire() & BatimentController::ACTION_VIEW ? $DroitIcone.=" {view}" : NULL;
+Yii::app()->session['Rights']->getLocataire() & BatimentController::ACTION_UPDATE ? $DroitIcone.=" {update}" : NULL;
+Yii::app()->session['Rights']->getLocataire() & BatimentController::ACTION_DELETE ? $DroitIcone.=" {delete}" : NULL;
+
 $this->breadcrumbs = array(
     'Manage',
 );
@@ -53,7 +58,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         'commune',
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',
-            'template' => ' {view} {update} {delete}'
+            'template' => $DroitIcone
         ),
     ),
 ));

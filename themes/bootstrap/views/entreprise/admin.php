@@ -2,6 +2,10 @@
 /* @var $this EntrepriseController */
 /* @var $model Entreprise */
 
+$DroitIcone = " ";
+Yii::app()->session['Rights']->getLocataire() & EntrepriseController::ACTION_VIEW ? $DroitIcone.=" {view}" : NULL;
+Yii::app()->session['Rights']->getLocataire() & EntrepriseController::ACTION_UPDATE ? $DroitIcone.=" {update}" : NULL;
+Yii::app()->session['Rights']->getLocataire() & EntrepriseController::ACTION_DELETE ? $DroitIcone.=" {delete}" : NULL;
 $this->breadcrumbs = array(
     'Manage',
 );
@@ -51,7 +55,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         'cp',
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',
-            'template' => ' {view} {update} {delete}'
+            'template' => $DroitIcone
         ),
     ),
 ));

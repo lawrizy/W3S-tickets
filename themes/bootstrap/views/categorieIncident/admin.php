@@ -2,6 +2,10 @@
 /* @var $this CategorieIncidentController */
 /* @var $model CategorieIncident */
 
+$DroitIcone = " ";
+Yii::app()->session['Rights']->getLocataire() & CategorieIncidentController::ACTION_VIEW ? $DroitIcone.=" {view}" : NULL;
+Yii::app()->session['Rights']->getLocataire() & CategorieIncidentController::ACTION_UPDATE ? $DroitIcone.=" {update}" : NULL;
+Yii::app()->session['Rights']->getLocataire() & CategorieIncidentController::ACTION_DELETE ? $DroitIcone.=" {delete}" : NULL;
 $this->breadcrumbs = array(
     'Liste',
 );
@@ -55,7 +59,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
             'value' => 'Priorite::model()->findByPk($data->fk_priorite)->label'),
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',
-            'template' => ' {view} {update} {delete}'
+            'template' => $DroitIcone
         ),
     ),
 ));

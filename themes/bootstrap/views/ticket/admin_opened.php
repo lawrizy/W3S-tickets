@@ -1,7 +1,10 @@
 <?php
 /* @var $this TicketController */
 /* @var $model Ticket */
-
+$DroitIcone = " ";
+Yii::app()->session['Rights']->getLocataire() & TicketController::ACTION_VIEW ? $DroitIcone.=" {view}" : NULL;
+Yii::app()->session['Rights']->getLocataire() & TicketController::ACTION_UPDATE ? $DroitIcone.=" {update}" : NULL;
+Yii::app()->session['Rights']->getLocataire() & TicketController::ACTION_DELETE ? $DroitIcone.=" {delete}" : NULL;
 $this->breadcrumbs = array(
     'Tickets',
 );
@@ -77,7 +80,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         array
             (
             'class' => 'bootstrap.widgets.TbButtonColumn',
-            'template' => '{view}'
+            'template' => $DroitIcone
         ),
     ),
 ));

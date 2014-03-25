@@ -268,7 +268,7 @@ class BatimentController extends Controller
             // On recherche donc les autres lieux pour ce locataires (lieux encore visible bien sûr)
             if ($locataires == NULL)
             { // S'il n'y a pas d'autres lieux pour ce locataire, on le 'delete'
-                $locataire = Locataire::model()->findByPk($lieu['fk_locataire']);
+                $locataire = User::model()->findByPk($lieu['fk_locataire']);
                 $locataire['visible'] = Constantes::INVISIBLE;
                 try
                 {

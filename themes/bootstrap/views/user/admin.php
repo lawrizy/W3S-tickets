@@ -2,6 +2,10 @@
 /* @var $this UserController */
 /* @var $model User */
 
+$DroitIcone = " ";
+Yii::app()->session['Rights']->getLocataire() & UserController::ACTION_VIEW ? $DroitIcone.=" {view}" : NULL;
+Yii::app()->session['Rights']->getLocataire() & UserController::ACTION_UPDATE ? $DroitIcone.=" {update}" : NULL;
+Yii::app()->session['Rights']->getLocataire() & UserController::ACTION_DELETE ? $DroitIcone.=" {delete}" : NULL;
 $this->breadcrumbs = array(
     'Manage',
 );
@@ -56,7 +60,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         ),
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',
-            'template' => ' {view} {update} {delete}'
+            'template' => $DroitIcone
         ),
     ),
 ));
