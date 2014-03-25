@@ -78,11 +78,11 @@
                     <?php $droit = $rights->getAdmin(); ?>
                     <tr>
                         <td>Admin</td>
-                        <td><input type="checkbox" name="Admin[]" <?php echo $droit & AdminController::ACTION_INDEX ? 'checked' : ''; ?> /></td> <!-- Index -->
+                        <td><input type="checkbox" name="AdminIndex" <?php echo $droit & AdminController::ACTION_INDEX ? 'checked' : ''; ?> /></td> <!-- Index -->
                         <td style="background-color: #802420"></td> <!-- View -->
                         <td style="background-color: #802420"></td> <!-- Admin -->
                         <td style="background-color: #802420"></td> <!-- Create -->
-                        <td><input type="checkbox" name="Admin[]" <?php echo $droit & AdminController::ACTION_UPDATE ? 'checked' : ''; ?> /></td> <!-- Update -->
+                        <td><input type="checkbox" name="AdminUpdate" <?php echo $droit & AdminController::ACTION_UPDATE ? 'checked' : ''; ?> /></td> <!-- Update -->
                         <td style="background-color: #802420"></td> <!-- Delete -->
                         <td style="background-color: #802420"></td> <!-- Traitement -->
                         <td style="background-color: #802420"></td> <!-- AddCategory -->
@@ -91,11 +91,11 @@
                     <tr>
                         <td>Batiment</td>
                         <td style="background-color: #802420"></td> <!-- Index -->
-                        <td><input type="checkbox" name="Batiment[]" <?php echo $droit & BatimentController::ACTION_VIEW ? 'checked' : ''; ?> /></td> <!-- View -->
-                        <td><input type="checkbox" name="Batiment[]" <?php echo $droit & BatimentController::ACTION_ADMIN ? 'checked' : ''; ?> /></td> <!-- Admin -->
-                        <td><input type="checkbox" name="Batiment[]" <?php echo $droit & BatimentController::ACTION_CREATE ? 'checked' : ''; ?> /></td> <!-- Create -->
-                        <td><input type="checkbox" name="Batiment[]" <?php echo $droit & BatimentController::ACTION_UPDATE ? 'checked' : ''; ?> /></td> <!-- Update -->
-                        <td><input type="checkbox" name="Batiment[]" <?php echo $droit & BatimentController::ACTION_DELETE ? 'checked' : ''; ?> /></td> <!-- Delete -->
+                        <td><input type="checkbox" name="BatimentView" <?php echo $droit & BatimentController::ACTION_VIEW ? 'checked' : ''; ?> /></td> <!-- View -->
+                        <td><input type="checkbox" name="BatimentAdmin" <?php echo $droit & BatimentController::ACTION_ADMIN ? 'checked' : ''; ?> /></td> <!-- Admin -->
+                        <td><input type="checkbox" name="BatimentCreate" <?php echo $droit & BatimentController::ACTION_CREATE ? 'checked' : ''; ?> /></td> <!-- Create -->
+                        <td><input type="checkbox" name="BatimentUpdate" <?php echo $droit & BatimentController::ACTION_UPDATE ? 'checked' : ''; ?> /></td> <!-- Update -->
+                        <td><input type="checkbox" name="BatimentDelete" <?php echo $droit & BatimentController::ACTION_DELETE ? 'checked' : ''; ?> /></td> <!-- Delete -->
                         <td style="background-color: #802420"></td> <!-- Traitement -->
                         <td style="background-color: #802420"></td> <!-- AddCategory -->
                     </tr>
@@ -103,18 +103,18 @@
                     <tr>
                         <td>Category</td>
                         <td style="background-color: #802420"></td> <!-- Index -->
-                        <td><input type="checkbox" name="Category[]" <?php echo $droit & CategorieIncidentController::ACTION_VIEW ? 'checked' : ''; ?> /></td> <!-- View -->
-                        <td><input type="checkbox" name="Category[]" <?php echo $droit & CategorieIncidentController::ACTION_ADMIN ? 'checked' : ''; ?> /></td> <!-- Admin -->
-                        <td><input type="checkbox" name="Category[]" <?php echo $droit & CategorieIncidentController::ACTION_CREATECAT ? 'checked' : ''; ?> /></td> <!-- Create -->
-                        <td><input type="checkbox" name="Category[]" <?php echo $droit & CategorieIncidentController::ACTION_UPDATECAT ? 'checked' : ''; ?> /></td> <!-- Update -->
-                        <td><input type="checkbox" name="Category[]" <?php echo $droit & CategorieIncidentController::ACTION_DELETE ? 'checked' : ''; ?> /></td> <!-- Delete -->
+                        <td><input type="checkbox" name="CategoryView" <?php echo $droit & CategorieIncidentController::ACTION_VIEW ? 'checked' : ''; ?> /></td> <!-- View -->
+                        <td><input type="checkbox" name="CategoryAdmin" <?php echo $droit & CategorieIncidentController::ACTION_ADMIN ? 'checked' : ''; ?> /></td> <!-- Admin -->
+                        <td><input type="checkbox" name="CategoryCreateCat" <?php echo $droit & CategorieIncidentController::ACTION_CREATECAT ? 'checked' : ''; ?> /></td> <!-- Create -->
+                        <td><input type="checkbox" name="CategoryUpdateCat" <?php echo $droit & CategorieIncidentController::ACTION_UPDATECAT ? 'checked' : ''; ?> /></td> <!-- Update -->
+                        <td><input type="checkbox" name="CategoryDelete" <?php echo $droit & CategorieIncidentController::ACTION_DELETE ? 'checked' : ''; ?> /></td> <!-- Delete -->
                         <td style="background-color: #802420"></td> <!-- Traitement -->
                         <td style="background-color: #802420"></td> <!-- AddCategory -->
                     </tr>
                     <?php $droit = $rights->getDashboard(); ?>
                     <tr>
                         <td>Dashboard</td>
-                        <td><input type="checkbox" name="DashBoard[]" <?php echo $droit & DashboardController::ACTION_VUE ? 'checked' : ''; ?> /></td> <!-- Index -->
+                        <td><input type="checkbox" name="DashBoardVue" <?php echo $droit & DashboardController::ACTION_VUE ? 'checked' : ''; ?> /></td> <!-- Index -->
                         <td style="background-color: #802420"></td> <!-- View -->
                         <td style="background-color: #802420"></td> <!-- Admin -->
                         <td style="background-color: #802420"></td> <!-- Create -->
@@ -127,19 +127,19 @@
                     <tr>
                         <td>Entreprise</td>
                         <td style="background-color: #802420"></td> <!-- Index -->
-                        <td><input type="checkbox" name="Entreprise[]" <?php echo $droit & EntrepriseController::ACTION_VIEW ? 'checked' : ''; ?> /></td> <!-- View -->
-                        <td><input type="checkbox" name="Entreprise[]" <?php echo $droit & EntrepriseController::ACTION_ADMIN ? 'checked' : ''; ?> /></td> <!-- Admin -->
-                        <td><input type="checkbox" name="Entreprise[]" <?php echo $droit & EntrepriseController::ACTION_CREATE ? 'checked' : ''; ?> /></td> <!-- Create -->
-                        <td><input type="checkbox" name="Entreprise[]" <?php echo $droit & EntrepriseController::ACTION_UPDATE ? 'checked' : ''; ?> /></td> <!-- Update -->
-                        <td><input type="checkbox" name="Entreprise[]" <?php echo $droit & EntrepriseController::ACTION_DELETE ? 'checked' : ''; ?> /></td> <!-- Delete -->
+                        <td><input type="checkbox" name="EntrepriseView" <?php echo $droit & EntrepriseController::ACTION_VIEW ? 'checked' : ''; ?> /></td> <!-- View -->
+                        <td><input type="checkbox" name="EntrepriseAdmin" <?php echo $droit & EntrepriseController::ACTION_ADMIN ? 'checked' : ''; ?> /></td> <!-- Admin -->
+                        <td><input type="checkbox" name="EntrepriseCreate" <?php echo $droit & EntrepriseController::ACTION_CREATE ? 'checked' : ''; ?> /></td> <!-- Create -->
+                        <td><input type="checkbox" name="EntrepriseUpdate" <?php echo $droit & EntrepriseController::ACTION_UPDATE ? 'checked' : ''; ?> /></td> <!-- Update -->
+                        <td><input type="checkbox" name="EntrepriseDelete" <?php echo $droit & EntrepriseController::ACTION_DELETE ? 'checked' : ''; ?> /></td> <!-- Delete -->
                         <td style="background-color: #802420"></td> <!-- Traitement -->
-                        <td><input type="checkbox" name="Entreprise[]" <?php echo $droit & EntrepriseController::ACTION_SECTEUR ? 'checked' : ''; ?> /></td> <!-- AddCategory -->
+                        <td><input type="checkbox" name="EntrepriseSecteur" <?php echo $droit & EntrepriseController::ACTION_SECTEUR ? 'checked' : ''; ?> /></td> <!-- AddCategory -->
                     </tr>
                     <?php $droit = $rights->getLieu(); ?>
                     <tr>
                         <td>Lieu</td>
                         <td style="background-color: #802420"></td> <!-- Index -->
-                        <td><input type="checkbox" name="Lieu[]" <?php echo $droit & LieuController::ACTION_VIEW ? 'checked' : ''; ?> /></td> <!-- View -->
+                        <td><input type="checkbox" name="LieuView" <?php echo $droit & LieuController::ACTION_VIEW ? 'checked' : ''; ?> /></td> <!-- View -->
                         <td style="background-color: #802420"></td> <!-- Admin -->
                         <td style="background-color: #802420"></td> <!-- Create -->
                         <td style="background-color: #802420"></td> <!-- Update -->
@@ -151,11 +151,11 @@
                     <tr>
                         <td>Locataire</td>
                         <td style="background-color: #802420"></td> <!-- Index -->
-                        <td><input type="checkbox" name="Locataire[]" <?php echo $droit & LocataireController::ACTION_VIEW ? 'checked' : ''; ?> /></td> <!-- View -->
-                        <td><input type="checkbox" name="Locataire[]" <?php echo $droit & LocataireController::ACTION_ADMIN ? 'checked' : ''; ?> /></td> <!-- Admin -->
-                        <td><input type="checkbox" name="Locataire[]" <?php echo $droit & LocataireController::ACTION_CREATE ? 'checked' : ''; ?> /></td> <!-- Create -->
-                        <td><input type="checkbox" name="Locataire[]" <?php echo $droit & LocataireController::ACTION_UPDATE ? 'checked' : ''; ?> /></td> <!-- Update -->
-                        <td><input type="checkbox" name="Locataire[]" <?php echo $droit & LocataireController::ACTION_DELETE ? 'checked' : ''; ?> /></td> <!-- Delete -->
+                        <td><input type="checkbox" name="LocataireView" <?php echo $droit & LocataireController::ACTION_VIEW ? 'checked' : ''; ?> /></td> <!-- View -->
+                        <td><input type="checkbox" name="LocataireAdmin" <?php echo $droit & LocataireController::ACTION_ADMIN ? 'checked' : ''; ?> /></td> <!-- Admin -->
+                        <td><input type="checkbox" name="LocataireCreate" <?php echo $droit & LocataireController::ACTION_CREATE ? 'checked' : ''; ?> /></td> <!-- Create -->
+                        <td><input type="checkbox" name="LocataireUpdate" <?php echo $droit & LocataireController::ACTION_UPDATE ? 'checked' : ''; ?> /></td> <!-- Update -->
+                        <td><input type="checkbox" name="LocataireDelete" <?php echo $droit & LocataireController::ACTION_DELETE ? 'checked' : ''; ?> /></td> <!-- Delete -->
                         <td style="background-color: #802420"></td> <!-- Traitement -->
                         <td style="background-color: #802420"></td> <!-- AddCategory -->
                     </tr>
@@ -163,19 +163,19 @@
                     <tr>
                         <td>Ticket</td>
                         <td style="background-color: #802420"></td> <!-- Index -->
-                        <td><input type="checkbox" name="Ticket[]" <?php echo $droit & TicketController::ACTION_VIEW ? 'checked' : ''; ?> /></td> <!-- View -->
-                        <td><input type="checkbox" name="Ticket[]" <?php echo $droit & TicketController::ACTION_ADMIN ? 'checked' : ''; ?> /></td> <!-- Admin -->
-                        <td><input type="checkbox" name="Ticket[]" <?php echo $droit & TicketController::ACTION_CREATE ? 'checked' : ''; ?> /></td> <!-- Create -->
-                        <td><input type="checkbox" name="Ticket[]" <?php echo $droit & TicketController::ACTION_UPDATE ? 'checked' : ''; ?> /></td> <!-- Update -->
-                        <td><input type="checkbox" name="Ticket[]" <?php echo $droit & TicketController::ACTION_DELETE ? 'checked' : ''; ?> /></td> <!-- Delete -->
-                        <td><input type="checkbox" name="Ticket[]" <?php echo $droit & TicketController::ACTION_TRAITEMENT ? 'checked' : ''; ?> /></td> <!-- Traitement -->
+                        <td><input type="checkbox" name="TicketView" <?php echo $droit & TicketController::ACTION_VIEW ? 'checked' : ''; ?> /></td> <!-- View -->
+                        <td><input type="checkbox" name="TicketAdmin" <?php echo $droit & TicketController::ACTION_ADMIN ? 'checked' : ''; ?> /></td> <!-- Admin -->
+                        <td><input type="checkbox" name="TicketCreate" <?php echo $droit & TicketController::ACTION_CREATE ? 'checked' : ''; ?> /></td> <!-- Create -->
+                        <td><input type="checkbox" name="TicketUpdate'" <?php echo $droit & TicketController::ACTION_UPDATE ? 'checked' : ''; ?> /></td> <!-- Update -->
+                        <td><input type="checkbox" name="TicketDelete" <?php echo $droit & TicketController::ACTION_DELETE ? 'checked' : ''; ?> /></td> <!-- Delete -->
+                        <td><input type="checkbox" name="TicketTraitement" <?php echo $droit & TicketController::ACTION_TRAITEMENT ? 'checked' : ''; ?> /></td> <!-- Traitement -->
                         <td style="background-color: #802420"></td> <!-- AddCategory -->
                     </tr>
                     <?php $droit = $rights->getTrad(); ?>
                     <tr>
                         <td>Trad</td>
                         <td style="background-color: #802420"></td> <!-- Index -->
-                        <td><input type="checkbox" name="Trad[]" <?php echo $droit & TradController::ACTION_INDEX ? 'checked' : ''; ?> /></td> <!-- View -->
+                        <td><input type="checkbox" name="TradIndex" <?php echo $droit & TradController::ACTION_INDEX ? 'checked' : ''; ?> /></td> <!-- View -->
                         <td style="background-color: #802420"></td> <!-- Admin -->
                         <td style="background-color: #802420"></td> <!-- Create -->
                         <td style="background-color: #802420"></td> <!-- Update -->
@@ -187,11 +187,11 @@
                     <tr>
                         <td>User</td>
                         <td style="background-color: #802420"></td> <!-- Index -->
-                        <td><input type="checkbox" name="User[]" <?php echo $droit & UserController::ACTION_VIEW ? 'checked' : ''; ?> /></td> <!-- View -->
-                        <td><input type="checkbox" name="User[]" <?php echo $droit & UserController::ACTION_ADMIN ? 'checked' : ''; ?> /></td> <!-- Admin -->
-                        <td><input type="checkbox" name="User[]" <?php echo $droit & UserController::ACTION_CREATE ? 'checked' : ''; ?> /></td> <!-- Create -->
-                        <td><input type="checkbox" name="User[]" <?php echo $droit & UserController::ACTION_UPDATE ? 'checked' : ''; ?> /></td> <!-- Update -->
-                        <td><input type="checkbox" name="User[]" <?php echo $droit & UserController::ACTION_DELETE ? 'checked' : ''; ?> /></td> <!-- Delete -->
+                        <td><input type="checkbox" name="UserView" <?php echo $droit & UserController::ACTION_VIEW ? 'checked' : ''; ?> /></td> <!-- View -->
+                        <td><input type="checkbox" name="UserAdmin" <?php echo $droit & UserController::ACTION_ADMIN ? 'checked' : ''; ?> /></td> <!-- Admin -->
+                        <td><input type="checkbox" name="UserCreate" <?php echo $droit & UserController::ACTION_CREATE ? 'checked' : ''; ?> /></td> <!-- Create -->
+                        <td><input type="checkbox" name="UserUpdate" <?php echo $droit & UserController::ACTION_UPDATE ? 'checked' : ''; ?> /></td> <!-- Update -->
+                        <td><input type="checkbox" name="UserDelete" <?php echo $droit & UserController::ACTION_DELETE ? 'checked' : ''; ?> /></td> <!-- Delete -->
                         <td style="background-color: #802420"></td> <!-- Traitement -->
                         <td style="background-color: #802420"></td> <!-- AddCategory -->
                     </tr>
