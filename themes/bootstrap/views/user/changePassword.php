@@ -28,13 +28,13 @@ and open the template in the editor.
         ?>
         <div class="table-bordered">
             <?php
-            echo '<h4 class="h47" style="text-decoration:underline;">Les champs marqués de <span class=required>*</span> sont obligatoire</h4>';
-            echo '</br>';
+            echo '<h4 class="h4" style="text-decoration:underline;">Les champs marqués de <span class=required>*</span> sont obligatoire</h4>';
+            echo '<h5 class="h5" style="text-decoration:underline;">Le mot de passe doit faire minimum 4 caractères et les espaces ne sont pas autorisé</h5>';
             echo CHtml::form();
             echo CHtml::label('Votre ancien mot de passe :<span class=required>&nbsp;*</span> ', 'amdp');
             echo CHtml::passwordField('AncienMdp');
             echo CHtml::label('Votre nouveau mot de passe :<span class=required>&nbsp;*</span> ', 'nmdp');
-            echo CHtml::passwordField('NouveauMdp');
+            echo CHtml::passwordField('NouveauMdp', '', array('id' => 'NouveauMdp', 'onkeyup' => 'notAllowed();'));
             echo CHtml::label('Retapez  nouveau mot de passe :<span class=required>&nbsp;*</span> ', 'nmdp1');
             echo CHtml::passwordField('NouveauMdp1');
             echo '</br>';
@@ -56,3 +56,22 @@ and open the template in the editor.
         </div>
     </body>
 </html>
+<script>
+    function notAllowed() {
+        var mdp = $('#NouveauMdp')[0];
+        if (event.keyCode === 32) // espace
+        {
+            alert("Caractère non autorisé !\nLe caractère à été effacé");
+            var afterChange = mdp.value.substr(0, mdp.value.length - 1);
+            mdp.value = afterChange;
+        }
+    }
+    $(".Buttons").click(function() {
+        var nvmdp1 = document.getElementById("NouveauMdp").value;
+        if (nvmdp1.length < 4)
+        {
+            alert("Le mot de passe doit être de 4 caractères minimum");
+            return false;
+        }
+    });
+</script>

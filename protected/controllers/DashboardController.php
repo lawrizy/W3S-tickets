@@ -7,9 +7,9 @@ class DashboardController extends Controller {
      * ou non des droits aux utilisateurs (voir la méthode 'accessRules()' de 
      * ce même contrôleur)
      */
+
     Const ID_CONTROLLER = 4;
     Const ACTION_TOUS = 1;
- 
 
     /**
      * @return array action filters
@@ -20,7 +20,7 @@ class DashboardController extends Controller {
             'postOnly + delete', // we only allow deletion via POST request
         );
     }
-    
+
     /**
      * La méthode permettant d'accorder des droits aux différents utilisateurs.
      * Cette méthode est appelée à chaque fois que l'on veut accéder à une action
@@ -30,19 +30,18 @@ class DashboardController extends Controller {
      */
     public function accessRules() { // droit des utilisateur sur les actions
         if (!Yii::app()->user->isGuest) { // Génération des droits selon le user
-            
             // On récupère d'abord le user de la session
             $logged = Yii::app()->session['Logged'];
             // ainsi que ses droits sur ce contrôleur
             $rights = Yii::app()->session['Rights']->getDashboard();
-                // La méthode getDashboard() demande à ne récupérer que les droits
-                // lié à ce contrôleur-ci (en l'occurence, dashboard)
-            
+            // La méthode getDashboard() demande à ne récupérer que les droits
+            // lié à ce contrôleur-ci (en l'occurence, dashboard)
+
             $allow = array('noright');
-                // On initialise ensuite l'array qui stockera les droits
-                // On lui met une action inexistante car la méthode accessRules
-                // considère qu'un array vide c'est avoir tous les droits
-            
+            // On initialise ensuite l'array qui stockera les droits
+            // On lui met une action inexistante car la méthode accessRules
+            // considère qu'un array vide c'est avoir tous les droits
+
             /* Et enfin on teste chaque droit un à un, et si le droit est bien accordé,
              * on le rajoute à l'array qui sera envoyé dans le return
              */
@@ -61,26 +60,26 @@ class DashboardController extends Controller {
                 array_push($allow, 'filterbybatiment');
                 array_push($allow, 'getfrequencecalledentreprise');
             }
-            
-            return array( // Ici on a plus qu'à envoyer la liste des droits
-                    array('allow', // Ici l'array des droits 'permis'
-                        'actions' => $allow, // Et on lui communique l'array que l'on a généré plus tôt
-                        'users' => array('@'), // Autorisé pour les user loggés
-                    ),
-                    array('deny', // Refuse autre users
-                        'users' => array('@'), // Refus aux visiteurs non loggés
-                        'message' => 'Vous n\'avez pas accès à cette page.'
-                            // Le message qui sera affiché
-                    ),
-                );
+
+            return array(// Ici on a plus qu'à envoyer la liste des droits
+                array('allow', // Ici l'array des droits 'permis'
+                    'actions' => $allow, // Et on lui communique l'array que l'on a généré plus tôt
+                    'users' => array('@'), // Autorisé pour les user loggés
+                ),
+                array('deny', // Refuse autre users
+                    'users' => array('@'), // Refus aux visiteurs non loggés
+                    'message' => 'Vous n\'avez pas accès à cette page.'
+                // Le message qui sera affiché
+                ),
+            );
         } else { // Si autre utilisateur (visiteur)
-            return array( // Ici on a plus qu'à envoyer la liste des droits
-                    array('deny', // Refuse autre users
-                        'users' => array('?'), // Refus aux visiteurs non loggés
-                        'message' => 'Vous n\'avez pas accès à cette page.'
-                            // Le message qui sera affiché
-                    ),
-                );
+            return array(// Ici on a plus qu'à envoyer la liste des droits
+                array('deny', // Refuse autre users
+                    'users' => array('?'), // Refus aux visiteurs non loggés
+                    'message' => 'Vous n\'avez pas accès à cette page.'
+                // Le message qui sera affiché
+                ),
+            );
         }
     }
 

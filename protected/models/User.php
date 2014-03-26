@@ -36,7 +36,7 @@ class User extends CActiveRecord {
             array('nom, email, password, fk_fonction, fk_langue', 'required'),
             array('fk_fonction, fk_langue, visible', 'numerical', 'integerOnly' => true),
             array('nom, email', 'length', 'max' => 64),
-            array('password', 'length', 'max' => 32),
+            array('password', 'length', 'max' => 32,'min'=>4),
 // The following rule is used by search().
 // @todo Please remove those attributes that should not be searched.
             array('id_user, nom, email, password, fk_fonction, fk_langue, visible', 'safe', 'on' => 'search'),

@@ -324,7 +324,7 @@ class UserController extends Controller {
                 Yii::app()->user->setFlash('error', $e->getMessage());
             }
         }
-        $this->render('changePassword');
+        $this->render('changePassword',array('model'=>$model));
     }
 
 }
