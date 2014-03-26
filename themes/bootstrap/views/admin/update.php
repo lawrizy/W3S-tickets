@@ -14,7 +14,7 @@
         <!-- Ici on affiche le nom ainsi que la fonction du user concerné -->
         <br /><br />
         <p id="avertissement" style="color: red; font-size: 20px; font-weight: bold;">
-          /!\ Attention, certains droits dépendent d'autres droits et seront 
+            <i class="icon-spin"></i> /!\ Attention, certains droits dépendent d'autres droits et seront 
           donc automatiquement cochés/décochés</p>
         <?php
         CHtml::form();

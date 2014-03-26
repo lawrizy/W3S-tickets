@@ -6,17 +6,17 @@
         <meta name="language" content="en"/>
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
         </script>
-        <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/styles.css"/>
+        <!--<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">-->
+            <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/styles.css"/>
 
-        <title><?php echo CHtml::encode($this->pageTitle); ?></title>
+            <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
-        <?php Yii::app()->bootstrap->register(); ?>
+            <?php Yii::app()->bootstrap->register(); ?>
     </head>
 
     <body>
 
         <!-- HEADER -->
-
         <div id="header">
             <?php
             $varCheminAcces = "";
@@ -29,28 +29,28 @@
                     array(
                         'class' => 'bootstrap.widgets.TbMenu',
                         'items' => array(
-                            array('label' => Translate::trad('APropos'), 'url' => array('/site/page', 'view' => 'about')),
-                            array('label' => Translate::trad('Contact'), 'url' => array('/site/contact')),
+                            array('label' => Translate::trad('APropos'), 'icon' => 'info-sign white', 'url' => array('/site/page', 'view' => 'about')),
+                            array('label' => Translate::trad('Contact'), 'icon' => 'comment', 'url' => array('/site/contact')),
                             '---',
-                            array('label' => Translate::trad('CreerTicket'), 'url' => array('/locataire/admin'), 'visible' => $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_USER || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ADMIN || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ROOT),
-                            array('label' => Translate::trad('ListeTicket'), 'url' => array('/ticket/admin'), 'visible' => $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_USER || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ADMIN || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ROOT),
+                            array('label' => Translate::trad('CreerTicket'), 'icon' => 'pencil white', 'url' => array('/locataire/admin'), 'visible' => $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_USER || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ADMIN || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ROOT),
+                            array('label' => Translate::trad('ListeTicket'), 'icon' => 'list white', 'url' => array('/ticket/admin'), 'visible' => $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_USER || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ADMIN || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ROOT),
                             array('label' => Translate::trad('Creer') . Yii::app()->session['NouveauTicket'] . ' ticket', 'url' => array('/ticket/create'), 'visible' => $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_LOCATAIRE),
                             '---',
-                            array('label' => Translate::trad("GestionCompte"), 'url' => array('#'),
+                            array('label' => Translate::trad("GestionCompte"), 'icon' => 'cog white', 'url' => array('#'),
                                 'items' => array(
-                                    array('label' => Translate::trad("ChangePassword"), 'url' => array($varCheminAcces)),
-                                    array('label' => Translate::trad('Graphique'), 'url' => array('dashboard/vue'), 'visible' => ($personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ADMIN || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ROOT))),
+                                    array('label' => Translate::trad("ChangePassword"), 'icon' => 'lock ', 'url' => array($varCheminAcces)),
+                                    array('label' => Translate::trad('Graphique'), 'url' => array('dashboard/vue'), 'icon' => 'dashboard white', 'visible' => ($personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ADMIN || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ROOT))),
                                 'visible' => !Yii::app()->user->isGuest),
                             '---',
-                            array('label' => 'Admin', 'url' => array('/admin'), 'visible' => $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ROOT),
+                            array('label' => 'Admin', 'icon' => 'briefcase white', 'url' => array('/admin'), 'visible' => $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ROOT),
                         )),
                     array(
                         'class' => 'bootstrap.widgets.TbMenu',
                         'htmlOptions' => array('class' => 'pull-right'),
                         'items' => array(
                             '---',
-                            array('label' => Translate::trad('Connexion'), 'url' => array('/site/login'), 'itemOptions' => array('class' => 'flashText', 'color' => 'red'), 'visible' => Yii::app()->user->isGuest,),
-                            array('label' => Translate::trad('DeConnexion') . ' (' . Yii::app()->user->name . ')', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
+                            array('label' => Translate::trad('Connexion'), 'url' => array('/site/login'), 'icon' => 'user white', 'itemOptions' => array('class' => 'flashText', 'color' => 'red'), 'visible' => Yii::app()->user->isGuest,),
+                            array('label' => Translate::trad('DeConnexion') . ' (' . Yii::app()->user->name . ')','icon' => 'off white', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
                         ),
                     ),
                 ),

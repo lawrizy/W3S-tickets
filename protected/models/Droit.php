@@ -1,106 +1,101 @@
 <?php
 
 /**
-* This is the model class for table "w3sys_droit".
-*
-* The followings are the available columns in table 'w3sys_droit':
-    * @property integer $id_droit
-    * @property integer $fk_controleur
-    * @property integer $fk_user
-    * @property integer $droits
-    *
-    * The followings are the available model relations:
-            * @property Controleur $fkControleur
-            * @property User $fkUser
-    */
-class Droit extends CActiveRecord
-{
-/**
-* @return string the associated database table name
-*/
-public function tableName()
-{
-return 'w3sys_droit';
-}
+ * This is the model class for table "w3sys_droit".
+ *
+ * The followings are the available columns in table 'w3sys_droit':
+ * @property integer $id_droit
+ * @property integer $fk_controleur
+ * @property integer $fk_user
+ * @property integer $droits
+ *
+ * The followings are the available model relations:
+ * @property Controleur $fkControleur
+ * @property User $fkUser
+ */
+class Droit extends CActiveRecord {
 
-/**
-* @return array validation rules for model attributes.
-*/
-public function rules()
-{
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName() {
+        return 'w3sys_droit';
+    }
+
+    /**
+     * @return array validation rules for model attributes.
+     */
+    public function rules() {
 // NOTE: you should only define rules for those attributes that
 // will receive user inputs.
-return array(
-    array('fk_controleur, fk_user', 'required'),
-    array('fk_controleur, fk_user, droits', 'numerical', 'integerOnly'=>true),
+        return array(
+            array('fk_controleur, fk_user', 'required'),
+            array('fk_controleur, fk_user, droits', 'numerical', 'integerOnly' => true),
 // The following rule is used by search().
 // @todo Please remove those attributes that should not be searched.
-array('id_droit, fk_controleur, fk_user, droits', 'safe', 'on'=>'search'),
-);
-}
+            array('id_droit, fk_controleur, fk_user, droits', 'safe', 'on' => 'search'),
+        );
+    }
 
-/**
-* @return array relational rules.
-*/
-public function relations()
-{
+    /**
+     * @return array relational rules.
+     */
+    public function relations() {
 // NOTE: you may need to adjust the relation name and the related
 // class name for the relations automatically generated below.
-return array(
-    'fkControleur' => array(self::BELONGS_TO, 'Controleur', 'fk_controleur'),
-    'fkUser' => array(self::BELONGS_TO, 'User', 'fk_user'),
-);
-}
+        return array(
+            'fkControleur' => array(self::BELONGS_TO, 'Controleur', 'fk_controleur'),
+            'fkUser' => array(self::BELONGS_TO, 'User', 'fk_user'),
+        );
+    }
 
-/**
-* @return array customized attribute labels (name=>label)
-*/
-public function attributeLabels()
-{
-return array(
-    'id_droit' => 'Id Droit',
-    'fk_controleur' => 'Fk Controleur',
-    'fk_user' => 'Fk User',
-    'droits' => 'Droits',
-);
-}
+    /**
+     * @return array customized attribute labels (name=>label)
+     */
+    public function attributeLabels() {
+        return array(
+            'id_droit' => 'Id Droit',
+            'fk_controleur' => 'Fk Controleur',
+            'fk_user' => 'Fk User',
+            'droits' => 'Droits',
+        );
+    }
 
-/**
-* Retrieves a list of models based on the current search/filter conditions.
-*
-* Typical usecase:
-* - Initialize the model fields with values from filter form.
-* - Execute this method to get CActiveDataProvider instance which will filter
-* models according to data in model fields.
-* - Pass data provider to CGridView, CListView or any similar widget.
-*
-* @return CActiveDataProvider the data provider that can return the models
-* based on the search/filter conditions.
-*/
-public function search()
-{
+    /**
+     * Retrieves a list of models based on the current search/filter conditions.
+     *
+     * Typical usecase:
+     * - Initialize the model fields with values from filter form.
+     * - Execute this method to get CActiveDataProvider instance which will filter
+     * models according to data in model fields.
+     * - Pass data provider to CGridView, CListView or any similar widget.
+     *
+     * @return CActiveDataProvider the data provider that can return the models
+     * based on the search/filter conditions.
+     */
+    public function search() {
 // @todo Please modify the following code to remove attributes that should not be searched.
 
-$criteria=new CDbCriteria;
+        $criteria = new CDbCriteria;
 
-		$criteria->compare('id_droit',$this->id_droit);
-		$criteria->compare('fk_controleur',$this->fk_controleur);
-		$criteria->compare('fk_user',$this->fk_user);
-		$criteria->compare('droits',$this->droits);
+        $criteria->compare('id_droit', $this->id_droit);
+        $criteria->compare('fk_controleur', $this->fk_controleur);
+        $criteria->compare('fk_user', $this->fk_user);
+        $criteria->compare('droits', $this->droits);
 
-return new CActiveDataProvider($this, array(
-'criteria'=>$criteria,
-));
-}
+        return new CActiveDataProvider($this, array(
+            'criteria' => $criteria,
+        ));
+    }
 
-/**
-* Returns the static model of the specified AR class.
-* Please note that you should have this exact method in all your CActiveRecord descendants!
-* @param string $className active record class name.
-* @return Droit the static model class
-*/
-public static function model($className=__CLASS__)
-{
-return parent::model($className);
-}
+    /**
+     * Returns the static model of the specified AR class.
+     * Please note that you should have this exact method in all your CActiveRecord descendants!
+     * @param string $className active record class name.
+     * @return Droit the static model class
+     */
+    public static function model($className = __CLASS__) {
+        return parent::model($className);
+    }
+
 }
