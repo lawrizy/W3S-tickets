@@ -71,6 +71,7 @@ class CategorieIncidentController extends Controller {
                 array_push($allow, 'createsouscat');
             }
             if ($rights & self::ACTION_UPDATE) {
+                array_push($allow, 'update');
                 array_push($allow, 'updatecat');
                 array_push($allow, 'updatesouscat');
             }
@@ -243,7 +244,16 @@ class CategorieIncidentController extends Controller {
             ));
         }
     }
-
+    
+    public function actionUpdate($id)
+    {
+        $model = $this->loadModel($id);
+        if($model->fk_parent == null) // Si c'est une catégorie parente, rediriger vers actionUpdateCat($id);
+            $this->redirect(array('updatecat', 'id'=>$id));
+        else
+            $this->redirect(array('updatesouscat', 'id'=>$id));
+    }
+    
     /**
      * Updates a particular model.
      * If update is successful, the browser will be redirected to the 'view' page.
