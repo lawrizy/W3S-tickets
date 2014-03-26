@@ -31,12 +31,14 @@ class AdminController extends Controller {
      */
     public function accessRules() { // droit des utilisateur sur les actions
         if (!Yii::app()->user->isGuest) { // Génération des droits selon le user
-            $allow = array();
+            $allow = array('noright');
             if (Yii::app()->session['Logged']->fk_fonction == Constantes::FONCTION_ROOT) {
-                    array_push($allow, 'update');
+                array_push($allow, 'update');
+                array_push($allow, 'index');
+            } elseif (Yii::app()->session['Logged']->fk_fonction != Constantes::FONCTION_LOCATAIRE) {
+                array_push($allow, 'index');
             }
             
-            array_push($allow, 'index');
             
             return array(// Ici on a plus qu'à envoyer la liste des droits
                 array('allow', // Ici l'array des droits 'permis'
@@ -74,15 +76,6 @@ class AdminController extends Controller {
 
         if (isset($_POST['tmp'])) {
 //            $rights = new Rights();
-
-            // Droits sur AdminController
-            $droit = 0;
-            $droit +=(int) isset($_POST['AdminIndex']) ? AdminController::ACTION_INDEX : 0;
-            $droit +=(int) isset($_POST['AdminUpdate']) ? AdminController::ACTION_UPDATE : 0;
-            $DroitModel = Droit::model()->findByAttributes(array('fk_user' => $model->id_user, 'fk_controleur' => AdminController::ID_CONTROLLER));
-            $DroitModel->droits = $droit;
-            $DroitModel->save();
-//            $rights->setAdmin($droit);
 
             // Droits sur BatimentController
             $droit = 0;
@@ -131,14 +124,6 @@ class AdminController extends Controller {
             $DroitModel->save();
 //            $rights->setEntreprise($droit);
 
-            // Droits sur LieuController
-            $droit = 0;
-            $droit += isset($_POST['LieuView']) ? LieuController::ACTION_TOUS : 0;
-            $DroitModel = Droit::model()->findByAttributes(array('fk_user' => $model->id_user, 'fk_controleur' => LieuController::ID_CONTROLLER));
-            $DroitModel->droits = $droit;
-            $DroitModel->save();
-//            $rights->setLieu($droit);
-
             // Droits sur LocataireController
             $droit = 0;
             $droit += isset($_POST['LocataireView']) ? LocataireController::ACTION_VIEW : 0;
@@ -162,15 +147,6 @@ class AdminController extends Controller {
             $DroitModel->droits = $droit;
             $DroitModel->save();
 //            $rights->setTicket($droit);
-
-            // Droits sur TradController
-            $droit = 0;
-            $droit += isset($_POST['TradIndex']) ? TradController::ACTION_TOUS : 0;
-                    // Dans le cas du trad, on a tous les droits ou on en a aucun
-            $DroitModel = Droit::model()->findByAttributes(array('fk_user' => $model->id_user, 'fk_controleur' => TradController::ID_CONTROLLER));
-            $DroitModel->droits = $droit;
-            $DroitModel->save();
-//            $rights->setTrad($droit);
 
             // Droits sur UserController
             $droit = 0;
