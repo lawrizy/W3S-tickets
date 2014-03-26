@@ -11,7 +11,7 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Create User', 'url' => array('create')),
+    array('label' => 'Create User', 'url' => array('create'), 'visible' => Yii::app()->session['Rights']->getUser() & UserController::ACTION_CREATE),
 );
 
 Yii::app()->clientScript->registerScript('search', "

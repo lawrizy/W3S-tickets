@@ -8,7 +8,7 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Gérer les utilisateurs', 'url' => array('admin')),
+    array('label' => 'Gérer les utilisateurs', 'url' => array('admin'), 'visible' => Yii::app()->session['Rights']->getUser() & UserController::ACTION_ADMIN),
 );
 ?>
 

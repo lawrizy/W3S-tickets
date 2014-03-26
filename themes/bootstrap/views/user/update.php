@@ -9,8 +9,8 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Détails de l\'utilisateur', 'url' => array('view', 'id' => $model->id_user)),
-    array('label' => 'Manage User', 'url' => array('admin')),
+    array('label' => 'Détails de l\'utilisateur', 'url' => array('view', 'id' => $model->id_user),'visible'=>  Yii::app()->session['Rights']->getUser()& UserController::ACTION_VIEW),
+    array('label' => 'Manage User', 'url' => array('admin'),'visible'=>  Yii::app()->session['Rights']->getUser()& UserController::ACTION_ADMIN),
 );
 ?>
 
