@@ -50,18 +50,17 @@
                         <th style="background-color: black;"></th>
                         <th>Index</th>
                         <th>View</th>
+                        <th>Admin</th>
                         <th>Create</th>
                         <th>Update</th>
                         <th>Delete</th>
                     </tr>
-                    <?php
-                        if ($model->fk_fonction != Constantes::FONCTION_LOCATAIRE) {
-                    ?>
                     <?php $droit = $rights->getBatiment(); ?>
                     <tr>
                         <td>Batiment</td>
                         <td style="background-color: #802420"></td> <!-- Index -->
                         <td><input class="BatimentView" type="checkbox" name="BatimentView" <?php echo $droit & BatimentController::ACTION_VIEW ? 'checked' : ''; ?> /></td> <!-- View -->
+                        <td><input class="BatimentAdmin" type="checkbox" name="BatimentAdmin" <?php echo $droit & BatimentController::ACTION_ADMIN ? 'checked' : ''; ?> /></td> <!-- Admin -->
                         <td><input class="BatimentCreate" type="checkbox" name="BatimentCreate" <?php echo $droit & BatimentController::ACTION_CREATE ? 'checked' : ''; ?> /></td> <!-- Create -->
                         <td><input class="BatimentUpdate" type="checkbox" name="BatimentUpdate" <?php echo $droit & BatimentController::ACTION_UPDATE ? 'checked' : ''; ?> /></td> <!-- Update -->
                         <td><input class="BatimentDelete" type="checkbox" name="BatimentDelete" <?php echo $droit & BatimentController::ACTION_DELETE ? 'checked' : ''; ?> /></td> <!-- Delete -->
@@ -71,6 +70,7 @@
                         <td>Category</td>
                         <td style="background-color: #802420"></td> <!-- Index -->
                         <td><input class="CategoryView" type="checkbox" name="CategoryView" <?php echo $droit & CategorieIncidentController::ACTION_VIEW ? 'checked' : ''; ?> /></td> <!-- View -->
+                        <td><input class="CategoryAdmin" type="checkbox" name="CategoryAdmin" <?php echo $droit & CategorieIncidentController::ACTION_ADMIN ? 'checked' : ''; ?> /></td> <!-- Admin -->
                         <td><input class="CategoryCreateCat" type="checkbox" name="CategoryCreate" <?php echo $droit & CategorieIncidentController::ACTION_CREATE ? 'checked' : ''; ?> /></td> <!-- Create -->
                         <td><input class="CategoryUpdateCat" type="checkbox" name="CategoryUpdate" <?php echo $droit & CategorieIncidentController::ACTION_UPDATE ? 'checked' : ''; ?> /></td> <!-- Update -->
                         <td><input class="CategoryDelete" type="checkbox" name="CategoryDelete" <?php echo $droit & CategorieIncidentController::ACTION_DELETE ? 'checked' : ''; ?> /></td> <!-- Delete -->
@@ -80,6 +80,7 @@
                         <td>Dashboard</td>
                         <td><input  class="DashBoardVue" type="checkbox" name="DashBoardVue" <?php echo $droit & DashboardController::ACTION_TOUS ? 'checked' : ''; ?> /></td> <!-- Index -->
                         <td style="background-color: #802420"></td> <!-- View -->
+                        <td style="background-color: #802420"></td> <!-- Admin -->
                         <td style="background-color: #802420"></td> <!-- Create -->
                         <td style="background-color: #802420"></td> <!-- Update -->
                         <td style="background-color: #802420"></td> <!-- Delete -->
@@ -89,6 +90,7 @@
                         <td>Entreprise</td>
                         <td style="background-color: #802420"></td> <!-- Index -->
                         <td><input  class="EntrepriseView" type="checkbox" name="EntrepriseView" <?php echo $droit & EntrepriseController::ACTION_VIEW ? 'checked' : ''; ?> /></td> <!-- View -->
+                        <td><input  class="EntrepriseAdmin" type="checkbox" name="EntrepriseAdmin" <?php echo $droit & EntrepriseController::ACTION_ADMIN ? 'checked' : ''; ?> /></td> <!-- Admin -->
                         <td><input  class="EntrepriseCreate" type="checkbox" name="EntrepriseCreate" <?php echo $droit & EntrepriseController::ACTION_CREATE ? 'checked' : ''; ?> /></td> <!-- Create -->
                         <td><input  class="EntrepriseUpdate" type="checkbox" name="EntrepriseUpdate" <?php echo $droit & EntrepriseController::ACTION_UPDATE ? 'checked' : ''; ?> /></td> <!-- Update -->
                         <td><input  class="EntrepriseDelete" type="checkbox" name="EntrepriseDelete" <?php echo $droit & EntrepriseController::ACTION_DELETE ? 'checked' : ''; ?> /></td> <!-- Delete -->
@@ -98,6 +100,7 @@
                         <td>Locataire</td>
                         <td style="background-color: #802420"></td> <!-- Index -->
                         <td><input  class="LocataireView" type="checkbox" name="LocataireView" <?php echo $droit & LocataireController::ACTION_VIEW ? 'checked' : ''; ?> /></td> <!-- View -->
+                        <td><input  class="LocataireAdmin" type="checkbox" name="LocataireAdmin" <?php echo $droit & LocataireController::ACTION_ADMIN ? 'checked' : ''; ?> /></td> <!-- Admin -->
                         <td><input  class="LocataireCreate" type="checkbox" name="LocataireCreate" <?php echo $droit & LocataireController::ACTION_CREATE ? 'checked' : ''; ?> /></td> <!-- Create -->
                         <td><input  class="LocataireUpdate" type="checkbox" name="LocataireUpdate" <?php echo $droit & LocataireController::ACTION_UPDATE ? 'checked' : ''; ?> /></td> <!-- Update -->
                         <td><input  class="LocataireDelete" type="checkbox" name="LocataireDelete" <?php echo $droit & LocataireController::ACTION_DELETE ? 'checked' : ''; ?> /></td> <!-- Delete -->
@@ -107,6 +110,7 @@
                         <td>Ticket</td>
                         <td style="background-color: #802420"></td> <!-- Index -->
                         <td><input class="TicketView"  type="checkbox" name="TicketView" <?php echo $droit & TicketController::ACTION_VIEW ? 'checked' : ''; ?> /></td> <!-- View -->
+                        <td><input class="TicketAdmin" type="checkbox" name="TicketAdmin" <?php echo $droit & TicketController::ACTION_ADMIN ? 'checked' : ''; ?> /></td> <!-- Admin -->
                         <td><input class="TicketCreate" type="checkbox" name="TicketCreate" <?php echo $droit & TicketController::ACTION_CREATE ? 'checked' : ''; ?> /></td> <!-- Create -->
                         <td><input class="TicketUpdate" type="checkbox" name="TicketUpdate" <?php echo $droit & TicketController::ACTION_UPDATE ? 'checked' : ''; ?> /></td> <!-- Update -->
                         <td><input class="TicketDelete" type="checkbox" name="TicketDelete" <?php echo $droit & TicketController::ACTION_DELETE ? 'checked' : ''; ?> /></td> <!-- Delete -->
@@ -116,13 +120,11 @@
                         <td>User</td>
                         <td style="background-color: #802420"></td> <!-- Index -->
                         <td><input class="UserView" type="checkbox" name="UserView" <?php echo $droit & UserController::ACTION_VIEW ? 'checked' : ''; ?> /></td> <!-- View -->
+                        <td><input class="UserAdmin" type="checkbox" name="UserAdmin" <?php echo $droit & UserController::ACTION_ADMIN ? 'checked' : ''; ?> /></td> <!-- Admin -->
                         <td><input class="UserCreate" type="checkbox" name="UserCreate" <?php echo $droit & UserController::ACTION_CREATE ? 'checked' : ''; ?> /></td> <!-- Create -->
                         <td><input class="UserUpdate" type="checkbox" name="UserUpdate" <?php echo $droit & UserController::ACTION_UPDATE ? 'checked' : ''; ?> /></td> <!-- Update -->
                         <td><input class="UserDelete" type="checkbox" name="UserDelete" <?php echo $droit & UserController::ACTION_DELETE ? 'checked' : ''; ?> /></td> <!-- Delete -->
                     </tr>
-                    <?php
-                        }
-                    ?>
                 </table>
                 <?php
                 $this->widget('bootstrap.widgets.TbButton', array(
@@ -320,5 +322,8 @@
         else $(".UserView").attr('checked', true);
     });
     // ------------------------------- Fin User --------------------------------
+    
+    
+    // -------------------------------- Fin Mix --------------------------------
 </script>
 <?php } ?>

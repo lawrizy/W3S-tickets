@@ -1,16 +1,7 @@
 <?php
 
 class TradController extends Controller {
-    /*
-     * Les constantes suivantes correspondent aux actions. Il y a une constante
-     * pour chaque action de ce contrôleur. Ces constantes serviront à attribuer
-     * ou non des droits aux utilisateurs (voir la méthode 'accessRules()' de 
-     * ce même contrôleur)
-     */
-
-    Const ID_CONTROLLER = 8;
-    Const ACTION_TOUS = 1;
-
+    
     public $layout = '//layouts/column2';
 
     public function filters() {
@@ -24,13 +15,13 @@ class TradController extends Controller {
      * La méthode permettant d'accorder des droits aux différents utilisateurs.
      * Cette méthode est appelée à chaque fois que l'on veut accéder à une action
      * de ce controleur. La méthode vérifie les droits que cet utilisateur a sur
-     * ce controleur et génère les arrays 'allow' (permis) et 'deny' (refusé)
-     * selon ces droits-là.
+     * ce controleur et génère l'array 'allow' (permis) selon ces droits-là.
      */
     public function accessRules() { // droit des utilisateur sur les actions
         if (!Yii::app()->user->isGuest) { // Génération des droits selon le user
             $allow = array('noright');
-
+            
+            // Seul les root ont des droits sur ce contrôleur
             if (Yii::app()->session['Logged']->fk_fonction == Constantes::FONCTION_ROOT) {
                 array_push($allow, 'update');
                 array_push($allow, 'index');
@@ -44,7 +35,7 @@ class TradController extends Controller {
                     'users' => array('@'), // Autorisé pour les user loggés
                 ),
                 array('deny', // Refuse autre users
-                    'users' => array('@'), // Refus aux visiteurs non loggés
+                    'users' => array('@'), // Refus aux visiteurs loggés
                     'message' => 'Vous n\'avez pas accès à cette page.'
                 // Le message qui sera affiché
                 ),
