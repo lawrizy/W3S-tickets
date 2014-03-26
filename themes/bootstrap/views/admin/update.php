@@ -323,7 +323,19 @@
     });
     // ------------------------------- Fin User --------------------------------
     
-    
+    $(".TicketCreate").click(function() {
+        if ($(".TicketCreate").is(':checked')) {
+            $(".LocataireView").attr('checked', true);
+            $(".LocataireAdmin").attr('checked', true);
+    }});
+    $(".LocataireView").click(function() {
+        if (!$(".LocataireView").is(':checked')) {
+            $(".TicketCreate").attr('checked', false);
+    }});
+    $(".LocataireAdmin").click(function() {
+        if (!$(".LocataireAdmin").is(':checked')) {
+            $(".TicketCreate").attr('checked', false);
+    }});
     // -------------------------------- Fin Mix --------------------------------
 </script>
 <?php } ?>
