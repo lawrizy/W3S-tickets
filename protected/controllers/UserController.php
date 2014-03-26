@@ -8,13 +8,13 @@ class UserController extends Controller {
      * ce même contrôleur)
      */
 
-    Const ID_CONTROLLER = 10;
+    Const ID_CONTROLLER = 9;
     Const ACTION_VIEW = 1;
     Const ACTION_CREATE = 2;
     COnst ACTION_DELETE = 4;
     const ACTION_UPDATE = 8;
     const ACTION_ADMIN = 16;
-    const ACTION_CHANGEPASSWORD = 32;
+    // const ACTION_CHANGEPASSWORD = 32;
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning

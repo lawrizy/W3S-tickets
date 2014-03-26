@@ -8,7 +8,7 @@ class TradController extends Controller {
      * ce même contrôleur)
      */
 
-    Const ID_CONTROLLER = 9;
+    Const ID_CONTROLLER = 8;
     Const ACTION_TOUS = 1;
 
     public $layout = '//layouts/column2';

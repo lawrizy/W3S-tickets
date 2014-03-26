@@ -8,7 +8,7 @@ class LocataireController extends Controller {
      * ce même contrôleur)
      */
 
-    const ID_CONTROLLER = 7;
+    const ID_CONTROLLER = 6;
     const ACTION_VIEW = 1;
     const ACTION_CREATE = 2;
     const ACTION_DELETE = 4;

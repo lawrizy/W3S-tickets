@@ -8,7 +8,7 @@ class TicketController extends Controller {
      * ou non des droits aux utilisateurs (voir la méthode 'accessRules()' de 
      * ce même contrôleur)
      */
-    Const ID_CONTROLLER = 8;
+    Const ID_CONTROLLER = 7;
     Const ACTION_VIEW = 1;
     Const ACTION_CREATE = 2;
     COnst ACTION_DELETE = 4;

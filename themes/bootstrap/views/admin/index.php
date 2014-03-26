@@ -61,6 +61,9 @@ $this->pageTitle = Yii::app()->name . ' - Admin';
 </ul>
 </p>
 
+<?php
+    if (Yii::app()->session['Logged']->fk_fonction == Constantes::FONCTION_ROOT) {
+?>
 <p>
     <b>I18N:</b>
 <ul>
@@ -68,6 +71,8 @@ $this->pageTitle = Yii::app()->name . ' - Admin';
     <li><a href="trad/modifyTraduction"><?php echo Translate::trad('ModifierTradExistante'); ?></a></li>
 </ul>
 </p>
+
+
 <p>
     <b><?php echo Translate::trad('ChangerDroits'); ?>:</b>
 <ul>
@@ -75,3 +80,6 @@ $this->pageTitle = Yii::app()->name . ' - Admin';
     <li><a href="admin/update?id=<?php echo $id_user?>"><?php echo Translate::trad('ChangerDroitsUtilisateur'); ?></a></li>
 </ul>
 </p>
+<?php
+    }
+?>
