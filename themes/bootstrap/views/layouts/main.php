@@ -7,17 +7,18 @@
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
         </script>
         <!--<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">-->
-            <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/styles.css"/>
+        <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/styles.css"/>
 
-            <title><?php echo CHtml::encode($this->pageTitle); ?></title>
+        <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
-            <?php Yii::app()->bootstrap->register(); ?>
+        <?php Yii::app()->bootstrap->register(); ?>
     </head>
 
     <body>
 
         <!-- HEADER -->
         <div id="header">
+
             <?php
             $varCheminAcces = "";
             $personneAuthentifie = Yii::app()->session['Logged'];
@@ -30,11 +31,11 @@
                         'class' => 'bootstrap.widgets.TbMenu',
                         'items' => array(
                             array('label' => Translate::trad('APropos'), 'icon' => 'info-sign white', 'url' => array('/site/page', 'view' => 'about')),
-                            array('label' => Translate::trad('Contact'), 'icon' => 'comment', 'url' => array('/site/contact')),
+                            array('label' => Translate::trad('Contact'), 'icon' => 'comment white', 'url' => array('/site/contact')),
                             '---',
                             array('label' => Translate::trad('CreerTicket'), 'icon' => 'pencil white', 'url' => array('/locataire/admin'), 'visible' => $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_USER || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ADMIN || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ROOT),
                             array('label' => Translate::trad('ListeTicket'), 'icon' => 'list white', 'url' => array('/ticket/admin'), 'visible' => $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_USER || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ADMIN || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ROOT),
-                            array('label' => Translate::trad('Creer') . Yii::app()->session['NouveauTicket'] . ' ticket', 'url' => array('/ticket/create'), 'visible' => $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_LOCATAIRE),
+                            array('label' => Translate::trad('Creer') . Yii::app()->session['NouveauTicket'] . ' ticket', 'icon' => 'pencil white', 'url' => array('/ticket/create'), 'visible' => $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_LOCATAIRE),
                             '---',
                             array('label' => Translate::trad("GestionCompte"), 'icon' => 'cog white', 'url' => array('#'),
                                 'items' => array(
@@ -50,7 +51,7 @@
                         'items' => array(
                             '---',
                             array('label' => Translate::trad('Connexion'), 'url' => array('/site/login'), 'icon' => 'user white', 'itemOptions' => array('class' => 'flashText', 'color' => 'red'), 'visible' => Yii::app()->user->isGuest,),
-                            array('label' => Translate::trad('DeConnexion') . ' (' . Yii::app()->user->name . ')','icon' => 'off white', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
+                            array('label' => Translate::trad('DeConnexion') . ' (' . Yii::app()->user->name . ')', 'icon' => 'off white', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
                         ),
                     ),
                 ),
@@ -94,7 +95,7 @@
 
                     <div id="aaaa">
                         <table>
-                            <tr>
+                            <tr> 
                                 <td width="50%"><a href=<?php echo Yii::app()->request->baseUrl; ?>><img width="40%"
                                                                                                          src="http://web3sys.com/tickets/images/HServices.png"/></a></td>
                                 <td width="50%"><a href="http://web3sys.com"><img align="right" width="40%"
@@ -128,6 +129,7 @@
                             }
                             ?>
                             <div id="copyright">
+                                <span class="glyphicon glyphicon-dashboard"></span>
                                 Copyright <?php echo Yii::app()->name . ' &copy; v0.1.9'; ?> <?php echo date('Y') . ' ' . Translate::trad('Par'); ?>  <a href="http://web3sys.com">Web3Sys</a>.<br/>
                                 <?php echo Translate::trad('DroitsReserve'); ?><br/>
                             </div>

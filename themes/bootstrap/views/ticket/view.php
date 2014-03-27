@@ -18,7 +18,7 @@ $this->menu = array(
     array('label' => Translate::trad('MenuTicketDelete'), 'url' => '#',
         'linkOptions' => array('submit' => array('delete', 'id' => $model->id_ticket), 'confirm' => 'Are you sure you want to delete this item?'),
         'visible' => Yii::app()->session['Rights']->getTicket() & TicketController::ACTION_DELETE),
-    )
+        )
 ?>
 <h1><?php echo Translate::trad('ViewTitre') . $model->code_ticket;
 ?></h1>

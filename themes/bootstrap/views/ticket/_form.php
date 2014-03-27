@@ -46,7 +46,7 @@
     // Cette dropDownList est initialisée vide car elle sera remplie après la sélection d'une catégorie ci-dessus.
     echo CHtml::dropDownList('DD_sousCat', '', array());
     ?>
-
+    <img class="loadingSous" src="../../assets/7d883f12/img/loading.gif">
 
     <?php
     echo '<label>' . Translate::trad('SelectionnerBatiment') . '<span class="required"> *</span></label>';
@@ -77,3 +77,17 @@
     <?php $this->endWidget(); ?>
 
 </div><!-- form -->
+<script>
+    $(document).ready(function() {
+        $(".loadingSous").hide();
+    });
+
+    $("#Categorie").ajaxStart(function() {
+        $(".loadingSous").show();
+
+    });
+    $("#Categorie").ajaxStop(function() {
+        $(".loadingSous").hide();
+
+    });
+</script>

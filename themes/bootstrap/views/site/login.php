@@ -10,7 +10,7 @@ $this->breadcrumbs = array(
 );
 ?>
 
-<h1 class="h1"><?php echo Translate::trad('ConnexionTitre'); ?></h1>
+<h1 class="h1"></span><?php echo Translate::trad('ConnexionTitre'); ?></h1>
 
 <p><?php echo Translate::trad('Indication'); ?></p>
 

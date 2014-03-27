@@ -31,19 +31,20 @@
             echo CHtml::dropDownList(
                     'batiment_selector', // Nom de la DDL
                     $defaultSelection, // Valeur selectionnée par défaut
-                    array( // Data
-                        'ALL' => Translate::trad('AllBatiment'),
-                        CHtml::listData(Batiment::model()->findAllByAttributes(array('visible' => Constantes::VISIBLE)), 'id_batiment', 'nom'),
-                    ),
-                    array( // htmlOptions
-                        'ajax' => array(
-                                    'type' => 'POST',
-                                    'url' => CController::createUrl('filterbybatiment'),
-                                    'data' => array('idBatiment' => 'js: this.value'),
-                                    'update' => "#graphs",
-                    ))
+                    array(// Data
+                'ALL' => Translate::trad('AllBatiment'),
+                CHtml::listData(Batiment::model()->findAllByAttributes(array('visible' => Constantes::VISIBLE)), 'id_batiment', 'nom'),
+                    ), array(// htmlOptions
+                'ajax' => array(
+                    'type' => 'POST',
+                    'url' => CController::createUrl('filterbybatiment'),
+                    'data' => array('idBatiment' => 'js: this.value'),
+                    'update' => "#graphs",
+                ))
             );
             ?>
+            <img class="loadingSous" src="../../assets/7d883f12/img/loading.gif">
+
         </div>
         <!-- FIN DIV DROPDOWNLIST GRAPHS -->
 
@@ -55,3 +56,17 @@
         </div>
     </body>
 </html>
+<script>
+    $(document).ready(function() {
+        $(".loadingSous").hide();
+    });
+
+    $("#batiment_selector").ajaxStart(function() {
+        $(".loadingSous").show();
+
+    });
+    $("#batiment_selector").ajaxStop(function() {
+        $(".loadingSous").hide();
+
+    });
+</script>
