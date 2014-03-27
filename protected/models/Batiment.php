@@ -12,8 +12,8 @@
  * @property integer $cpt
  * @property string $code
  * @property integer $visible
- *
- * The followings are the available model relations:
+ */
+ /* The followings are the available model relations:
  * @property Secteur[] $secteurs
  */
 class Batiment extends CActiveRecord {

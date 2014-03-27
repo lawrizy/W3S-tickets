@@ -2,14 +2,14 @@
 
 class Constantes {
     /*
-     * Les différents champs visibles de toutes les tables sont des booléens
+     * @Les différents champs visibles de toutes les tables sont des booléens
      */
 
     const INVISIBLE = 0;
     const VISIBLE = 1;
 
     /*
-     * Les canaux étant fixes, on stocke directement la valeur de leur id ici pour pouvoir les tester
+     * @Les canaux étant fixes, on stocke directement la valeur de leur id ici pour pouvoir les tester
      */
     const CANAL_PHONE = 1;
     const CANAL_WEB = 2;
