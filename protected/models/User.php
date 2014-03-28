@@ -91,7 +91,7 @@ class User extends CActiveRecord {
         $criteria->compare('nom', $this->nom, true);
         $criteria->compare('email', $this->email, true);
         $criteria->compare('password', $this->password, true);
-        $criteria->compare('fk_fonction', $this->fk_fonction);
+        $criteria->compare('fk_fonction', $this->fk_fonction!=Constantes::FONCTION_LOCATAIRE);
         $criteria->compare('fk_langue', $this->fk_langue);
         $criteria->compare('visible', $this->visible);
 
