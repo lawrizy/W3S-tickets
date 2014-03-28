@@ -43,6 +43,7 @@ $this->breadcrumbs = array(
             'buttonType' => 'submit',
             'type' => 'primary',
             'label' => Translate::trad('ConnexionButton'),
+      
         ));
         ?>
     </div>
