@@ -93,7 +93,9 @@ if ($idBatiment == 'ALL') { // Cas 1 : sélectionner tous les bâtiments
             'options' => array()
         )
     );
-} ?>
+}
+
+?>
 <script>
     $(document).ready(function() {
         $(".loadingSous").hide();
