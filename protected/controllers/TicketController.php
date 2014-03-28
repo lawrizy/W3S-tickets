@@ -223,11 +223,11 @@ class TicketController extends Controller {
                 }
                 $this->redirect(array('view', 'id' => $oldmodel['id_ticket']));
             } catch (CDbException $ex) {
-                Yii::trace('dans catch', 'cron');
+//                Yii::trace('dans catch', 'cron');
                 echo 'erreur' . $ex->getMessage();
                 Yii::app()->session['erreurDB'] = 'Souci avec la base de données, veuillez contacter votre administrateur';
             }
-            Yii::trace('Après catch', 'cron');
+//            Yii::trace('Après catch', 'cron');
         }
         $this->render('traitement', array(
             'model' => $this->loadModel($id),
