@@ -94,18 +94,6 @@ class DashboardController extends Controller {
      * Retourne une liste contenant un label de catégorie lié à une valeur représentant la fréquence de cette catégorie dans la DB.
      * Format : array( [labelCatégorie] => [fréqCatégorie] )
      */
-    public function getDataForCategoriesStats() {
-        
-    }
-
-    public function getNombreIncidentElectricite() {
-        return (int) CategorieIncident::model()->countByAttributes(array('fk_parent' => 2));
-    }
-
-    public function getNombreIncidentSanitaire() {
-        return (int) CategorieIncident::model()->countByAttributes(array('fk_parent' => 1));
-    }
-
     public function actionGetTicketByCategorie() {
         //Yii::trace("actionGetTicketByCategorie", "cron");
         $categories = $this->getCategories();
@@ -153,30 +141,32 @@ class DashboardController extends Controller {
      * est passé en paramètre).
      * @param $idBatiment Le bâtiment pour lequel calculer la fréquence des statuts ticket (ouvert, inprogress, closed)
      * @return array Une liste contenant un statut associé à une valeur représentant sa fréquence.
-     *              Format : array($label=>$value)
+     * Format : array($label=>$value)
      */
     public function actionGetTicketByStatusForBatimentID($idBatiment) {
         $nbStatutTicket = array();
-
-        for ($idStatut = Constantes::STATUT_OPENED; $idStatut <= Constantes::STATUT_CLOSED; ++$idStatut) {
-            $nbTicket = Ticket::model()->countByAttributes(array('fk_batiment' => $idBatiment, 'fk_statut' => $idStatut));
-
-            if ($idStatut == Constantes::STATUT_OPENED) {
-                $label = ' nouveau(x)';
-                $color = 'rgba(220, 0,0,1)';
-            } elseif ($idStatut == Constantes::STATUT_TREATMENT) {
-                $label = ' en cours';
-                $color = 'rgba(66,200,22,1)';
-            } else {
-                $label = ' clôturé(s)';
-                $color = 'rgba(242,106,22,1)';
-            }
-            $value = array(
-                "value" => (int) $nbTicket,
-                "color" => $color,
-                "label" => (int) ($nbTicket) . $label);
-            array_push($nbStatutTicket, $value);
-        }
+        
+        $nbTicket = Ticket::model()->countByAttributes(array('fk_batiment' => $idBatiment, 'fk_statut' => Constantes::STATUT_OPENED));
+        $value = array(
+            "value" => (int) $nbTicket,
+            "color" => 'rgba(220, 0,0,1)',
+            "label" => (int) ($nbTicket) . ' ' . Translate::trad('AjaxStatutNew'));
+        array_push($nbStatutTicket, $value);
+        
+        $nbTicket = Ticket::model()->countByAttributes(array('fk_batiment' => $idBatiment, 'fk_statut' => Constantes::STATUT_TREATMENT));
+        $value = array(
+            "value" => (int) $nbTicket,
+            "color" => 'rgba(242,106,22,1)',
+            "label" => (int) ($nbTicket) . ' ' . Translate::trad('AjaxStatutInProgress'));
+        array_push($nbStatutTicket, $value);
+        
+        $nbTicket = Ticket::model()->countByAttributes(array('fk_batiment' => $idBatiment, 'fk_statut' => Constantes::STATUT_CLOSED));
+        $value = array(
+            "value" => (int) $nbTicket,
+            "color" => 'rgba(66,200,22,1)',
+            "label" => (int) ($nbTicket) . ' ' . Translate::trad('AjaxStatutClosed'));
+        array_push($nbStatutTicket, $value);
+        
         return $nbStatutTicket;
     }
 
