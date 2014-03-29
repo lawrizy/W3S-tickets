@@ -153,17 +153,26 @@ class CategorieIncidentController extends Controller {
         $db = Yii::app()->db;
         $tsql = $db->beginTransaction();
         
+        $trad = new Trad();
+        $trad->fr = '';
+        $trad->en = '';
+        $trad->nl = '';
+        
         $model = new CategorieIncident();
         // On génère un premier modèle
         // Vérifie si a bien reçu un objet 'CategorieIncident'
         // ==> si non, c'est que c'est la première arrivée sur la page create,
         // ==> si oui, c'est que c'est la page create elle-même qui renvoie ici pour la création d'une catégorie
         if (isset($_POST['CategorieIncident'])) {
+            $trad->fr = $_POST['tradFR'];
+            $trad->nl = $_POST['tradNL'];
+            $trad->en = $_POST['tradEN'];
             $model->attributes = $_POST['CategorieIncident'];
             $model['fk_priorite'] = Constantes::PRIORITE_LOW;
             // Pour une catégorie parent, il n'y a pas de priorité mais pour la DB
             // qui en exige une, on en met une par défaut (elle n'est jamais utilisée)
-            if ($model->validate() && $_POST['fk_entreprise'] != null) {
+            if ($model->validate() && $_POST['fk_entreprise'] != null &&
+                    ($_POST['tradFR'] != '' && $_POST['tradNL'] != '' && $_POST['tradEN'] != '')) {
                 // Si la validation du modèle (vérifie que tout est bien présent comme il faut)
                 // et que l'entreprise reçu n'est pas null, alors on peut enregistrer
                 //if ($model->save(FALSE)) {  // Le FALSE indique qu'on ne désire pas
@@ -179,7 +188,7 @@ class CategorieIncidentController extends Controller {
                     $sousCat['fk_priorite'] = Constantes::PRIORITE_LOW;
                     // Une sous-catégorie 'Autre' est toujours à priorité basse
                     $sousCat->save(true);
-                            
+                    
                     $secteur = new Secteur();
                     $secteur->fk_entreprise = $_POST['fk_entreprise'];
                     $secteur['fk_categorie'] = $model['id_categorie_incident'];
@@ -190,8 +199,14 @@ class CategorieIncidentController extends Controller {
                     // Et enfin on redirige
                 }
             } else {
-                // Si la validation n'est pas bonne ou que l'entreprise est null ...
-                if ($_POST['fk_entreprise'] == null) {
+                // Si la validation n'est pas bonne, que l'entreprise est null
+                // ou que les traductions n'ont pas bien été remplies...
+                if ($_POST['tradFR'] == '' || $_POST['tradNL'] == '' || $_POST['tradEN'] == '') {
+                    // On vérifie si c'est l'une des traductions qui pose problème
+                    Yii::app()->session['errorTradField'] = true;
+                    // Si oui, on met une variable indiquant qu'il y a une erreur
+                    // Cette variable servira à afficher un message indiquant qu'il faut remplir les traductions
+                } elseif ($_POST['fk_entreprise'] == null) {
                     // On vérifie si c'est l'entreprise qui pose problème
                     Yii::app()->session['errorEntrepriseField'] = true;
                     // Si oui, on met une variable indiquant qu'il y a une erreur
@@ -203,12 +218,12 @@ class CategorieIncidentController extends Controller {
                     Yii::app()->session['id_entreprise'] = $_POST['fk_entreprise'];
                 }
                 $this->render('createCat', array(// Et dans les deux cas, on redirige
-                    'model' => $model,
+                    'model' => $model, 'trad' => $trad
                 ));
             }
         } else { // Si pas de CategorieIncident, donc premier arrivé sur la page et on se contente de l'afficher
             $this->render('createCat', array(
-                'model' => $model,
+                'model' => $model, 'trad' => $trad
             ));
         }
     }
@@ -218,28 +233,38 @@ class CategorieIncidentController extends Controller {
      * If creation is successful, the browser will be redirected to the 'view' page.
      */
     public function actionCreateSousCat() {
+        
+        $trad = new Trad();
+        $trad->fr = '';
+        $trad->en = '';
+        $trad->nl = '';
+        
         $model = new CategorieIncident();
         // On génère un premier modèle
         // Vérifie si a bien reçu un objet 'CategorieIncident'
         // ==> si non, c'est que c'est la première arrivée sur la page create,
         // ==> si oui, c'est que c'est la page create elle-même qui renvoie ici pour la création d'une catégorie
         if (isset($_POST['CategorieIncident'])) {
+            $trad->fr = $_POST['tradFR'];
+            $trad->nl = $_POST['tradNL'];
+            $trad->en = $_POST['tradEN'];
             $model->attributes = $_POST['CategorieIncident'];
-            if ($model['fk_parent'] != null && $this->attemptSave($model)) {
+            if ($model['fk_parent'] != null && ($_POST['tradFR'] != '' && $_POST['tradNL'] != ''
+                    && $_POST['tradEN'] != '') && $this->attemptSave($model)) {
                 $this->redirect(array('view', 'id' => $model->id_categorie_incident));
-            } else { // Si validation pas ok ou parent null
+            } else { // Si validation pas ok, traductions pas ok ou parent null
                 if ($model['fk_parent'] == null) // On vérifie si c'est le parent qui pose problème
                     Yii::app()->session['errorParentField'] = true;
                 // Si c'est bien le parent, on met une variable de session pour l'indiquer
                 // Ensuite dans la vue, on affichera un message si cette variable est à true
                 // Et enfin on redirige
                 $this->render('createSousCat', array(
-                    'model' => $model,
+                    'model' => $model, 'trad' => $trad
                 ));
             }
         } else { // Si aucune variable envoyée, alors c'est le premier passage sur la page
             $this->render('createSousCat', array(
-                'model' => $model,
+                'model' => $model, 'trad' => $trad
             ));
         }
     }

@@ -118,20 +118,7 @@ and open the template in the editor.
         </div>
     </form>
 </div>
-
 <script>
-    $(".AdminUpdate").click(function() {
-        if ($(".AdminUpdate").is(':checked')) {
-            $(".AdminIndex").attr('checked', true);
-            $(".AdminUpdate").attr('checked', true);
-        }
-    });
-    $(".AdminIndex").click(function() {
-        if (!$(".AdminIndex").is(':checked'))
-            $(".AdminUpdate").attr('checked', false);
-    });
-    // ------------------------------ Fin Admin --------------------------------
-
     $(".BatimentDelete").click(function() {
         if ($(".BatimentDelete").is(':checked')) {
             $(".BatimentAdmin").attr('checked', true);
@@ -311,7 +298,7 @@ and open the template in the editor.
             $(".TicketView").attr('checked', true);
     });
     // ------------------------------ Fin Ticket -------------------------------
-
+    
     $(".UserDelete").click(function() {
         if ($(".UserDelete").is(':checked')) {
             $(".UserView").attr('checked', true);
@@ -368,6 +355,8 @@ and open the template in the editor.
 </script>
 
 <script>
+    // Ce qui suit sert à afficher une image de chargement
+    // lorsqu'AJAX recherche les données d'un utilisateur
     $(document).ready(function() {
         $(".loadingSous").hide();
     });
@@ -381,4 +370,3 @@ and open the template in the editor.
 
     });
 </script>
-

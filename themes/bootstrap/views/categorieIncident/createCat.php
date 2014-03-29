@@ -9,9 +9,8 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Manage Categories', 'url' => array('admin'),'visible'=>  Yii::app()->session['Rights']->getCategorie() & CategorieIncidentController::ACTION_ADMIN),
+    array('label' => 'Manage Categories', 'url' => array('admin'),
+        'visible' => Yii::app()->session['Rights']->getCategorie() & CategorieIncidentController::ACTION_ADMIN),
 );
-?>
 
-
-<?php $this->renderPartial('_formCreateCat', array('model' => $model)); ?>
+$this->renderPartial('_formCreateCat', array('model' => $model, 'trad' => $trad)); ?>
