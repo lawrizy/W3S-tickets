@@ -1,13 +1,13 @@
 <?php
 
 class UserController extends Controller {
-    
     /*
      * Les constantes suivantes correspondent aux actions. Il y a une constante
      * pour chaque action de ce contrôleur. Ces constantes serviront à attribuer
      * ou non des droits aux utilisateurs (voir la méthode 'accessRules()' de 
      * ce même contrôleur)
      */
+
     const ID_CONTROLLER = 9;
     const ACTION_VIEW = 1;
     const ACTION_CREATE = 2;
@@ -70,9 +70,10 @@ class UserController extends Controller {
                 array_push($allow, 'update');
             if ($rights & self::ACTION_ADMIN)
                 array_push($allow, 'admin');
-            
+
             // Ce droit est un droit que tout le monde a
             array_push($allow, 'changepassword');
+
 
             return array(// Ici on a plus qu'à envoyer la liste des droits
                 array('allow', // Ici l'array des droits 'permis'
@@ -88,6 +89,10 @@ class UserController extends Controller {
         }
         else { // Si autre utilisateur (visiteur)
             return array(// Ici on a plus qu'à envoyer la liste des droits
+                array('allow',
+                    'actions' => array('quote'),
+                    'users' => array('*'),
+                ),
                 array('deny', // Refuse autre users
                     'users' => array('?'), // Refus aux visiteurs non loggés
                     'message' => 'Vous n\'avez pas accès à cette page.'
@@ -96,25 +101,25 @@ class UserController extends Controller {
             );
         }
     }
-    
+
     public function actions() {
-        Yii::trace('actions - ', 'cron');
         return array(
-            'quote'=>array(
-                'class'=>'CWebServiceAction',
+            'quote' => array(
+                'class' => 'CWebServiceAction',
             ),
         );
     }
-    
+
     /**
-     * @return string
+     * @param string $email Email de l'utilisateur
+     * @param string $password Mot de passe de l'utilisateur
+     *  @return int  $idUser l'id de l'utilisateur
      * @soap
      */
-    public function sayHello() {
-        Yii::trace('hello', 'cron');
-        return "Hello World!!!";
+    public function giveLogin($email, $password) {
+        return (int) User::model()->findAllByAttributes(array('email' => $email,'password' => md5($password)))->id_user;
     }
-    
+
     /**
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
@@ -322,7 +327,7 @@ class UserController extends Controller {
                 Yii::app()->user->setFlash('error', $e->getMessage());
             }
         }
-        $this->render('changePassword',array('model'=>$model));
+        $this->render('changePassword', array('model' => $model));
     }
 
 }

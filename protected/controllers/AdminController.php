@@ -10,6 +10,7 @@ class AdminController extends Controller {
             'accessControl',
             'postOnly + delete',
         );
+        
     }
 
     /**
