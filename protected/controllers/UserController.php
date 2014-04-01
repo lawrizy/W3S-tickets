@@ -96,25 +96,25 @@ class UserController extends Controller {
             );
         }
     }
-
-//    /*
-//     * Cette action nous permet d'attribuer des droits aux utilisateurs.
-//     * Sur la vue associée, on tombe sur un tableau permettant de choisir quels
-//     * droits donner à l'utilisateur selectionné.
-//     */
-//
-//    public function actionAccorderDroit($id) {
-//        $model = $this->loadModel($id);
-//
-//        if (isset($_POST['Admin'])) {
-//
-//
-//            $this->redirect(array('view', 'id' => $model->id_user));
-//        }
-//
-//        $this->render('accorderDroit', array('model' => $model));
-//    }
-
+    
+    public function actions() {
+        Yii::trace('actions - ', 'cron');
+        return array(
+            'quote'=>array(
+                'class'=>'CWebServiceAction',
+            ),
+        );
+    }
+    
+    /**
+     * @return string
+     * @soap
+     */
+    public function sayHello() {
+        Yii::trace('hello', 'cron');
+        return "Hello World!!!";
+    }
+    
     /**
      * Displays a particular model.
      * @param integer $id the ID of the model to be displayed
