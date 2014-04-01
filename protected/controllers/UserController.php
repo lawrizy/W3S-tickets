@@ -117,7 +117,8 @@ class UserController extends Controller {
      * @soap
      */
     public function giveLogin($email, $password) {
-        return (int) User::model()->findAllByAttributes(array('email' => $email,'password' => md5($password)))->id_user;
+        $idUser = User::model()->findByAttributes(array('email' => $email, 'password' => md5($password)));
+        return $idUser == null ?  0 : $idUser->id_user;
     }
 
     /**
