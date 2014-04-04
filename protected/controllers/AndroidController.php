@@ -15,10 +15,9 @@ class AndroidController extends Controller {
     /*
      * Les codes erreurs possibles lorsque le webService est appelé
      */
-    const ERROR_DB_INACCESSIBLE = 0;
-    const ERROR_USER_INEXISTANT = 1;
-    const ERROR_USER_OK = 2;
-
+    const ERROR_DB_INACCESSIBLE = -2;
+    const ERROR_USER_INEXISTANT = -1;
+    
     /**
      * @return array action filters
      */
@@ -61,23 +60,37 @@ class AndroidController extends Controller {
         try {
             $user = User::model()->findByAttributes(array('email' => $email, 'password' => md5($password)));
             if ($user !== null)
-                $error = self::ERROR_USER_OK;
+                $error = $user->id_user;
         } catch (CDbException $ex){
             $error = self::ERROR_DB_INACCESSIBLE;
         }
+        
         return $error;
     }
     
     /**
-     * @return CategorieIncident[] Liste des catégories parents
+     * @soap @var int
+     * @soap @var string
+     * @soap @var int
+     * @soap @var int
+     * @soap @var int
+     * @return string[] Liste des catégories parents
      * @soap
      */
     public function getCategorie() {
         $cats = CategorieIncident::model()->findAllByAttributes(
                 array('visible' => Constantes::VISIBLE, 'fk_parent' => NULL));
-        
-        // ????
-        return $cats;
+        $b = array();
+        $retour = array();
+        foreach($cats as $cat) {
+            $c = array(
+                'id' => (string) $cat->id_categorie_incident,
+                'label' => (string) $cat->label);
+            $b = $c;
+            array_push($retour, $c);
+        }
+        $a = array('bonjour', 'hello', 'buenos dias', 'ohayo', 'salam');
+        return $b;
     }
     
     /**
@@ -89,8 +102,14 @@ class AndroidController extends Controller {
         $sousCats = CategorieIncident::model()->findAllByAttributes(
                 array('visible' => Constantes::VISIBLE, 'fk_parent' => $parent));
         
-        // ????
-        return $sousCats;
+        $retour = array();
+        foreach($cats as $cat) {
+            $c = array(
+                'id' => $cat->id_categorie_incident,
+                'label' => $cat->label);
+            array_push($retour, $c);
+        }
+        return $retour;
     }
     
     /**
@@ -99,15 +118,18 @@ class AndroidController extends Controller {
      * @soap
      */
     public function getBatiment($user) {
-        $bats = Batiment::model()->findBySql(""
+        $batiments = Batiment::model()->findBySql(""
                 . "SELECT * "
                 . "FROM w3sys_batiment as b "
                 . "WHERE b.id_batiment IN "
                     . "(SELECT fk_batiment FROM w3sys_lieu as l "
                     . "WHERE l.fk_locataire =". $user ." AND visible = ". Constantes::VISIBLE .")");
         
-        // ????
-        return $bats;
+        $retour = array();
+        foreach($batiments as $batiment) {
+            array_push($retour, $batiment);
+        }
+        return $retour;
     }
 
 }
