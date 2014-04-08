@@ -89,7 +89,7 @@ return array(
                 '<controller:\w+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 '<controller:\w+>/<action:\w+>' => '<controller>/<action>',
                 'user/quote' => 'user/quote',
-                'android/websys' => 'android/websys'
+                'android/websys' => 'android/websys',
             ),
         ),
         /*
@@ -118,12 +118,12 @@ return array(
                     'logFile' => 'application.log',
                     'categories' => 'cron',
                 ),
-              /*
+            /*
               array
               (
               'class' => 'CWebLogRoute',
               ),
-              */
+             */
             ),
         ),
         // Ajout du composant chart JS pour afficher des graphiques, etc..

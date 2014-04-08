@@ -80,17 +80,14 @@ class AndroidController extends Controller {
     public function getCategorie() {
         $cats = CategorieIncident::model()->findAllByAttributes(
                 array('visible' => Constantes::VISIBLE, 'fk_parent' => NULL));
-        $b = array();
         $retour = array();
         foreach($cats as $cat) {
             $c = array(
                 'id' => (string) $cat->id_categorie_incident,
                 'label' => (string) $cat->label);
-            $b = $c;
             array_push($retour, $c);
         }
-        $a = array('bonjour', 'hello', 'buenos dias', 'ohayo', 'salam');
-        return $b;
+        return $retour;
     }
     
     /**
