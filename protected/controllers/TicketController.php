@@ -1,19 +1,20 @@
 <?php
 
 class TicketController extends Controller {
-    
     /*
      * Les constantes suivantes correspondent aux actions. Il y a une constante
      * pour chaque action de ce contrôleur. Ces constantes serviront à attribuer
      * ou non des droits aux utilisateurs (voir la méthode 'accessRules()' de 
      * ce même contrôleur)
      */
+
     Const ID_CONTROLLER = 7;
     Const ACTION_VIEW = 1;
     Const ACTION_CREATE = 2;
     COnst ACTION_DELETE = 4;
     const ACTION_UPDATE = 8;
     const ACTION_ADMIN = 16;
+
     // const ACTION_GETSOUSCATEGORIESDYNAMIQUES = 32;
     // const ACTION_CLOSE = 64;
     // const ACTION_SENDNOTIFICATIONMAIL = 128;
@@ -43,14 +44,13 @@ class TicketController extends Controller {
      */
     public function accessRules() { // droit des utilisateur sur les actions
         if (!Yii::app()->user->isGuest) { // Génération des droits selon le user
-            
             // On récupère d'abord le user de la session
             $logged = Yii::app()->session['Logged'];
             // ainsi que ses droits sur ce contrôleur
             $rights = Yii::app()->session['Rights']->getTicket();
-                // La méthode getTicket() demande à ne récupérer que les droits
-                // lié à ce contrôleur-ci (en l'occurence, ticket)
-            
+            // La méthode getTicket() demande à ne récupérer que les droits
+            // lié à ce contrôleur-ci (en l'occurence, ticket)
+
             $allow = array('noright');
             // On initialise ensuite l'array qui stockera les droits
             // On lui met une action inexistante car la méthode accessRules
@@ -313,14 +313,14 @@ class TicketController extends Controller {
         ));
     }
 
-    private function createCodeTicket($fk_batiment) {
+    public static function createCodeTicket($fk_batiment) {
         // Table batiment contient un code (4 caractères différents pour chaque bâtiment) et un compteur (qui s'incrémente de 1 à chaque ajout de ticket)
         $batiment = Batiment::model()->findByPk($fk_batiment);
         // On incrémente le compteur de 1
         $batiment->cpt += 1;
         // On save pour enregistrer l'incrémentation sinon recommence toujours du même nombre
-        //$batiment->save(false);
-        $this->attemptSave($batiment);
+        $batiment->save(false);
+        // $this->attemptSave($batiment);
         // On return le string du code_ticket
         return $batiment->code . $batiment->cpt;
     }

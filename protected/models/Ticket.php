@@ -14,7 +14,7 @@
  * @property integer $fk_entreprise
  * @property string $code_ticket
  * @property string $etage
- * @property string $bureau
+ * @property string $bureaus
  * @property integer $fk_locataire
  * @property integer $fk_batiment
  * @property integer $visible
