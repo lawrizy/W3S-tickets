@@ -8,6 +8,7 @@
  */
 
 class AndroidController extends Controller {
+    
     /*
      * Les codes erreurs possibles lorsque le webService est appelé
      */
@@ -55,7 +56,7 @@ class AndroidController extends Controller {
     public function testLogin($email, $password) {
         $error = self::ERROR_USER_INEXISTANT;
         try {
-            $user = User::model()->findByAttributes(array('email' => $email, 'password' => md5($password)));
+            $user = User::model()->findByAttributes(array('email' => $email, 'visible' => Constantes::VISIBLE, 'password' => md5($password)));
             if ($user !== null)
                 $error = $user->id_user;
         } catch (CDbException $ex) {
@@ -90,14 +91,20 @@ class AndroidController extends Controller {
      * @param int $id_user id du locataire
      * @param int $sousCategorie id de la sous categorie
      * @param int $fk_batiment id du batiment
+     * @param string $etage etage de l'incident
+     * @param string $bureau bureau de l'incident
+     * @param string $descriptif description de l'incident
      * @return bool message
      * @soap
      */
-    public function createTicket($id_user, $sousCategorie, $fk_batiment) {
+    public function createTicket($id_user, $sousCategorie, $fk_batiment, $etage = null, $bureau = null, $descriptif = null) {
         $ticketAndroid = new Ticket;
         $ticketAndroid->fk_locataire = $id_user;
         $ticketAndroid->fk_batiment = $fk_batiment;
         $ticketAndroid->fk_categorie = $sousCategorie;
+        $ticketAndroid->etage = $etage;
+        $ticketAndroid->bureau = $bureau;
+        $ticketAndroid->descriptif = $descriptif;
         $ticketAndroid->fk_canal = Constantes::CANAL_WEB;
         $ticketAndroid->fk_statut = Constantes::STATUT_OPENED;
         $ticketAndroid->fk_user = Constantes::USER_DEFAUT;
@@ -119,48 +126,49 @@ class AndroidController extends Controller {
         } else {
             return true;
         }
-        return "Heu ...";
     }
-
+    
     /**
-     * @soap @var int
-     * @soap @var string
-     * @soap @var int
-     * @soap @var int
-     * @soap @var int
-     * @return string[] Liste des catégories parents
+     * @param int $idBatiment id du bâtiment sur lequel filtrer
+     * @return mixed[] Liste des categories/nbTicket
      * @soap
      */
-    public function getCategorie() {
-        $cats = CategorieIncident::model()->findAllByAttributes(
-                array('visible' => Constantes::VISIBLE, 'fk_parent' => NULL));
-        $retour = array();
-        foreach ($cats as $cat) {
-            $c = array(
-                'id' => (string) $cat->id_categorie_incident,
-                'label' => (string) $cat->label);
-            array_push($retour, $c);
+    public function getBarsDatas($idBatiment, $langue = Constantes::LANGUE_EN) {
+        $listCat = array();
+        $categories = CategorieIncident::model()->findAllByAttributes(array(
+            'visible' => Constantes::VISIBLE,
+            'fk_parent' => NULL));
+        
+        if ($idBatiment == 0) {
+            foreach ($categories as $categorie) {
+                $cat = array(
+                    'label' => $categorie['label'], 
+                    'nb' => (int) Ticket::model()->countByAttributes(array('fk_categorie' => $categorie['id_categorie_incident'])));
+                array_push($listCat, $cat);
+            }
+        } else {
+            foreach ($categories as $categorie) {
+                $cat = array(
+                    'label' => $categorie['label'], 
+                    'nb' => (int) Ticket::model()->countByAttributes(array(
+                        'fk_categorie' => $categorie['id_categorie_incident'],
+                        'fk_batiment' => $idBatiment)));
+                array_push($listCat, $cat);
+            }
         }
-        return $retour;
+        return $listCat;
     }
-
+    
     /**
-     * @param int $parent Id de la catégorie-parent
-     * @return CategorieIncident[] Liste des sous-catégories concernées
+     * @param int $langue Langue d'affichage de l'application
+     * @return mixed[] Liste des nombres de tickets par statut.
      * @soap
      */
-    public function getSousCategorie($parent) {
-        $sousCats = CategorieIncident::model()->findAllByAttributes(
-                array('visible' => Constantes::VISIBLE, 'fk_parent' => $parent));
-
-        $retour = array();
-        foreach ($cats as $cat) {
-            $c = array(
-                'id' => $cat->id_categorie_incident,
-                'label' => $cat->label);
-            array_push($retour, $c);
+    public function getPieDatas($langue = Constantes::LANGUE_EN) {
+        $status = StatutTicket::model()->findAll();
+        foreach ($status as $statut) {
+            
         }
-        return $retour;
     }
 
     /**
@@ -182,5 +190,7 @@ class AndroidController extends Controller {
         }
         return $retour;
     }
+    
+    
 
 }

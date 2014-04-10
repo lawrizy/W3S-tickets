@@ -95,7 +95,6 @@ class DashboardController extends Controller {
      * Format : array( [labelCatégorie] => [fréqCatégorie] )
      */
     public function actionGetTicketByCategorie() {
-        //Yii::trace("actionGetTicketByCategorie", "cron");
         $categories = $this->getCategories();
         $nbFinal = array();
         foreach ($categories as $categorie) {
@@ -119,7 +118,6 @@ class DashboardController extends Controller {
     }
 
     public function actionGetTicketByCategorieForBatimentID($idBatiment) {
-        //Yii::trace("actionGetTicketByCategorie", "cron");
         $categories = $this->getCategories();
         $nbFinal = array();
 

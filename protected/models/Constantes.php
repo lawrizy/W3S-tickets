@@ -21,6 +21,7 @@ class Constantes {
     const STATUT_OPENED = 1;
     const STATUT_TREATMENT = 2;
     const STATUT_CLOSED = 3;
+    const NB_STATUT = 3;
 
     /*
      * Les fonctions d'un utilisateur étant fixes, on stocke directement la valeur

@@ -50,7 +50,11 @@
 
     <?php
     echo '<label>' . Translate::trad('SelectionnerBatiment') . '<span class="required"> *</span></label>';
-    echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAllByAttributes(array('visible' => Constantes::VISIBLE)), 'id_batiment', 'nom')));
+    echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAllBySql(
+                "SELECT b.id_batiment, b.nom FROM db_ticketing.w3sys_lieu l 
+                        INNER JOIN w3sys_batiment b on  l.fk_batiment = b.id_batiment
+                        WHERE l.fk_locataire =" . $_GET['id'] . " and "
+                . "l.visible=" . Constantes::VISIBLE), 'id_batiment', 'nom')));
 
     echo $form->labelEx($model, 'etage');
     echo $form->textField($model, 'etage', array('size' => 1, 'maxlength' => 10, 'style' => 'resize:none', 'value' => $model->etage));
