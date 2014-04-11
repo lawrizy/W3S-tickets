@@ -79,8 +79,7 @@ class AndroidController extends Controller {
                         INNER JOIN w3sys_batiment b on  l.fk_batiment = b.id_batiment
                         WHERE l.fk_locataire =" . $id_user . " and "
                 . "l.visible=" . Constantes::VISIBLE);
-        foreach ($buildings_id as $idBuildings)
-        {
+        foreach ($buildings_id as $idBuildings) {
             array_push($myBuildings, $idBuildings->id_batiment);
         }
         return $myBuildings;
@@ -139,20 +138,40 @@ class AndroidController extends Controller {
             'visible' => Constantes::VISIBLE,
             'fk_parent' => NULL));
         
+        Yii::app()->session['_lang'] = 'en';
         if ($idBatiment == 0) {
             foreach ($categories as $categorie) {
+                
+                $nbTicket = Ticket::model()->countBySql(
+                        "SELECT t.id_ticket "
+                        . "FROM w3sys_ticket t "
+                        . "WHERE t.visible = ". (int)Constantes::VISIBLE ." "
+                        . "AND fk_categorie IN "
+                            . "(SELECT c.id_categorie_incident "
+                            . "FROM w3sys_categorie_incident c "
+                            . "WHERE c.fk_parent = ".$categorie['id_categorie_incident'].")");
+                Yii::trace($categorie['label'] . ' - ' . $nbTicket,'cron');
                 $cat = array(
-                    'label' => $categorie['label'], 
-                    'nb' => (int) Ticket::model()->countByAttributes(array('fk_categorie' => $categorie['id_categorie_incident'])));
+                    'label' => Translate::trad($categorie['label']), 
+                    'nb' => $nbTicket);
                 array_push($listCat, $cat);
             }
         } else {
             foreach ($categories as $categorie) {
+                
+                $nbTicket = Ticket::model()->countBySql(
+                        "SELECT t.id_ticket "
+                        . "FROM w3sys_ticket t "
+                        . "WHERE t.visible = ". (int)Constantes::VISIBLE ." "
+                        . "AND fk_batiment = ". (int)$idBatiment ." "
+                        . "AND fk_categorie IN "
+                            . "(SELECT c.id_categorie_incident "
+                            . "FROM w3sys_categorie_incident c "
+                            . "WHERE c.fk_parent = ".$categorie['id_categorie_incident'].")");
+                Yii::trace($categorie['label'] . ' - ' . $nbTicket,'cron');
                 $cat = array(
-                    'label' => $categorie['label'], 
-                    'nb' => (int) Ticket::model()->countByAttributes(array(
-                        'fk_categorie' => $categorie['id_categorie_incident'],
-                        'fk_batiment' => $idBatiment)));
+                    'label' => Translate::trad($categorie['label']), 
+                    'nb' => $nbTicket);
                 array_push($listCat, $cat);
             }
         }
