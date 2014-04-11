@@ -129,46 +129,54 @@ class AndroidController extends Controller {
     
     /**
      * @param int $idBatiment id du bâtiment sur lequel filtrer
-     * @return mixed[] Liste des categories/nbTicket
+     * @param int $langue id de la langue à traduire (paramètre falcutatif)
+     * @return mixed[] Liste des nombre de tickets par catégorie
      * @soap
      */
-    public function getBarsDatas($idBatiment, $langue = Constantes::LANGUE_EN) {
-        $listCat = array();
+    public function getBarsDatas($idBatiment, $langue) {
+        $listCat = array(); // On initialise un array pour la liste finale à renvoyer
+        Yii::app()->session['_lang'] = $langue == Constantes::LANGUE_EN ? 'en' : ($langue == Constantes::LANGUE_FR ? 'fr' : 'nl');
+            // Comme il n'y a pas de session dans le cas d'une application Android 
+            // qui se connecte via Webservice, on n'a pas non plus la langue de l'utilisateur.
+            // Pour cette raison on demande en paramètre l'id de la langue de l'utilisateur
+            // et on la met dans une variable de session _lang qui sera utilisée
+            // seulement pour la traduction des textes
         $categories = CategorieIncident::model()->findAllByAttributes(array(
             'visible' => Constantes::VISIBLE,
             'fk_parent' => NULL));
         
-        Yii::app()->session['_lang'] = 'en';
-        if ($idBatiment == 0) {
-            foreach ($categories as $categorie) {
-                
-                $nbTicket = Ticket::model()->countBySql(
-                        "SELECT t.id_ticket "
+        if ($idBatiment == 0) { // Si demande pour tous les bâtiments
+            foreach ($categories as $categorie) { // On parcourt toutes les catégories
+                // On prépare une requête SQL qui va rechercher le nombre de ticket
+                $sql = "SELECT count(t.id_ticket) "
                         . "FROM w3sys_ticket t "
-                        . "WHERE t.visible = ". (int)Constantes::VISIBLE ." "
+                        . "WHERE t.visible = ". Constantes::VISIBLE ." "
                         . "AND fk_categorie IN "
                             . "(SELECT c.id_categorie_incident "
                             . "FROM w3sys_categorie_incident c "
-                            . "WHERE c.fk_parent = ".$categorie['id_categorie_incident'].")");
-                Yii::trace($categorie['label'] . ' - ' . $nbTicket,'cron');
-                $cat = array(
-                    'label' => Translate::trad($categorie['label']), 
+                            . "WHERE c.fk_parent = ".$categorie['id_categorie_incident'].")";
+                $nbTicket = Yii::app()->db->createCommand($sql)->queryScalar();
+                    // La méthode queryScalar() permet de récupérer la toute première donnée
+                    // de la toute première ligne qui sera le résultat de la requête passée
+                    // en paramètre
+                $cat = array( // On génère l'array qui sera inseré dans la liste finale
+                    'label' => Translate::trad($categorie['label']), // On n'oublie pas de traduire
                     'nb' => $nbTicket);
-                array_push($listCat, $cat);
+                array_push($listCat, $cat); // Et on push à la liste à renvoyer
             }
-        } else {
+        } else { // Si demande pour un bâtiment en particulier
             foreach ($categories as $categorie) {
-                
-                $nbTicket = Ticket::model()->countBySql(
-                        "SELECT t.id_ticket "
+                // Le fonctionnement est le même qu'au-dessus. Seul différence,
+                // on rajoute une condition en plus dans notre recherche
+                $sql = "SELECT count(t.id_ticket) "
                         . "FROM w3sys_ticket t "
-                        . "WHERE t.visible = ". (int)Constantes::VISIBLE ." "
-                        . "AND fk_batiment = ". (int)$idBatiment ." "
+                        . "WHERE t.visible = ". Constantes::VISIBLE ." "
+                        . "AND fk_batiment = ". $idBatiment ." " // La condition supplémentaire
                         . "AND fk_categorie IN "
                             . "(SELECT c.id_categorie_incident "
                             . "FROM w3sys_categorie_incident c "
-                            . "WHERE c.fk_parent = ".$categorie['id_categorie_incident'].")");
-                Yii::trace($categorie['label'] . ' - ' . $nbTicket,'cron');
+                            . "WHERE c.fk_parent = ".$categorie['id_categorie_incident'].")";
+                $nbTicket = Yii::app()->db->createCommand($sql)->queryScalar();
                 $cat = array(
                     'label' => Translate::trad($categorie['label']), 
                     'nb' => $nbTicket);
@@ -176,18 +184,54 @@ class AndroidController extends Controller {
             }
         }
         return $listCat;
+            // Et enfin on retourne l'array contenant toutes les données demandées
     }
     
     /**
+     * @param int $idBatiment Le bâtiment sur lequel filtrer
      * @param int $langue Langue d'affichage de l'application
      * @return mixed[] Liste des nombres de tickets par statut.
      * @soap
      */
-    public function getPieDatas($langue = Constantes::LANGUE_EN) {
-        $status = StatutTicket::model()->findAll();
-        foreach ($status as $statut) {
-            
+    public function getPieDatas($idBatiment, $langue) {
+        $listStatut = array(); // On initialise un array pour la liste finale à renvoyer
+        Yii::app()->session['_lang'] = $langue == Constantes::LANGUE_EN ? 'en' : ($langue == Constantes::LANGUE_FR ? 'fr' : 'nl');
+            // Comme il n'y a pas de session dans le cas d'une application Android 
+            // qui se connecte via Webservice, on n'a pas non plus la langue de l'utilisateur.
+            // Pour cette raison on demande en paramètre l'id de la langue de l'utilisateur
+            // et on la met dans une variable de session _lang qui sera utilisée
+            // seulement pour la traduction des textes
+        $statuts = StatutTicket::model()->findAll(); // On récupère tous les statuts
+        if ($idBatiment == 0) { // Si demande faite pour tous les bâtiments
+            foreach ($statuts as $statut) { // On parcourt alors tous les statuts
+                $nbTicket = (int)Ticket::model()->countByAttributes(array(
+                    'visible' => Constantes::VISIBLE,
+                    'fk_statut' => $statut['id_statut_ticket']));
+                    // On compte le nombre de tickets étant dans ce statut
+                    Yii::trace($idBatiment, 'cron');
+                $s = array(
+                    'label' => Translate::trad($statut['label']),
+                    'nb' => $nbTicket); // On génère l'array qu'on insèrera dans la liste finale ...
+                array_push($listStatut, $s); // ... et on l'insère
+            }
+        } else { // Si demande pour un bâtiment en particulier
+            foreach ($statuts as $statut) {
+                // Le fonctionnement est le même qu'au-dessus. Seul différence,
+                // on rajoute une condition en plus dans notre recherche
+                $nbTicket = (int)Ticket::model()->countByAttributes(array(
+                    'visible' => Constantes::VISIBLE,
+                    'fk_statut' => $statut['id_statut_ticket'],
+                    'fk_batiment' => $idBatiment));
+                Yii::trace($idBatiment, 'cron');
+                $s = array(
+                    'label' => Translate::trad($statut['label']),
+                    'nb' => $nbTicket);
+                array_push($listStatut, $s);
+            }
         }
+        
+        return $listStatut;
+            // Et enfin on retourne l'array contenant toutes les données demandées
     }
 
     /**
