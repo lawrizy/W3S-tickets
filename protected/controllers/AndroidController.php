@@ -12,7 +12,8 @@ class AndroidController extends Controller {
     /*
      * Les codes erreurs possibles lorsque le webService est appelé
      */
-
+    const ERROR_SAVE_HISTORIQUE = '-4';
+    const ERROR_SAVE_TICKET = '-3';
     const ERROR_DB_INACCESSIBLE = -2;
     const ERROR_USER_INEXISTANT = -1;
 
@@ -87,13 +88,13 @@ class AndroidController extends Controller {
 
     /**
      * 
-     * @param int $id_user id du locataire
-     * @param int $sousCategorie id de la sous categorie
-     * @param int $fk_batiment id du batiment
-     * @param string $etage etage de l'incident
-     * @param string $bureau bureau de l'incident
-     * @param string $descriptif description de l'incident
-     * @return bool message
+     * @param int $id_user ID du locataire
+     * @param int $sousCategorie ID de la sous categorie
+     * @param int $fk_batiment ID du batiment
+     * @param string $etage Etage de l'incident
+     * @param string $bureau Bureau de l'incident
+     * @param string $descriptif Description de l'incident
+     * @return string Code-Ticket
      * @soap
      */
     public function createTicket($id_user, $sousCategorie, $fk_batiment, $etage = null, $bureau = null, $descriptif = null) {
@@ -103,11 +104,10 @@ class AndroidController extends Controller {
         $ticketAndroid->fk_categorie = $sousCategorie;
         $ticketAndroid->etage = $etage;
         $ticketAndroid->bureau = $bureau;
-        $ticketAndroid->descriptif = $descriptif;
+        $ticketAndroid->descriptif = "TicketAndroid: " . $descriptif;
         $ticketAndroid->fk_canal = Constantes::CANAL_WEB;
         $ticketAndroid->fk_statut = Constantes::STATUT_OPENED;
         $ticketAndroid->fk_user = Constantes::USER_DEFAUT;
-        $ticketAndroid->descriptif = "TicketAndroid :)";
         $ticketAndroid->code_ticket = TicketController::createCodeTicket($fk_batiment);
         $cat = CategorieIncident::model()->findByPk($ticketAndroid['fk_categorie']);
         $ticketAndroid->fk_priorite = $cat['fk_priorite'];
@@ -118,12 +118,13 @@ class AndroidController extends Controller {
             $histo->fk_statut_ticket = Constantes::STATUT_OPENED;
             $histo->fk_user = $ticketAndroid['fk_user'];
             if ($histo->save()) {
-                return true;
+                
+                return $ticketAndroid->code_ticket;
             } else {
-                return false;
+                return self::ERROR_SAVE_HISTORIQUE;
             }
         } else {
-            return true;
+            return self::ERROR_SAVE_TICKET;
         }
     }
     

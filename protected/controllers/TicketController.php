@@ -168,7 +168,7 @@ class TicketController extends Controller {
                 $histo = new HistoriqueTicket();
                 $histo->date_update = date("Y-m-d H:i:s", time());
                 $histo->fk_ticket = $model->id_ticket;
-// Lors de la cloture, statut forcément à Closed
+                    // Lors de la cloture, statut forcément à Closed
                 $histo->fk_statut_ticket = Constantes::STATUT_CLOSED;
                 $logged = Yii::app()->session['Logged'];
                 $histo->fk_user = $logged['id_user'];
