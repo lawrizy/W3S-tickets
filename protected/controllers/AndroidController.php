@@ -68,6 +68,26 @@ class AndroidController extends Controller {
     }
 
     /**
+     * @param int $idUser L'id de l'utilisateur
+     * @return int L'id de la fonction associée à l'utilisateur
+     * @soap
+     */
+    public function getUserPermissionLevel($idUser)
+    {
+        /* @var $model User */
+        $error = self::ERROR_USER_INEXISTANT;
+        try{
+            $model = User::model()->findByAttributes(array('id_user' => $idUser));
+            if($model != null) $error = $model->fk_fonction;
+        } 
+        catch(CDbException $e)
+        {
+            $error = self::ERROR_DB_INACCESSIBLE;
+        }
+        return $error;
+    }
+    
+    /**
      * 
      * @param int $id_user
      * @return string[] id des batiments
