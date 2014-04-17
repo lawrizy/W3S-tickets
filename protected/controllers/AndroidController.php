@@ -288,10 +288,10 @@ class AndroidController extends Controller
     }
 
     /**
-     * -     * @param int $idUser L'id de l'utilisateur
-     * -     * @return int L'id de la fonction associée à l'utilisateur
-     * -     * @soap
-     * -     */
+     * @param int $idUser L'id de l'utilisateur
+     * @return int L'id de la fonction associée à l'utilisateur
+     * @soap
+     */
     public function getUserPermissionLevel($idUser)
     {
         /* @var $model User */
