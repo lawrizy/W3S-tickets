@@ -7,8 +7,7 @@
  * Les méthodes ne sont pas encore utilisables
  */
 
-class AndroidController extends Controller
-{
+class AndroidController extends Controller {
 
     /*
      * Les codes erreurs possibles lorsque le webService est appelé
@@ -21,8 +20,7 @@ class AndroidController extends Controller
     /**
      * @return array action filters
      */
-    public function filters()
-    {
+    public function filters() {
         return array(
             'accessControl', // perform access control for CRUD operations
             'postOnly + delete', // we only allow deletion via POST request
@@ -32,8 +30,7 @@ class AndroidController extends Controller
     /*
      * AccessRules donnant droit à l'appel du webservice
      */
-    public function accessRules()
-    {
+    public function accessRules() {
         return array(
             array('allow',
                 'actions' => array('websys'),
@@ -52,8 +49,7 @@ class AndroidController extends Controller
      * générer le fichier WSDL associé. Et à partir de là on peut appeler les
      * méthodes de associés à ce webservices (voir commentaire sur méthode suivante)
      */
-    public function actions()
-    {
+    public function actions() {
         return array(
             'websys' => array(
                 'class' => 'CWebServiceAction',
@@ -112,7 +108,7 @@ class AndroidController extends Controller
     { // Demande des bâtiments pour un certain locataire
         $myBuildings = array(); // Initialisation de la variable de retour
         $buildings_id = Batiment::model()->findAllBySql(
-            "SELECT b.id_batiment FROM db_ticketing.w3sys_lieu l 
+            "SELECT b.id_batiment FROM w3sys_lieu l 
                     INNER JOIN w3sys_batiment b on  l.fk_batiment = b.id_batiment
                     WHERE l.fk_locataire =" . $id_user . " and "
             . "l.visible=" . Constantes::VISIBLE);
@@ -154,14 +150,14 @@ class AndroidController extends Controller
         // On génère le code du ticket
         $cat = CategorieIncident::model()->findByPk($ticketAndroid['fk_categorie']);
         $ticketAndroid->fk_priorite = $cat['fk_priorite']; // Priorité par rapport à la catégorie
-        if ($ticketAndroid->save(false))
+        if ($ticketAndroid->save(FALSE))
         { // On test le save du ticket
             $histo = new HistoriqueTicket(); // On génère l'historique associé
             $histo->date_update = date("Y-m-d H:i:s", time());
             $histo->fk_ticket = $ticketAndroid->id_ticket;
             $histo->fk_statut_ticket = Constantes::STATUT_OPENED;
             $histo->fk_user = $ticketAndroid['fk_locataire'];
-            if ($histo->save())
+            if ($histo->save(FALSE))
             { // On enregistre l'historique
                 // ------------------ TODO Envoi de mail ------------------ //
                 // On envoie un mail au locataire
@@ -253,10 +249,8 @@ class AndroidController extends Controller
         // et on la met dans une variable de session _lang qui sera utilisée
         // seulement pour la traduction des textes
         $statuts = StatutTicket::model()->findAll(); // On récupère tous les statuts
-        if ($idBatiment == 0)
-        { // Si demande faite pour tous les bâtiments
-            foreach ($statuts as $statut)
-            { // On parcourt alors tous les statuts
+        if ($idBatiment == 0) { // Si demande faite pour tous les bâtiments
+            foreach ($statuts as $statut) { // On parcourt alors tous les statuts
                 $nbTicket = (int)Ticket::model()->countByAttributes(array(
                     'visible' => Constantes::VISIBLE,
                     'fk_statut' => $statut['id_statut_ticket']));
@@ -267,16 +261,14 @@ class AndroidController extends Controller
                 array_push($listStatut, $s); // ... et on l'insère
             }
         }
-        else
-        { // Si demande pour un bâtiment en particulier
-            foreach ($statuts as $statut)
-            {
+        else { // Si demande pour un bâtiment en particulier
+            foreach ($statuts as $statut) {
                 // Le fonctionnement est le même qu'au-dessus. Seul différence,
                 // on rajoute une condition en plus dans notre recherche
                 $nbTicket = (int)Ticket::model()->countByAttributes(array(
                     'visible' => Constantes::VISIBLE,
                     'fk_statut' => $statut['id_statut_ticket'],
-                    'fk_batiment' => $idBatiment));
+                    'fk_batiment' => $idBatiment)); // Condition supplémentaire
                 $s = new CategorieAndroid(
                     Translate::trad($statut['label']),
                     $nbTicket == NULL ? 0 : $nbTicket);
@@ -292,16 +284,13 @@ class AndroidController extends Controller
      * @return int L'id de la fonction associée à l'utilisateur
      * @soap
      */
-    public function getUserPermissionLevel($idUser)
-    {
+    public function getUserPermissionLevel($idUser) {
         /* @var $model User */
         $error = self::ERROR_USER_INEXISTANT;
-        try
-        {
+        try {
             $model = User::model()->findByAttributes(array('id_user' => $idUser));
             if ($model != null) $error = $model->fk_fonction;
-        } catch (CDbException $e)
-        {
+        } catch (CDbException $e) {
             $error = self::ERROR_DB_INACCESSIBLE;
         }
         return $error;
