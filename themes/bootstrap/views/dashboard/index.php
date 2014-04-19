@@ -53,7 +53,7 @@
         echo '<br/><br/><br/>';
         echo '<h3>' . Translate::trad('AjaxFrenquenceEntreprise') . '</h3>';
 
-        $entrepriseFreqAllData = $this->actionGetFrequenceCalledEntreprise();
+        $entrepriseFreqAllData = $this->getFrequenceCalledEntreprise();
         $color_step = 100;
         $r = 0;
         $g = 0;

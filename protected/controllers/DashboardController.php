@@ -52,12 +52,8 @@ class DashboardController extends Controller {
             // chaque nombre n'ait qu'un seul bit à '1' et n'accorde donc qu'un seul droit
             if ($rights & self::ACTION_TOUS) {
                 array_push($allow, 'vue');
-                array_push($allow, 'getticketbycategorie');
-                array_push($allow, 'getticketbycategorieforbatimentid');
-                array_push($allow, 'getticketbystatusforbatimentid');
-                array_push($allow, 'getcategorieslabel');
                 array_push($allow, 'filterbybatiment');
-                array_push($allow, 'getfrequencecalledentreprise');
+//                array_push($allow, 'getfrequencecalledentreprise');
             }
 
             return array(// Ici on a plus qu'à envoyer la liste des droits
@@ -94,7 +90,7 @@ class DashboardController extends Controller {
      * Retourne une liste contenant un label de catégorie lié à une valeur représentant la fréquence de cette catégorie dans la DB.
      * Format : array( [labelCatégorie] => [fréqCatégorie] )
      */
-    public function actionGetTicketByCategorie() {
+    public function getTicketByCategorie() {
         $categories = $this->getCategories();
         $nbFinal = array();
         foreach ($categories as $categorie) {
@@ -117,7 +113,7 @@ class DashboardController extends Controller {
         return $listCategorie;
     }
 
-    public function actionGetTicketByCategorieForBatimentID($idBatiment) {
+    public function getTicketByCategorieForBatimentID($idBatiment) {
         $categories = $this->getCategories();
         $nbFinal = array();
 
@@ -126,7 +122,8 @@ class DashboardController extends Controller {
             $sousCategories = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => $categorie['id_categorie_incident']));
 
             foreach ($sousCategories as $sousCategorie)
-                $nbCategorie += Ticket::model()->countByAttributes(array('fk_categorie' => $sousCategorie['id_categorie_incident'], 'fk_batiment' => $idBatiment));
+                $nbCategorie += Ticket::model()->countByAttributes(array(
+                    'fk_categorie' => $sousCategorie['id_categorie_incident'], 'fk_batiment' => $idBatiment));
 
             array_push($nbFinal, $nbCategorie);
         }
@@ -141,24 +138,27 @@ class DashboardController extends Controller {
      * @return array Une liste contenant un statut associé à une valeur représentant sa fréquence.
      * Format : array($label=>$value)
      */
-    public function actionGetTicketByStatusForBatimentID($idBatiment) {
+    public function getTicketByStatusForBatimentID($idBatiment) {
         $nbStatutTicket = array();
         
-        $nbTicket = Ticket::model()->countByAttributes(array('fk_batiment' => $idBatiment, 'fk_statut' => Constantes::STATUT_OPENED));
+        $nbTicket = Ticket::model()->countByAttributes(array(
+            'fk_batiment' => $idBatiment, 'fk_statut' => Constantes::STATUT_OPENED, 'visible' => Constantes::VISIBLE));
         $value = array(
             "value" => (int) $nbTicket,
             "color" => 'rgba(220, 0,0,1)',
             "label" => (int) ($nbTicket) . ' ' . Translate::trad('AjaxStatutNew'));
         array_push($nbStatutTicket, $value);
         
-        $nbTicket = Ticket::model()->countByAttributes(array('fk_batiment' => $idBatiment, 'fk_statut' => Constantes::STATUT_TREATMENT));
+        $nbTicket = Ticket::model()->countByAttributes(array(
+            'fk_batiment' => $idBatiment, 'fk_statut' => Constantes::STATUT_TREATMENT, 'visible' => Constantes::VISIBLE));
         $value = array(
             "value" => (int) $nbTicket,
             "color" => 'rgba(242,106,22,1)',
             "label" => (int) ($nbTicket) . ' ' . Translate::trad('AjaxStatutInProgress'));
         array_push($nbStatutTicket, $value);
         
-        $nbTicket = Ticket::model()->countByAttributes(array('fk_batiment' => $idBatiment, 'fk_statut' => Constantes::STATUT_CLOSED));
+        $nbTicket = Ticket::model()->countByAttributes(array(
+            'fk_batiment' => $idBatiment, 'fk_statut' => Constantes::STATUT_CLOSED, 'visible' => Constantes::VISIBLE));
         $value = array(
             "value" => (int) $nbTicket,
             "color" => 'rgba(66,200,22,1)',
@@ -172,9 +172,8 @@ class DashboardController extends Controller {
      * Retourne la liste de tous les noms (labels) des catégories principales, afin d'être affichées sur un graphique.
      * @return array Une liste de labels de catégories principales.
      */
-    public function actionGetCategoriesLabel() { //return list categorie's label
-        //Yii::trace("getTicketByCategorie", "cron");
-        $datas = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL));
+    public function getCategoriesLabel() { //return list categorie's label
+        $datas = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL, 'visible' => Constantes::VISIBLE));
         $listLabel = array();
         foreach ($datas as $data) {
             array_push($listLabel, Translate::trad($data['label']));
@@ -199,16 +198,21 @@ class DashboardController extends Controller {
      * TODO commenter
      * @return array
      */
-    public function actionGetFrequenceCalledEntreprise() {
+    public function getFrequenceCalledEntreprise() {
         $data = array(); // Format : array( array([nom entreprise] => [nb appels]) )
         $db = Yii::app()->db;
-        $entreprisesID = Entreprise::model()->findAllBySql("SELECT id_entreprise, nom FROM w3sys_entreprise order by id_entreprise asc");
+        $entreprisesID = Entreprise::model()->findAllBySql(
+                "SELECT id_entreprise, nom "
+                . "FROM w3sys_entreprise e "
+                . "WHERE e.visible = ". Constantes::VISIBLE 
+                . " ORDER BY id_entreprise asc");
         foreach ($entreprisesID as $entry) {
             //echo $entry['id_entreprise'] . " " . $entry['nom'] . "<br/>"; // Debug echo
             // Préparer les variables, on peut déjà récupérer le nom de l'entreprise en cours et calculer sa fréquence
             $currentEntrepriseName = $entry['nom'];
             // Dans la table Ticket, on compte le nombre d'occurences de l'ID de l'entreprise en cours
-            $currentEntrepriseCount = Ticket::model()->countByAttributes(array('fk_entreprise' => $entry['id_entreprise']));
+            $currentEntrepriseCount = Ticket::model()->countByAttributes(array(
+                'fk_entreprise' => $entry['id_entreprise'], 'visible' => Constantes::VISIBLE));
             // pusher le résultat en cours dans la table de résultat
             $data_to_push = array($currentEntrepriseName => $currentEntrepriseCount);
             array_push($data, $data_to_push);
@@ -218,7 +222,7 @@ class DashboardController extends Controller {
         return $data;
     }
 
-    public function actionGetNombreTicketsParUser() {
+    public function getNombreTicketsParUser() {
         $returnData = array();
 
         return $returnData;

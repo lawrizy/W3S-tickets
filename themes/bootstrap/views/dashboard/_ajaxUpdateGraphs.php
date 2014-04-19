@@ -11,12 +11,12 @@ if ($idBatiment == 'ALL') { // Cas 1 : sélectionner tous les bâtiments
             'width' => 500,
             'height' => 200,
             'htmlOptions' => array(),
-            'labels' => $this->actionGetCategoriesLabel(),
+            'labels' => $this->getCategoriesLabel(),
             'datasets' => array(
                 array(
                     "fillColor" => "rgba(34,167,212,1)",
                     "strokeColor" => "#AAAAAA",
-                    "data" => $this->actionGetTicketByCategorie()
+                    "data" => $this->getTicketByCategorie()
                 )
             ),
             'options' => array()
@@ -26,9 +26,9 @@ if ($idBatiment == 'ALL') { // Cas 1 : sélectionner tous les bâtiments
 
     echo '<p><h3>' . Translate::trad('AjaxStatutTicket') . '</h3></p>';
     
-    $opened = Ticket::model()->countByAttributes(array('fk_statut' => Constantes::STATUT_OPENED));
-    $treatment = Ticket::model()->countByAttributes(array('fk_statut' => Constantes::STATUT_TREATMENT));
-    $closed = Ticket::model()->countByAttributes(array('fk_statut' => Constantes::STATUT_CLOSED));
+    $opened = Ticket::model()->countByAttributes(array('fk_statut' => Constantes::STATUT_OPENED, 'visible' => Constantes::VISIBLE));
+    $treatment = Ticket::model()->countByAttributes(array('fk_statut' => Constantes::STATUT_TREATMENT, 'visible' => Constantes::VISIBLE));
+    $closed = Ticket::model()->countByAttributes(array('fk_statut' => Constantes::STATUT_CLOSED, 'visible' => Constantes::VISIBLE));
     
     $this->widget(
         'chartjs.widgets.ChPie', array(
@@ -66,12 +66,12 @@ if ($idBatiment == 'ALL') { // Cas 1 : sélectionner tous les bâtiments
             'width' => 500,
             'height' => 200,
             'htmlOptions' => array(),
-            'labels' => $this->actionGetCategoriesLabel(),
+            'labels' => $this->getCategoriesLabel(),
             'datasets' => array(
                 array(
                     "fillColor" => "rgba(34,167,212,1)",
                     "strokeColor" => "#AAAAAA",
-                    "data" => $this->actionGetTicketByCategorieForBatimentID($idBatiment),
+                    "data" => $this->getTicketByCategorieForBatimentID($idBatiment),
                 )
             ),
             'options' => array()
@@ -89,7 +89,7 @@ if ($idBatiment == 'ALL') { // Cas 1 : sélectionner tous les bâtiments
             'htmlOptions' => array(),
             'drawLabels' => true,
             //'animation' => false,
-            'datasets' => $this->actionGetTicketByStatusForBatimentID($idBatiment),
+            'datasets' => $this->getTicketByStatusForBatimentID($idBatiment),
             'options' => array()
         )
     );

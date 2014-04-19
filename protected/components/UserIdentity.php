@@ -23,9 +23,10 @@ class UserIdentity extends CUserIdentity {
                 if ($record->password !== md5($this->password)) {
                     Yii::app()->user->setFlash('error', '<strong>Le mot de passe ou le nom d\'utilisateur est incorrect.!</strong>');
                     $this->errorCode = self::ERROR_PASSWORD_INVALID;
-                } else {// si le mot de passe est différent du mot de passe de la db
+                } else {// mot de passe correct
                     //--------------Traitement de la session unique-------------
-                    if (($Session = Session::model()->findByAttributes(array('email' => $record->email))) != NULL) {// rechere du record dans la table w3sys_Session par l'email de l'utilisateur
+                    if (($Session = Session::model()->findByAttributes(array('email' => $record->email))) != NULL) {
+                        // recherche du record dans la table w3sys_Session par l'email de l'utilisateur
                         $Session->fkYiisession->delete();  // on supprime sa ligne /!\ la suppression de cette ligne supprime la ligne correspondante dans la table w3sys_Session delete on cascade
                     }
                     $Session = new Session(); //on crée un nouveau record dans la table w3sys_session
