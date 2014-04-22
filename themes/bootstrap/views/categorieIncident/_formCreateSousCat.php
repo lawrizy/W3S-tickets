@@ -24,7 +24,7 @@
             echo $form->textField($model, 'label', array('size' => 60, 'maxlength' => 64, 'value' => $model->label));
             echo $form->error($model, 'label', array('style' => 'color: red;'));
         ?>
-        <label for="CategorieIncident_fk_parent">Cat&eacute;gorie Parent&nbsp;<span class="required">*</span></label>
+        <label for="CategorieIncident_fk_parent"><?php echo Translate::trad("CreateCategoryParentCategoryLabel"); ?><span class="required">*</span></label>
         <?php
             echo $form->dropDownList($model, 'fk_parent', array('' => '', 
                 CHtml::listData(CategorieIncident::model()->findAllByAttributes(
