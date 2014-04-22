@@ -7,8 +7,6 @@
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
         </script>
         <!--<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">-->
-        <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->theme->baseUrl; ?>/css/styles.css"/>
-
         <title><?php echo CHtml::encode($this->pageTitle); ?></title>
 
         <?php Yii::app()->bootstrap->register(); ?>
@@ -50,7 +48,7 @@
                         'htmlOptions' => array('class' => 'pull-right'),
                         'items' => array(
                             '---',
-                            array('label' => Translate::trad('Connexion'), 'url' => array('/site/login'), 'icon' => 'user white', 'itemOptions' => array('class' => 'flashText', 'color' => 'red'), 'visible' => Yii::app()->user->isGuest,),
+                            array('label' => Translate::trad('Connexion'), 'url' => array('/site/login'), 'icon' => 'user white', 'visible' => Yii::app()->user->isGuest,),
                             array('label' => Translate::trad('DeConnexion') . ' (' . Yii::app()->user->name . ')', 'icon' => 'off white', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
                         ),
                     ),
