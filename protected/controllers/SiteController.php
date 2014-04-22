@@ -132,11 +132,6 @@ class SiteController extends Controller {
         else {
             $varIsAjax = Constantes::ISAJAX_TRUE;
         }
-        $model = User::model()->findByPk(Yii::app()->session['Logged']->id_user);
-        $Session = Session::model()->findByAttributes(array('email' => $model->email));
-        $yiisession = Yiisession::model()->findByPk($Session->fk_yiisession);
-        $yiisession->delete();
-        $model->save();
         Yii::app()->user->logout();
         Yii::app()->language = Yii::app()->session['_lang'];
         header('Location: ' . Yii::app()->request->baseUrl . '/index.php/site/login?expiration=' . $varIsAjax);
