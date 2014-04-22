@@ -47,7 +47,7 @@ $model->visible = Constantes::VISIBLE;
 $this->widget('bootstrap.widgets.TbGridView', array(
     'id' => 'user-grid',
     'type' => 'striped condensed bordered',
-    'dataProvider' => $model->search(),
+    'dataProvider' => $model->searchUserAdmin(),
     'columns' => array(
         array('name' => 'Nom',
             'value' => '$data->nom',

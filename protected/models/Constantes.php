@@ -74,4 +74,9 @@ class Constantes {
     const ISAJAX_TRUE = 1;
     const ISAJAX_FALSE = 0;
 
+    /*
+     * Code-erreur de la DB concernant par exemple l'unicité d'un champ, ...
+     */
+    const DB_ERROR_UNIQUE = 23000;
+
 }
