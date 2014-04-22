@@ -8,10 +8,5 @@ $this->breadcrumbs = array(
 SiteController::assignLangue();
 ?>
 <?php echo '<h1>' . Translate::trad('APropos') . '</h1>';
-
-echo '<p>This application <br>';
-echo '<u>was developped by:</u><br>';
-echo '<b>';
-    echo '<br>';
-    echo 'Ridounet , Capelle and Desaedeleer</b></p>';
+echo '<p><b>' . Translate::trad('developperTeam') . '</b></p>';
 ?>
