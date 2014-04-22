@@ -17,14 +17,14 @@
             'enableAjaxValidation' => false,
         )); ?>
         <div class="SousCateg">
-        <p><h2>Création d'une sous-catégorie</h2></p><hr>
+        <p><h2><?php echo Translate::trad("CreateCategoryMainTitle"); ?></h2></p><hr>
         <p class = "note"><?php echo Translate::trad('Required'); ?></p>
         <?php
             echo $form->labelEx($model, 'label');
             echo $form->textField($model, 'label', array('size' => 60, 'maxlength' => 64, 'value' => $model->label));
             echo $form->error($model, 'label', array('style' => 'color: red;'));
         ?>
-        <label for="CategorieIncident_fk_parent">Cat&eacute;gorie Parent&nbsp;<span class="required">*</span></label>
+        <label for="CategorieIncident_fk_parent"><?php echo Translate::trad("CreateCategoryParentCategoryLabel"); ?><span class="required">*</span></label>
         <?php
             echo $form->dropDownList($model, 'fk_parent', array('' => '', 
                 CHtml::listData(CategorieIncident::model()->findAllByAttributes(
@@ -44,10 +44,10 @@
         <hr>
 
         
-        <p><h4>Traductions: <span class="required">*</span></h4></p>
-        <p>Les trois traductions sont obligatoires car ce sont ces traductions qui seront affichées, pas le nom donné au dessus</p>
+        <p><h4><?php echo Translate::trad("CreateCategoryTranslationTitle"); ?><span class="required">*</span></h4></p>
+        <p><?php echo Translate::trad("CreateSubCategoryRequiredFields"); ?></p>
         <?php if (Yii::app()->session['errorTradField']) {
-                echo '<label style="color:red;">Ces 3 champs sont obligatoires</label>';
+                echo '<label style="color:red;"><?php echo Translate::trad("CreateSubCategoryRequiredFields2"); ?></label>';
                 Yii::app()->session['trad'] = false;
               }
         ?>

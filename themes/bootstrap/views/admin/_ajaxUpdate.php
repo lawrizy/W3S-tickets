@@ -6,12 +6,10 @@ and open the template in the editor.
 -->
 
 <div>
-    <h1>Attribution de droits à <?php echo $model->nom . ' [' . $model->fkFonction->label . ']'; ?></h1>
+    <h1><?php echo Translate::trad("AdminAttributionDroitsMessage"); ?><?php echo $model->nom . ' [' . $model->fkFonction->label . ']'; ?></h1>
     <!-- Ici on affiche le nom ainsi que la fonction du user concerné -->
     <br /><br />
-    <p id="avertissement"  style="color: red; font-size: 20px; font-weight: bold;">
-        /!\ Attention, certains droits dépendent d'autres droits et seront 
-        donc automatiquement cochés/décochés</p>
+    <p id="avertissement"  style="color: red; font-size: 20px; font-weight: bold;"><?php echo Translate::trad("AdminAttributionDroitsWarning"); ?></p>
 
     <form action="update?id=<?php echo $model->id_user; ?>" method="post">
         <input type="hidden" name="tmp" /> 
@@ -38,7 +36,7 @@ and open the template in the editor.
                 </tr>
                 <?php $droit = $rights->getBatiment(); ?>
                 <tr>
-                    <td>Batiment</td>
+                    <td><?php echo Translate::trad("BatimentTicket"); ?></td>
                     <td style="background-color: #802420"></td> <!-- Index -->
                     <td><input class="BatimentView" type="checkbox" name="BatimentView" <?php echo $droit & BatimentController::ACTION_VIEW ? 'checked' : ''; ?> /></td> <!-- View -->
                     <td><input class="BatimentAdmin" type="checkbox" name="BatimentAdmin" <?php echo $droit & BatimentController::ACTION_ADMIN ? 'checked' : ''; ?> /></td> <!-- Admin -->
@@ -48,7 +46,7 @@ and open the template in the editor.
                 </tr>
                 <?php $droit = $rights->getCategorie(); ?>
                 <tr>
-                    <td>Category</td>
+                    <td><?php echo Translate::trad("CategTicket"); ?></td>
                     <td style="background-color: #802420"></td> <!-- Index -->
                     <td><input class="CategoryView" type="checkbox" name="CategoryView" <?php echo $droit & CategorieIncidentController::ACTION_VIEW ? 'checked' : ''; ?> /></td> <!-- View -->
                     <td><input class="CategoryAdmin" type="checkbox" name="CategoryAdmin" <?php echo $droit & CategorieIncidentController::ACTION_ADMIN ? 'checked' : ''; ?> /></td> <!-- Admin -->
@@ -68,7 +66,7 @@ and open the template in the editor.
                 </tr>
                 <?php $droit = $rights->getEntreprise(); ?>
                 <tr>
-                    <td>Entreprise</td>
+                    <td><?php echo Translate::trad("Entreprise"); ?></td>
                     <td style="background-color: #802420"></td> <!-- Index -->
                     <td><input  class="EntrepriseView" type="checkbox" name="EntrepriseView" <?php echo $droit & EntrepriseController::ACTION_VIEW ? 'checked' : ''; ?> /></td> <!-- View -->
                     <td><input  class="EntrepriseAdmin" type="checkbox" name="EntrepriseAdmin" <?php echo $droit & EntrepriseController::ACTION_ADMIN ? 'checked' : ''; ?> /></td> <!-- Admin -->
@@ -78,7 +76,7 @@ and open the template in the editor.
                 </tr>
                 <?php $droit = $rights->getLocataire(); ?>
                 <tr>
-                    <td>Locataire</td>
+                    <td><?php echo Translate::trad("LocataireTicket"); ?></td>
                     <td style="background-color: #802420"></td> <!-- Index -->
                     <td><input  class="LocataireView" type="checkbox" name="LocataireView" <?php echo $droit & LocataireController::ACTION_VIEW ? 'checked' : ''; ?> /></td> <!-- View -->
                     <td><input  class="LocataireAdmin" type="checkbox" name="LocataireAdmin" <?php echo $droit & LocataireController::ACTION_ADMIN ? 'checked' : ''; ?> /></td> <!-- Admin -->
