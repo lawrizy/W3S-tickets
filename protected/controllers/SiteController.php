@@ -64,21 +64,29 @@ class SiteController extends Controller {
      */
     public function actionContact() {
         $this->assignLangue();
-
         $model = new ContactForm;
-        if (isset($_POST['ContactForm'])) {
+        
+        if (isset($_POST['ContactForm']))
+        {
             $model->attributes = $_POST['ContactForm'];
-            if ($model->validate()) {
-                $name = '=?UTF-8?B?' . base64_encode($model->name) . '?=';
-                $subject = '=?UTF-8?B?' . base64_encode($model->subject) . '?=';
-                $headers = "From: $name <{$model->email}>\r\n" .
-                        "Reply-To: {$model->email}\r\n" .
-                        "MIME-Version: 1.0\r\n" .
-                        "Content-Type: text/plain; charset=UTF-8";
-
-                mail(Yii::app()->params['adminEmail'], $subject, $model->body, $headers);
-                Yii::app()->user->setFlash('contact', 'Thank you for contacting us. We will respond to you as soon as possible.');
-                $this->refresh();
+            if($model->validate())
+            {
+                $from = Yii::app()->params["adminEmail"];
+                $to = Yii::app()->params["emailReceptionMessageContact"];
+                $subject = "=?UTF-8?B?" . base64_encode(Translate::trad("ContactIncomingMessageFrom") . $model->subject) . '?=';
+                $body = $model->body;
+                
+                $toSend = new YiiMailMessage($subject, $body, "text/plain", "UTF-8");
+                $toSend->addTo($to);
+                $toSend->addFrom($from);
+                
+                try {
+                    Yii::app()->mail->send($toSend);
+                } catch (Swift_SwiftException $mailException) {
+                    Yii::app()->user->setFlash('error', 'L\'envoi du mail a échoué.<br/>' . $mailException->getMessage());
+                }
+                
+                Yii::app()->user->setFlash('info', Translate::trad("ContactMessageSuccessAlert"));
             }
         }
         $this->render('contact', array('model' => $model));

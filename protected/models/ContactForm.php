@@ -7,19 +7,25 @@
  */
 class ContactForm extends CFormModel {
 
-    public $name;
     public $email;
     public $subject;
     public $body;
     public $verifyCode;
-
+    
+    public function __construct()
+    {
+        if(!Yii::app()->user->isGuest)
+            $this->email = Yii::app()->user->name;
+    }
+    
     /**
      * Declares the validation rules.
      */
     public function rules() {
         return array(
             // name, email, subject and body are required
-            array('name, email, subject, body', 'required', 'message' => 'Le champs {attribute} ne peut être vide.'),
+            //array('name, email, subject, body', 'required', 'message' => 'Le champs {attribute} ne peut être vide.'),
+            array('email, subject, body', 'required', 'message' => 'Le champs {attribute} ne peut être vide.'),
             // email has to be a valid email address
             array('email', 'email'),
             // verifyCode needs to be entered correctly
@@ -35,11 +41,9 @@ class ContactForm extends CFormModel {
     public function attributeLabels() {
         return array(
             'verifyCode' => Translate::trad('TranslationCode'),
-            'name' => Translate::trad('NomLoc'),
             'email' => 'Email',
             'subject' => Translate::trad('Subject'),
             'body' => Translate::trad("MessageBody"),
         );
     }
-
 }

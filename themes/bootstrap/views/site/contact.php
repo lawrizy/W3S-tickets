@@ -38,9 +38,14 @@ $this->breadcrumbs=array(
 
 	<?php echo $form->errorSummary($model); ?>
 
-    <?php echo $form->textFieldRow($model,'name'); ?>
+    <?php if(true==false)echo $form->textFieldRow($model,'name'); ?>
 
-    <?php echo $form->textFieldRow($model,'email'); ?>
+    <?php 
+    if(Yii::app()->user->isGuest)    
+        echo $form->textFieldRow($model,'email');
+    else
+        echo $form->textFieldRow($model, 'email', array('disabled' => 'true', 'value' => Yii::app()->user->name));
+    ?>
 
     <?php echo $form->textFieldRow($model,'subject',array('size'=>60,'maxlength'=>128)); ?>
 
