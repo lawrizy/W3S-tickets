@@ -56,8 +56,8 @@ class CategorieIncident extends CActiveRecord {
         return array(
             'id_categorie_incident' => 'Id Categorie Incident',
             'label' => 'Label',
-            'fk_parent' => 'Fk Parent',
-            'fk_priorite' => 'Fk Priorite',
+            'fk_parent' => Translate::trad("CategorieIncidentFKParentLabel"),
+            'fk_priorite' => Translate::trad("CategorieIncidentFKPriorityLabel"),
             'visible' => 'Visible',
         );
     }
