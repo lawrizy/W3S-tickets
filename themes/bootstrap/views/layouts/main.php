@@ -24,6 +24,7 @@
             $varCheminAcces = "user/changepassword?id=" . $personneAuthentifie['id_user'];
             $this->widget('bootstrap.widgets.TbNavbar', array(
                 'collapse' => TRUE,
+                'fixed'=>true,
                 'type' => 'inverse',
                 'items' => array(
                     array(
