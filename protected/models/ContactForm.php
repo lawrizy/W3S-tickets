@@ -34,7 +34,11 @@ class ContactForm extends CFormModel {
      */
     public function attributeLabels() {
         return array(
-            'verifyCode' => 'Verification Code',
+            'verifyCode' => Translate::trad('TranslationCode'),
+            'name' => Translate::trad('NomLoc'),
+            'email' => 'Email',
+            'subject' => Translate::trad('Subject'),
+            'body' => Translate::trad("MessageBody"),
         );
     }
 

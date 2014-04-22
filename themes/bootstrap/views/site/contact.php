@@ -20,7 +20,7 @@ $this->breadcrumbs=array(
 <?php else: ?>
 
 <p>
-If you have business inquiries or other questions, please fill out the following form to contact us. Thank you.
+<?php echo Translate::trad("contact_business_message"); ?>
 </p>
 
 <div class="form">
@@ -34,7 +34,7 @@ If you have business inquiries or other questions, please fill out the following
 	),
 )); ?>
 
-	<p class="note">Fields with <span class="required">*</span> are required.</p>
+	<p class="note"><?php echo Translate::trad('Required'); ?></p>
 
 	<?php echo $form->errorSummary($model); ?>
 
@@ -48,7 +48,7 @@ If you have business inquiries or other questions, please fill out the following
 
 	<?php if(CCaptcha::checkRequirements()): ?>
 		<?php echo $form->captchaRow($model,'verifyCode',array(
-            'hint'=>'Please enter the letters as they are shown in the image above.<br/>Letters are not case-sensitive.',
+            'hint' => Translate::trad("CaptchaInstruction"),
         )); ?>
 	<?php endif; ?>
 
