@@ -90,7 +90,6 @@ class UserController extends Controller {
         else { // Si autre utilisateur (visiteur)
             return array(// Ici on a plus qu'à envoyer la liste des droits
                 array('allow',
-                    'actions' => array('quote'),
                     'users' => array('*'),
                 ),
                 array('deny', // Refuse autre users
@@ -100,25 +99,6 @@ class UserController extends Controller {
                 ),
             );
         }
-    }
-
-    public function actions() {
-        return array(
-            'quote' => array(
-                'class' => 'CWebServiceAction',
-            ),
-        );
-    }
-
-    /**
-     * @param string $email Email de l'utilisateur
-     * @param string $password Mot de passe de l'utilisateur
-     *  @return int  $idUser l'id de l'utilisateur
-     * @soap
-     */
-    public function giveLogin($email, $password) {
-        $idUser = User::model()->findByAttributes(array('email' => $email, 'password' => md5($password)));
-        return $idUser == null ?  0 : $idUser->id_user;
     }
 
     /**
@@ -140,33 +120,35 @@ class UserController extends Controller {
         /* @var CDbTransaction $tsql */
         $db = Yii::app()->db;
         $tsql = $db->beginTransaction();
-
         $model = new User;
-
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
+        
         if (isset($_POST['User'])) {
             try {
-                $model->attributes = $tmp = $_POST['User'];
-                $tmp['password'] = md5($tmp['password']);
-                $model->attributes = $tmp;
-                if ($model->validate() && $model->save(true)) {
-                    $tsql->commit();
-                    $this->redirect(array('view', 'id' => $model->id_user));
+                $tmp = new User();
+                $model->attributes = $tmp->attributes = $_POST['User'];
+                $tmp->password = md5($tmp->password);
+                if ($tmp->validate()) {
+                    if ($tmp->save(FALSE)) {
+                        $tsql->commit();
+                        $this->redirect(array('view', 'id' => $tmp->id_user));
+                    } else {
+                        throw new CDbException();
+                    }
                 } else {
                     $err = "Une erreur est survenue : <br/>";
-                    foreach ($model->getErrors() as $k => $v)
+                    foreach ($tmp->getErrors() as $k => $v)
                         $err .= $v[0] . "<br/>";
                     throw new Exception($err);
                 }
-            } catch (Exception $e) {
+            } catch (Exception $ex) {
                 $tsql->rollback();
-                Yii::app()->user->setFlash('error', $e->getMessage());
-                $this->redirect(array('create'));
+                if ($ex->getCode() === 23000) {
+                    Yii::app()->user->setFlash('error', 'Le mail doit être unique');
+                } else {
+                    Yii::app()->user->setFlash('error', $ex->getMessage());
+                }
             }
         }
-
         $this->render('create', array(
             'model' => $model,
         ));
@@ -244,16 +226,6 @@ class UserController extends Controller {
         // if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
-    }
-
-    /**
-     * Lists all models.
-     */
-    public function actionIndex() {
-        $dataProvider = new CActiveDataProvider('User');
-        $this->render('index', array(
-            'dataProvider' => $dataProvider,
-        ));
     }
 
     /**
