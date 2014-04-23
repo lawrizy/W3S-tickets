@@ -5,10 +5,10 @@
  *
  * The followings are the available columns in table 'w3sys_trad':
  * @property integer $id
- * @property string $code
  * @property string $fr
  * @property string $en
  * @property string $nl
+ * @property string $code
  */
 class Trad extends CActiveRecord
 {

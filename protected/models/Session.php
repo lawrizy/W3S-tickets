@@ -1,16 +1,16 @@
 <?php
 
 /**
-* This is the model class for table "w3sys_session".
-*
-* The followings are the available columns in table 'w3sys_session':
-    * @property integer $id_session
-    * @property string $fk_yiisession
-    * @property string $email
-    *
-    * The followings are the available model relations:
-            * @property Yiisession $fkYiisession
-    */
+ * This is the model class for table "w3sys_session".
+ *
+ * The followings are the available columns in table 'w3sys_session':
+ * @property integer $id_session
+ * @property string $fk_yiisession
+ * @property string $email
+ *
+ * The followings are the available model relations:
+ * @property Yiisession $fkYiisession
+ */
 class Session extends CActiveRecord
 {
 /**

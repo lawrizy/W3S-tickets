@@ -6,6 +6,10 @@
  * The followings are the available columns in table 'w3sys_priorite':
  * @property integer $id_priorite
  * @property string $label
+ *
+ * The followings are the available model relations:
+ * @property CategorieIncident[] $categorieIncidents
+ * @property Ticket[] $tickets
  */
 class Priorite extends CActiveRecord {
 
@@ -39,6 +43,8 @@ class Priorite extends CActiveRecord {
 // NOTE: you may need to adjust the relation name and the related
 // class name for the relations automatically generated below.
         return array(
+            'categorieIncidents' => array(self::HAS_MANY, 'CategorieIncident', 'fk_priorite'),
+            'tickets' => array(self::HAS_MANY, 'Ticket', 'fk_priorite'),
         );
     }
 
