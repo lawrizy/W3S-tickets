@@ -8,6 +8,8 @@
  * @property integer $fk_locataire
  * @property integer $fk_batiment
  * @property integer $visible
+ * @property Batiment $fkBatiment
+ * @property User $fkLocataire
  */
 class Lieu extends CActiveRecord {
 
@@ -40,6 +42,8 @@ class Lieu extends CActiveRecord {
 // NOTE: you may need to adjust the relation name and the related
 // class name for the relations automatically generated below.
         return array(
+            'fkBatiment' => array(self::BELONGS_TO, 'Batiment', 'fk_batiment'),
+            'fkLocataire' => array(self::BELONGS_TO, 'User', 'fk_locataire'),
         );
     }
 
