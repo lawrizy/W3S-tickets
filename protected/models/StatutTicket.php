@@ -4,11 +4,12 @@
  * This is the model class for table "w3sys_statut_ticket".
  *
  * The followings are the available columns in table 'w3sys_statut_ticket':
- * @property string $id_statut_ticket
+ * @property integer $id_statut_ticket
  * @property string $label
  *
  * The followings are the available model relations:
  * @property HistoriqueTicket[] $historiqueTickets
+ * @property Ticket[] $tickets
  */
 class StatutTicket extends CActiveRecord {
 
@@ -42,6 +43,7 @@ class StatutTicket extends CActiveRecord {
 // class name for the relations automatically generated below.
         return array(
             'historiqueTickets' => array(self::HAS_MANY, 'HistoriqueTicket', 'fk_statut_ticket'),
+            'tickets' => array(self::HAS_MANY, 'Ticket', 'fk_statut'),
         );
     }
 

@@ -6,6 +6,9 @@
  * The followings are the available columns in table 'w3sys_canal':
  * @property integer $id_canal
  * @property string $label
+ *
+ * The followings are the available model relations:
+ * @property Ticket[] $tickets
  */
 class Canal extends CActiveRecord {
 
@@ -38,6 +41,7 @@ class Canal extends CActiveRecord {
 // NOTE: you may need to adjust the relation name and the related
 // class name for the relations automatically generated below.
         return array(
+            'tickets' => array(self::HAS_MANY, 'Ticket', 'fk_canal'),
         );
     }
 

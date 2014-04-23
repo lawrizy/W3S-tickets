@@ -51,7 +51,7 @@
     <?php
     echo '<label>' . Translate::trad('SelectionnerBatiment') . '<span class="required"> *</span></label>';
     echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAllBySql(
-                "SELECT b.id_batiment, b.nom FROM db_ticketing.w3sys_lieu l 
+                "SELECT b.id_batiment, b.nom FROM w3sys_lieu l 
                         INNER JOIN w3sys_batiment b on  l.fk_batiment = b.id_batiment
                         WHERE l.fk_locataire =" . $_GET['id'] . " and "
                 . "l.visible=" . Constantes::VISIBLE), 'id_batiment', 'nom')));

@@ -11,6 +11,9 @@
  * @property integer $visible
  *
  * The followings are the available model relations:
+ * @property CategorieIncident $fkParent
+ * @property CategorieIncident[] $categorieIncidents
+ * @property Priorite $fkPriorite
  * @property Secteur[] $secteurs
  */
 class CategorieIncident extends CActiveRecord {
@@ -45,6 +48,9 @@ class CategorieIncident extends CActiveRecord {
 // NOTE: you may need to adjust the relation name and the related
 // class name for the relations automatically generated below.
         return array(
+            'fkParent' => array(self::BELONGS_TO, 'CategorieIncident', 'fk_parent'),
+            'categorieIncidents' => array(self::HAS_MANY, 'CategorieIncident', 'fk_parent'),
+            'fkPriorite' => array(self::BELONGS_TO, 'Priorite', 'fk_priorite'),
             'secteurs' => array(self::HAS_MANY, 'Secteur', 'fk_categorie'),
         );
     }

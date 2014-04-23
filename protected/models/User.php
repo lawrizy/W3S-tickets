@@ -13,7 +13,11 @@
  * @property integer $visible
  *
  * The followings are the available model relations:
+ * @property Droit[] $droits
  * @property HistoriqueTicket[] $historiqueTickets
+ * @property Lieu[] $lieus
+ * @property Ticket[] $tickets
+ * @property Ticket[] $tickets1
  * @property Fonction $fkFonction
  * @property Langue $fkLangue
  */
@@ -50,7 +54,11 @@ class User extends CActiveRecord {
 // NOTE: you may need to adjust the relation name and the related
 // class name for the relations automatically generated below.
         return array(
+            'droits' => array(self::HAS_MANY, 'Droit', 'fk_user'),
             'historiqueTickets' => array(self::HAS_MANY, 'HistoriqueTicket', 'fk_user'),
+            'lieus' => array(self::HAS_MANY, 'Lieu', 'fk_locataire'),
+            'tickets' => array(self::HAS_MANY, 'Ticket', 'fk_user'),
+            'tickets1' => array(self::HAS_MANY, 'Ticket', 'fk_locataire'),
             'fkFonction' => array(self::BELONGS_TO, 'Fonction', 'fk_fonction'),
             'fkLangue' => array(self::BELONGS_TO, 'Langue', 'fk_langue'),
         );
