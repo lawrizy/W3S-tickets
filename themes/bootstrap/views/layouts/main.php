@@ -35,7 +35,7 @@
                             '---',
                             array('label' => Translate::trad('CreerTicket'), 'icon' => 'pencil white', 'url' => array('/locataire/admin'), 'visible' => $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_USER || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ADMIN || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ROOT),
                             array('label' => Translate::trad('ListeTicket'), 'icon' => 'list white', 'url' => array('/ticket/admin'), 'visible' => $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_USER || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ADMIN || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ROOT),
-                            array('label' => Translate::trad('Creer') . Yii::app()->session['NouveauTicket'] . ' ticket', 'icon' => 'pencil white', 'url' => array('/ticket/create'), 'visible' => $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_LOCATAIRE),
+                            array('label' => Translate::trad('Creer') . Yii::app()->session['NouveauTicket'] . ' ticket', 'icon' => 'pencil white', 'url' => array('/ticket/create/'.$personneAuthentifie['id_user']), 'visible' => $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_LOCATAIRE),
                             '---',
                             array('label' => Translate::trad("GestionCompte"), 'icon' => 'cog white', 'url' => array('#'),
                                 'items' => array(
