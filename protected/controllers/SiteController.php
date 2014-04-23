@@ -121,7 +121,7 @@ class SiteController extends Controller {
             // validate user input and redirect to the previous page if valid
             if ($model->validate() && $model->login()) {
                 if (Yii::app()->session['Logged']->fk_fonction == Constantes::FONCTION_LOCATAIRE)
-                    $this->redirect(array('./ticket/create'));
+                    $this->redirect(array('./ticket/create','id'=>  Yii::app()->session['Logged']->id_user));
                 else {
                     $this->redirect(array('./ticket/admin?var=admin'));
                 }
