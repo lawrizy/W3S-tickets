@@ -135,20 +135,21 @@ class UserController extends Controller {
                         throw new CDbException();
                     }
                 } else {
-                    $err = "Une erreur est survenue : <br/>";
+                    $err = "";
                     foreach ($tmp->getErrors() as $k => $v)
                         $err .= $v[0] . "<br/>";
                     throw new Exception($err);
                 }
             } catch (Exception $ex) {
                 $tsql->rollback();
-                if ($ex->getCode() === 23000) {
-                    Yii::app()->user->setFlash('error', 'Le mail doit être unique');
+                if ($ex->getCode() === Constantes::DB_ERROR_UNIQUE) {
+                    Yii::app()->user->setFlash('error', Translate::trad('mailUnique'));
                 } else {
                     Yii::app()->user->setFlash('error', $ex->getMessage());
                 }
             }
         }
+        
         $this->render('create', array(
             'model' => $model,
         ));
@@ -164,31 +165,37 @@ class UserController extends Controller {
         /* @var CDbTransaction $tsql */
         $db = Yii::app()->db;
         $tsql = $db->beginTransaction();
-
         $model = $this->loadModel($id);
-
         if (isset($_POST['User'])) {
             try {
                 $user = $_POST['User'];
                 $user['password'] = $model->password;
                 $model->attributes = $user;
 
-                if ($model->validate() && $model->save()) {
-                    $tsql->commit();
-                    $this->redirect(array('view', 'id' => $model->id_user));
+                if ($model->validate()) {
+                    if ($model->save(FALSE)) {
+                        $tsql->commit();
+                        $this->redirect(array('view', 'id' => $model->id_user));
+                    } else {
+                        throw new CDbException();
+                    }
                 } else {
-                    $err = "Une erreur est survenue : <br/>";
+                    $err = "";
                     foreach ($model->getErrors() as $k => $v)
                         $err .= $v[0] . "<br/>";
                     throw new Exception($err);
                 }
-            } catch (Exception $e) {
+            } catch (Exception $ex) {
                 $tsql->rollback();
-                Yii::app()->user->setFlash('error', $e->getMessage());
-                $this->redirect(array('update', 'id' => $model->id_user));
+                if ($ex->getCode() === Constantes::DB_ERROR_UNIQUE) {
+                    Yii::app()->user->setFlash('error', Translate::trad('mailUnique'));
+                } else {
+                    Yii::app()->user->setFlash('error', $ex->getMessage());
+                }
             }
         }
-
+        
+        $model->password = '';
         $this->render('update', array(
             'model' => $model,
         ));

@@ -82,7 +82,7 @@ class User extends CActiveRecord {
      * @return CActiveDataProvider the data provider that can return the models
      * based on the search/filter conditions.
      */
-    public function search() {
+    public function searchUserAdmin() {
 // @todo Please modify the following code to remove attributes that should not be searched.
 
         $criteria = new CDbCriteria;
@@ -91,7 +91,7 @@ class User extends CActiveRecord {
         $criteria->compare('nom', $this->nom, true);
         $criteria->compare('email', $this->email, true);
         $criteria->compare('password', $this->password, true);
-        $criteria->compare('fk_fonction', $this->fk_fonction!=Constantes::FONCTION_LOCATAIRE);
+        $criteria->compare('fk_fonction', [Constantes::FONCTION_USER, Constantes::FONCTION_ADMIN]);
         $criteria->compare('fk_langue', $this->fk_langue);
         $criteria->compare('visible', $this->visible);
 
