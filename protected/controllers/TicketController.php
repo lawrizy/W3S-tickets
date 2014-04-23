@@ -578,7 +578,7 @@ class TicketController extends Controller {
     }
 
     public function getCategoriesLabel() { //return list categorie's label
-        $datas = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => 0, 'visible' => Constantes::VISIBLE));
+        $datas = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL, 'visible' => Constantes::VISIBLE));
         $datasList = CHtml::listData($datas, 'id_categorie_incident', 'label');
 
         foreach ($datasList as $key => $value) {
