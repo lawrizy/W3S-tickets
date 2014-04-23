@@ -9,19 +9,27 @@
  * @property integer $fk_categorie
  * @property integer $fk_user
  * @property string $descriptif
- * @property integer $fk_canal
  * @property string $date_intervention
  * @property integer $fk_entreprise
  * @property string $code_ticket
  * @property string $etage
  * @property string $bureau
- * @property integer $fk_locataire
  * @property integer $fk_batiment
- * @property integer $visible
  * @property integer $fk_priorite
+ * @property integer $fk_locataire
+ * @property integer $visible
+ * @property integer $fk_canal
  *
  * The followings are the available model relations:
  * @property HistoriqueTicket[] $historiqueTickets
+ * @property StatutTicket $fkStatut
+ * @property CategorieIncident $fkCategorie
+ * @property User $fkUser
+ * @property Entreprise $fkEntreprise
+ * @property Batiment $fkBatiment
+ * @property Priorite $fkPriorite
+ * @property User $fkLocataire
+ * @property Canal $fkCanal
  */
 class Ticket extends CActiveRecord {
 
@@ -59,6 +67,14 @@ class Ticket extends CActiveRecord {
 // class name for the relations automatically generated below.
         return array(
             'historiqueTickets' => array(self::HAS_MANY, 'HistoriqueTicket', 'fk_ticket'),
+            'fkStatut' => array(self::BELONGS_TO, 'StatutTicket', 'fk_statut'),
+            'fkCategorie' => array(self::BELONGS_TO, 'CategorieIncident', 'fk_categorie'),
+            'fkUser' => array(self::BELONGS_TO, 'User', 'fk_user'),
+            'fkEntreprise' => array(self::BELONGS_TO, 'Entreprise', 'fk_entreprise'),
+            'fkBatiment' => array(self::BELONGS_TO, 'Batiment', 'fk_batiment'),
+            'fkPriorite' => array(self::BELONGS_TO, 'Priorite', 'fk_priorite'),
+            'fkLocataire' => array(self::BELONGS_TO, 'User', 'fk_locataire'),
+            'fkCanal' => array(self::BELONGS_TO, 'Canal', 'fk_canal'),
         );
     }
 
