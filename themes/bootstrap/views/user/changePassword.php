@@ -41,7 +41,7 @@ and open the template in the editor.
             ?>
             <div class="Buttons">
                 <?php
-                echo CHtml::submitButton('changer');
+                echo CHtml::submitButton(Translate::trad("ChangePasswordButtonCaption"));
 //                $this->widget('bootstrap.widgets.TbButton', array(
 //                    'label' => 'changer',
 //                    'buttonType' => 'submit',

@@ -71,9 +71,9 @@ class SiteController extends Controller {
             $model->attributes = $_POST['ContactForm'];
             if($model->validate())
             {
-                $from = Yii::app()->params["adminEmail"];
-                $to = Yii::app()->params["emailReceptionMessageContact"];
-                $subject = "=?UTF-8?B?" . base64_encode(Translate::trad("ContactIncomingMessageFrom") . $model->subject) . '?=';
+                $from = "mailer@web3sys.com";
+                $to = Yii::app()->params["adminEmail"];
+                $subject = "=?UTF-8?B?" . base64_encode(Translate::trad("ContactIncomingMessageFrom") . " - Subject: " . $model->subject) . '?=';
                 $body = $model->body;
                 
                 $toSend = new YiiMailMessage($subject, $body, "text/plain", "UTF-8");
@@ -84,6 +84,9 @@ class SiteController extends Controller {
                     Yii::app()->mail->send($toSend);
                 } catch (Swift_SwiftException $mailException) {
                     Yii::app()->user->setFlash('error', 'L\'envoi du mail a échoué.<br/>' . $mailException->getMessage());
+                } catch(Swift_RfcComplianceException $complianceEx)
+                {
+                    Yii::app()->user->setFlash('error', 'L\'envoi du mail a échoué : <br/>' . $complianceEx->getMessage());
                 }
                 
                 Yii::app()->user->setFlash('info', Translate::trad("ContactMessageSuccessAlert"));
