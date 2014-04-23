@@ -158,5 +158,5 @@
 </script>  
 <?php
 Yii::app()->clientScript->registerCoreScript('jquery');
-Yii::app()->clientScript->registerScript(null, '$("#alert_session").delay(5000).fadeOut();')
+Yii::app()->clientScript->registerScript(null, '$("#alert_session").delay(10000).fadeOut();')
 ?>
