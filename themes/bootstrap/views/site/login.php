@@ -28,7 +28,7 @@ $this->breadcrumbs = array(
     ?>
 
     <p class="note"><?php echo Translate::trad('Required'); ?>
-        <?php echo $form->textFieldRow($model, 'username', array('id' => 'IWantTheFocus')); ?>
+        <?php echo $form->textFieldRow($model, 'username', array()); ?>
 
         <?php
         echo $form->passwordFieldRow($model, 'password', array(
@@ -49,10 +49,11 @@ $this->breadcrumbs = array(
     </div>
 
     <?php
-    Yii::app()->clientScript->registerCoreScript('jquery');
-    Yii::app()->clientScript->registerScript(null, '$("#IWantTheFocus").focus();')
+    $this->endWidget();
     ?>
 
-    <?php $this->endWidget(); ?>
-
 </div><!-- form -->
+
+<script type="application/javascript">
+    $("#LoginForm_username").focus();
+</script>

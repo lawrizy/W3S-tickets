@@ -20,7 +20,7 @@ class LoginForm extends CFormModel {
     public function rules() {
         return array(
             // username and password are required
-            array('username, password', 'required', 'message' => Translate::trad('ChampVide')),
+            array('username, password', 'required', 'message' => Translate::trad('ChampsVide')),
             array('username', 'email'),
             // rememberMe needs to be a boolean
             array('rememberMe', 'boolean'),
