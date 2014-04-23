@@ -281,33 +281,36 @@ class TicketController extends Controller {
             $model->attributes = $ticket;
             try {
                 //$model->save();
-                if (!$this->attemptSave($model))
-                    $this->redirect(array('admin'));
-                $loc = User::model()->findByPk($model['fk_locataire']);
-                // Si la sauvegarde du ticket s'est bien passé,
-                // on enregistre un évènement opened pour la création du ticket
-                $histo = new HistoriqueTicket();
-                $histo->date_update = date("Y-m-d H:i:s", time());
-                $histo->fk_ticket = $model->id_ticket;
-                // Lors de la création, statut forcément à opened
-                $histo->fk_statut_ticket = Constantes::STATUT_OPENED;
-                $histo->fk_user = $model['fk_user'];
-                //if ($histo->save(false))
-                if ($this->attemptSave($histo)) {
-                    $this->actionSendNotificationMail($model);
-                    Yii::app()->user->setFlash('success', 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email']);
+                if (!$this->attemptSave($model)) {
+                    $this->render('create', array('model' => $model,));
                 } else {
-                    $this->redirect(array('admin'));
+                    $loc = User::model()->findByPk($model['fk_locataire']);
+                    // Si la sauvegarde du ticket s'est bien passé,
+                    // on enregistre un évènement opened pour la création du ticket
+                    $histo = new HistoriqueTicket();
+                    $histo->date_update = date("Y-m-d H:i:s", time());
+                    $histo->fk_ticket = $model->id_ticket;
+                    // Lors de la création, statut forcément à opened
+                    $histo->fk_statut_ticket = Constantes::STATUT_OPENED;
+                    $histo->fk_user = $model['fk_user'];
+                    //if ($histo->save(false))
+                    if ($this->attemptSave($histo)) {
+                        $this->actionSendNotificationMail($model);
+                        Yii::app()->user->setFlash('success', 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email']);
+                    } else {
+                        $this->redirect(array('view', 'id' => $model->id_ticket));
+                    }
+                    // Si tout s'est bien passé, on redirige vers la page view
+                    Yii::app()->session['NouveauTicket'] = 'nouveau';
+                    $this->redirect(array('view', 'id' => $model->id_ticket));
                 }
-                // Si tout s'est bien passé, on redirige vers la page view
-                Yii::app()->session['NouveauTicket'] = 'nouveau';
-                $this->redirect(array('view', 'id' => $model->id_ticket));
             } catch (CDbException $e) {
 
                 Yii::app()->session['erreurDB'] = $e->getMessage();
             }
         }
-
+        
+        
         $this->render('create', array(
             'model' => $model,
         ));
