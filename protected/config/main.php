@@ -98,7 +98,7 @@ return array(
           // uncomment the following to use a MySQL database
          */
         'db' => array(
-            'connectionString' => 'mysql:host=192.168.1.25;dbname=db_ticketing',
+            'connectionString' => 'mysql:host=192.168.1.25;dbname=websystickets',
             'emulatePrepare' => true,
             'username' => 'root',
             'password' => 'root',
