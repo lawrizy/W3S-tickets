@@ -16,8 +16,8 @@
  * @property Droit[] $droits
  * @property HistoriqueTicket[] $historiqueTickets
  * @property Lieu[] $lieus
- * @property Ticket[] $tickets
- * @property Ticket[] $tickets1
+ * @property Ticket[] $ticketsUser
+ * @property Ticket[] $ticketsLocataire
  * @property Fonction $fkFonction
  * @property Langue $fkLangue
  */
@@ -57,8 +57,8 @@ class User extends CActiveRecord {
             'droits' => array(self::HAS_MANY, 'Droit', 'fk_user'),
             'historiqueTickets' => array(self::HAS_MANY, 'HistoriqueTicket', 'fk_user'),
             'lieus' => array(self::HAS_MANY, 'Lieu', 'fk_locataire'),
-            'tickets' => array(self::HAS_MANY, 'Ticket', 'fk_user'),
-            'tickets1' => array(self::HAS_MANY, 'Ticket', 'fk_locataire'),
+            'ticketsUser' => array(self::HAS_MANY, 'Ticket', 'fk_user'),
+            'ticketsLocataire' => array(self::HAS_MANY, 'Ticket', 'fk_locataire'),
             'fkFonction' => array(self::BELONGS_TO, 'Fonction', 'fk_fonction'),
             'fkLangue' => array(self::BELONGS_TO, 'Langue', 'fk_langue'),
         );

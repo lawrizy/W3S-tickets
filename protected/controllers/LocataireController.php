@@ -1,13 +1,13 @@
 <?php
 
 class LocataireController extends Controller {
+    
     /*
      * Les constantes suivantes correspondent aux actions. Il y a une constante
      * pour chaque action de ce contrôleur. Ces constantes serviront à attribuer
      * ou non des droits aux utilisateurs (voir la méthode 'accessRules()' de 
      * ce même contrôleur)
      */
-
     const ID_CONTROLLER = 6;
     const ACTION_VIEW = 1;
     const ACTION_CREATE = 2;
@@ -132,7 +132,7 @@ class LocataireController extends Controller {
                     Yii::app()->user->setFlash('success', 'Le locataire a bien été créé.');
                     $this->redirect(array('view', 'id' => $model->id_user));
                 } else {
-                    $errMessage = "Une erreur s'est produite : <br/>";
+                    $errMessage = Translate::trad('erreurProduite');
                     foreach ($model->getErrors() as $key => $value)
                         $errMessage .= $value[0] . "<br/>";
                     throw new Exception($errMessage);
@@ -168,10 +168,10 @@ class LocataireController extends Controller {
             try {
                 if ($model->validate() && $model->save()) {
                     $tsql->commit();
-                    Yii::app()->user->setFlash('success', 'Le locataire a bien été mis à jour.');
+                    Yii::app()->user->setFlash('success', Translate::trad('successMajLocataire'));
                     $this->redirect(array('view', 'id' => $model->id_user));
                 } else {
-                    $errMessage = "Une erreur s'est produite : <br/>";
+                    $errMessage = Translate::trad('erreurProduite');
                     foreach ($model->getErrors() as $key => $value)
                         $errMessage .= $value[0] . "<br/>";
                     throw new Exception($errMessage);
@@ -204,31 +204,31 @@ class LocataireController extends Controller {
         $tsql = $db->beginTransaction();
 
         try {
-            if ($model->validate() && $model->save(true)) {
+            if ($model->validate() && $model->save(FALSE)) {
                 $tsql->commit();
-                Yii::app()->user->setFlash('success', 'Le delete du locataire s\'est bien passé.');
+                Yii::app()->user->setFlash('success', Translate::trad('successDeleteLocataire'));
             } else {
-                $err = "Une erreur est survenue : <br/>";
+                $err = Translate::trad('erreurProduite');
                 foreach ($model->getErrors() as $k => $v)
                     $err .= $v[0] . "<br/>";
                 throw new Exception($err);
             }
 
             // Trouver la liste des tickets liés au locataire. On récupère une liste de CActiveRecords
-            $idDuLocataireSoftDelete = $model['id_locataire'];
-            $listeTicketsLocataire = Ticket::model()->findAllByAttributes(array('fk_locataire' => $idDuLocataireSoftDelete));
+            $tickets = $model->ticketsLocataire;
             // Boucle foreach sur chaque enregistrement ($key => $value)
-            foreach ($listeTicketsLocataire as $key => $activeRecordTicket) {
+            foreach ($tickets as $key => $ticket) {
                 // Passer le champs visible de chaque enregistrement trouvé à invisible
-                $activeRecordTicket->setAttribute('visible', Constantes::INVISIBLE);
+                $ticket->setAttribute('visible', Constantes::INVISIBLE);
                 // Faire un save() du changement effectué
-                if (!$activeRecordTicket->validate() || !$activeRecordTicket->save()) {
-                    $err = "Une erreur est survenue lors de la suppression des tickets liés au locataire supprimé : <br/>";
-                    foreach ($activeRecordTicket->getErrors() as $k => $v)
+                if ($ticket->validate() && $ticket->save(FALSE)) {
+                    $tsql->commit();
+                    
+                } else {
+                    $err = Translate::trad('erreurProduite');
+                    foreach ($ticket->getErrors() as $k => $v)
                         $err .= $v[0] . "<br/>";
                     throw new Exception($err);
-                } else {
-                    $tsql->commit();
                 }
             }
             $this->redirect(array('admin'));
@@ -292,14 +292,16 @@ class LocataireController extends Controller {
 
         if (isset($_POST['Batiment'])) {
             try {
-                $modelLieu = Lieu::model()->findByAttributes(array('fk_locataire' => $_GET['id'], 'fk_batiment' => $_POST['Batiment'], 'visible' => Constantes::VISIBLE));
+                $modelLieu = Lieu::model()->findByAttributes(array(
+                    'fk_locataire' => $model->id_user, 'fk_batiment' => $_POST['Batiment'], 'visible' => Constantes::VISIBLE));
                 $modelLieu['visible'] = Constantes::INVISIBLE;
-                if ($modelLieu->validate() && $modelLieu->save()) {
+                if ($modelLieu->validate() && $modelLieu->save(FALSE)) {
                     $tsql->commit();
-                    Yii::app()->user->setFlash('success', '<strong> Le propriétaire ' . $model->nom . ' n\'habite plus dans le bâtiment: ' . Batiment::model()->findByPk($_POST['Batiment'])->nom . '</strong>');
+                    Yii::app()->user->setFlash('success', 'Le locataire '.
+                        $model->nom . ' n\'habite plus dans le bâtiment: ' . $modelLieu->fkBatiment->nom);
                     $this->redirect(array('deleteLieu?id=' . $model->id_user));
                 } else {
-                    $err = "Une erreur est survenue : <br/>";
+                    $err = Translate::trad('erreurProduite');
                     foreach ($modelLieu->getErrors() as $k => $v)
                         $err .= $v[0] . "<br/>";
                     throw new Exception($err);
@@ -309,29 +311,30 @@ class LocataireController extends Controller {
                 Yii::app()->user->setFlash('error', $erreur->getMessage());
                 $this->redirect(array('admin'));
             }
+        } else {
+            $this->render('deleteLieu', array('model' => $model));
         }
-
-        $this->render('deleteLieu', array('model' => $model));
     }
 
     public function actionaddLieu() {
-        /* @var CDbConnection $db */
-        /* @var CDbTransaction $tsql */
+        /** @var CDbConnection $db */
+        /** @var CDbTransaction $tsql */
         $db = Yii::app()->db;
         $tsql = $db->beginTransaction();
 
         $model = User::model()->findByPk($_GET['id']);
+        
         if (isset($_POST['Batiment'])) {
             try {
                 $modelLieu = new Lieu();
                 $modelLieu['fk_locataire'] = $model->id_user;
                 $modelLieu['fk_batiment'] = $_POST['Batiment'];
-                if ($modelLieu->validate() && $modelLieu->save()) {
+                if ($modelLieu->validate() && $modelLieu->save(FALSE)) {
                     $tsql->commit();
                     Yii::app()->user->setFlash('success', '<strong>Cette adresse a bien été ajoutée pour: ' . $model->nom . '</strong>');
                     $this->redirect(array('addLieu?id=' . $model->id_user));
                 } else {
-                    $err = "Une erreur est survenue : <br/>";
+                    $err = Translate::trad('erreurProduite');
                     foreach ($modelLieu->getErrors() as $k => $v)
                         $err .= $v[0] . "<br/>";
                     throw new Exception($err);
@@ -341,9 +344,9 @@ class LocataireController extends Controller {
                 Yii::app()->user->setFlash('error', $erreur->getMessage());
                 $this->redirect(array('admin'));
             }
+        } else {
+            $this->render('addLieu', array('model' => $model));
         }
-
-        $this->render('addLieu', array('model' => $model));
     }
 
     public function actionChangePassword() {
@@ -358,17 +361,17 @@ class LocataireController extends Controller {
                 if (md5($_POST['AncienMdp']) === $model->password) {
                     if ($_POST['NouveauMdp'] != NULL && $_POST['NouveauMdp'] === $_POST['NouveauMdp1']) {
                         $model->password = md5($_POST['NouveauMdp1']);
-                        if ($model->validate() && $model->save()) {
+                        if ($model->validate() && $model->save(FALSE)) {
                             $tsql->commit();
                             Yii::app()->user->setFlash('success', '<strong>Votre nouveau mot de passe a bien été enregistré!' . '</strong>');
                         } else {
-                            $err = "Une erreur est survenue : <br/>";
+                            $err = Translate::trad('erreurProduite');
                             foreach ($model->getErrors() as $k => $v)
                                 $err .= $v[0] . "<br/>";
                             throw new Exception($err);
                         }
                     } else {
-                        throw new Exception('<strong>Erreur les nouveaux mots de passe sont différents !' . '</strong>');
+                        throw new Exception('<strong>Erreur les nouveaux mots de passe ne sont pas pareils !' . '</strong>');
                     }
                 } else {
                     throw new Exception('<strong>Erreur votre ancien mot de passe est erroné !' . '</strong>');
@@ -378,8 +381,9 @@ class LocataireController extends Controller {
                 Yii::app()->user->setFlash('error', $e->getMessage());
                 $this->redirect(array('changepassword', 'id' => $model->id_locataire));
             }
+        } else {
+            $this->render('changePassword');
         }
-        $this->render('changePassword');
     }
 
 }

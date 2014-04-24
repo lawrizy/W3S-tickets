@@ -85,6 +85,15 @@ class DashboardController extends Controller {
         $data = array('idBatiment' => 'ALL');
         $this->render('index', $data);
     }
+    
+    public function getCategories() { //retrurn list of categories
+        $datas = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL));
+        $listCategorie = array();
+        foreach ($datas as $data) {
+            array_push($listCategorie, $data);
+        }
+        return $listCategorie;
+    }
 
     /**
      * Retourne une liste contenant un label de catégorie lié à une valeur représentant la fréquence de cette catégorie dans la DB.
@@ -95,22 +104,12 @@ class DashboardController extends Controller {
         $nbFinal = array();
         foreach ($categories as $categorie) {
             $nbCategorie = 0;
-            $sousCategories = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => $categorie['id_categorie_incident']));
-            foreach ($sousCategories as $sousCategorie) {
+            foreach ($categorie->categorieIncidents as $sousCategorie) {
                 $nbCategorie += Ticket::model()->countByAttributes(array('fk_categorie' => $sousCategorie['id_categorie_incident']));
             }
             array_push($nbFinal, $nbCategorie);
         }
         return $nbFinal;
-    }
-
-    public function getCategories() { //retrurn list of categories
-        $datas = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL));
-        $listCategorie = array();
-        foreach ($datas as $data) {
-            array_push($listCategorie, $data);
-        }
-        return $listCategorie;
     }
 
     public function getTicketByCategorieForBatimentID($idBatiment) {

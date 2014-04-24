@@ -15,6 +15,7 @@
  * @property CategorieIncident[] $categorieIncidents
  * @property Priorite $fkPriorite
  * @property Secteur[] $secteurs
+ * @property Ticket[] $tickets
  */
 class CategorieIncident extends CActiveRecord {
 
@@ -52,6 +53,7 @@ class CategorieIncident extends CActiveRecord {
             'categorieIncidents' => array(self::HAS_MANY, 'CategorieIncident', 'fk_parent'),
             'fkPriorite' => array(self::BELONGS_TO, 'Priorite', 'fk_priorite'),
             'secteurs' => array(self::HAS_MANY, 'Secteur', 'fk_categorie'),
+            'tickets' => array(self::HAS_MANY, 'Ticket', 'fk_categorie'),
         );
     }
 

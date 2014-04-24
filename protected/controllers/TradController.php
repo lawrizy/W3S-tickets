@@ -82,11 +82,11 @@ class TradController extends Controller {
         if (isset($_POST['Trad'])) {
             try {
                 $model->attributes = $_POST['Trad'];
-                if ($model->validate() && $model->save()) {
+                if ($model->validate() && $model->save(FALSE)) {
                     $tsql->commit();
                     $this->redirect(array('modifyTraduction'));
                 } else {
-                    $err = "Une erreur est survenue : <br/>";
+                    $err = Translate::trad('erreurProduite');
                     foreach ($model->getErrors() as $k => $v)
                         $err .= $v[0] . "<br/>";
                     throw new Exception($err);
@@ -96,9 +96,9 @@ class TradController extends Controller {
                 Yii::app()->user->setFlash('error', $e->getMessage());
                 $this->redirect(array('modifyTraduction'));
             }
+        } else {
+            $this->render('update', array('model' => $model));
         }
-
-        $this->render('update', array('model' => $model));
     }
 
     /**
@@ -117,12 +117,12 @@ class TradController extends Controller {
                 $model->attributes = $_POST['Trad'];
                 // Exécution de la validation suivant les règles du modèle (code, fr, en, nl non null, etc...)
                 // Sauvegarde de la nouvelle traduction
-                if ($model->validate() && $model->save(false)) {
+                if ($model->validate() && $model->save(FALSE)) {
                     $tsql->commit();
                     Yii::app()->user->setFlash("success", "L'insertion de la nouvelle traduction s'est bien passée.<br/>
                                 Vous pouvez désormais l'utiliser en écrivant Translate::trad(\"" . $model->code . "\")");
                 } else {
-                    $err = "Une erreur est survenue : <br/>";
+                    $err = Translate::trad('erreurProduite');
                     foreach ($model->getErrors() as $k => $v)
                         $err .= $v[0] . "<br/>";
                     throw new Exception($err);

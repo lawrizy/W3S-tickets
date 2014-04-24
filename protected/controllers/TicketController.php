@@ -132,12 +132,12 @@ class TicketController extends Controller {
             return false;
         try {
             // Si la validation est passée ET qu'aucune erreur n'est retournée par la DB
-            if ($objectToSave->validate() && $objectToSave->save(true)) {
+            if ($objectToSave->validate() && $objectToSave->save(FALSE)) {
                 // On commite les changements
                 $tsql->commit();
             } else { // Non validé
                 // Si la validation n'est pas passée, on génère le message d'erreur
-                $err = "Une erreur est survenue : <br/>";
+                $err = Translate::trad('erreurProduite');
                 // ici on récupère les strings d'erreur contenues dans le modèle, pour les ajouter à la string d'erreur "principale"
                 foreach ($objectToSave->getErrors() as $k => $v)
                     $err .= $v[0] . "<br/>";
@@ -155,27 +155,26 @@ class TicketController extends Controller {
     }
 
     public function actionClose($id) {
+        $model = $this->loadModel($id);
         if (isset($_POST['Ticket'])) {
             $var = $_POST['Ticket'];
-            $model = $this->loadModel($id);
             $model->descriptif = $model->descriptif . ' ---------- Cloture ---------- ' . $var['descriptif'];
             $model->fk_statut = Constantes::STATUT_CLOSED;
             try {
                 //$model->save(false);
                 if (!$this->attemptSave($model))
                     $this->redirect(array('view', 'id' => $model->id_ticket));
-                $loc = User::model()->findByPk($model['fk_locataire']);
                 $histo = new HistoriqueTicket();
                 $histo->date_update = date("Y-m-d H:i:s", time());
                 $histo->fk_ticket = $model->id_ticket;
-                    // Lors de la cloture, statut forcément à Closed
+                // Lors de la cloture, statut forcément à Closed
                 $histo->fk_statut_ticket = Constantes::STATUT_CLOSED;
                 $logged = Yii::app()->session['Logged'];
                 $histo->fk_user = $logged['id_user'];
                 //if ($histo->save(false)) {
                 if ($this->attemptSave($histo)) {
                     $this->actionSendNotificationMail($model);
-                    Yii::app()->user->setFlash('success', 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email']);
+                    Yii::app()->user->setFlash('success', 'Un mail vous a été envoyé à l\' adresse : ' . $model->fkLocataire->email);
                 } else {
                     $this->redirect(array('view', 'id' => $model->id_ticket));
                 }
@@ -185,7 +184,7 @@ class TicketController extends Controller {
             }
         } else {
             $this->render('close', array(
-                'model' => $this->loadModel($id),
+                'model' => $model,
             ));
         }
     }
@@ -204,7 +203,6 @@ class TicketController extends Controller {
                 //$oldmodel->save(FALSE);
                 if (!$this->attemptSave($oldmodel))
                     $this->redirect(array('admin'));
-                $loc = User::model()->findByPk($oldmodel['fk_locataire']);
                 // Si la sauvegarde du ticket s'est bien passé,
                 // on enregistre un évènement InProgress pour le traitement du ticket
                 $histo = new HistoriqueTicket();
@@ -217,7 +215,7 @@ class TicketController extends Controller {
                 //if ($histo->save(false)) {
                 if ($this->attemptSave($histo)) {
                     $this->actionSendNotificationMail($oldmodel);
-                    Yii::app()->user->setFlash('success', 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email']);
+                    Yii::app()->user->setFlash('success', 'Un mail vous a été envoyé à l\' adresse : ' . $oldmodel->fkLocataire->email);
                 } else {
                     $this->redirect(array('admin'));
                 }
@@ -267,8 +265,7 @@ class TicketController extends Controller {
             // On met à jour la sous-catégorie (qui est liée elle-même à une catégorie mère unique).
             if (isset($_POST['DD_sousCat'])) {
                 $ticket['fk_categorie'] = $_POST['DD_sousCat'];
-                $cat = CategorieIncident::model()->findByPk($ticket['fk_categorie']);
-                $ticket['fk_priorite'] = $cat['fk_priorite'];
+                $ticket['fk_priorite'] = $ticket->fkCategorie->fkPriorite->id_priorite;
             } else {
                 $ticket['fk_categorie'] = NULL;
                 $ticket['fk_priorite'] = NULL;
@@ -284,7 +281,6 @@ class TicketController extends Controller {
                 if (!$this->attemptSave($model)) {
                     $this->render('create', array('model' => $model,));
                 } else {
-                    $loc = User::model()->findByPk($model['fk_locataire']);
                     // Si la sauvegarde du ticket s'est bien passé,
                     // on enregistre un évènement opened pour la création du ticket
                     $histo = new HistoriqueTicket();
@@ -296,7 +292,7 @@ class TicketController extends Controller {
                     //if ($histo->save(false))
                     if ($this->attemptSave($histo)) {
                         $this->actionSendNotificationMail($model);
-                        Yii::app()->user->setFlash('success', 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email']);
+                        Yii::app()->user->setFlash('success', 'Un mail vous a été envoyé à l\' adresse : ' . $model->fkLocataire->email);
                     } else {
                         $this->redirect(array('view', 'id' => $model->id_ticket));
                     }
@@ -309,8 +305,8 @@ class TicketController extends Controller {
                 Yii::app()->session['erreurDB'] = $e->getMessage();
             }
         }
-        
-        
+
+
         $this->render('create', array(
             'model' => $model,
         ));
@@ -337,31 +333,30 @@ class TicketController extends Controller {
         //COMMENTS
         $model = $oldmodel = $this->loadModel($id);
 
-// Vérifie si a bien reçu un objet 'Ticket'
-// ==> si non, c'est que c'est la première arrivée sur la page update,
-// ==> si oui, c'est que c'est la page update elle-même qui renvoie ici pour la mise à jour d'un ticket
+        // Vérifie si a bien reçu un objet 'Ticket'
+        // ==> si non, c'est que c'est la première arrivée sur la page update,
+        // ==> si oui, c'est que c'est la page update elle-même qui renvoie ici pour la mise à jour d'un ticket
         if (isset($_POST['Ticket'])) {
-// Stocke les anciennes valeurs du modèle, pour comparaison ultérieure.
-// Le changement du modèle s'opère ici.
+            // Stocke les anciennes valeurs du modèle, pour comparaison ultérieure.
+            // Le changement du modèle s'opère ici.
             $model->attributes = $_POST['Ticket'];
-// On génère un code ticket selon le bâtiment selectionné SEULEMENT si le batiment a changé
+            // On génère un code ticket selon le bâtiment selectionné SEULEMENT si le batiment a changé
             $model->code_ticket = $model->fk_batiment != $oldmodel->fk_batiment ? $this->createCodeTicket($model->fk_batiment) : $model->code_ticket;
 
-// On met à jour la sous-catégorie (qui est liée elle-même à une catégorie mère unique).
+            // On met à jour la sous-catégorie (qui est liée elle-même à une catégorie mère unique).
             if (isset($_POST['DD_sousCat']))
                 $model->fk_categorie = $_POST['DD_sousCat'];
             else
                 $ticket['fk_categorie'] = 'null';
 
-// Ensuite on sauvegarde les changements normalement.
+            // Ensuite on sauvegarde les changements normalement.
             try {
                 //$model->save();
                 if (!$this->attemptSave($model))
                     $this->redirect(array('update', 'id' => $model->id_ticket));
-                $loc = Locataire::model()->findByPk($model['fk_locataire']);
-                Yii::app()->session['EmailSend'] = 'Un mail vous a été envoyé à l\' adresse : ' . $loc['email'];
-// Si la sauvegarde du ticket s'est bien passé,
-// on enregistre un évènement pour le ticket
+                Yii::app()->session['EmailSend'] = 'Un mail vous a été envoyé à l\' adresse : ' . $model->fkLocataire->email;
+                // Si la sauvegarde du ticket s'est bien passé,
+                // on enregistre un évènement pour le ticket
                 $histo = new HistoriqueTicket();
                 $histo->date_update = date("Y-m-d H:i:s", time());
                 $histo->fk_ticket = $model->id_ticket;
@@ -390,8 +385,12 @@ class TicketController extends Controller {
     public function actionDelete($id) {
         $model = $this->loadModel($id);
         $model->setAttribute("visible", Constantes::INVISIBLE);
-        //$model->save(true);
-        $this->attemptSave($model);
+        if ($this->attemptSave($model)) {
+            foreach ($model->historiqueTickets as $histo) {
+                $histo->visible = Constantes::INVISIBLE;
+                $this->attemptSave($histo);
+            }
+        }
         $this->redirect(array('admin'));
     }
 
@@ -416,7 +415,6 @@ class TicketController extends Controller {
      */
     private function actionSendNotificationMail($modelTicket) {
         $message = new YiiMailMessage;
-        $locataire = User::model()->findByPk($modelTicket->fk_locataire);
         $message->from = 'mailer@web3sys.com';
         $message->addTo($locataire->email);
 
@@ -427,13 +425,13 @@ class TicketController extends Controller {
                         "<div style='text-align: center;'><h2>Votre ticket n&ordm; " . $modelTicket->code_ticket . " a &eacute;t&eacute; cr&eacute;&eacute;.</h2></div>"
                         . "<div style='border-style: solid; border-width: 2px; margin-left: 10em; margin-right: 10em; padding: 2em; border-radius: 3em;'>"
                         . "<u>R&eacute;sum&eacute; des informations du ticket:</u><br/><br/>"
-                        . "<b>Cr&eacute;ateur du ticket</b>: " . $locataire->nom . "<br/>"
-                        . "<b>Catégorie du ticket</b>: " . CategorieIncident::model()->findByPk(CategorieIncident::model()->findByPk($modelTicket->fk_categorie)->fk_parent)->label . "<br/>"
-                        . "<b>Sous-catégorie du ticket</b>: " . CategorieIncident::model()->findByPk($modelTicket->fk_categorie)->label . "<br/>"
-                        . "<b>Bâtiment concern&eacute;</b>: " . Batiment::model()->findByPk($modelTicket->fk_batiment)->nom . "<br/>"
-                        . "<b>Adresse</b>: " . Batiment::model()->findByPk($modelTicket->fk_batiment)->adresse . "<br/>"
+                        . "<b>Cr&eacute;ateur du ticket</b>: " . $modelTicket->fkLocataire->nom . "<br/>"
+                        . "<b>Catégorie du ticket</b>: " . $modelTicket->fkCategorie->fkParent->label . "<br/>"
+                        . "<b>Sous-catégorie du ticket</b>: " . $modelTicket->fkCategorie->label . "<br/>"
+                        . "<b>Bâtiment concern&eacute;</b>: " . $modelTicket->fkBatiment->nom . "<br/>"
+                        . "<b>Adresse</b>: " . $modelTicket->fkBatiment->adresse . "<br/>"
                         . "<b>Commentaire</b>: " . $modelTicket->descriptif . "<br/>"
-                        . "<b>Gestionnaire de votre ticket</b>: " . User::model()->findByPk($modelTicket->fk_user)->nom . "<br/>"
+                        . "<b>Gestionnaire de votre ticket</b>: " . $modelTicket->fkUser->nom . "<br/>"
                         . "<br/>"
                         . "<b><center>Merci d'avoir rapporté votre problème.</center>   </b>"
                         . "</div>"
@@ -448,12 +446,12 @@ class TicketController extends Controller {
                         . "<div style='border-style: solid; border-width: 2px; margin-left: 10em; margin-right: 10em; padding: 2em; border-radius: 3em;'>"
                         . "R&eacute;sum&eacute; des informations du ticket:<br/>"
                         . "Cr&eacute;ateur du ticket: " . $locataire->nom . "<br/>"
-                        . "Catégorie du ticket: " . CategorieIncident::model()->findByPk(CategorieIncident::model()->findByPk($modelTicket->fk_categorie)->fk_parent)->label . "<br/>"
-                        . "Sous-catégorie du ticket: " . CategorieIncident::model()->findByPk($modelTicket->fk_categorie)->label . "<br/>"
-                        . "Bâtiment concern&eacute;: " . Batiment::model()->findByPk($modelTicket->fk_batiment)->nom . "<br/>"
-                        . "Adresse : " . Batiment::model()->findByPk($modelTicket->fk_batiment)->adresse . "<br/>"
+                        . "Catégorie du ticket: " . $modelTicket->fkCategorie->fkParent->label . "<br/>"
+                        . "Sous-catégorie du ticket: " . $modelTicket->fkCategorie->label . "<br/>"
+                        . "Bâtiment concern&eacute;: " . $modelTicket->fkBatiment->nom . "<br/>"
+                        . "Adresse : " . $modelTicket->fkBatiment->adresse . "<br/>"
                         . "Commentaire: " . $modelTicket->descriptif . "<br/>"
-                        . "Gestionnaire de votre ticket: " . User::model()->findByPk($modelTicket->fk_user)->nom
+                        . "Gestionnaire de votre ticket: " . $modelTicket->fkUser->nom
                         . "</div>"
                         , 'text/html'
                 );
@@ -509,51 +507,6 @@ class TicketController extends Controller {
         }
     }
 
-    // TODO utiliser des vues pour faire les requêtes suivantes :
-
-    /**
-     * Retourne une liste d'entreprises pouvant être contactées dans le cadre d'un ticket
-     * @param $idTicket L'identifiant du ticket concerné
-     * @return array La liste des entreprises "sélectionnables"
-     */
-    public function getEntreprise($idTicket) {
-        $model = $this->loadModel($idTicket);
-        //TODO commenter
-        $lieu = Lieu::model()->findByPk($model->fk_lieu);
-        $secteurs = Secteur::model()->findAllByAttributes(array('fk_batiment' => $lieu->fk_batiment, 'fk_categorie' => $model->fk_categorie, 'visible' => Constantes::VISIBLE));
-        $entreprises = array();
-        foreach ($secteurs as $secteur) {
-            $entreprise = Entreprise::model()->findByPk($secteur->fk_entreprise);
-            array_push($entreprises, $entreprise);
-        }
-
-        return $entreprises;
-    }
-
-    /**
-     * Retourne une liste de secteurs possibles pour une catégorie d'incident donnée
-     * @param $entreprise ???
-     * @param $categorie La catégorie d'incident concernée
-     * @param $batiment Le bâtiment concerné
-     * @return array|mixed|null
-     */
-    public function getSecteurByFk($entreprise, $categorie, $batiment) {
-        $var = Secteur::model()->findByAttributes(array('fk_batiment' => $batiment, 'fk_categorie' => $categorie, 'fk_entreprise' => $entreprise, 'visible' => Constantes::VISIBLE));
-        return $var->id_secteur;
-    }
-
-    /**
-     * Retourne la liste de tous les bâtiments de la DB.
-     * @return array|CActiveRecord|mixed|null La liste de tous les bâtiments de la DB
-     */
-    public function getBatiment() {
-        $batiments = Batiment::model()->findAllByAttributes(array('visible' => Constantes::VISIBLE));
-        foreach ($batiments as $batiment) {
-            $batiment['name'] = $batiment->adresse . ', ' . $batiment->cp . ' ' . $batiment->commune . ' - nom: ' . $batiment->nom;
-        }
-        return $batiments;
-    }
-
     /**
      * Cette méthode s'occupe du chargement dynamique des sous-catégories en fonction de la catégorie principale sélectionnée.
      * Elle crée elle même les tags <option value="...">...</option> qui formeront le form (qui se trouve dans la vue).
@@ -587,8 +540,6 @@ class TicketController extends Controller {
         foreach ($datasList as $key => $value) {
             $datasList[$key] = CHtml::encode(Translate::trad($datasList[$key]));
         }
-
-        //print_r($datasList);
 
         return $datasList;
     }

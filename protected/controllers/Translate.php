@@ -7,7 +7,6 @@ class Translate {
     // Son modèle 'Trad' est présent dans le dossier modèle et permet de rechercher un élément dans la DB
     // Le fonctionnement de la méthode est très simple, recherche dans la DB de l'enregistrement
     // et on renvoie la traduction selon la langue courante de l'application (la méthode renvoie donc un string)
-
     public static function trad($txt) {    // Traduit les phrases de maximum 128 caractères
         try {
             $result = Trad::model()->findByAttributes(array('code' => $txt));
@@ -19,7 +18,6 @@ class Translate {
             return $txt; // Retourne le texte du code pour au moins avoir un feedback
         }
     }
-
 }
 
 ?>

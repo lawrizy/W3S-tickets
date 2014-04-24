@@ -1,13 +1,13 @@
 <?php
 
 class UserController extends Controller {
+    
     /*
      * Les constantes suivantes correspondent aux actions. Il y a une constante
      * pour chaque action de ce contrôleur. Ces constantes serviront à attribuer
      * ou non des droits aux utilisateurs (voir la méthode 'accessRules()' de 
      * ce même contrôleur)
      */
-
     const ID_CONTROLLER = 9;
     const ACTION_VIEW = 1;
     const ACTION_CREATE = 2;
@@ -121,7 +121,7 @@ class UserController extends Controller {
         $db = Yii::app()->db;
         $tsql = $db->beginTransaction();
         $model = new User;
-        
+
         if (isset($_POST['User'])) {
             try {
                 $tmp = new User();
@@ -149,7 +149,7 @@ class UserController extends Controller {
                 }
             }
         }
-        
+
         $this->render('create', array(
             'model' => $model,
         ));
@@ -194,7 +194,7 @@ class UserController extends Controller {
                 }
             }
         }
-        
+
         $model->password = '';
         $this->render('update', array(
             'model' => $model,
@@ -291,7 +291,7 @@ class UserController extends Controller {
                             $tsql->commit();
                             Yii::app()->user->setFlash('success', '<strong>Votre nouveau mot de passe a bien été enregistré!' . '</strong>');
                         } else {
-                            $err = "Une erreur est survenue : <br/>";
+                            $err = Translate::trad('erreurProduite');
                             foreach ($model->getErrors() as $k => $v)
                                 $err .= $v[0] . "<br/>";
                             throw new Exception($err);

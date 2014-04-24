@@ -288,7 +288,7 @@ class AndroidController extends Controller {
         /* @var $model User */
         $error = self::ERROR_USER_INEXISTANT;
         try {
-            $model = User::model()->findByAttributes(array('id_user' => $idUser));
+            $model = User::model()->findByPk($idUser);
             if ($model != null) $error = $model->fk_fonction;
         } catch (CDbException $e) {
             $error = self::ERROR_DB_INACCESSIBLE;
