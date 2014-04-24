@@ -38,7 +38,7 @@ $this->widget('bootstrap.widgets.TbDetailView', array(
         ),
         array(
             'name' => 'Langue',
-            'value' => Langue::model()->findByPk($model->fk_langue)->label
+            'value' => $model->fkLangue->label
         ),
     ),
 ));
