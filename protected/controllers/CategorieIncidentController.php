@@ -107,7 +107,7 @@ class CategorieIncidentController extends Controller {
      * @param null $objectToSave L'active record dont les changements doivent être commit vers la DB.
      * @return bool Un booléen qui signifie si la sauvegarde s'est bien passé ou non.
      */
-    private function attemptSave($objectToSave)
+    private function attemptSave($objectToSave, $saveNow = true)
     {
         /* @var CDbConnection $db */
         /* @var CDbTransaction $tsql */
@@ -118,7 +118,7 @@ class CategorieIncidentController extends Controller {
         try
         {
             // Si la validation est passée ET qu'aucune erreur n'est retournée par la DB
-            if($objectToSave->validate() && $objectToSave->save(true))
+            if($saveNow && $objectToSave->validate() && $objectToSave->save(true))
             {
                 // On commite les changements
                 $tsql->commit();
