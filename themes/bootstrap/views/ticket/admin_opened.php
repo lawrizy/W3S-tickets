@@ -58,25 +58,26 @@ $this->widget('bootstrap.widgets.TbGridView', array(
             'value' => '$data->code_ticket'),
         array(
             'name' => Translate::trad('LocataireTicket'),
-            'value' => 'User::model()->findByPk($data->fk_locataire)->nom'),
+            'value' => '$data->fkLocataire->nom'),
         array(
             'name' => Translate::trad('StatutTicket'),
-            'value' => 'Translate::trad(StatutTicket::model()->findByPk($data->fk_statut)->label);'
+            'value' => 'Translate::trad($data->fkStatut->label);'
         ),
         array(
             'name' => Translate::trad('CategTicket'),
-            'value' => 'Translate::trad(CategorieIncident::model()->findByPk(CategorieIncident::model()->findByPk($data->fk_categorie)->fk_parent)->label);'
+            'value' => 'Translate::trad($data->fkCategorie->fkParent->label);'
         ),
         array(
             'name' => Translate::trad('CategorieTicket'),
-            'value' => 'Translate::trad(CategorieIncident::model()->findByPk($data->fk_categorie)->label);'
+            'value' => 'Translate::trad($data->fkCategorie->label);'
         ),
         array(
             'name' => Translate::trad('BatimentTicketCirc'),
-            'value' => 'Batiment::model()->findByPk($data->fk_batiment)->nom'),
+            'value' => '$data->fkBatiment->nom'
+        ),
         array(
             'name' => Translate::trad('UserTicketCirc'),
-            'value' => 'User::model()->findByPk($data->fk_user)->nom'),
+            'value' => '$data->fkUser->nom'),
         array
             (
             'class' => 'bootstrap.widgets.TbButtonColumn',

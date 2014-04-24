@@ -53,10 +53,10 @@ $this->widget('bootstrap.widgets.TbGridView', array(
         'label',
         array(
             'name' => 'Fk Parent',
-            'value' => '$data->fk_parent != null ? CategorieIncident::model()->findByPk($data->fk_parent)->label : \'-----\''),
+            'value' => '$data->fk_parent != null ? $data->fk_parent->label : \'-----\''),
         array(
             'name' => 'Fk Priorite',
-            'value' => 'Priorite::model()->findByPk($data->fk_priorite)->label'),
+            'value' => '$data->fk_priorite->label'),
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',
             'template' => $DroitIcone
