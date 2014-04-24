@@ -14,15 +14,16 @@
 
     <?php
     // Affichage de l'entreprise qui s'occupera de ce ticket (selon la catégorie)
-    $categorie = CategorieIncident::model()->findByPk($model->fk_categorie);
-    $secteur = Secteur::model()->findByAttributes(array('fk_categorie' => $categorie['fk_parent'], 'visible' => Constantes::VISIBLE));
-    if ($secteur == null) {
+    //$categorie = CategorieIncident::model()->findByPk($model->fk_categorie);
+    //  $secteur = Secteur::model()->findByAttributes(array('fk_categorie' =>  $model->fkCategorie->id_categorie_incident/*$categorie['fk_parent']*/, 'visible' => Constantes::VISIBLE));
+    if (!isset($model->fkCategorie->secteurs[0])) {
         echo '<input type="hidden" value="' . Constantes::ENTREPRISE_DEFAUT . '" name="Ticket[fk_entreprise]" />';
         echo '<br /><p style="color: red;">/!\ Aucun sous-traitant n\'est lié à cette catégorie, contactez votre administrateur au plus vite pour régler ça!</p><br />';
     } else {
         echo '<input type="hidden" value="' . $secteur['fk_entreprise'] . '" name="Ticket[fk_entreprise]" />';
+        // $secteur->Fk
         $entreprise = Entreprise::model()->findByPk($secteur['fk_entreprise']);
-        echo '<br /><p style="color: blue;">Le sous-traitant qui s\'occupera de ce ticket est: ' . $entreprise['nom'] . '</p><br /><br />';
+        echo '<br /><p style="color: blue;">Le sous-traitant qui s\'occupera de ce ticket est: ' . $model->fkCategorie->secteurs[0]->fkEntreprise->nom . '</p><br /><br />';
     }
     ?>
 
@@ -47,26 +48,25 @@
         ))
     );
     ?>
-    
+
     <?php
-        echo $form->labelEx($model, 'fk_priorite');
-        echo $form->dropDownList($model, 'fk_priorite', array('' => '', CHtml::listData(Priorite::model()->findAll(), 'id_priorite', 'label')));
-        echo $form->error($model, 'fk_priorite');
-        
+    echo $form->labelEx($model, 'fk_priorite');
+    echo $form->dropDownList($model, 'fk_priorite', array('' => '', CHtml::listData(Priorite::model()->findAll(), 'id_priorite', 'label')));
+    echo $form->error($model, 'fk_priorite');
     ?>
-    
-    
-    
+
+
+
     <div class="buttons">
-    <?php
-    $this->widget('zii.widgets.jui.CJuiButton', array(
-        'buttonType' => 'submit', // Type de bouton
-        'name' => 'traitement', // L'action à lancer (ne pas oublier les rules dans le controleur)
-        'caption' => Translate::trad('ButtonTraitement'), // Le texte à afficher sur le bouton
-    ));
-    ?>
+        <?php
+        $this->widget('zii.widgets.jui.CJuiButton', array(
+            'buttonType' => 'submit', // Type de bouton
+            'name' => 'traitement', // L'action à lancer (ne pas oublier les rules dans le controleur)
+            'caption' => Translate::trad('ButtonTraitement'), // Le texte à afficher sur le bouton
+        ));
+        ?>
     </div>
 
-<?php $this->endWidget(); ?>
+    <?php $this->endWidget(); ?>
 
 </div><!-- form -->

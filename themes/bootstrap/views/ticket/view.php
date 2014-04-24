@@ -34,29 +34,29 @@ $this->widget('bootstrap.widgets.TbDetailView', array(
     'attributes' => array(
         array(
             'name' => Translate::trad('StatutTicket'),
-            'value' => Translate::trad(StatutTicket::model()->findByPk($model->fk_statut)->label)
+            'value' => Translate::trad($model->fkStatut->label)
         ),
         array(
             'name' => Translate::trad('LocataireTicket'),
-            'value' => User::model()->findByPk($model->fk_locataire)->nom
+            'value' => $model->fkLocataire->nom
         ),
         array(
             'name' => Translate::trad('CategTicket'),
-            'value' => Translate::trad(CategorieIncident::model()->findByPk(CategorieIncident::model()->findByPk($model->fk_categorie)->fk_parent)->label)
+            'value' => Translate::trad($model->fkCategorie->fkParent->label)
         ),
         array(
             'name' => Translate::trad('CategorieTicket'),
-            'value' => Translate::trad(CategorieIncident::model()->findByPk($model->fk_categorie)->label)
+            'value' => Translate::trad($model->fkCategorie->label)
         ),
         array(
             'name' => Translate::trad('BatimentTicketCirc'),
-            'value' => $batiment->nom . ' - ' . $batiment->adresse),
+            'value' => $model->fkBatiment->nom . ' - ' . $model->fkBatiment->adresse),
         array(
             'name' => Translate::trad('UserTicketCirc'),
-            'value' => User::model()->findByPk($model->fk_user)->nom),
+            'value' => $model->fkUser->nom),
         array(
             'name' => Translate::trad('CanalTicketCirc'),
-            'value' => Translate::trad(Canal::model()->findByPk($model->fk_canal)->label)
+            'value' => Translate::trad($model->fkCanal->label)
         ),
     ),
 ));
@@ -74,7 +74,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
             'value' => '$data->date_update'),
         array(
             'name' => Translate::trad('ViewHistoriqueType'),
-            'value' => 'Translate::trad( StatutTicket::model()->findByPk($data->fk_statut_ticket)->label);'),
+            'value' => 'Translate::trad($data->fkStatutTicket->label);'),
     ),
 ));
 ?>
