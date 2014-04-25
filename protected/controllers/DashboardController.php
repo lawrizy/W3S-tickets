@@ -115,18 +115,17 @@ class DashboardController extends Controller {
     public function getTicketByCategorieForBatimentID($idBatiment) {
         $categories = $this->getCategories();
         $nbFinal = array();
-
         foreach ($categories as $categorie) {
             $nbCategorie = 0;
-            $sousCategories = CategorieIncident::model()->findAllByAttributes(array('fk_parent' => $categorie['id_categorie_incident']));
-
+            $sousCategories = $categorie->categorieIncidents;
             foreach ($sousCategories as $sousCategorie)
                 $nbCategorie += Ticket::model()->countByAttributes(array(
-                    'fk_categorie' => $sousCategorie['id_categorie_incident'], 'fk_batiment' => $idBatiment));
-
+                    'fk_categorie' => $sousCategorie['id_categorie_incident'],
+                    'fk_batiment' => $idBatiment,
+                    'visible' => Constantes::VISIBLE
+                ));
             array_push($nbFinal, $nbCategorie);
         }
-
         return $nbFinal;
     }
 
@@ -138,31 +137,30 @@ class DashboardController extends Controller {
      * Format : array($label=>$value)
      */
     public function getTicketByStatusForBatimentID($idBatiment) {
-        $nbStatutTicket = array();
-        
-        $nbTicket = Ticket::model()->countByAttributes(array(
+        $nbOpened = Ticket::model()->countByAttributes(array(
             'fk_batiment' => $idBatiment, 'fk_statut' => Constantes::STATUT_OPENED, 'visible' => Constantes::VISIBLE));
-        $value = array(
-            "value" => (int) $nbTicket,
-            "color" => 'rgba(220, 0,0,1)',
-            "label" => (int) ($nbTicket) . ' ' . Translate::trad('AjaxStatutNew'));
-        array_push($nbStatutTicket, $value);
-        
-        $nbTicket = Ticket::model()->countByAttributes(array(
+        $nbTreatment = Ticket::model()->countByAttributes(array(
             'fk_batiment' => $idBatiment, 'fk_statut' => Constantes::STATUT_TREATMENT, 'visible' => Constantes::VISIBLE));
-        $value = array(
-            "value" => (int) $nbTicket,
-            "color" => 'rgba(242,106,22,1)',
-            "label" => (int) ($nbTicket) . ' ' . Translate::trad('AjaxStatutInProgress'));
-        array_push($nbStatutTicket, $value);
-        
-        $nbTicket = Ticket::model()->countByAttributes(array(
+        $nbClosed = Ticket::model()->countByAttributes(array(
             'fk_batiment' => $idBatiment, 'fk_statut' => Constantes::STATUT_CLOSED, 'visible' => Constantes::VISIBLE));
-        $value = array(
-            "value" => (int) $nbTicket,
+        
+        $arrayOpened = array(
+            "value" => (int) $nbOpened,
+            "color" => 'rgba(220, 0,0,1)',
+            "label" => (int) ($nbOpened) . ' ' . Translate::trad('AjaxStatutNew'));
+        $arrayTreatment = array(
+            "value" => (int) $nbTreatment,
+            "color" => 'rgba(242,106,22,1)',
+            "label" => (int) ($nbTreatment) . ' ' . Translate::trad('AjaxStatutInProgress'));
+        $arrayClosed = array(
+            "value" => (int) $nbClosed,
             "color" => 'rgba(66,200,22,1)',
-            "label" => (int) ($nbTicket) . ' ' . Translate::trad('AjaxStatutClosed'));
-        array_push($nbStatutTicket, $value);
+            "label" => (int) ($nbClosed) . ' ' . Translate::trad('AjaxStatutClosed'));
+        
+        $nbStatutTicket = array();
+        array_push($nbStatutTicket, $arrayOpened);
+        array_push($nbStatutTicket, $arrayTreatment);
+        array_push($nbStatutTicket, $arrayClosed);
         
         return $nbStatutTicket;
     }
@@ -217,14 +215,7 @@ class DashboardController extends Controller {
             array_push($data, $data_to_push);
             // print_r($data_to_push); // Debug print_r
         }
-
         return $data;
-    }
-
-    public function getNombreTicketsParUser() {
-        $returnData = array();
-
-        return $returnData;
     }
 
 }
