@@ -174,28 +174,29 @@ class CategorieIncidentController extends Controller {
                     ($_POST['tradFR'] != '' && $_POST['tradNL'] != '' && $_POST['tradEN'] != '')) {
                 // Si la validation du modèle (vérifie que tout est bien présent comme il faut)
                 // et que l'entreprise reçu n'est pas null, alors on peut enregistrer
-                //if ($model->save(FALSE)) {  // Le FALSE indique qu'on ne désire pas
                 try {
-                    if ($model->save(TRUE)) {
+                    if ($model->save(TRUE)) { // Le FALSE indique qu'on ne désire pas
                         // faire la validation avant le save. Validation
                         // faite au dessus, pas besoin de la refaire
-                        // Si le save s'est bien passé, on crée une sous-catégorie 'Autre'
-                        // pour cette catégorie parent et aussi un secteur pour le lier à l'entreprise
-                        $sousCat = new CategorieIncident();
-                        $sousCat['fk_parent'] = $model['id_categorie_incident'];
-                        // On a déjà enregistré le parent et Yii a automatiquement repris son id
-                        $sousCat['label'] = 'Autre';
-                        $sousCat['fk_priorite'] = Constantes::PRIORITE_LOW;
-                        // Une sous-catégorie 'Autre' est toujours à priorité basse
-                        if ($sousCat->save(TRUE)) {
-                            $secteur = new Secteur();
-                            $secteur->fk_entreprise = $_POST['fk_entreprise'];
-                            $secteur['fk_categorie'] = $model['id_categorie_incident'];
-                            // Nouveau secteur que l'on remplit avec les infos qu'on a déjà
-                            if ($secteur->save(TRUE)) {
-                                $tsql->commit(); // On envoie tous les changements à la DB
-                                $this->redirect(array('view', 'id' => $model->id_categorie_incident));
-                                // Et enfin on redirige
+                        if ($trad->save()){ // On enregistre les traductions
+                            // Si le save s'est bien passé, on crée une sous-catégorie 'Autre'
+                            // pour cette catégorie parent et aussi un secteur pour le lier à l'entreprise
+                            $sousCat = new CategorieIncident();
+                            $sousCat['fk_parent'] = $model['id_categorie_incident'];
+                            // On a déjà enregistré le parent et Yii a automatiquement repris son id
+                            $sousCat['label'] = 'Autre';
+                            $sousCat['fk_priorite'] = Constantes::PRIORITE_LOW;
+                            // Une sous-catégorie 'Autre' est toujours à priorité basse
+                            if ($sousCat->save(TRUE)) {
+                                $secteur = new Secteur();
+                                $secteur->fk_entreprise = $_POST['fk_entreprise'];
+                                $secteur['fk_categorie'] = $model['id_categorie_incident'];
+                                // Nouveau secteur que l'on remplit avec les infos qu'on a déjà
+                                if ($secteur->save(TRUE)) {
+                                    $tsql->commit(); // On envoie tous les changements à la DB
+                                    $this->redirect(array('view', 'id' => $model->id_categorie_incident));
+                                    // Et enfin on redirige
+                                }
                             }
                         }
                     }
@@ -306,33 +307,50 @@ class CategorieIncidentController extends Controller {
         $tsql = $db->beginTransaction();
         
         $model = $this->loadModel($id);
+        $trad = Trad::model()->findByAttributes(array('code' => $model['label']));
+
         // On retrouve d'abord l'enregistrement que l'on veut updater
         // Vérifie si a bien reçu un objet 'CategorieIncident'
         // ==> si non, c'est que c'est la première arrivée sur la page create,
         // ==> si oui, c'est que c'est la page create elle-même qui renvoie ici pour la création d'une catégorie
         if (isset($_POST['CategorieIncident'])) {
+            
             // Dans le cas de la mise à jour de la sous-catégorie, il est impossible 
             // de ne pas avoir de parent ou de priorité étant donné qu'ils ont déjà été
             // introduits lors de la création. Dans la page update il n'y a pas la possibilité
             // de repasser ces champs à null, par contre on peut supprimer le label d'ou le
             // fait de laisser la validation se faire dans le "$model->save()"
-            $model->attributes = $_POST['CategorieIncident'];
-            try {
-                $model->save(TRUE);
-                $tsql->commit(); // On envoie tous les changements à la DB
-                $this->redirect(array('view', 'id' => $model->id_categorie_incident));
-            } catch (Exception $ex) {
-                $tsql->rollback();
-                Yii::app()->user->setFlash('error', Translate::trad('erreurCreateCat'));
-                $this->render('updateSousCat', array(
-                    'model' => $model
-                ));
+            if ($_POST['tradFR'] != '' && $_POST['tradNL'] != '' && $_POST['tradEN'] != '') {
+                $model->attributes = $_POST['CategorieIncident'];
+                $trad['fr'] = $_POST['tradFR'];
+                $trad['nl'] = $_POST['tradNL'];
+                $trad['en'] = $_POST['tradEN'];
+                try {
+                    $model->save(TRUE);
+                    $trad->save(TRUE);
+                    $tsql->commit(); // On envoie tous les changements à la DB
+                    $this->redirect(array('view', 'id' => $model->id_categorie_incident));
+                } catch (Exception $ex) {
+                    $tsql->rollback();
+                    Yii::app()->user->setFlash('error', Translate::trad('erreurCreateCat'));
+                    $this->render('updateSousCat', array(// Et enfin on redirige
+                        'model' => $model, 'trad' => $trad
+                    ));
+                }
+            } else {
+                    // On vérifie si c'est l'une des traductions qui pose problème
+                    Yii::app()->session['errorTradField'] = true;
+                    // Si oui, on met une variable indiquant qu'il y a une erreur
+                    // Cette variable servira à afficher un message indiquant qu'il faut remplir les traductions
             }
+            $this->render('updateSousCat', array(// Et enfin on redirige
+                'model' => $model, 'trad' => $trad
+            ));
         } else {
             // On arrive ici seulement s'il n'y a pas de $_POST[CategorieIncident],
             // donc lors du premier passage sur la page
             $this->render('updateSousCat', array(// Et enfin on redirige
-                'model' => $model,
+                'model' => $model, 'trad' => $trad
             ));
         }
     }
@@ -347,6 +365,7 @@ class CategorieIncidentController extends Controller {
         $tsql = $db->beginTransaction();
         
         $model = $this->loadModel($id);
+        $trad = Trad::model()->findByAttributes(array('code' => $model['label']));
         // On retrouve d'abord l'enregistrement que l'on veut updater
 
         $secteur = Secteur::model()->findByAttributes(array('visible' => Constantes::VISIBLE, 'fk_categorie' => $id));
@@ -360,27 +379,43 @@ class CategorieIncidentController extends Controller {
             // introduits lors de la création. Dans la page update il n'y a pas la possibilité
             // de repasser ces champs à null, par contre on peut supprimer le label d'ou le
             // fait de laisser la validation se faire dans le "$model->save()"
-            $model->attributes = $_POST['CategorieIncident'];
-            //if ($model->save()) { // Si l'enregistrement se passe bien, on continue
-            try {
-                $model->save(TRUE);
-                $secteur['visible'] = Constantes::INVISIBLE;
-                $secteur->save(); // On passe ce secteur à invisible
+            
+            if ($_POST['tradFR'] != '' && $_POST['tradNL'] != '' && $_POST['tradEN'] != '') {
+                $model->attributes = $_POST['CategorieIncident'];
+                $trad['fr'] = $_POST['tradFR'];
+                $trad['nl'] = $_POST['tradNL'];
+                $trad['en'] = $_POST['tradEN'];
+                //if ($model->save()) { // Si l'enregistrement se passe bien, on continue
+                try {
+                    $model->save(TRUE);
+                    $trad->save(TRUE);
+                    $secteur['visible'] = Constantes::INVISIBLE;
+                    $secteur->save(); // On passe ce secteur à invisible
 
-                $newSecteur = new Secteur(); // Et on en crée un nouveau avec les mêmes infos
-                $newSecteur['fk_categorie'] = $secteur['fk_categorie'];
-                $newSecteur['fk_entreprise'] = $secteur['fk_entreprise'];
-                $newSecteur->save(TRUE); // On le sauve
-                $tsql->commit(); // On envoie tous les changements à la DB
-                $this->redirect(array('view', 'id' => $model->id_categorie_incident));
-                // Et enfin on redirige l'utilisateur
-            } catch (Exception $ex) {
-                $tsql->rollback();
-                Yii::app()->user->setFlash('error', Translate::trad('erreurCreateCat'));
-                $this->render('updateCat', array(
-                    'model' => $model
-                ));
+                    $newSecteur = new Secteur(); // Et on en crée un nouveau avec les mêmes infos
+                    $newSecteur['fk_categorie'] = $secteur['fk_categorie'];
+                    $newSecteur['fk_entreprise'] = $secteur['fk_entreprise'];
+                    $newSecteur->save(TRUE); // On le sauve
+                    $tsql->commit(); // On envoie tous les changements à la DB
+                    $this->redirect(array('view', 'id' => $model->id_categorie_incident));
+                    // Et enfin on redirige l'utilisateur
+                } catch (Exception $ex) {
+                    $tsql->rollback();
+                    Yii::app()->user->setFlash('error', Translate::trad('erreurCreateCat'));
+                    $this->render('updateCat', array(// Et enfin on redirige
+                        'model' => $model, 'trad' => $trad
+                    ));
+                }
+            } else {
+                    // Si c'est l'une des traductions qui pose problème
+                    Yii::app()->session['errorTradField'] = true;
+                    // On met une variable indiquant qu'il y a une erreur
+                    // Cette variable servira à afficher un message indiquant qu'il faut remplir les traductions
+                    $this->render('updateCat', array(// Et enfin on redirige
+                        'model' => $model, 'trad' => $trad
+                    ));
             }
+            
         } else {
             // On arrive ici seulement s'il n'y a pas de $_POST[CategorieIncident],
             // donc lors du premier passage sur la page
@@ -389,7 +424,7 @@ class CategorieIncidentController extends Controller {
             // valeur par défaut dans la comboBox entreprise. Etant donné que l'entreprise
             // n'est pas un champ de la catégorie, la comboBox ne prendra pas par défaut le champ entreprise
             $this->render('updateCat', array(// Et enfin on redirige
-                'model' => $model,
+                'model' => $model, 'trad' => $trad
             ));
         }
     }

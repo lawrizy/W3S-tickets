@@ -2,6 +2,7 @@
 /* @var $this CategorieIncidentController */
 /* @var $model CategorieIncident */
 /* @var $form CActiveForm */
+/* @var $trad Trad */
 ?>
 
 <div class="form">
@@ -32,6 +33,26 @@
     echo CHtml::dropDownList('fk_entreprise', Yii::app()->session['id_entreprise'], array(CHtml::listData(Entreprise::model()->findAllByAttributes(array('visible' => Constantes::VISIBLE)), 'id_entreprise', 'nom')));
     Yii::app()->session['id_entreprise'] = NULL;
     ?>
+    <hr>
+    
+    
+    <p><h4>Traductions: <span class="required">*</span></h4></p>
+    <p>Les trois traductions sont obligatoires car ce sont ces traductions qui seront affichées, pas le nom donné au dessus</p>
+    
+    <?php if (Yii::app()->session['errorTradField']) {
+            echo '<label style="color:red;">Ces 3 champs sont obligatoires</label>';
+            Yii::app()->session['errorTradField'] = false;
+          }
+    ?>
+    <label for="tradFR">FR:</label>
+    <?php echo CHtml::textField('tradFR', $trad->fr); ?>
+            
+    <label for="tradNL">NL:</label>
+    <?php echo CHtml::textField('tradNL', $trad->nl); ?>
+
+    <label for="tradEN">EN:</label>
+    <?php echo CHtml::textField('tradEN', $trad->en); ?>
+    
     <hr>
 
     <div class="buttons">

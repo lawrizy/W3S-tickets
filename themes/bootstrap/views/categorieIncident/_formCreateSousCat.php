@@ -2,6 +2,7 @@
 /* @var $this CategorieIncidentController */
 /* @var $model CategorieIncident */
 /* @var $form CActiveForm */
+/* @var $trad Trad */
 ?>
 
 
@@ -48,7 +49,7 @@
         <p><?php echo Translate::trad("CreateSubCategoryRequiredFields"); ?></p>
         <?php if (Yii::app()->session['errorTradField']) {
                 echo '<label style="color:red;"><?php echo Translate::trad("CreateSubCategoryRequiredFields2"); ?></label>';
-                Yii::app()->session['trad'] = false;
+                Yii::app()->session['errorTradField'] = false;
               }
         ?>
         <label for="tradFR">FR:</label>

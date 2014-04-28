@@ -50,13 +50,16 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'id' => 'categorie-incident-grid',
     'dataProvider' => $model->search(),
     'columns' => array(
-        'label',
+        array(
+            'name' => 'label',
+            'value' => 'Translate::trad($data->label)'
+        ),
         array(
             'name' => 'Fk Parent',
-            'value' => '$data->fk_parent != null ? $data->fk_parent->label : \'-----\''),
+            'value' => '$data->fkParent != null ? Translate::trad($data->fkParent->label) : \'-----\''),
         array(
             'name' => 'Fk Priorite',
-            'value' => '$data->fk_priorite->label'),
+            'value' => 'Translate::trad($data->fkPriorite->label)'),
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',
             'template' => $DroitIcone

@@ -1,6 +1,7 @@
 <?php
 /* @var $this CategorieIncidentController */
 /* @var $model CategorieIncident */
+/* @var $trad Trad */
 
 $this->breadcrumbs = array(
     'Categorie Incidents' => array('admin'),
@@ -16,4 +17,4 @@ $this->menu = array(
 
 <h1>Update Sous-Categorie</h1>
 
-<?php $this->renderPartial('_formUpdateSousCat', array('model' => $model)); ?>
+<?php $this->renderPartial('_formUpdateSousCat', array('model' => $model, 'trad' => $trad)); ?>

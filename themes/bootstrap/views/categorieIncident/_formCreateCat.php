@@ -2,6 +2,7 @@
 /* @var $this CategorieIncidentController */
 /* @var $model CategorieIncident */
 /* @var $form CActiveForm */
+/* @var $trad Trad */
 ?>
 
 <div class="form">
@@ -48,7 +49,7 @@
     
     <?php if (Yii::app()->session['errorTradField']) {
             echo '<label style="color:red;">Ces 3 champs sont obligatoires</label>';
-            Yii::app()->session['trad'] = false;
+            Yii::app()->session['errorTradField'] = false;
           }
     ?>
     <label for="tradFR">FR:</label>
