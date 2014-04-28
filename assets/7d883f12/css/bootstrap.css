@@ -168,7 +168,9 @@ textarea {
   overflow: auto;
   vertical-align: top;
 }
-
+body{
+    padding-top: 70px;
+}
 @media print {
   * {
     color: #000 !important;

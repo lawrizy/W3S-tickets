@@ -949,7 +949,7 @@
   }
 }
 
-@media (max-width: 979px) {
+@media (max-width: 1213px) {
   body {
     padding-top: 0;
   }
@@ -1086,6 +1086,7 @@
   .navbar .nav-collapse .nav.pull-right {
     float: none;
     margin-left: 0;
+  
   }
   .nav-collapse,
   .nav-collapse.collapse {
