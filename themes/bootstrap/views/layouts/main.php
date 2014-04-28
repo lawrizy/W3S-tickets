@@ -24,7 +24,7 @@
             $varCheminAcces = "user/changepassword?id=" . $personneAuthentifie['id_user'];
             $this->widget('bootstrap.widgets.TbNavbar', array(
                 'collapse' => TRUE,
-                'fixed'=>true,
+                //'fixed'=>true,
                 'type' => 'inverse',
                 'items' => array(
                     array(
@@ -32,24 +32,20 @@
                         'items' => array(
                             array('label' => Translate::trad('APropos'), 'icon' => 'info-sign white', 'url' => array('/site/page', 'view' => 'about')),
                             array('label' => Translate::trad('Contact'), 'icon' => 'comment white', 'url' => array('/site/contact')),
-                            '---',
                             array('label' => Translate::trad('CreerTicket'), 'icon' => 'pencil white', 'url' => array('/locataire/admin'), 'visible' => $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_USER || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ADMIN || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ROOT),
                             array('label' => Translate::trad('ListeTicket'), 'icon' => 'list white', 'url' => array('/ticket/admin'), 'visible' => $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_USER || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ADMIN || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ROOT),
                             array('label' => Translate::trad('Creer') . Yii::app()->session['NouveauTicket'] . ' ticket', 'icon' => 'pencil white', 'url' => array('/ticket/create/'.$personneAuthentifie['id_user']), 'visible' => $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_LOCATAIRE),
-                            '---',
                             array('label' => Translate::trad("GestionCompte"), 'icon' => 'cog white', 'url' => array('#'),
                                 'items' => array(
                                     array('label' => Translate::trad("ChangePassword"), 'icon' => 'lock ', 'url' => array($varCheminAcces)),
                                     array('label' => Translate::trad('Graphique'), 'url' => array('dashboard/vue'), 'icon' => 'dashboard white', 'visible' => ($personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ADMIN || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ROOT))),
                                 'visible' => !Yii::app()->user->isGuest),
-                            '---',
-                            array('label' => 'Admin', 'icon' => 'briefcase white', 'url' => array('/admin'), 'visible' => $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ROOT),
+                            array('label' => 'Admin', 'icon' => 'briefcase white', 'url' => array('/admin'), 'visible' => Yii::app()->session['adminAccess']),
                         )),
                     array(
                         'class' => 'bootstrap.widgets.TbMenu',
                         'htmlOptions' => array('class' => 'pull-right'),
                         'items' => array(
-                            '---',
                             array('label' => Translate::trad('Connexion'), 'url' => array('/site/login'), 'icon' => 'user white', 'visible' => Yii::app()->user->isGuest,),
                             array('label' => Translate::trad('DeConnexion') . ' (' . Yii::app()->user->name . ')', 'icon' => 'off white', 'url' => array('/site/logout'), 'visible' => !Yii::app()->user->isGuest),
                         ),

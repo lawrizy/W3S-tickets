@@ -78,5 +78,10 @@ class Constantes {
      * Code-erreur de la DB concernant par exemple l'unicité d'un champ, ...
      */
     const DB_ERROR_UNIQUE = 23000;
+    
+    /*
+     * Constantes générales
+     */
+    const NO_RIGHT = 0;
 
 }

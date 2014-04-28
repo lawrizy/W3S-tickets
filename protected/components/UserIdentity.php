@@ -42,6 +42,8 @@ class UserIdentity extends CUserIdentity {
                     Yii::app()->session['Logged'] = $record; // enregistrement du record dans la session 
                     Yii::app()->session['Rights'] = RightsController::getDroits($record->id_user);
                         // Va rechercher et mettre les droits de ce user en session
+                    $this->getAdminRights();
+                        // Vérifie si ce user a le droit d'accéder à la page d'administration
                     $this->getLanguage($record);
                     Yii::app()->user->setFlash('success', '<strong>Bienvenue: ' . $record->nom . ' !</strong>'); // message en cas de connexion simultanée
                 }
@@ -68,5 +70,20 @@ class UserIdentity extends CUserIdentity {
         } else {
             Yii::app()->session['_lang'] = 'nl';
         }
+    }
+    
+    private function getAdminRights() {
+        // Vérifie si cette personne doit pouvoir accéder à la page admin
+        $rights = Yii::app()->session['Rights'];
+        $bool = false;
+        if (($rights->getBatiment() != Constantes::NO_RIGHT) ||
+                ($rights->getCategorie() != Constantes::NO_RIGHT) ||
+                ($rights->getEntreprise() != Constantes::NO_RIGHT) ||
+                ($rights->getUser()) != Constantes::NO_RIGHT ||
+                ($rights->getLocataire() != (LocataireController::ACTION_ADMIN + LocataireController::ACTION_VIEW))) {
+            $bool = true;
+        }
+
+        Yii::app()->session['adminAccess'] = $bool;
     }
 }
