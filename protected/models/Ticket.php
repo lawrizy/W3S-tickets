@@ -227,7 +227,7 @@ class Ticket extends CActiveRecord {
         $criteria->compare('bureau', $this->bureau, true);
         $criteria->compare('fk_locataire', $id);
         $criteria->compare('fk_batiment', $this->fk_batiment);
-        $criteria->compare('visible', $this->visible);
+        $criteria->compare('visible', Constantes::VISIBLE);
         $criteria->compare('fk_priorite', $this->fk_priorite);
 
         return new CActiveDataProvider($this, array(

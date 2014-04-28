@@ -196,15 +196,15 @@ class LocataireController extends Controller {
     public function actionDelete($id) {
         /* @var CDbConnection $db */
         /* @var CDbTransaction $tsql */
+        $db = Yii::app()->db;
+        $tsql = $db->beginTransaction();
+        
         $model = $this->loadModel($id);
         // Au lieu de hard delete le locataire, on passe son champs "visible" à 0 (invisible)
         $model->setAttribute("visible", Constantes::INVISIBLE);
         // On sauvegarde ensuite les changements faits
-        $db = Yii::app()->db;
-        $tsql = $db->beginTransaction();
-
         try {
-            if ($model->validate() && $model->save(FALSE)) {
+            if ($model->save(FALSE)) {
                 $tsql->commit();
                 Yii::app()->user->setFlash('success', Translate::trad('successDeleteLocataire'));
             } else {
@@ -221,7 +221,7 @@ class LocataireController extends Controller {
                 // Passer le champs visible de chaque enregistrement trouvé à invisible
                 $ticket->setAttribute('visible', Constantes::INVISIBLE);
                 // Faire un save() du changement effectué
-                if ($ticket->validate() && $ticket->save(FALSE)) {
+                if ($ticket->save(FALSE)) {
                     $tsql->commit();
                     
                 } else {

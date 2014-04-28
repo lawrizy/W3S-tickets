@@ -10,7 +10,7 @@ $this->breadcrumbs = array(
 $this->menu = array(
     //   array('label' => 'Update Locataire', 'url' => array('update', 'id' => $model->id_locataire)),
     array('label' => Translate::trad('CreerTicket'), 'url' => array('ticket/create?id=' . $model->id_user),
-        'visible' => Yii::app()->session['Rights']->getLocataire() & LocataireController::ACTION_CREATE),
+        'visible' => Yii::app()->session['Rights']->getTicket() & TicketController::ACTION_CREATE),
     array('label' => Translate::trad('DeleteLocataire'), 'url' => '#',
         'linkOptions' => array('submit' => array('delete', 'id' => $model->id_user), 'confirm' => 'Are you sure you want to delete this item?',
             'visible' => Yii::app()->session['Rights']->getLocataire() & LocataireController::ACTION_DELETE)),
