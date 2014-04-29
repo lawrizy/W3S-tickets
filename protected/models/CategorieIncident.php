@@ -9,12 +9,13 @@
  * @property integer $fk_parent
  * @property integer $fk_priorite
  * @property integer $visible
+ * @property integer $fk_entreprise
  *
  * The followings are the available model relations:
  * @property CategorieIncident $fkParent
  * @property CategorieIncident[] $categorieIncidents
  * @property Priorite $fkPriorite
- * @property Secteur[] $secteurs
+ * @property Entreprise $fkEntreprise
  * @property Ticket[] $tickets
  */
 class CategorieIncident extends CActiveRecord {
@@ -34,11 +35,11 @@ class CategorieIncident extends CActiveRecord {
 // will receive user inputs.
         return array(
             array('label, fk_priorite', 'required', 'message' => 'Le champs {attribute} ne peut être vide.'),
-            array('fk_parent, fk_priorite', 'numerical', 'integerOnly' => true, 'message' => 'Veuillez n\'entrer qu\'un nombre dans le champs suivant : {attribute}'),
+            array('fk_parent, fk_priorite, fk_entreprise', 'numerical', 'integerOnly' => true, 'message' => 'Veuillez n\'entrer qu\'un nombre dans le champ suivant : {attribute}'),
             array('label', 'length', 'max' => 64),
 // The following rule is used by search().
 // @todo Please remove those attributes that should not be searched.
-            array('id_categorie_incident, label, fk_parent, fk_priorite', 'safe', 'on' => 'search'),
+            array('id_categorie_incident, label, fk_parent, fk_priorite, fk_entreprise', 'safe', 'on' => 'search'),
         );
     }
 
@@ -52,7 +53,7 @@ class CategorieIncident extends CActiveRecord {
             'fkParent' => array(self::BELONGS_TO, 'CategorieIncident', 'fk_parent'),
             'categorieIncidents' => array(self::HAS_MANY, 'CategorieIncident', 'fk_parent'),
             'fkPriorite' => array(self::BELONGS_TO, 'Priorite', 'fk_priorite'),
-            'secteurs' => array(self::HAS_MANY, 'Secteur', 'fk_categorie'),
+            'fkEntreprise' => array(self::BELONGS_TO, 'Entreprise', 'fk_entreprise'),
             'tickets' => array(self::HAS_MANY, 'Ticket', 'fk_categorie'),
         );
     }
@@ -66,6 +67,7 @@ class CategorieIncident extends CActiveRecord {
             'label' => 'Label',
             'fk_parent' => Translate::trad("CategorieIncidentFKParentLabel"),
             'fk_priorite' => Translate::trad("CategorieIncidentFKPriorityLabel"),
+            'fk_entreprise' => 'Fk Entreprise',
             'visible' => 'Visible',
         );
     }
@@ -91,6 +93,7 @@ class CategorieIncident extends CActiveRecord {
         $criteria->compare('label', $this->label, true);
         $criteria->compare('fk_parent', $this->fk_parent);
         $criteria->compare('fk_priorite', $this->fk_priorite);
+        $criteria->compare('fk_entreprise',$this->fk_entreprise);
         $criteria->compare('visible', Constantes::VISIBLE);
 
         return new CActiveDataProvider($this, array(

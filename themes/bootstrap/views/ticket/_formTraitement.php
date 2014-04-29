@@ -14,16 +14,13 @@
 
     <?php
     // Affichage de l'entreprise qui s'occupera de ce ticket (selon la catégorie)
-    //$categorie = CategorieIncident::model()->findByPk($model->fk_categorie);
-    //  $secteur = Secteur::model()->findByAttributes(array('fk_categorie' =>  $model->fkCategorie->id_categorie_incident/*$categorie['fk_parent']*/, 'visible' => Constantes::VISIBLE));
-    if (!isset($model->fkCategorie->secteurs[0])) {
+    if ($model->fkCategorie->fkParent->fk_entreprise == NULL) {
         echo '<input type="hidden" value="' . Constantes::ENTREPRISE_DEFAUT . '" name="Ticket[fk_entreprise]" />';
         echo '<br /><p style="color: red;">/!\ Aucun sous-traitant n\'est lié à cette catégorie, contactez votre administrateur au plus vite pour régler ça!</p><br />';
     } else {
-        echo '<input type="hidden" value="' . $secteur['fk_entreprise'] . '" name="Ticket[fk_entreprise]" />';
-        // $secteur->Fk
-        $entreprise = Entreprise::model()->findByPk($secteur['fk_entreprise']);
-        echo '<br /><p style="color: blue;">Le sous-traitant qui s\'occupera de ce ticket est: ' . $model->fkCategorie->secteurs[0]->fkEntreprise->nom . '</p><br /><br />';
+        $entreprise = $model->fkCategorie->fkParent->fkEntreprise;
+        echo '<input type="hidden" value="' . $entreprise->id_entreprise . '" name="Ticket[fk_entreprise]" />';
+        echo '<br /><p style="color: blue;">Le sous-traitant qui s\'occupera de ce ticket est: ' . $entreprise->nom . '</p><br /><br />';
     }
     ?>
 

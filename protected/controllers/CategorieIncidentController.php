@@ -153,53 +153,41 @@ class CategorieIncidentController extends Controller {
         $tsql = $db->beginTransaction();
 
         $trad = new Trad();
-        $trad->fr = '';
-        $trad->en = '';
-        $trad->nl = '';
-
         $model = new CategorieIncident();
         // On génère un premier modèle
         // Vérifie si a bien reçu un objet 'CategorieIncident'
         // ==> si non, c'est que c'est la première arrivée sur la page create,
         // ==> si oui, c'est que c'est la page create elle-même qui renvoie ici pour la création d'une catégorie
         if (isset($_POST['CategorieIncident'])) {
+            $model->attributes = $_POST['CategorieIncident'];
+            $model['fk_priorite'] = Constantes::PRIORITE_LOW;
+            $trad->code = $model->label;
             $trad->fr = $_POST['tradFR'];
             $trad->nl = $_POST['tradNL'];
             $trad->en = $_POST['tradEN'];
-            $model->attributes = $_POST['CategorieIncident'];
-            $model['fk_priorite'] = Constantes::PRIORITE_LOW;
             // Pour une catégorie parent, il n'y a pas de priorité mais pour la DB
             // qui en exige une, on en met une par défaut (elle n'est jamais utilisée)
-            if ($model->validate() && $_POST['fk_entreprise'] != null &&
-                    ($_POST['tradFR'] != '' && $_POST['tradNL'] != '' && $_POST['tradEN'] != '')) {
+            if ($model->fk_entreprise != NULL && $model->validate() &&
+                    ($trad->fr != '' && $trad->nl != '' && $trad->en != '')) {
                 // Si la validation du modèle (vérifie que tout est bien présent comme il faut)
                 // et que l'entreprise reçu n'est pas null, alors on peut enregistrer
                 try {
-                    if ($model->save(TRUE)) { // Le FALSE indique qu'on ne désire pas
-                        // faire la validation avant le save. Validation
-                        // faite au dessus, pas besoin de la refaire
-                        if ($trad->save()){ // On enregistre les traductions
-                            // Si le save s'est bien passé, on crée une sous-catégorie 'Autre'
-                            // pour cette catégorie parent et aussi un secteur pour le lier à l'entreprise
-                            $sousCat = new CategorieIncident();
-                            $sousCat['fk_parent'] = $model['id_categorie_incident'];
-                            // On a déjà enregistré le parent et Yii a automatiquement repris son id
-                            $sousCat['label'] = 'Autre';
-                            $sousCat['fk_priorite'] = Constantes::PRIORITE_LOW;
-                            // Une sous-catégorie 'Autre' est toujours à priorité basse
-                            if ($sousCat->save(TRUE)) {
-                                $secteur = new Secteur();
-                                $secteur->fk_entreprise = $_POST['fk_entreprise'];
-                                $secteur['fk_categorie'] = $model['id_categorie_incident'];
-                                // Nouveau secteur que l'on remplit avec les infos qu'on a déjà
-                                if ($secteur->save(TRUE)) {
-                                    $tsql->commit(); // On envoie tous les changements à la DB
-                                    $this->redirect(array('view', 'id' => $model->id_categorie_incident));
-                                    // Et enfin on redirige
-                                }
-                            }
-                        }
-                    }
+                    if (!$model->save(FALSE)) throw new Exception ('');  // Le FALSE indique qu'on ne désire pas
+                    // faire la validation avant le save. Validation
+                    // faite au dessus, pas besoin de la refaire
+                    if (!$trad->save(FALSE)) throw new Exception (''); // On enregistre les traductions
+                    // Si le save s'est bien passé, on crée une sous-catégorie 'Autre'
+                    // pour cette catégorie parent et aussi un secteur pour le lier à l'entreprise
+                    $sousCat = new CategorieIncident();
+                    $sousCat['fk_parent'] = $model['id_categorie_incident'];
+                    // On a déjà enregistré le parent et Yii a automatiquement repris son id
+                    $sousCat['label'] = 'Autre';
+                    $sousCat['fk_priorite'] = Constantes::PRIORITE_LOW;
+                    // Une sous-catégorie 'Autre' est toujours à priorité basse
+                    if (!$sousCat->save(FALSE)) throw new Exception ('');
+                    $tsql->commit(); // On envoie tous les changements à la DB
+                    $this->redirect(array('view', 'id' => $model->id_categorie_incident));
+                    // Et enfin on redirige
                 } catch (Exception $ex) {
                     $tsql->rollback();
                     Yii::app()->user->setFlash('error', Translate::trad('erreurCreateCat'));
@@ -215,7 +203,7 @@ class CategorieIncidentController extends Controller {
                     Yii::app()->session['errorTradField'] = true;
                     // Si oui, on met une variable indiquant qu'il y a une erreur
                     // Cette variable servira à afficher un message indiquant qu'il faut remplir les traductions
-                } elseif ($_POST['fk_entreprise'] == null) {
+                } elseif ($model->fk_entreprise == null) {
                     // On vérifie si c'est l'entreprise qui pose problème
                     Yii::app()->session['errorEntrepriseField'] = true;
                     // Si oui, on met une variable indiquant qu'il y a une erreur
@@ -246,23 +234,20 @@ class CategorieIncidentController extends Controller {
         $tsql = $db->beginTransaction();
         
         $trad = new Trad();
-        $trad->fr = '';
-        $trad->en = '';
-        $trad->nl = '';
-
         $model = new CategorieIncident();
         // On génère un premier modèle
         // Vérifie si a bien reçu un objet 'CategorieIncident'
         // ==> si non, c'est que c'est la première arrivée sur la page create,
         // ==> si oui, c'est que c'est la page create elle-même qui renvoie ici pour la création d'une catégorie
         if (isset($_POST['CategorieIncident'])) {
+            $model->attributes = $_POST['CategorieIncident'];
+            $trad->code = $model->label;
             $trad->fr = $_POST['tradFR'];
             $trad->nl = $_POST['tradNL'];
             $trad->en = $_POST['tradEN'];
-            $model->attributes = $_POST['CategorieIncident'];
-            if ($model['fk_parent'] != null && ($_POST['tradFR'] != '' && $_POST['tradNL'] != '' && $_POST['tradEN'] != '') && $model->validate()) {
+            if ($model['fk_parent'] != null && ($trad->fr != '' && $trad->nl != '' && $trad->en != '') && $model->validate()) {
                 try {
-                    $model->save(FALSE);
+                    if (!$model->save(FALSE)) throw new Exception();
                     $tsql->commit(); // On envoie tous les changements à la DB
                     $this->redirect(array('view', 'id' => $model->id_categorie_incident));
                 } catch (Exception $ex) {
@@ -326,8 +311,8 @@ class CategorieIncidentController extends Controller {
                 $trad['nl'] = $_POST['tradNL'];
                 $trad['en'] = $_POST['tradEN'];
                 try {
-                    $model->save(TRUE);
-                    $trad->save(TRUE);
+                    if (!$model->save(FALSE)) throw new Exception ();
+                    if (!$trad->save(FALSE)) throw new Exception ();
                     $tsql->commit(); // On envoie tous les changements à la DB
                     $this->redirect(array('view', 'id' => $model->id_categorie_incident));
                 } catch (Exception $ex) {
@@ -368,7 +353,7 @@ class CategorieIncidentController extends Controller {
         $trad = Trad::model()->findByAttributes(array('code' => $model['label']));
         // On retrouve d'abord l'enregistrement que l'on veut updater
 
-        $secteur = Secteur::model()->findByAttributes(array('visible' => Constantes::VISIBLE, 'fk_categorie' => $id));
+//        $secteur = Secteur::model()->findByAttributes(array('visible' => Constantes::VISIBLE, 'fk_categorie' => $id));
         // On retrouve déjà pour plus tard le secteur lié à cette catégorie
         // Vérifie si a bien reçu un objet 'CategorieIncident'
         // ==> si non, c'est que c'est la première arrivée sur la page create,
@@ -379,7 +364,6 @@ class CategorieIncidentController extends Controller {
             // introduits lors de la création. Dans la page update il n'y a pas la possibilité
             // de repasser ces champs à null, par contre on peut supprimer le label d'ou le
             // fait de laisser la validation se faire dans le "$model->save()"
-            
             if ($_POST['tradFR'] != '' && $_POST['tradNL'] != '' && $_POST['tradEN'] != '') {
                 $model->attributes = $_POST['CategorieIncident'];
                 $trad['fr'] = $_POST['tradFR'];
@@ -387,15 +371,8 @@ class CategorieIncidentController extends Controller {
                 $trad['en'] = $_POST['tradEN'];
                 //if ($model->save()) { // Si l'enregistrement se passe bien, on continue
                 try {
-                    $model->save(TRUE);
-                    $trad->save(TRUE);
-                    $secteur['visible'] = Constantes::INVISIBLE;
-                    $secteur->save(); // On passe ce secteur à invisible
-
-                    $newSecteur = new Secteur(); // Et on en crée un nouveau avec les mêmes infos
-                    $newSecteur['fk_categorie'] = $secteur['fk_categorie'];
-                    $newSecteur['fk_entreprise'] = $secteur['fk_entreprise'];
-                    $newSecteur->save(TRUE); // On le sauve
+                    if (!$model->save(TRUE)) throw new Exception ();
+                    if (!$trad->save(TRUE)) throw new Exception ();
                     $tsql->commit(); // On envoie tous les changements à la DB
                     $this->redirect(array('view', 'id' => $model->id_categorie_incident));
                     // Et enfin on redirige l'utilisateur
@@ -419,7 +396,7 @@ class CategorieIncidentController extends Controller {
         } else {
             // On arrive ici seulement s'il n'y a pas de $_POST[CategorieIncident],
             // donc lors du premier passage sur la page
-            Yii::app()->session['id_entreprise'] = $secteur['fk_entreprise'];
+            Yii::app()->session['id_entreprise'] = $model->fk_entreprise;
             // Cette variable de session est initialisée pour pouvoir mettre une
             // valeur par défaut dans la comboBox entreprise. Etant donné que l'entreprise
             // n'est pas un champ de la catégorie, la comboBox ne prendra pas par défaut le champ entreprise
@@ -441,39 +418,32 @@ class CategorieIncidentController extends Controller {
         try {
             $model = $this->loadModel($id); // On récupère l'enregistrement de cette catégorie
             $model['visible'] = Constantes::INVISIBLE; // et on met l'enregistrement à l'état invisible
-            $model->save(FALSE); // et enfin on enregistre cet état invisible dans la DB
-
+            if (!$model->save(FALSE)) throw new Exception (); // et enfin on enregistre cet état invisible dans la DB
             /*
-             * Ensuite, si on supprime une catégorie, il faut aussi supprimer tous les tickets qui sont liées à cette catégorie.
-             * Et si la catégorie en question est un parent, il faut faire pareil pour tous ses enfants
-             * (c'est-à-dire, 'delete' tous ses enfants et les tickets qui sont liés à ces enfants)
+             * Ensuite, si c'est une sous-catégorie, il faut delete tous les tickets liés,
+             * et si c'est une catégorie parent, il faut delete toutes les sous-catégories
+             * ET les tickets qui lui sont liés...
              */
             if ($model['fk_parent'] == NULL) { // Si fk_parent est null, c'est une catégorie parent
                 // Et donc si c'est un parent, on doit d'abord trouver toutes les sous-catégories qui sont ses enfants
                 $sousCats = $model->categorieIncidents;
                 foreach ($sousCats as $sousCat) { // parcourir toutes les sous-catégories et les passer à l'état invisible
                     $sousCat['visible'] = Constantes::INVISIBLE;
-                    $sousCat->save(FALSE);
-
-                    // Retrouver tous les tickets qui sont liés à cette sous-catégorie
+                    if (!$sousCat->save(FALSE)) throw new Exception ();
+                       // Retrouver tous les tickets qui sont liés à cette sous-catégorie
                     $tickets = $sousCat->tickets;
                     foreach ($tickets as $ticket) { // Et aussi les passer à l'état invisible
                         $ticket['visible'] = Constantes::INVISIBLE;
-                        $ticket->save(FALSE);
+                        if (!$ticket->save(FALSE)) throw new Exception ();
                     }
                 }
-                // Il faut aussi retrouver le secteur lié à cette catégories
-                $secteur = Secteur::model()->findByAttributes(
-                        array('fk_categorie' => $model['id_categorie_incident'], 'visible' => Constantes::VISIBLE));
-                $secteur['visible'] = Constantes::INVISIBLE;
-                $secteur->save(FALSE);
                 $tsql->commit(); // On envoie tous les changements à la DB
             } else { // Si fk_parent n'est pas null, c'est donc un enfant
                 // Et si c'est un enfant, il faut juste 'delete' tous les tickets qui sont liés à lui
                 $tickets = $model->tickets; // On recherche tous les tickets qui sont liés à cette catégorie
                 foreach ($tickets as $ticket) { // et on les passe tous à l'état invisible
                     $ticket['visible'] = Constantes::INVISIBLE;
-                    $ticket->save(FALSE);
+                    if (!$ticket->save(FALSE)) throw new Exception ();
                 }
                 $tsql->commit(); // On envoie tous les changements à la DB
             }
@@ -484,8 +454,8 @@ class CategorieIncidentController extends Controller {
         } catch (Exception $ex) {
             $tsql->rollback();
             Yii::app()->user->setFlash('error', Translate::trad('erreurCreateCat'));
-            $this->render('view', array(// Et enfin on redirige
-                'id' => $model->id_categorie_incident,
+            $this->redirect('view', array(// Et enfin on redirige
+                'id' => $id,
             ));
         }
     }
