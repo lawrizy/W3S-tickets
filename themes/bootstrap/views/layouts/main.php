@@ -40,7 +40,7 @@
                                     array('label' => Translate::trad("ChangePassword"), 'icon' => 'lock ', 'url' => array($varCheminAcces)),
                                     array('label' => Translate::trad('Graphique'), 'url' => array('dashboard/vue'), 'icon' => 'dashboard white', 'visible' => ($personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ADMIN || $personneAuthentifie['fk_fonction'] == Constantes::FONCTION_ROOT))),
                                 'visible' => !Yii::app()->user->isGuest),
-                            array('label' => 'Admin', 'icon' => 'briefcase white', 'url' => array('/admin'), 'visible' => Yii::app()->session['adminAccess']),
+                            array('label' => 'Admin', 'icon' => 'briefcase white', 'url' => array('/admin'), 'visible' => (!Yii::app()->user->isGuest && Yii::app()->session['Logged']->fk_fonction == Constantes::FONCTION_ROOT)),
                         )),
                     array(
                         'class' => 'bootstrap.widgets.TbMenu',
