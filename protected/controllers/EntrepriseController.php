@@ -148,13 +148,12 @@ class EntrepriseController extends Controller {
     public function actionSecteur($id) {
         $db = Yii::app()->db;
         $tsql = $db->beginTransaction();
-        
+        $model = $this->loadModel($id);
         if (isset($_POST['idCat'])) {
-            $secteur = new Secteur();
-            $secteur['fk_categorie'] = $_POST['idCat'];
-            $secteur['fk_entreprise'] = $_POST['id_entreprise'];
             try {
-                $secteur->save(TRUE);
+                $categorie = CategorieIncident::model()->findByPk($_POST['idCat']);
+                $categorie->fk_entreprise = $model->id_entreprise;
+                if (!$categorie->save(TRUE)) throw new Exception ();
                 $tsql->commit(); // On envoie tous les changements à la DB
                 $this->render('view', array(
                     'model' => $this->loadModel($id),
@@ -168,7 +167,7 @@ class EntrepriseController extends Controller {
             }
         } else {
             $this->render('secteur', array(
-                'model' => $this->loadModel($id),
+                'model' => $model,
             ));
         }
     }
@@ -255,33 +254,32 @@ class EntrepriseController extends Controller {
      * @param integer $id the ID of the model to be deleted
      */
     public function actionDelete($id) { // TODO transactions // Soft-delete, on passe un champ visible à 0 plutôt que de supprimer l'enregistrement
+        /* @var CDbConnection $db */
+        /* @var CDbTransaction $tsql */
+        $db = Yii::app()->db;
+        $tsql = $db->beginTransaction();
+        
         $model = $this->loadModel($id); // On récupère l'enregistrement de cet entreprise
 
-        $model['visible'] = Constantes::INVISIBLE; // et on met l'enregistrement à l'état invisible
-        //$model->save(true); // et enfin on enregistre cet état invisible dans la DB
-        $this->attemptSave($model);
-
-        $tickets = $model->tickets;
-        // On recherche tous les tickets qui sont liés à cet entreprise
-        foreach ($tickets as $ticket) { // et on les passe tous à l'état invisible
-            $ticket['visible'] = Constantes::INVISIBLE;
-            //$ticket->save(true);
-            $this->attemptSave($ticket);
+        try {
+            $model['visible'] = Constantes::INVISIBLE; // et on met l'enregistrement à l'état invisible
+            if (!$model->save(FALSE)) throw new Exception(); // et enfin on enregistre cet état invisible dans la DB
+            $tickets = $model->tickets;
+            // On recherche tous les tickets qui sont liés à cet entreprise
+            foreach ($tickets as $ticket) { // et on les passe tous à l'état invisible
+                $ticket['visible'] = Constantes::INVISIBLE;
+                if (!$ticket->save(true)) throw new Exception();
+            }
+            $categories = $model->categorieIncidents;
+            foreach ($categories as $categorie) {
+                $categorie->fk_entreprise = NULL;
+                if (!$categorie->save(FALSE)) throw new Exception ();
+            }
+            $tsql->commit();
+        } catch (Exception $ex) {
+            $tsql->rollback();
+            Yii::app()->user->setFlash('error', 'Erreur lors de l\'enregistrement dans la base de données, veuillez contacter votre administrateur si &ccedil;a recommence.');
         }
-
-        $secteurs = $model->secteurs;
-        // On recherche aussi tous les secteurs liés à cet entreprise
-        foreach ($secteurs as $secteur) { // et on les passe tous à l'état invisible
-            $secteur['visible'] = Constantes::INVISIBLE;
-            $this->attemptSave($secteur);
-            $newSecteur = new Secteur();
-            // Il faut aussi que la catégorie ne reste pas vide, pour cela on crée un nouveau secteur avec une entreprise par défaut
-            $newSecteur->fk_categorie = $secteur['fk_categorie']; // on garde 
-            $newSecteur->fk_entreprise = Constantes::ENTREPRISE_DEFAUT;
-            $this->attemptSave($newSecteur);
-        }
-
-//        $categories = CategorieIncident::model()->findByPk($id);
         if (!isset($_GET['ajax']))
             $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
     }

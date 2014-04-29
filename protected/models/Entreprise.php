@@ -14,7 +14,7 @@
  * @property integer $visible
  *
  * The followings are the available model relations:
- * @property Secteur[] $secteurs
+ * @property CategorieIncident[] $categorieIncidents
  * @property Ticket[] $tickets
  */
 class Entreprise extends CActiveRecord {
@@ -49,7 +49,7 @@ class Entreprise extends CActiveRecord {
 // NOTE: you may need to adjust the relation name and the related
 // class name for the relations automatically generated below.
         return array(
-            'secteurs' => array(self::HAS_MANY, 'Secteur', 'fk_entreprise'),
+            'categorieIncidents' => array(self::HAS_MANY, 'CategorieIncident', 'fk_entreprise'),
             'tickets' => array(self::HAS_MANY, 'Ticket', 'fk_entreprise'),
         );
     }

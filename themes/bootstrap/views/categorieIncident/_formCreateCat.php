@@ -25,14 +25,12 @@
           echo $form->error($model, 'label', array('style' => 'color: red;'));
     ?>
     
-    <label for="fk_entreprise">Entreprise: <span class=required>*</span></label>
-    <?php echo CHtml::dropDownList('fk_entreprise', Yii::app()->session['id_entreprise'], 
-        array('' => '', CHtml::listData(Entreprise::model()->findAllByAttributes(
-            array('visible' => Constantes::VISIBLE)), 'id_entreprise', 'nom')));
-    // Yii::app()->session['id_entreprise'] est une variable permettant de mettre une entreprise par défaut
-    // Lorsqu'on revient sur cette page après une erreur d'enregistrement (validate qui ne passe pas par exemple)
-    Yii::app()->session['id_entreprise'] = NULL;
-
+    <?php echo $form->labelEx($model, 'label');
+          echo $form->dropDownList($model, 'fk_entreprise', array('' => '', 
+              CHtml::listData(Entreprise::model()->findAllByAttributes(
+                  array('visible' => Constantes::VISIBLE)), 'id_entreprise', 'nom')));
+          echo $form->error($model, 'fk_entreprise', array('style' => 'color: red;'));
+    
     if (Yii::app()->session['errorEntrepriseField']) { // Si cette variable est à true
         echo '<label style="color: red;">' . 'Le champ Entreprise ne peut &ecirc;tre vide.' . '</label>';
             // Alors on affiche un message d'erreur. Cette variable est initialisée par
@@ -42,7 +40,6 @@
     }
     ?>
     <hr>
-    
     
     <p><h4>Traductions: <span class="required">*</span></h4></p>
     <p>Les trois traductions sont obligatoires car ce sont ces traductions qui seront affichées, pas le nom donné au dessus</p>
@@ -63,7 +60,7 @@
     
     <hr>
     <div class="buttons">
-    <?php echo CHtml::submitButton('CreateSousCat'); ?>
+    <?php echo CHtml::submitButton('CreateCat'); ?>
     </div>
 
     <?php $this->endWidget(); ?>

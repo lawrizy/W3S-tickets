@@ -33,9 +33,9 @@ $this->menu = array(
 //        ->where('id_categorie_incident in (select fk_categorie FROM w3sys_secteur WHERE fk_entreprise= ' . $model->id_entreprise . ')')
 //        ->queryAll();
 $string = " ";
-$varSecteur = Secteur::model()->findAllByAttributes(array('fk_entreprise' => $model->id_entreprise)); // recupération d'un tableau de  Secteur
-foreach ($varSecteur as $secteur) { // Boucle pour récuperer la categorie 
-    $string .=CategorieIncident::model()->findByAttributes(array('id_categorie_incident' => $secteur->fk_categorie))->label . ' ';
+$categories = CategorieIncident::model()->findAllByAttributes(array('fk_entreprise' => $model->id_entreprise)); // recupération d'un tableau de  Secteur
+foreach ($categories as $categorie) { // Boucle pour récuperer la categorie 
+    $string .= $categorie->label . ' ';
 }// $String  est la liste des catégories   
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
