@@ -143,8 +143,7 @@ return array(
     // application-level parameters that can be accessed
     // using Yii::app()->params['paramName']
     'params' => array(
-        // this is used in contact page
-        'adminEmail' => 'lionel@web3sys.com',
+        'adminEmail' => 'lionel@web3sys.com', // Cette adresse reçevra les emails de la page contact 
         'emailReceptionMessageContact' => 'desaedeleerlionel@hotmail.com',
     ),
     'onBeginRequest' => array('MyApp', 'beginRequest'),

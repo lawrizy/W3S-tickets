@@ -62,6 +62,7 @@ $this->breadcrumbs=array(
             'buttonType'=>'submit',
             'type'=>'primary',
             'label'=>'Submit',
+            'htmlOptions' => array('onClick' => 'js:antiSpam(this);'),
         )); ?>
 	</div>
 
@@ -70,3 +71,11 @@ $this->breadcrumbs=array(
 </div><!-- form -->
 
 <?php endif; ?>
+
+<script>
+    function antiSpam(button)
+    {
+        button.disabled = true;
+        button.form.submit();
+    }
+</script>

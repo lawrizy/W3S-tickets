@@ -23,24 +23,24 @@
     // Form pour la sélection de la catégorie
     echo '<label>' . Translate::trad('SelectionnerCategorie') . '<span class="required"> *</span> </label>';
     echo CHtml::dropDownList
-            (
+        (
             'Categorie', // Le nom de cette dropDownList
             'fk_categorie', // La colonne à sélectionner
             array // Cette array remplit la dropDownList avec les catégories mères disponibles dans la DB.
-        (
-        '' => '',
-        $this->getCategoriesLabel(),
-            ), array // Cette array définit le chargement dynamique des valeurs dans la dropDownList des sous-catégories. (Voir dropDownList suivante appelée DD_sousCat)
-        (
-        'ajax' => array
             (
-            'type' => 'POST',
-            'url' => CController::createUrl('getsouscategoriesdynamiques'),
-            'data' => array('paramID' => 'js:this.value'),
-            'update' => '#DD_sousCat',
-        )
+                '' => '',
+                $this->getCategoriesLabel(),
+            ), array // Cette array définit le chargement dynamique des valeurs dans la dropDownList des sous-catégories. (Voir dropDownList suivante appelée DD_sousCat)
+            (
+                'ajax' => array
+                (
+                    'type' => 'POST',
+                    'url' => CController::createUrl('getsouscategoriesdynamiques'),
+                    'data' => array('paramID' => 'js:this.value'),
+                    'update' => '#DD_sousCat',
+                )
             )
-    );
+        );
 
     echo '<label>' . Translate::trad('SelectionnerSousCategorie') . ':<span class="required"> *</span> </label>';
     // Cette dropDownList est initialisée vide car elle sera remplie après la sélection d'une catégorie ci-dessus.
@@ -51,10 +51,10 @@
     <?php
     echo '<label>' . Translate::trad('SelectionnerBatiment') . '<span class="required"> *</span></label>';
     echo $form->dropDownList($model, 'fk_batiment', array('' => '', CHtml::listData(Batiment::model()->findAllBySql(
-                "SELECT b.id_batiment, b.nom FROM w3sys_lieu l 
-                        INNER JOIN w3sys_batiment b on  l.fk_batiment = b.id_batiment
-                        WHERE l.fk_locataire =" . $_GET['id'] . " and "
-                . "l.visible=" . Constantes::VISIBLE), 'id_batiment', 'nom')));
+        "SELECT b.id_batiment, b.nom FROM w3sys_lieu l 
+                INNER JOIN w3sys_batiment b on  l.fk_batiment = b.id_batiment
+                WHERE l.fk_locataire =" . $_GET['id'] . " and "
+        . "l.visible=" . Constantes::VISIBLE), 'id_batiment', 'nom')));
 
     echo $form->labelEx($model, 'etage');
     echo $form->textField($model, 'etage', array('size' => 1, 'maxlength' => 10, 'style' => 'resize:none', 'value' => $model->etage));
@@ -67,14 +67,8 @@
     echo $form->error($model, 'descriptif');
     ?>
     <div class="button">
-        <?php echo CHtml::submitButton(Translate::trad('ButtonCreer')); ?>
-        <?php
-//    $this->widget('bootstrap.widgets.TbButton', array(
-//        'label' => Translate::trad('ButtonCreer'),
-//        'type'=>'primary',
-//        'buttonType' => 'submit', // null, 'primary', 'info', 'success', 'warning', 'danger' or 'inverse'
-//        'size' => 'null', // null, 'large', 'small' or 'mini'
-//    ));
+        <?php 
+        echo CHtml::submitButton(Translate::trad('ButtonCreer'), array('id' => 'buttonCreer', 'onClick' => 'antiSpam(this);'));
         ?>
     </div>
 
@@ -82,15 +76,21 @@
 
 </div><!-- form -->
 <script>
-    $(document).ready(function() {
+    function antiSpam(button)
+    {
+        button.disabled = true;
+        button.form.submit();
+    }
+    
+    $(document).ready(function () {
         $(".loadingSous").hide();
     });
 
-    $("#Categorie").ajaxStart(function() {
+    $("#Categorie").ajaxStart(function () {
         $(".loadingSous").show();
 
     });
-    $("#Categorie").ajaxStop(function() {
+    $("#Categorie").ajaxStop(function () {
         $(".loadingSous").hide();
 
     });
