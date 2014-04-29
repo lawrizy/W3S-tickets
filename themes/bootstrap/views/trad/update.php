@@ -4,10 +4,10 @@
 /* @var $form CActiveForm */
 
 
-$this->breadcrumbs = array('Trad' => array('../admin'));
+$this->breadcrumbs = array('trad' => array('../index.php/trad/modifyTraduction'));
 ?>
 
-<h1>Mettre à jour une traduction "<?php echo $model->code; ?>"</h1>
+<h1><?php echo Translate::trad("ModifierTradExistante"); ?></h1>
 
 <?php
 $form = $this->beginWidget('CActiveForm', array(
@@ -47,7 +47,7 @@ $form = $this->beginWidget('CActiveForm', array(
     $this->widget('bootstrap.widgets.TbButton', array(
         'buttonType' => 'submit',
         'type' => 'primary',
-        'label' => 'Modifier la traduction',
+        'label' => Translate::trad("ModifierTradExistante"),
     ));
     // FORMULAIRE END
     ?>

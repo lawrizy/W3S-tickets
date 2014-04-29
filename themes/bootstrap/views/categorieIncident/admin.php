@@ -55,10 +55,10 @@ $this->widget('bootstrap.widgets.TbGridView', array(
             'value' => 'Translate::trad($data->label)'
         ),
         array(
-            'name' => 'Fk Parent',
+            'name' => Translate::trad("CategorieParente"),
             'value' => '$data->fkParent != null ? Translate::trad($data->fkParent->label) : \'-----\''),
         array(
-            'name' => 'Fk Priorite',
+            'name' => Translate::trad("Priority"),
             'value' => 'Translate::trad($data->fkPriorite->label)'),
         array(
             'class' => 'bootstrap.widgets.TbButtonColumn',

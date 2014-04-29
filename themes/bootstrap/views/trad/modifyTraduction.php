@@ -9,11 +9,11 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Ajouter une nouvelle traduction', 'url' => array('addTraduction')),
+    array('label' => Translate::trad("AjouterNouvelleTraduction"), 'url' => array('addTraduction')),
 );
 ?>
 <div id="retour">
-    <a href="../admin">Retour à la page d'administration</a><br/>
+    <a href="../admin"><?php Translate::trad("RetourPageAdmin"); ?></a><br/>
 </div>
 
 <div class="form">

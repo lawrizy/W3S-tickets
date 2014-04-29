@@ -6,7 +6,7 @@
 
 $this->breadcrumbs = array(
     'admin' => '../admin',
-    'Ajouter une nouvelle traduction',
+    Translate::trad("AjouterNouvelleTraduction"),
 );
 
 $this->menu = array(
@@ -59,7 +59,7 @@ echo $form->error($model, 'nl');
     $this->widget('bootstrap.widgets.TbButton', array(
         'buttonType'=>'submit',
         'type' => 'primary',
-        'label' => 'Envoyer la nouvelle traduction',
+        'label' => Translate::trad("AjouterNouvelleTraduction"),
     ));
     // FORMULAIRE END
     ?>

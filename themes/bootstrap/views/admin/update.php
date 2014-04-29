@@ -6,6 +6,12 @@
     <body>
         <div>
             <?php
+
+            $this->breadcrumbs = array(
+                'admin' => '../admin',
+                Translate::trad("admin"),
+            );
+            
             /*
              * $model => Le user dont les droits seront ré-organisés ici
              * $rights => Les droits du user en question
