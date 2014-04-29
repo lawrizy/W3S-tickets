@@ -11,7 +11,7 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Create Entreprise', 'url' => array('create'), 'visible' => Yii::app()->session['Rights']->getEntreprise() & EntrepriseController::ACTION_CREATE),
+    array('label' => Translate::trad("CreerEntreprise"), 'url' => array('create'), 'visible' => Yii::app()->session['Rights']->getEntreprise() & EntrepriseController::ACTION_CREATE),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -28,11 +28,11 @@ return false;
 ");
 ?>
 
-<h1>Manage Entreprises</h1>
+<h1><?php echo Translate::trad("GestionEntreprise"); ?></h1>
 
 
 
-<?php echo CHtml::link('Advanced Search', '#', array('class' => 'search-button')); ?>
+<!--<?php echo CHtml::link('Advanced Search', '#', array('class' => 'search-button')); ?>-->
 <div class="search-form" style="display:none">
     <?php
     $this->renderPartial('_search', array(

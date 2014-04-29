@@ -8,10 +8,10 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Gérer les utilisateurs', 'url' => array('admin'), 'visible' => Yii::app()->session['Rights']->getUser() & UserController::ACTION_ADMIN),
+    array('label' => Translate::trad("GestionUtilisateurs"), 'url' => array('admin'), 'visible' => Yii::app()->session['Rights']->getUser() & UserController::ACTION_ADMIN),
 );
 ?>
 
-<h1>Create User</h1>
+<h1><?php echo Translate::trad("CreerUtilisateur"); ?></h1>
 
 <?php $this->renderPartial('_formCreate', array('model' => $model)); ?>

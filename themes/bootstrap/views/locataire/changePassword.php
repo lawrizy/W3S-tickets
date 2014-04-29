@@ -15,7 +15,7 @@ and open the template in the editor.
         <title></title>
     </head>
     <body>
-        <h1 class="h1" style="text-decoration: underline;">Changer votre mot de passe</h1>
+        <h1 class="h1" style="text-decoration: underline;"><?php echo Translate::trad("ChangePassword"); ?></h1>
         <br>
         <br>
         <?php
@@ -28,7 +28,7 @@ and open the template in the editor.
         ?>
         <div class="table table-bordered"style="padding-left: 12px;" >
             <?php
-            echo '<h4 class="h4" style="text-decoration:underline;">Les champs marqués de <span class=required>*</span> sont obligatoire</h4>';
+            echo '<h4 class="h4" style="text-decoration:underline;">'. Translate::trad("Required") . '</h4>';
             echo '</br>';
             echo CHtml::form();
             echo CHtml::label('Votre ancien mot de passe :<span class=required>&nbsp;*</span> ', 'amdp');

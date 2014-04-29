@@ -17,7 +17,7 @@
         'enableAjaxValidation' => false,
     )); ?>
 
-    <p><h2>Création d'une catégorie</h2></p><hr>
+    <p><h2><?php echo Translate::trad("CreationCategorie"); ?></h2></p><hr>
     <p class="note"><?php echo Translate::trad('Required'); ?></p>
     
     <?php echo $form->labelEx($model, 'label');
@@ -25,14 +25,14 @@
           echo $form->error($model, 'label', array('style' => 'color: red;'));
     ?>
     
-    <?php echo $form->labelEx($model, 'label');
+    <?php echo $form->labelEx($model, 'fk_entreprise');
           echo $form->dropDownList($model, 'fk_entreprise', array('' => '', 
               CHtml::listData(Entreprise::model()->findAllByAttributes(
                   array('visible' => Constantes::VISIBLE)), 'id_entreprise', 'nom')));
           echo $form->error($model, 'fk_entreprise', array('style' => 'color: red;'));
     
     if (Yii::app()->session['errorEntrepriseField']) { // Si cette variable est à true
-        echo '<label style="color: red;">' . 'Le champ Entreprise ne peut &ecirc;tre vide.' . '</label>';
+        echo '<label style="color: red;">' . Translate::trad("ChampsEntrepriseObligatoire") . '</label>';
             // Alors on affiche un message d'erreur. Cette variable est initialisée par
             // le controleur s'il y a un souci avec le champ entreprise
         Yii::app()->session['errorEntrepriseField'] = false;
@@ -41,11 +41,11 @@
     ?>
     <hr>
     
-    <p><h4>Traductions: <span class="required">*</span></h4></p>
-    <p>Les trois traductions sont obligatoires car ce sont ces traductions qui seront affichées, pas le nom donné au dessus</p>
+    <p><h4><?php echo Translate::trad("TraductionsLabel"); ?>: <span class="required">*</span></h4></p>
+    <p><?php echo Translate::trad("TraductionsObligatoire"); ?></p>
     
     <?php if (Yii::app()->session['errorTradField']) {
-            echo '<label style="color:red;">Ces 3 champs sont obligatoires</label>';
+            echo '<label style="color:red;"><?php echo Translate::trad("TraductionsTroisObligatoire"); ?></label>';
             Yii::app()->session['errorTradField'] = false;
           }
     ?>
@@ -60,7 +60,7 @@
     
     <hr>
     <div class="buttons">
-    <?php echo CHtml::submitButton('CreateCat'); ?>
+    <?php echo CHtml::submitButton(Translate::trad("CreerSousCategorie")); ?>
     </div>
 
     <?php $this->endWidget(); ?>

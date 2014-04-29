@@ -10,7 +10,7 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Create Locataire', 'url' => array('create'), 'visible' => Yii::app()->session['Rights']->getLocataire() & LocataireController::ACTION_CREATE),
+    array('label' => Translate::trad("AjouterLocataire"), 'url' => array('create'), 'visible' => Yii::app()->session['Rights']->getLocataire() & LocataireController::ACTION_CREATE),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -27,7 +27,7 @@ return false;
 ");
 ?>
 
-<h1>Manage Locataires</h1>
+<h1><?php echo Translate::trad("ManageLocataire"); ?></h1>
 
 
 <?php echo CHtml::link('Advanced Search', '#', array('class' => 'search-button')); ?>
@@ -45,13 +45,13 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'id' => 'locataire-grid',
     'dataProvider' => $model->searchLocataire(),
     'columns' => array(
-        array('name' => 'Nom',
+        array('name' => Translate::trad("NomLoc"),
             'value' => '$data->nom;'
         ),
         array('name' => 'Email',
             'value' => '$data->email;'
         ),
-        array('name' => 'Langue',
+        array('name' => Translate::trad("Langue"),
             'value' => 'Langue::model()->findByPk($data->fk_langue)->label;'
         ),
         array(

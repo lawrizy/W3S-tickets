@@ -9,7 +9,7 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Manage Categories', 'url' => array('admin'),
+    array('label' => Translate::trad("GestionCategorieIncident"), 'url' => array('admin'),
         'visible' => Yii::app()->session['Rights']->getCategorie() & CategorieIncidentController::ACTION_ADMIN),
 );
 

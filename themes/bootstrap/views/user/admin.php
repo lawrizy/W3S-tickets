@@ -11,7 +11,7 @@ $this->breadcrumbs = array(
 );
 
 $this->menu = array(
-    array('label' => 'Create User', 'url' => array('create'), 'visible' => Yii::app()->session['Rights']->getUser() & UserController::ACTION_CREATE),
+    array('label' => Translate::trad('CreerUtilisateur'), 'url' => array('create'), 'visible' => Yii::app()->session['Rights']->getUser() & UserController::ACTION_CREATE),
 );
 
 Yii::app()->clientScript->registerScript('search', "
@@ -28,10 +28,10 @@ $('.search-form form').submit(function(){
 ");
 ?>
 
-<h1>Manage Users</h1>
+<h1><?php echo Translate::trad("GestionUtilisateurs"); ?></h1>
 
 
-<?php echo CHtml::link('Advanced Search', '#', array('class' => 'search-button')); ?>
+<!--<?php echo CHtml::link('Advanced Search', '#', array('class' => 'search-button')); ?>-->
 <div class="search-form" style="display:none">
     <?php
     $this->renderPartial('_search', array(
@@ -49,13 +49,13 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'type' => 'striped condensed bordered',
     'dataProvider' => $model->searchUserAdmin(),
     'columns' => array(
-        array('name' => 'Nom',
+        array('name' => Translate::trad("NomLoc"),
             'value' => '$data->nom',
         ),
         array('name' => 'Email',
             'value' => '$data->email',
         ),
-        array('name' => 'Fonction',
+        array('name' => Translate::trad("FonctionUser"),
             'value' => '$data->fkFonction->label',
         ),
         array(
