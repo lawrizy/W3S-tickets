@@ -60,12 +60,12 @@ class Entreprise extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id_entreprise' => 'Id Entreprise',
-            'nom' => 'Nom',
-            'adresse' => 'Adresse',
-            'tva' => 'Tva',
-            'commune' => 'Commune',
-            'cp' => 'Cp',
-            'tel' => 'Tel',
+            'nom' => Translate::trad("NomLoc"),
+            'adresse' => Translate::trad("Adresse"),
+            'tva' => Translate::trad("TVA"),
+            'commune' => Translate::trad("Commune"),
+            'cp' => Translate::trad("CodePostal"),
+            'tel' => Translate::trad("Phone"),
             'visible' => 'Visible',
         );
     }

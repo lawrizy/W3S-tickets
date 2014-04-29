@@ -19,7 +19,7 @@
         ));
         ?>
 
-        <p class="note">Les champs marqués de <span class="required">*</span> sont requis.</p>
+        <p class="note"><?php echo Translate::trad("Required"); ?></p>
 
 
         <?php

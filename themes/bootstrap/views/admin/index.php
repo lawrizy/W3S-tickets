@@ -47,7 +47,7 @@ $this->pageTitle = Yii::app()->name . ' - Admin';
     <b><?php echo Translate::trad('SousTraitant'); ?>&nbsp;:</b>
 <ul>
     <li><a href="entreprise/admin"><?php echo Translate::trad('ListeSousTraitant'); ?></a>&nbsp;<?php echo Translate::trad('ExplicationEntreprise'); ?></li>
-    <li><a href="entreprise/create">Rajouter un Sous-Traitant</a></li>
+    <li><a href="entreprise/create"><?php echo Translate::trad('RajouterSousTraitant'); ?></a></li>
 </ul>
 </p>
 

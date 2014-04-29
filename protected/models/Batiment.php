@@ -61,10 +61,10 @@ class Batiment extends CActiveRecord {
     public function attributeLabels() {
         return array(
             'id_batiment' => 'Id Batiment',
-            'adresse' => 'Adresse',
-            'commune' => 'Commune',
-            'cp' => 'Cp',
-            'nom' => 'Nom',
+            'adresse' => Translate::trad("Adresse"),
+            'commune' => Translate::trad("Commune"),
+            'cp' => Translate::trad("CodePostal"),
+            'nom' => Translate::trad("NomLoc"),
             'cpt' => 'Cpt',
             'code' => 'Code',
             'visible' => 'Visible',

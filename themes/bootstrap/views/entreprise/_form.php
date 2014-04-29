@@ -17,7 +17,7 @@
     ));
     ?>
 
-    <p class="note">Les champs marqués de <span class="required">*</span> sont requis.</p>
+    <p class="note"><?php echo Translate::trad("Required"); ?></p>
     
         <?php echo $form->labelEx($model, 'nom'); ?>
         <?php echo $form->textField($model, 'nom', array('size' => 45, 'maxlength' => 45)); ?>

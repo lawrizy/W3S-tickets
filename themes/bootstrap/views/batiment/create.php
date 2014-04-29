@@ -3,12 +3,12 @@
 /* @var $model Batiment */
 
 $this->breadcrumbs = array(
-    'Batiments' => array('admin'),
+    Translate::trad("AllBatiment") => array('admin'),
     'Create',
 );
 
 $this->menu = array(
-    array('label' => 'Manage Batiment', 'url' => array('admin'), 'visible' => Yii::app()->session['Rights']->getBatiment() & BatimentController::ACTION_ADMIN),
+    array('label' => Translate::trad("ManageBatiment"), 'url' => array('admin'), 'visible' => Yii::app()->session['Rights']->getBatiment() & BatimentController::ACTION_ADMIN),
 );
 ?>
 

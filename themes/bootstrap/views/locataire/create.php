@@ -3,15 +3,15 @@
 /* @var $model Locataire */
 
 $this->breadcrumbs=array(
-	'Locataires'=>array('admin'),
+	Translate::trad('ManageLocataire')=>array('admin'),
 	'Create',
 );
 
 $this->menu=array(
-array('label'=>'Manage Locataire', 'url'=>array('admin'),'visible'=>  Yii::app()->session['Rights']->getLocataire()& LocataireController::ACTION_ADMIN),
+array('label'=>Translate::trad("ManageLocataire"), 'url'=>array('admin'),'visible'=>  Yii::app()->session['Rights']->getLocataire()& LocataireController::ACTION_ADMIN),
 );
 ?>
 
-<h1>Create Locataire</h1>
+<h1><?php echo Translate::trad("AjouterLocataire"); ?></h1>
 
 <?php $this->renderPartial('_formCreate', array('model'=>$model)); ?>
