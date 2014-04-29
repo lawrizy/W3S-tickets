@@ -14,6 +14,7 @@ class EntrepriseController extends Controller {
     COnst ACTION_DELETE = 4;
     const ACTION_UPDATE = 8;
     const ACTION_ADMIN = 16;
+    const ACTION_TOUS = 31;
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning

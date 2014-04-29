@@ -14,6 +14,7 @@ class UserController extends Controller {
     const ACTION_DELETE = 4;
     const ACTION_UPDATE = 8;
     const ACTION_ADMIN = 16;
+    const ACTION_TOUS = 31;
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
@@ -119,23 +120,23 @@ class UserController extends Controller {
         /* @var CDbConnection $db */
         /* @var CDbTransaction $tsql */
         $db = Yii::app()->db;
-        $tsql = $db->beginTransaction();
         $model = new User;
 
         if (isset($_POST['User'])) {
+            $tsql = $db->beginTransaction();
+            $tmp = new User();
+            $model->attributes = $tmp->attributes = $_POST['User'];
+            $tmp->setAttribute("password", md5($model->password));
             try {
-                $tmp = new User();
-                $model->attributes = $tmp->attributes = $_POST['User'];
-                $tmp->password = md5($tmp->password);
-                if ($tmp->validate()) {
-                    if ($tmp->save(FALSE)) {
-                        $tsql->commit();
-                        $this->redirect(array('view', 'id' => $tmp->id_user));
-                    } else {
-                        throw new CDbException();
-                    }
+                Yii::trace('avant save', 'cron');
+                if ($tmp->validate() && $tmp->save(FALSE)) {
+                    Yii::trace('id du user ' . $tmp->id_user, 'cron');
+                    RightsController::createRights($tmp->id_user, $tmp->fk_fonction);
+                    $tsql->commit();
+                    Yii::app()->user->setFlash('success', 'L\'utilisateur a bien été créé.');
+                    $this->redirect(array('view', 'id' => $tmp->id_user));
                 } else {
-                    $err = "";
+                    $err = Translate::trad('erreurProduite');
                     foreach ($tmp->getErrors() as $k => $v)
                         $err .= $v[0] . "<br/>";
                     throw new Exception($err);
@@ -147,12 +148,17 @@ class UserController extends Controller {
                 } else {
                     Yii::app()->user->setFlash('error', $ex->getMessage());
                 }
+                $this->render('create', array(
+                    'model' => $model,
+                ));
             }
+        } else {
+            $this->render('create', array(
+                'model' => $model,
+            ));
         }
 
-        $this->render('create', array(
-            'model' => $model,
-        ));
+        
     }
 
     /**
@@ -309,5 +315,6 @@ class UserController extends Controller {
         }
         $this->render('changePassword', array('model' => $model));
     }
+    
 
 }

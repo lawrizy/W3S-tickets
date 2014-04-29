@@ -18,6 +18,7 @@ class CategorieIncidentController extends Controller {
     //const ACTION_UPDATESOUSCAT = 16;
     const ACTION_ADMIN = 32;
     const ACTION_DELETE = 64;
+    const ACTION_TOUS = 107;
 
     /**
      * @var string the default layout for the views. Defaults to '//layouts/column2', meaning

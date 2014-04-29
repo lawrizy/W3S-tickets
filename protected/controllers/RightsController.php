@@ -44,4 +44,132 @@ class RightsController {
     public static function  saveRights($id, $rights) {
         
     }
+    
+    
+        
+    public static function createRights($id, $fonction) {
+        if ($fonction == Constantes::FONCTION_LOCATAIRE) { // Droits si locataire
+            $batiment = new Droit();
+                $batiment->fk_controleur = BatimentController::ID_CONTROLLER;
+                $batiment->fk_user = $id; $batiment->droits = Constantes::NO_RIGHT;
+                if (!$batiment->save(FALSE)) throw new Exception('Erreur lors de l\'enregistrement en base de données');
+            $categorie = new Droit();
+                $categorie->fk_controleur = CategorieIncidentController::ID_CONTROLLER;
+                $categorie->fk_user = $id; $categorie->droits = Constantes::NO_RIGHT;
+                if (!$categorie->save(FALSE)) throw new Exception('Erreur lors de l\'enregistrement en base de données');
+            $dashboard = new Droit();
+                $dashboard->fk_controleur = DashboardController::ID_CONTROLLER;
+                $dashboard->fk_user = $id; $dashboard->droits = Constantes::NO_RIGHT;
+                if (!$dashboard->save(FALSE)) throw new Exception('Erreur lors de l\'enregistrement en base de données');
+            $entreprise = new Droit();
+                $entreprise->fk_controleur = EntrepriseController::ID_CONTROLLER;
+                $entreprise->fk_user = $id; $entreprise->droits = Constantes::NO_RIGHT;
+                if (!$entreprise->save(FALSE)) throw new Exception('Erreur lors de l\'enregistrement en base de données');
+            $locataire = new Droit();
+                $locataire->fk_controleur = LocataireController::ID_CONTROLLER;
+                $locataire->fk_user = $id; $locataire->droits = Constantes::NO_RIGHT;
+                if (!$locataire->save(FALSE)) throw new Exception('Erreur lors de l\'enregistrement en base de données');
+            $ticket = new Droit();
+                $ticket->fk_controleur = TicketController::ID_CONTROLLER;
+                $ticket->fk_user = $id; $ticket->droits = TicketController::ACTION_CREATE + TicketController::ACTION_VIEW;
+                if (!$ticket->save(FALSE)) throw new Exception('Erreur lors de l\'enregistrement en base de données');
+            $user = new Droit();
+                $user->fk_controleur = UserController::ID_CONTROLLER;
+                $user->fk_user = $id; $user->droits = Constantes::NO_RIGHT;
+                if (!$user->save(FALSE)) throw new Exception('Erreur lors de l\'enregistrement en base de données');
+            
+        } elseif ($fonction == Constantes::FONCTION_USER) { // Droits si simple user
+            $batiment = new Droit();
+                $batiment->fk_controleur = BatimentController::ID_CONTROLLER; $batiment->fk_user = $id;
+                $batiment->droits = Constantes::NO_RIGHT;
+                if (!$batiment->save(FALSE)) throw new Exception('Erreur lors de l\'enregistrement en base de données');
+            $categorie = new Droit();
+                $categorie->fk_controleur = CategorieIncidentController::ID_CONTROLLER; $categorie->fk_user = $id;
+                $categorie->droits = Constantes::NO_RIGHT;
+                if (!$categorie->save(FALSE)) throw new Exception('Erreur lors de l\'enregistrement en base de données');
+            $dashboard = new Droit();
+                $dashboard->fk_controleur = DashboardController::ID_CONTROLLER; $dashboard->fk_user = $id;
+                $dashboard->droits = Constantes::NO_RIGHT;
+                if (!$dashboard->save(FALSE)) throw new Exception('Erreur lors de l\'enregistrement en base de données');
+            $entreprise = new Droit();
+                $entreprise->fk_controleur = EntrepriseController::ID_CONTROLLER; $entreprise->fk_user = $id;
+                $entreprise->droits = Constantes::NO_RIGHT;
+                if (!$entreprise->save(FALSE)) throw new Exception('Erreur lors de l\'enregistrement en base de données');
+            $locataire = new Droit();
+                $locataire->fk_controleur = LocataireController::ID_CONTROLLER; $locataire->fk_user = $id;
+                $locataire->droits = LocataireController::ACTION_ADMIN + LocataireController::ACTION_VIEW;
+                if (!$locataire->save(FALSE)) throw new Exception('Erreur lors de l\'enregistrement en base de données');
+            $ticket = new Droit();
+                $ticket->fk_controleur = TicketController::ID_CONTROLLER; $ticket->fk_user = $id;
+                $ticket->droits = TicketController::ACTION_CREATE + TicketController::ACTION_VIEW + TicketController::ACTION_ADMIN + TicketController::ACTION_UPDATE;
+                if (!$ticket->save(FALSE)) throw new Exception('Erreur lors de l\'enregistrement en base de données');
+            $user = new Droit();
+                $user->fk_controleur = UserController::ID_CONTROLLER; $user->fk_user = $id;
+                $user->droits = Constantes::NO_RIGHT;
+                if (!$user->save(FALSE)) throw new Exception('Erreur lors de l\'enregistrement en base de données');
+                
+        } elseif ($fonction == Constantes::FONCTION_ADMIN) { // Droits si Admin
+            $batiment = new Droit();
+                $batiment->fk_controleur = BatimentController::ID_CONTROLLER; $batiment->fk_user = $id;
+                $batiment->droits = Constantes::NO_RIGHT;
+                if (!$batiment->save(FALSE)) throw new Exception('Erreur lors de l\'enregistrement en base de données');
+            $categorie = new Droit();
+                $categorie->fk_controleur = CategorieIncidentController::ID_CONTROLLER; $categorie->fk_user = $id;
+                $categorie->droits = Constantes::NO_RIGHT;
+                if (!$categorie->save(FALSE)) throw new Exception('Erreur lors de l\'enregistrement en base de données');
+            $dashboard = new Droit();
+                $dashboard->fk_controleur = DashboardController::ID_CONTROLLER; $dashboard->fk_user = $id;
+                $dashboard->droits = DashboardController::ACTION_TOUS;
+                if (!$dashboard->save(FALSE)) throw new Exception('Erreur lors de l\'enregistrement en base de données');
+            $entreprise = new Droit();
+                $entreprise->fk_controleur = EntrepriseController::ID_CONTROLLER; $entreprise->fk_user = $id;
+                $entreprise->droits = Constantes::NO_RIGHT;
+                if (!$entreprise->save(FALSE)) throw new Exception('Erreur lors de l\'enregistrement en base de données');
+            $locataire = new Droit();
+                $locataire->fk_controleur = LocataireController::ID_CONTROLLER; $locataire->fk_user = $id;
+                $locataire->droits = LocataireController::ACTION_ADMIN + LocataireController::ACTION_VIEW;
+                if (!$locataire->save(FALSE)) throw new Exception('Erreur lors de l\'enregistrement en base de données');
+            $ticket = new Droit();
+                $ticket->fk_controleur = TicketController::ID_CONTROLLER; $ticket->fk_user = $id;
+                $ticket->droits = TicketController::ACTION_TOUS;
+                if (!$ticket->save(FALSE)) throw new Exception('Erreur lors de l\'enregistrement en base de données');
+            $user = new Droit();
+                $user->fk_controleur = UserController::ID_CONTROLLER; $user->fk_user = $id;
+                $user->droits = Constantes::NO_RIGHT;
+                if (!$user->save(FALSE)) throw new Exception('Erreur lors de l\'enregistrement en base de données');
+            
+        } elseif ($fonction == Constantes::FONCTION_ROOT) { // Droits si Root
+            $batiment = new Droit();
+                $batiment->fk_controleur = BatimentController::ID_CONTROLLER; $batiment->fk_user = $id;
+                $batiment->droits = BatimentController::ACTION_TOUS;
+                if (!$batiment->save(FALSE)) throw new Exception('Erreur lors de l\'enregistrement en base de données');
+            $categorie = new Droit();
+                $categorie->fk_controleur = CategorieIncidentController::ID_CONTROLLER; $categorie->fk_user = $id;
+                $categorie->droits = CategorieIncidentController::ACTION_TOUS;
+                if (!$categorie->save(FALSE)) throw new Exception('Erreur lors de l\'enregistrement en base de données');
+            $dashboard = new Droit();
+                $dashboard->fk_controleur = DashboardController::ID_CONTROLLER; $dashboard->fk_user = $id;
+                $dashboard->droits = DashboardController::ACTION_TOUS;
+                if (!$dashboard->save(FALSE)) throw new Exception('Erreur lors de l\'enregistrement en base de données');
+            $entreprise = new Droit();
+                $entreprise->fk_controleur = EntrepriseController::ID_CONTROLLER; $entreprise->fk_user = $id;
+                $entreprise->droits = EntrepriseController::ACTION_TOUS;
+                if (!$entreprise->save(FALSE)) throw new Exception('Erreur lors de l\'enregistrement en base de données');
+            $locataire = new Droit();
+                $locataire->fk_controleur = LocataireController::ID_CONTROLLER; $locataire->fk_user = $id;
+                $locataire->droits = LocataireController::ACTION_TOUS;
+                if (!$locataire->save(FALSE)) throw new Exception('Erreur lors de l\'enregistrement en base de données');
+            $ticket = new Droit();
+                $ticket->fk_controleur = TicketController::ID_CONTROLLER; $ticket->fk_user = $id;
+                $ticket->droits = TicketController::ACTION_TOUS;
+                if (!$ticket->save(FALSE)) throw new Exception('Erreur lors de l\'enregistrement en base de données');
+            $user = new Droit();
+                $user->fk_controleur = UserController::ID_CONTROLLER; $user->fk_user = $id;
+                $user->droits = UserController::ACTION_TOUS;
+                if (!$user->save(FALSE)) throw new Exception('Erreur lors de l\'enregistrement en base de données');
+            
+        } else {
+            throw new Exception('Fonction invalide');
+        }
+    }
 }

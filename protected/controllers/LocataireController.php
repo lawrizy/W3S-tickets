@@ -14,6 +14,7 @@ class LocataireController extends Controller {
     const ACTION_DELETE = 4;
     const ACTION_UPDATE = 8;
     const ACTION_ADMIN = 16;
+    const ACTION_TOUS = 31;
 //    const ACTION_ADDLIEU = 32;
 //    const ACTION_DELETELIEU = 64;
 //    const ACTION_CHANGEPASSWORD = 128;
@@ -116,37 +117,42 @@ class LocataireController extends Controller {
         $db = Yii::app()->db;
         $model = new User;
 
-        // Uncomment the following line if AJAX validation is needed
-        // $this->performAjaxValidation($model);
-
         if (isset($_POST['User'])) {
             $tsql = $db->beginTransaction();
-
-            $model->attributes = $_POST['User'];
-            $model->setAttribute("password", md5($model->password));
+            $tmp = new User();
             $model->fk_fonction = Constantes::FONCTION_LOCATAIRE;
-
+            $model->attributes = $tmp->attributes = $_POST['User'];
+            $tmp->setAttribute("password", md5($model->password));
             try {
-                if ($model->validate() && $model->save()) {
+                Yii::trace('Avant save', 'cron');
+                if ($tmp->validate() && $tmp->save(FALSE)) {
+                    Yii::trace('id du locataire ' . $tmp->id_user, 'cron');
+                    RightsController::createRights($tmp->id_user, $tmp->fk_fonction);
                     $tsql->commit();
                     Yii::app()->user->setFlash('success', 'Le locataire a bien été créé.');
-                    $this->redirect(array('view', 'id' => $model->id_user));
+                    $this->redirect(array('view', 'id' => $tmp->id_user));
                 } else {
                     $errMessage = Translate::trad('erreurProduite');
                     foreach ($model->getErrors() as $key => $value)
                         $errMessage .= $value[0] . "<br/>";
                     throw new Exception($errMessage);
                 }
-            } catch (Exception $erreur) {
+            } catch (Exception $ex) {
                 $tsql->rollback();
-                Yii::app()->user->setFlash('error', $erreur->getMessage());
-                $this->redirect(array('create', 'id' => $model->id_user));
+                if ($ex->getCode() === Constantes::DB_ERROR_UNIQUE) {
+                    Yii::app()->user->setFlash('error', Translate::trad('mailUnique'));
+                } else {
+                    Yii::app()->user->setFlash('error', $ex->getMessage());
+                }
+                $this->render('create', array(
+                    'model' => $model,
+                ));
             }
+        } else {
+            $this->render('create', array(
+                'model' => $model,
+            ));
         }
-
-        $this->render('create', array(
-            'model' => $model,
-        ));
     }
 
     /**
@@ -179,7 +185,9 @@ class LocataireController extends Controller {
             } catch (Exception $erreur) {
                 $tsql->rollback();
                 Yii::app()->user->setFlash('error', $erreur->getMessage());
-                $this->redirect(array('update', 'id' => $model->id_user));
+                $this->render('update', array(
+                    'model' => $model,
+                ));
             }
         }
 
@@ -385,7 +393,6 @@ class LocataireController extends Controller {
             $this->render('changePassword');
         }
     }
-
 }
 
 ?>
