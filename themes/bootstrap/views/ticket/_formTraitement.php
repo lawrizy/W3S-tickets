@@ -59,14 +59,18 @@
 
     <div class="buttons">
         <?php
-        $this->widget('zii.widgets.jui.CJuiButton', array(
-            'buttonType' => 'submit', // Type de bouton
-            'name' => 'traitement', // L'action à lancer (ne pas oublier les rules dans le controleur)
-            'caption' => Translate::trad('ButtonTraitement'), // Le texte à afficher sur le bouton
-        ));
+        echo CHtml::submitButton(Translate::trad('ButtonTraitement'), array('onClick' => 'antiSpam(this);'));
         ?>
     </div>
 
     <?php $this->endWidget(); ?>
 
 </div><!-- form -->
+
+<script>
+    function antiSpam(button)
+    {
+        button.disabled = true;
+        button.form.submit();
+    }
+</script>
