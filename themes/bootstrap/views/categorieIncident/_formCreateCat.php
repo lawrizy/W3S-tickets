@@ -25,7 +25,7 @@
           echo $form->error($model, 'label', array('style' => 'color: red;'));
     ?>
     
-    <?php echo $form->labelEx($model, 'label');
+    <?php echo $form->labelEx($model, 'fk_entreprise');
           echo $form->dropDownList($model, 'fk_entreprise', array('' => '', 
               CHtml::listData(Entreprise::model()->findAllByAttributes(
                   array('visible' => Constantes::VISIBLE)), 'id_entreprise', 'nom')));
