@@ -120,12 +120,13 @@ class LocataireController extends Controller {
         if (isset($_POST['User'])) {
             $tsql = $db->beginTransaction();
             $tmp = new User();
-            $model->fk_fonction = Constantes::FONCTION_LOCATAIRE;
             $model->attributes = $tmp->attributes = $_POST['User'];
-            $tmp->setAttribute("password", md5($model->password));
+            $model->fk_fonction = $tmp->fk_fonction = Constantes::FONCTION_LOCATAIRE;
             try {
                 Yii::trace('Avant save', 'cron');
-                if ($tmp->validate() && $tmp->save(FALSE)) {
+                if ($tmp->validate()) {
+                    $tmp->setAttribute("password", md5($tmp->password));
+                    if (!$tmp->save(FALSE)) throw new Exception (Translate::trad('erreurProduite'));
                     Yii::trace('id du locataire ' . $tmp->id_user, 'cron');
                     RightsController::createRights($tmp->id_user, $tmp->fk_fonction);
                     $tsql->commit();

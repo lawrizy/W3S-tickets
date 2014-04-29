@@ -126,10 +126,11 @@ class UserController extends Controller {
             $tsql = $db->beginTransaction();
             $tmp = new User();
             $model->attributes = $tmp->attributes = $_POST['User'];
-            $tmp->setAttribute("password", md5($model->password));
             try {
                 Yii::trace('avant save', 'cron');
-                if ($tmp->validate() && $tmp->save(FALSE)) {
+                if ($tmp->validate()) {
+                    $tmp->setAttribute("password", md5($tmp->password));
+                    if (!$tmp->save(FALSE)) throw new Exception (Translate::trad('erreurProduite'));
                     Yii::trace('id du user ' . $tmp->id_user, 'cron');
                     RightsController::createRights($tmp->id_user, $tmp->fk_fonction);
                     $tsql->commit();
@@ -143,7 +144,7 @@ class UserController extends Controller {
                 }
             } catch (Exception $ex) {
                 $tsql->rollback();
-                if ($ex->getCode() === Constantes::DB_ERROR_UNIQUE) {
+                if ($ex->getCode() == Constantes::DB_ERROR_UNIQUE) {
                     Yii::app()->user->setFlash('error', Translate::trad('mailUnique'));
                 } else {
                     Yii::app()->user->setFlash('error', $ex->getMessage());
@@ -157,8 +158,6 @@ class UserController extends Controller {
                 'model' => $model,
             ));
         }
-
-        
     }
 
     /**

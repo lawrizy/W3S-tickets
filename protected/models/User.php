@@ -34,15 +34,15 @@ class User extends CActiveRecord {
      * @return array validation rules for model attributes.
      */
     public function rules() {
-// NOTE: you should only define rules for those attributes that
-// will receive user inputs.
+    // NOTE: you should only define rules for those attributes that
+    // will receive user inputs.
         return array(
             array('nom, email, password, fk_fonction, fk_langue', 'required'),
             array('fk_fonction, fk_langue, visible', 'numerical', 'integerOnly' => true),
             array('nom, email', 'length', 'max' => 64),
             array('password', 'length', 'max' => 32,'min'=>4),
-// The following rule is used by search().
-// @todo Please remove those attributes that should not be searched.
+            // The following rule is used by search().
+            // @todo Please remove those attributes that should not be searched.
             array('id_user, nom, email, password, fk_fonction, fk_langue, visible', 'safe', 'on' => 'search'),
         );
     }
@@ -51,8 +51,8 @@ class User extends CActiveRecord {
      * @return array relational rules.
      */
     public function relations() {
-// NOTE: you may need to adjust the relation name and the related
-// class name for the relations automatically generated below.
+    // NOTE: you may need to adjust the relation name and the related
+    // class name for the relations automatically generated below.
         return array(
             'droits' => array(self::HAS_MANY, 'Droit', 'fk_user'),
             'historiqueTickets' => array(self::HAS_MANY, 'HistoriqueTicket', 'fk_user'),
