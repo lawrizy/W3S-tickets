@@ -265,7 +265,8 @@ class TicketController extends Controller {
             // On met à jour la sous-catégorie (qui est liée elle-même à une catégorie mère unique).
             if (isset($_POST['DD_sousCat'])) {
                 $ticket['fk_categorie'] = $_POST['DD_sousCat'];
-                $ticket['fk_priorite'] = $ticket->fkCategorie->fkPriorite->id_priorite;
+                $cat = CategorieIncident::model()->findByPk($ticket['fk_categorie']);
+                $ticket['fk_priorite'] = $cat->fk_priorite;
             } else {
                 $ticket['fk_categorie'] = NULL;
                 $ticket['fk_priorite'] = NULL;
@@ -416,6 +417,7 @@ class TicketController extends Controller {
     private function actionSendNotificationMail($modelTicket) {
         $message = new YiiMailMessage;
         $message->from = 'mailer@web3sys.com';
+        $locataire = $modelTicket->fkLocataire;
         $message->addTo($locataire->email);
 
         switch ($modelTicket->fk_statut) {

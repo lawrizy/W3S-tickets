@@ -18,7 +18,7 @@
             'enableAjaxValidation' => false,
         )); ?>
         <div class="SousCateg">
-        <p><h2><?php echo Translate::trad("CreateCategoryMainTitle"); ?></h2></p><hr>
+        <p><h2>Création d'une sous-catégorie</h2></p><hr>
         <p class = "note"><?php echo Translate::trad('Required'); ?></p>
         <?php
             echo $form->labelEx($model, 'label');
