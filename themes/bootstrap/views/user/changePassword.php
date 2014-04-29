@@ -15,7 +15,7 @@ and open the template in the editor.
         <title></title>
     </head>
     <body>
-        <h1 class="h1" style="text-decoration: underline;">Changer votre mot de passe</h1>
+        <h1 class="h1" style="text-decoration: underline;"><?php echo Translate::trad("ChangePassword"); ?></h1>
         <br>
         <br>
         <?php
@@ -28,14 +28,14 @@ and open the template in the editor.
         ?>
         <div class="table-bordered">
             <?php
-            echo '<h4 class="h4" style="text-decoration:underline;">Les champs marqués de <span class=required>*</span> sont obligatoire</h4>';
-            echo '<h5 class="h5" style="text-decoration:underline;">Le mot de passe doit faire minimum 4 caractères et les espaces ne sont pas autorisé</h5>';
+            echo '<h4 class="h4" style="text-decoration:underline;">' . Translate::trad("Required") . '</h4>';
+            echo '<h5 class="h5" style="text-decoration:underline;">'. Translate::trad("PasswordRestrictionsMessage") .'</h5>';
             echo CHtml::form();
-            echo CHtml::label('Votre ancien mot de passe :<span class=required>&nbsp;*</span> ', 'amdp');
+            echo CHtml::label(Translate::trad("AncienMotDePasse") . ' :<span class=required>&nbsp;*</span> ', 'amdp');
             echo CHtml::passwordField('AncienMdp');
-            echo CHtml::label('Votre nouveau mot de passe :<span class=required>&nbsp;*</span> ', 'nmdp');
+            echo CHtml::label(Translate::trad("NouveauMotDePasse") . ' :<span class=required>&nbsp;*</span> ', 'nmdp');
             echo CHtml::passwordField('NouveauMdp', '', array('id' => 'NouveauMdp', 'onkeyup' => 'notAllowed();'));
-            echo CHtml::label('Retapez  nouveau mot de passe :<span class=required>&nbsp;*</span> ', 'nmdp1');
+            echo CHtml::label(Translate::trad("RetaperMDP") . ' :<span class=required>&nbsp;*</span> ', 'nmdp1');
             echo CHtml::passwordField('NouveauMdp1');
             echo '</br>';
             ?>
