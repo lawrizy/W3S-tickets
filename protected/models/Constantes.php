@@ -63,7 +63,7 @@ class Constantes {
     /*
      * L'utilisateur par défaut à assigner lors de la création de ticket
      */
-    const USER_DEFAUT = 1;
+    const USER_DEFAUT = 0;
 
     /*
      * IsAjax permet de savoir si un utilisateur à été déconnecté parce que la 

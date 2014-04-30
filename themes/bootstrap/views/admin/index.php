@@ -81,5 +81,5 @@ $this->pageTitle = Yii::app()->name . ' - Admin';
 </ul>
 </p>
 <?php
-    }
+    } // Fin du [if (fonction == ROOT)]
 ?>

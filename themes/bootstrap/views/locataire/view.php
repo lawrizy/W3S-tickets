@@ -12,8 +12,8 @@ $this->menu = array(
     array('label' => Translate::trad('CreerTicket'), 'url' => array('ticket/create?id=' . $model->id_user),
         'visible' => Yii::app()->session['Rights']->getTicket() & TicketController::ACTION_CREATE),
     array('label' => Translate::trad('DeleteLocataire'), 'url' => '#',
-        'linkOptions' => array('submit' => array('delete', 'id' => $model->id_user), 'confirm' => 'Are you sure you want to delete this item?',
-            'visible' => Yii::app()->session['Rights']->getLocataire() & LocataireController::ACTION_DELETE)),
+        'linkOptions' => array('submit' => array('delete', 'id' => $model->id_user), 'confirm' => 'Are you sure you want to delete this item?'),
+        'visible' => Yii::app()->session['Rights']->getLocataire() & LocataireController::ACTION_DELETE),
     array('label' => Translate::trad('ManageLocataire'), 'url' => array('admin'),
         'visible' => Yii::app()->session['Rights']->getLocataire() & LocataireController::ACTION_ADMIN),
     array('label' => Translate::trad('Rajouterlieu'), 'url' => array('locataire/addLieu?id=' . $model->id_user),
@@ -25,7 +25,7 @@ $this->menu = array(
 );
 ?>
 
-<h1>Locataire:&nbsp;<?php echo $model->nom; ?></h1>
+<h1><?php echo Translate::trad('LocataireTicket'); ?>:&nbsp;<?php echo $model->nom; ?></h1>
 
 <?php
 $this->widget('bootstrap.widgets.TbDetailView', array(
@@ -33,11 +33,11 @@ $this->widget('bootstrap.widgets.TbDetailView', array(
     'data' => $model,
     'attributes' => array(
         array(
-            'name' => 'Email',
+            'name' => Translate::trad('EmailUser'),
             'value' => $model->email,
         ),
         array(
-            'name' => 'Langue',
+            'name' => Translate::trad('Langue'),
             'value' => $model->fkLangue->label
         ),
     ),

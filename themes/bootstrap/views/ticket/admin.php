@@ -52,7 +52,7 @@ $this->widget('bootstrap.widgets.TbGridView', array(
     'type' => 'striped bordered condensed',
     'id' => 'ticket-grid',
     'dataProvider' => $model->search(),
-    // 'filter' => $model,
+    //'filter' => $model,
     'columns' => array(
         array(
             'name' => Translate::trad('CodeTicket'),
@@ -77,14 +77,32 @@ $this->widget('bootstrap.widgets.TbGridView', array(
             'value' => '$data->fkBatiment->nom'
             ),
         array(
-            'name' => Translate::trad('UserTicketCirc'),
-            'value' => '$data->fkUser->nom'),
+            'name' => Translate::trad('UserTicketCirc'), 'type' => 'raw',
+            'value' => '$data->fkUser->nom'
+            ),
         array
             (
             'class' => 'bootstrap.widgets.TbButtonColumn',
             'template' => $DroitIcone
         ),
+//        array(
+//            'name' => Translate::trad('UserTicketCirc'), 'type' => 'raw',
+//            'value' => 'CHtml::dropDownList(\'UserList\', $data->fk_user, array(\'\' => \'\', CHtml::listData(User::model()->findAllByAttributes(array(\'visible\' => Constantes::VISIBLE)), \'id_user\', \'nom\')))'
+//            ),
     ),
 ));
-?>
 
+//echo '<br />';
+//
+//$list = array(
+//    array('id' => 1, 'text' => 'Un', 'group' => 'Test2'),
+//    array('id' => 2, 'text' => 'Deux', 'group' => 'Test2'),
+//    array('id' => 3, 'text' => 'Trois', 'group' => 'Test'),
+//    array('id' => 4, 'text' => 'Quatre', 'group' => 'Test2'),
+//    array('id' => 5, 'text' => 'Cinq', 'group' => 'Test'),
+//    array('id' => 6, 'text' => 'Six', 'group' => 'Test'),
+//);
+//
+//echo CHtml::dropDownList('', '', array(CHtml::listData($list, 'id', 'text', 'group')));
+
+?>
