@@ -546,5 +546,15 @@ class TicketController extends Controller {
 
         return $datasList;
     }
+    
+    public function getPrioriteTraduite() {
+        $listPriorite = array();
+        $priorites = Priorite::model()->findAll();
+        foreach($priorites as $priorite) {
+            $p = array('id_priorite' => $priorite->id_priorite, 'label' => Translate::trad($priorite->label));
+            array_push($listPriorite, $p);
+        }
+        return $listPriorite;
+    }
 
 }

@@ -30,14 +30,15 @@
         
         <hr>
         <?php
-        echo '<label for="CategorieIncident_fk_parent">Cat&eacute;gorie-Parent&nbsp;<span class="required">*</span></label>';
-        echo $form->dropDownList($model, 'fk_parent', array(CHtml::listData(CategorieIncident::model()->findAllByAttributes(array('fk_parent' => NULL, 'visible' => Constantes::VISIBLE)), 'id_categorie_incident', 'label')));
+        echo '<label for="CategorieIncident_fk_parent">' . Translate::trad("CategorieParente") . '<span class="required">*</span></label>';
+        echo $form->dropDownList($model, 'fk_parent', array(
+            CHtml::listData($this->getCategorieTraduite(), 'id_categorie_incident', 'label')));
         ?>
         
         <hr>
         <?php
         echo '<label>Priorit&eacute;</label>';
-        echo $form->dropDownList($model, 'fk_priorite', array(CHtml::listData(Priorite::model()->findAll(), 'id_priorite', 'label')));
+        echo $form->dropDownList($model, 'fk_priorite', array(CHtml::listData($this->getPrioriteTraduite(), 'id_priorite', 'label')));
         ?>
         <hr>
     

@@ -151,5 +151,16 @@ class AdminController extends Controller {
             $this->render('update', array('model' => $model));
         }
     }
+    
+    public function getUserForRights() { // Renvoie une liste de user sans locataire et root
+        $listUsers = array();
+        $users = User::model()->findAllByAttributes(array('visible' => Constantes::VISIBLE));
+        foreach ($users as $user) {
+            if ($user->fk_fonction != Constantes::FONCTION_LOCATAIRE && $user->fk_fonction != Constantes::FONCTION_ROOT) {
+                array_push($listUsers, $user);
+            }
+        }
+        return $listUsers;
+    }
 
 }

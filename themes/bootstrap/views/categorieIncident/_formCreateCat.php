@@ -25,7 +25,7 @@
           echo $form->error($model, 'label', array('style' => 'color: red;'));
     ?>
     
-    <?php echo $form->labelEx($model, 'fk_entreprise');
+    <?php echo '<label for="CategorieIncident_fk_entreprise">' . Translate::trad("EntrepriseAssociee") . ' <span class="required">*</span></label>';
           echo $form->dropDownList($model, 'fk_entreprise', array('' => '', 
               CHtml::listData(Entreprise::model()->findAllByAttributes(
                   array('visible' => Constantes::VISIBLE)), 'id_entreprise', 'nom')));

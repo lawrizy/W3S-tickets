@@ -48,7 +48,7 @@
 
     <?php
     echo $form->labelEx($model, 'fk_priorite');
-    echo $form->dropDownList($model, 'fk_priorite', array('' => '', CHtml::listData(Priorite::model()->findAll(), 'id_priorite', 'label')));
+    echo $form->dropDownList($model, 'fk_priorite', array('' => '', CHtml::listData($this->getPrioriteTraduite(), 'id_priorite', 'label')));
     echo $form->error($model, 'fk_priorite');
     ?>
 

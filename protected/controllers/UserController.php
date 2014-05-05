@@ -315,5 +315,15 @@ class UserController extends Controller {
         $this->render('changePassword', array('model' => $model));
     }
     
-
+    public function getUserWithoutLocataire() {
+        $listFonction = array();
+        $fonctions = Fonction::model()->findAll();
+        foreach ($fonctions as $fonction) {
+            if ($fonction->id_fonction != Constantes::FONCTION_LOCATAIRE) {
+                array_push($listFonction, $fonction);
+            }
+        }
+        return $listFonction;
+    }
+    
 }

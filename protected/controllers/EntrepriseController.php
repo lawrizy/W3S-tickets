@@ -323,5 +323,23 @@ class EntrepriseController extends Controller {
             Yii::app()->end();
         }
     }
+    
+    public function getCategorieTraduite() {
+        $listFinal = array();
+//        $listCategorie = Yii::app()->db->createCommand()
+//            ->select('*')
+//            ->from('w3sys_categorie_incident c')
+//            ->where('c.fk_parent is null and c.fk_entreprise is null and c.visible = ' . Constantes::VISIBLE)
+//            ->queryAll();
+        $categories = CategorieIncident::model()->findAllByAttributes(array(
+            'visible' => Constantes::VISIBLE,
+            'fk_parent' => NULL,
+            'fk_entreprise' => NULL));
+        foreach ($categories as $categorie) {
+            $cat = array('id_categorie_incident' => $categorie->id_categorie_incident, 'label' => Translate::trad($categorie->label));
+            array_push($listFinal, $cat);
+        }
+        return $listFinal;
+    }
 
 }

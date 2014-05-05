@@ -24,14 +24,8 @@
     <input type="hidden" value="<?php echo $model->id_entreprise; ?>" name="id_entreprise" />
 
     <?php
-    $listCategorie = Yii::app()->db->createCommand()
-            ->select('*')
-            ->from('w3sys_categorie_incident c')
-            ->where('c.fk_parent is null and c.fk_entreprise is null and c.visible = ' . Constantes::VISIBLE)
-            ->queryAll();
-
     echo '<br /><br />';
-    echo CHtml::dropDownList('idCat', 'label', array('' => '', CHtml::listData($listCategorie, 'id_categorie_incident', 'label')));
+    echo CHtml::dropDownList('idCat', 'label', array('' => '', CHtml::listData($this->getCategorieTraduite(), 'id_categorie_incident', 'label')));
     // On affiche la liste des catégories libres
 
     echo '<br /><br />';

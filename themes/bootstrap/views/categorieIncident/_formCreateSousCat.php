@@ -28,8 +28,7 @@
         <label for="CategorieIncident_fk_parent"><?php echo Translate::trad("CategorieParente"); ?><span class="required">*</span></label>
         <?php
             echo $form->dropDownList($model, 'fk_parent', array('' => '', 
-                CHtml::listData(CategorieIncident::model()->findAllByAttributes(
-                    array('fk_parent' => NULL, 'visible' => Constantes::VISIBLE)), 'id_categorie_incident', 'label')));
+                CHtml::listData($this->getCategorieTraduite(), 'id_categorie_incident', 'label')));
             if (Yii::app()->session['errorParentField']) { // Si cette variable est à true
                 echo '<label style="color: red;">' . Translate::trad("ChampsParentNonVide") . '</label>';
                     // Alors on affiche un message d'erreur. Cette variable est initialisée par
@@ -39,7 +38,7 @@
             }
 
             echo $form->labelEx($model, 'fk_priorite');
-            echo $form->dropDownList($model, 'fk_priorite', array('' => '', CHtml::listData(Priorite::model()->findAll(), 'id_priorite', 'label')));
+            echo $form->dropDownList($model, 'fk_priorite', array('' => '', CHtml::listData($this->getPrioriteTraduite(), 'id_priorite', 'label')));
             echo $form->error($model, 'fk_priorite', array('style' => 'color: red;'));
         ?>
         <hr>

@@ -509,5 +509,25 @@ class CategorieIncidentController extends Controller {
             Yii::app()->end();
         }
     }
+    
+    public function getCategorieTraduite() {
+        $listCategorie = array();
+        $categories = CategorieIncident::model()->findAllByAttributes(array('visible' => Constantes::VISIBLE, 'fk_parent' => NULL));
+        foreach($categories as $categorie) {
+            $cat = array('id_categorie_incident' => $categorie->id_categorie_incident, 'label' => Translate::trad($categorie->label));
+            array_push($listCategorie, $cat);
+        }
+        return $listCategorie;
+    }
+    
+    public function getPrioriteTraduite() {
+        $listPriorite = array();
+        $priorites = Priorite::model()->findAll();
+        foreach($priorites as $priorite) {
+            $p = array('id_priorite' => $priorite->id_priorite, 'label' => Translate::trad($priorite->label));
+            array_push($listPriorite, $p);
+        }
+        return $listPriorite;
+    }
 
 }

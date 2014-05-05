@@ -32,7 +32,7 @@
         echo $form->error($model, 'email');
 
         echo $form->labelEx($model, 'fk_fonction');
-        echo $form->dropDownList($model, 'fk_fonction', array('' => '', CHtml::listData(Fonction::model()->findAll(), 'id_fonction', 'label')));
+        echo $form->dropDownList($model, 'fk_fonction', array('' => '', CHtml::listData($this->getUserWithoutLocataire(), 'id_fonction', 'label')));
         echo $form->error($model, 'fk_fonction');
         
         echo $form->labelEx($model, 'fk_langue');

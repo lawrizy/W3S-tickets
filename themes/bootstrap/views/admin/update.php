@@ -17,7 +17,7 @@
              * $rights => Les droits du user en question
              */
             CHtml::form();
-            echo CHtml::dropDownList('UserList', '', array(CHtml::listData(User::model()->findAll(), 'id_user', 'nom')), array(// Cette array définit le chargement dynamique des valeurs dans la dropDownList des sous-catégories. (Voir dropDownList suivante appelée DD_sousCat)
+            echo CHtml::dropDownList('UserList', '', array(CHtml::listData($this->getUserForRights(), 'id_user', 'nom')), array(// Cette array définit le chargement dynamique des valeurs dans la dropDownList des sous-catégories. (Voir dropDownList suivante appelée DD_sousCat)
                 'ajax' => array(
                     'type' => 'POST',
                     'url' => CController::createUrl('admin/update?id=idPost'),
